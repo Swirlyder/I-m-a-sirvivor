@@ -7,9 +7,9 @@ var http = require('http');
 var cb = require('origindb')('lb');
 var _ = require('lodash');
 var roomStaff = ['aknolan', 'privatepenquin', 'shamethat', 'swirlyder', 'bondance', 'dontlose', 'phable', 'zeonth', 'lunarixis', 'spieky', 'skywardmonado', 'unfixable']
-    var hostQueue = [];
-    var queueText = '';
-  var ids = [];
+var hostQueue = [];
+var queueText = '';
+var ids = [];
   
 if (Config.serverid === 'showdown')
 {
@@ -690,7 +690,7 @@ exports.commands = {
 		}
 		else
 		{
-			var text = '/pm ' + user + ', ';
+			var text = '/pm ' + user.id + ', ';
 		}
 		var gameTypes = {
 			trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**'],
@@ -753,11 +753,7 @@ exports.commands = {
 		{
 			if (!(arg in gameTypes))
 			{
-				if (user.hasRank(room.id, '+') || room.id === user.id)
-				{
-					this.say(room, "Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html");
-				}
-				else return this.say(room, '/w ' + user + ', Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html');
+				text += "Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
 			}
 			else
 			{
@@ -796,8 +792,9 @@ exports.commands = {
 	intro: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
+		if (user.hasRank(room.id, '+')) {
 			text = '';
+		}
 		else if (room.id !== user.id)
 		{
 			text = '/pm ' + user + ', ';
@@ -892,8 +889,7 @@ exports.commands = {
 		this.say(room, text);
 	},
 
-	nexthost: function(arg, user, room)
-	{
+	nexthost: function(arg, user, room) {
 		if (user.hasRank(room.id, '%') && arg)
 		{
 			if (host) return this.say(room, host + ' is set as the next host. If this user is unavailable use ``.host [user]`` to override and ``.nexthost [user]`` to set the next host.');
@@ -1409,41 +1405,32 @@ exports.commands = {
 
 	joke: function(arg, user, room)
 	{
+		var text = '';
+		var jokes = ['What does a nosey pepper do? Get jalapeño business.', 'What is Bruce Lee’s favorite drink? Wataaaaah!', 'How does NASA organize their company parties? They planet.', 'Why does Snoop Dogg carry an umbrella? Fo’ drizzle.', 'What time is it when you have to go to the dentist? Tooth-hurtie.', 'There’s two fish in a tank. One turns to the other and says "You man the guns, I’ll drive"', 'Why can’t a bike stand on its own? It’s two tired.', 'How do you make Holy water? Boil the hell out of it.', 'What did one ocean say to the other ocean? Nothing, they just waved.', 'A bear walks into a bar and he asks the bartender "I\'d like some peanuts............. and a glass of milk. The bartender says "Why the big pause?"', 'Why did the scientist install a knocker on his door? He wanted to win the No-bell prize!', 'What did the traffic light say when it stayed on red? ”You would be red too if you had to change in front of everyone!”', 'Two hats are on a hat rack. Hat #1 to hat #2 “you stay here. I’ll go on a head.”', 'Why did the tomato blush? ... it saw the salad dressing.', 'What did the football coach say to the broken vending machine? “Give me my quarterback!”', 'What did the digital clock say to the grandfather clock? Look grandpa, no hands!', 'What happens to a frog\'s car when it breaks down? It gets toad away.', 'What did the blanket say when it fell of the bed? "Oh sheet!"', 'What lights up a soccer stadium? A soccer match', 'Why shouldn\'t you write with a broken pencil? Because it\'s pointless.', 'What do you call a fake noodle? An impasta', 'Why is Peter Pan always flying? He neverlands!', 'How many tickles does it take to make an octopus laugh? Ten-Tickles', 'Why did the stadium get hot after the game? All of the fans left.', 'What did Barack Obama say to Michelle when he proposed? Obama: I don\'t wanna be obama self.', 'Why did the picture go to jail? Because it was framed!', 'What if soy milk is just regular milk introducing itself in Spanish?', 'Why couldn\'t the sesame seed leave the gambling casino? Because he was on a roll.', 'Why did the chicken cross the playground? To get to the other slide.', 'What does a cell phone give his girlfriend? A RING!', 'How did the italian chef die? He pasta away.', 'Why didn\'t the skeleton go to the party? He had no-body to dance with!', 'How does Moses make his tea? Hebrews it.', 'What do you call a sleeping bull? A bull-dozer.', 'Why didn\'t the koala get the job? He didn\'t have the koalafictions', 'What do you call a fairy that hasn\'t bathed in a year? Stinkerbell', 'What do you call two Mexicans playing basketball? Juan on Juan.', 'What do you call a guy who never farts in public? A private tutor', 'Why did the can crusher quit hit job? It was soda pressing!', 'A blonde went into a doctors office and said "doctor help I\'m terribly sick" doc replies "flu?" "no, I drove here."', 'What do you comb a rabbit with? A hare brush!', 'Why did the deer need braces? Because he had buck teeth!', 'What did the blanket say when it fell off the bed? Oh sheet!', 'Why shouldn\'t you write with an unsharpened pencil? It\'s pointless', 'What did one plate say to the other? Dinner\'s on me!', 'How do you make a tissue dance? You put a little boogey in it!', 'Want to hear a joke about paper? Never mind it\'s tearable.', 'What\'s the difference between a gutair and a fish? You can tune a gutair but you can\'t tuna fish!', 'What kind of key opens a banana? A mon-key!', 'What do you call a line of rabbits walking backwards? A receding hare line.', 'Why did the Fungi leave the party? There wasn\'t mushroom.', 'Why did the algae and the fungus get married? They took a lichen to each other.', 'Why do Toadstools grow so close together? They don\'t need Mushroom. ', 'What would a mushroom car say? Shroom shroom!', 'What room has no doors, no walls, no floor and no ceiling? A mushroom.', 'What do you get if you cross a toadstool and a full suitcase? Not mushroom for your holiday clothes!', 'Did you hear the joke about the fungus? I could tell it to you, but it might need time to grow on you.', 'What do mushrooms eat when they sit around the campfire? S\'pores.', 'What did the mushroom say when it was locked out of the house? E no ki.', 'Why wouldn\'t the teenage mushroom skip school? He didn\'t want to get in truffle', 'Why did the mushroom go to the party? It didn\'t. Mushrooms are non-sentient organic matter, so they generally don\'t get invited to parties.', 'Why did the Mushroom get invited to all the RAVE parties? \'Cuz he\'s a fungi!', 'Yo mama so poor your family ate cereal with a fork to save milk', 'Yo mama so fat, I took a picture of her last Christmas and it\'s still printing', 'What did the first cannibal say to the other while they were eating a clown? Does this taste funny to you?', 'One night Chuck Norris had a pissing contest outside of a bar. He won when his opponents drowned', 'My Dad used to say always fight fire with fire, which is probably why he got kicked out of the fire brigade', 'I like to stop the microwave at 1 second just to feel like a bomb defuser', 'I should change my facebook username to NOBODY so that way when people post crappy posts, and i press the like button it will say NOBODY likes this', 'It\'s so cold outside, I actually saw a gangster pull his pants up.', 'A gift card is a great way to say, Go buy your own fucking present', 'Life is all about perspective. The sinking of the Titanic was a miracle to the lobsters in the ships kitchen', 'Lazy People Fact #5812672793, You were too lazy to read that number', 'My favourite exercise is a cross between a lunge and a crunch. Its called Lunch.', 'I have the heart of a lion. And a lifetime ban from the zoo.', 'Old ladies in wheelchairs with blankets over their legs? I don’t think so… retired mermaids.', 'Years ago I used to supply filing cabinets for the mafia. Yes, I was involved in very organised crime', 'If you are being chased by a police dog, try not to go through a tunnel, then on to a little see-saw, then jump through a hoop of fire. They are trained for that', 'I named my hard drive "dat ass" so once a month my computer asks if I want to back dat ass up', 'Relationships are a lot like algebra. Have you ever looked at your X and wondered Y?', 'I swear to drunk Im not God, but seriously, stay in drugs, eat school, and dont do vegetables.', 'You haven\'t experienced awkward until you try to tickle someone who isn\'t ticklish', '"No, thanks. I\'m a vegetarian." Is a fun thing to say when someone hands you their baby', 'Maybe if we all emailed the constitution to each other, the NSA will finally read it', 'If a quiz is quizzical, then what does that make a test?', 'Whatever you do in life, always give 100%. Unless you are donating blood...', 'It is all shits and giggles until someone giggles and shits!', 'I wonder if anyone has watched Storage Wars and said "hey thats my shit!"', 'I am naming my TV remote Waldo for obvious reasons', 'I hate when I am about to hug someone really sexy and my face hits the mirror', 'Telling a girl to calm down works about as well as trying to baptize a cat', 'Dating a single mother is like continuing from somebody else\'s saved game', 'If only God can judge us than Santa has some explaining to do', 'My vacuum cleaner broke. I put a Dallas Cowboys sticker on it, and now it sucks again', 'When the zombie apocalypse finally happens, I\'m moving to Washington D.C. I figure the lack of brains there will keep the undead masses away', 'Everyone\'s middle name should be "Goddamn". Try it. Doesnt it sound so great?', 'Before Instagram, I used to waste so much time sitting around having to imagine what my friends food looked like', 'The sad moment when you return to your shitty life after watching an awesome movie', 'A big shout out to sidewalks... Thanks for keeping me off the streets', 'Buying an electric car seems like a good idea until you hit a squirrel and flip over a few times', 'I named my dog "5 miles" so I can tell people I walk 5 miles every day', 'Your future depends on your dreams, so go to sleep', 'Yawning is your bodies way of saying 20% battery remaining', 'Dont you hate it when someone answers their own questions? I do', 'Paradise.'];
+		text += jokes[Math.floor(Math.random() * jokes.length)];
+		if (user.hasRank(room.id, '+') || room.id === user.id)
 		{
-			var text = '';
-			var jokes = ['What does a nosey pepper do? Get jalapeño business.', 'What is Bruce Lee’s favorite drink? Wataaaaah!', 'How does NASA organize their company parties? They planet.', 'Why does Snoop Dogg carry an umbrella? Fo’ drizzle.', 'What time is it when you have to go to the dentist? Tooth-hurtie.', 'There’s two fish in a tank. One turns to the other and says "You man the guns, I’ll drive"', 'Why can’t a bike stand on its own? It’s two tired.', 'How do you make Holy water? Boil the hell out of it.', 'What did one ocean say to the other ocean? Nothing, they just waved.', 'A bear walks into a bar and he asks the bartender "I\'d like some peanuts............. and a glass of milk. The bartender says "Why the big pause?"', 'Why did the scientist install a knocker on his door? He wanted to win the No-bell prize!', 'What did the traffic light say when it stayed on red? ”You would be red too if you had to change in front of everyone!”', 'Two hats are on a hat rack. Hat #1 to hat #2 “you stay here. I’ll go on a head.”', 'Why did the tomato blush? ... it saw the salad dressing.', 'What did the football coach say to the broken vending machine? “Give me my quarterback!”', 'What did the digital clock say to the grandfather clock? Look grandpa, no hands!', 'What happens to a frog\'s car when it breaks down? It gets toad away.', 'What did the blanket say when it fell of the bed? "Oh sheet!"', 'What lights up a soccer stadium? A soccer match', 'Why shouldn\'t you write with a broken pencil? Because it\'s pointless.', 'What do you call a fake noodle? An impasta', 'Why is Peter Pan always flying? He neverlands!', 'How many tickles does it take to make an octopus laugh? Ten-Tickles', 'Why did the stadium get hot after the game? All of the fans left.', 'What did Barack Obama say to Michelle when he proposed? Obama: I don\'t wanna be obama self.', 'Why did the picture go to jail? Because it was framed!', 'What if soy milk is just regular milk introducing itself in Spanish?', 'Why couldn\'t the sesame seed leave the gambling casino? Because he was on a roll.', 'Why did the chicken cross the playground? To get to the other slide.', 'What does a cell phone give his girlfriend? A RING!', 'How did the italian chef die? He pasta away.', 'Why didn\'t the skeleton go to the party? He had no-body to dance with!', 'How does Moses make his tea? Hebrews it.', 'What do you call a sleeping bull? A bull-dozer.', 'Why didn\'t the koala get the job? He didn\'t have the koalafictions', 'What do you call a fairy that hasn\'t bathed in a year? Stinkerbell', 'What do you call two Mexicans playing basketball? Juan on Juan.', 'What do you call a guy who never farts in public? A private tutor', 'Why did the can crusher quit hit job? It was soda pressing!', 'A blonde went into a doctors office and said "doctor help I\'m terribly sick" doc replies "flu?" "no, I drove here."', 'What do you comb a rabbit with? A hare brush!', 'Why did the deer need braces? Because he had buck teeth!', 'What did the blanket say when it fell off the bed? Oh sheet!', 'Why shouldn\'t you write with an unsharpened pencil? It\'s pointless', 'What did one plate say to the other? Dinner\'s on me!', 'How do you make a tissue dance? You put a little boogey in it!', 'Want to hear a joke about paper? Never mind it\'s tearable.', 'What\'s the difference between a gutair and a fish? You can tune a gutair but you can\'t tuna fish!', 'What kind of key opens a banana? A mon-key!', 'What do you call a line of rabbits walking backwards? A receding hare line.', 'Why did the Fungi leave the party? There wasn\'t mushroom.', 'Why did the algae and the fungus get married? They took a lichen to each other.', 'Why do Toadstools grow so close together? They don\'t need Mushroom. ', 'What would a mushroom car say? Shroom shroom!', 'What room has no doors, no walls, no floor and no ceiling? A mushroom.', 'What do you get if you cross a toadstool and a full suitcase? Not mushroom for your holiday clothes!', 'Did you hear the joke about the fungus? I could tell it to you, but it might need time to grow on you.', 'What do mushrooms eat when they sit around the campfire? S\'pores.', 'What did the mushroom say when it was locked out of the house? E no ki.', 'Why wouldn\'t the teenage mushroom skip school? He didn\'t want to get in truffle', 'Why did the mushroom go to the party? It didn\'t. Mushrooms are non-sentient organic matter, so they generally don\'t get invited to parties.', 'Why did the Mushroom get invited to all the RAVE parties? \'Cuz he\'s a fungi!', 'Yo mama so poor your family ate cereal with a fork to save milk', 'Yo mama so fat, I took a picture of her last Christmas and it\'s still printing', 'What did the first cannibal say to the other while they were eating a clown? Does this taste funny to you?', 'One night Chuck Norris had a pissing contest outside of a bar. He won when his opponents drowned', 'My Dad used to say always fight fire with fire, which is probably why he got kicked out of the fire brigade', 'I like to stop the microwave at 1 second just to feel like a bomb defuser', 'I should change my facebook username to NOBODY so that way when people post crappy posts, and i press the like button it will say NOBODY likes this', 'It\'s so cold outside, I actually saw a gangster pull his pants up.', 'A gift card is a great way to say, Go buy your own fucking present', 'Life is all about perspective. The sinking of the Titanic was a miracle to the lobsters in the ships kitchen', 'Lazy People Fact #5812672793, You were too lazy to read that number', 'My favourite exercise is a cross between a lunge and a crunch. Its called Lunch.', 'I have the heart of a lion. And a lifetime ban from the zoo.', 'Old ladies in wheelchairs with blankets over their legs? I don’t think so… retired mermaids.', 'Years ago I used to supply filing cabinets for the mafia. Yes, I was involved in very organised crime', 'If you are being chased by a police dog, try not to go through a tunnel, then on to a little see-saw, then jump through a hoop of fire. They are trained for that', 'I named my hard drive "dat ass" so once a month my computer asks if I want to back dat ass up', 'Relationships are a lot like algebra. Have you ever looked at your X and wondered Y?', 'I swear to drunk Im not God, but seriously, stay in drugs, eat school, and dont do vegetables.', 'You haven\'t experienced awkward until you try to tickle someone who isn\'t ticklish', '"No, thanks. I\'m a vegetarian." Is a fun thing to say when someone hands you their baby', 'Maybe if we all emailed the constitution to each other, the NSA will finally read it', 'If a quiz is quizzical, then what does that make a test?', 'Whatever you do in life, always give 100%. Unless you are donating blood...', 'It is all shits and giggles until someone giggles and shits!', 'I wonder if anyone has watched Storage Wars and said "hey thats my shit!"', 'I am naming my TV remote Waldo for obvious reasons', 'I hate when I am about to hug someone really sexy and my face hits the mirror', 'Telling a girl to calm down works about as well as trying to baptize a cat', 'Dating a single mother is like continuing from somebody else\'s saved game', 'If only God can judge us than Santa has some explaining to do', 'My vacuum cleaner broke. I put a Dallas Cowboys sticker on it, and now it sucks again', 'When the zombie apocalypse finally happens, I\'m moving to Washington D.C. I figure the lack of brains there will keep the undead masses away', 'Everyone\'s middle name should be "Goddamn". Try it. Doesnt it sound so great?', 'Before Instagram, I used to waste so much time sitting around having to imagine what my friends food looked like', 'The sad moment when you return to your shitty life after watching an awesome movie', 'A big shout out to sidewalks... Thanks for keeping me off the streets', 'Buying an electric car seems like a good idea until you hit a squirrel and flip over a few times', 'I named my dog "5 miles" so I can tell people I walk 5 miles every day', 'Your future depends on your dreams, so go to sleep', 'Yawning is your bodies way of saying 20% battery remaining', 'Dont you hate it when someone answers their own questions? I do', 'Paradise.'];
+			this.say(room, text);
+		}
 
-			text += jokes[Math.floor(Math.random() * jokes.length)];
-			if (user.hasRank(room.id, '+') || room.id === user.id)
-			{
-				this.say(room, text);
-			}
-
-			if (!user.hasRank(room.id, '+'))
-			{
-				this.say(room, '/w ' + user + ', ' + text);
-
-			}
+		if (!user.hasRank(room.id, '+'))
+		{
+			this.say(room, '/w ' + user + ', ' + text);
 		}
 	},
 
 	gif: function(arg, user, room)
 	{
+		var text = '';
+		var gifs = ['/addhtmlbox <center><img src="http://media2.giphy.com/media/u7hjTwuewz3Gw/giphy.gif" width=225 height=175/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/31c91db0b76d312b966c6adfe1c3940a/tumblr_nz57a2TvRC1u17v9ro1_540.gif" width=270 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/1gyIAEh.gif" width=380 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/RDtW8Gr.gif" width=222 height=200/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/qR77BXg.gif" width=250 height=225/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/2PZ8XUR.gif" width=385 height=216/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/451d21ddbde24e207a6f7ddd92206445/tumblr_inline_nt0ujvAJ8P1qjzu7m_500.gif" width=238 height=223/></center>', '/addhtmlbox <center><img src="http://www.keysmashblog.com/wp-content/uploads/2013/02/wig-snatching.gif" width=333 height=217/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/5f2015d7ba3f93f6c258e039d377287d/tumblr_inline_nn2r5c94m11qbxex9_500.gif" width=382 height=215/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/IFOqV6m.gif" width=387 height=218/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/hSv7KYd.gif" width=267 height=219/></center>'];
+		text += gifs[Math.floor(Math.random() * gifs.length)];
+		if (user.hasRank(room.id, '#') || room.id === user.id)
 		{
-			var text = '';
-			var gifs = ['/addhtmlbox <center><img src="http://media2.giphy.com/media/u7hjTwuewz3Gw/giphy.gif" width=225 height=175/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/31c91db0b76d312b966c6adfe1c3940a/tumblr_nz57a2TvRC1u17v9ro1_540.gif" width=270 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/1gyIAEh.gif" width=380 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/RDtW8Gr.gif" width=222 height=200/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/qR77BXg.gif" width=250 height=225/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/2PZ8XUR.gif" width=385 height=216/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/451d21ddbde24e207a6f7ddd92206445/tumblr_inline_nt0ujvAJ8P1qjzu7m_500.gif" width=238 height=223/></center>', '/addhtmlbox <center><img src="http://www.keysmashblog.com/wp-content/uploads/2013/02/wig-snatching.gif" width=333 height=217/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/5f2015d7ba3f93f6c258e039d377287d/tumblr_inline_nn2r5c94m11qbxex9_500.gif" width=382 height=215/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/IFOqV6m.gif" width=387 height=218/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/hSv7KYd.gif" width=267 height=219/></center>'];
-
-			text += gifs[Math.floor(Math.random() * gifs.length)];
-			if (user.hasRank(room.id, '#') || room.id === user.id)
-			{
-				this.say(room, text);
-			}
-
-			if (!user.hasRank(room.id, '+'))
-			{
-				this.say(room, '/w ' + user + ', ' + text);
-
-			}
+			this.say(room, text);
+		}
+		if (!user.hasRank(room.id, '+'))
+		{
+			this.say(room, '/w ' + user + ', ' + text);
 		}
 	},
 
@@ -1467,58 +1454,53 @@ exports.commands = {
 			}
 		}
 	},
-        gift: 'present',
-        present: function(arg, user, room)
+    gift: 'present',
+    present: function(arg, user, room)
 	{
+		var text = '';
+        var presents = [' A nice rubber red ball', ' 5 dolla, now beat it kid', ' a carton of eggnog!', '**Error 404:** You\'ve been vewy naughty :c', ' a Stonehenge! WHAT DOES IT MEAN?!', ' is another present!', ' not even a kiss', ' You thought I was going to get you something? LMAO', ' 1 trillion billion kazillion dollars! :o', ' my heart c: ', ' coal', ' The Sheep Lord\'s life supply of wool :0', ' *dies', ' Transmuter\'s beard!', ' lifetime supply of hoopla', ' a hug c:', ' Jingle Bjorn\'s password :OOOO', ' Randy ( ͡° ͜ʖ ͡°)', ' some waffles (>\'.\')>#', ' a box of CHOCOLATES!', ' the key to the underworld that gives you the chance to rule the world! muahahaha', ' a brand spanking new girlfriend... for 5 easy payments of $59.99 plusshippingandhandling', '. https://www.youtube.com/watch?v=lrAkb9AZ8Xg&feature=youtu.be', ' juan penny. :J', ' JOHN CENA *horns sound*', ' Lunarixis\' bottomless teapot', ' The magical mario mushroom!', ' The hammer of Tho', ' A bag full of sweg that belongs to... PPQ?', ' A banana (for scale)', ' A subsription to WWE SUUUPEEER SLAAAAM', ' a giant SHAD!', ' Phable\'s mixtape (Caution. May be hot.)', ' a [[jar of hearts]]', '  a terrifying creature appearing to be a blend of a cockroach and a mouse was found by a nuclear testing site. Have fun! :D', '  Shame That\'s secret manga collection', ' Imagi\'s mmm... mmm.. good Tiramisu', ' a fistbump from Saitama! (Caution: You\'ll prolly die)', ' Spieky\'s homemade razor candy', ' a Lunarixis x Don\'t Lose fanfic', ' a copy of The Rick Ross **Certified Boss** Crossfit program', ' a Sir Vivor Fedora and fake moustache!', ' a copy of the Bon Dance audition tape for High School Musical', ' __urkerab__ serenading you with a lullaby u_u', ' DEEZ NUTCRACKERS', ' a picture of Oprah Winfrey', ' is... a paper hat', ' a signed copy of __Muting Zarzel__', ' some rubbing bacon', ' a rotten pancake... it looks... pink?', ' a CAP flyer from Zeonth', ' a single M&M', ' a Nintendo SIXTY FOOOUR', ' a Hawkie egg', ' an onion', ' a bowl of soup', ' two tickets to the Nuclear War Crazed Autocracy', ' a motivational poster featuring rssp1', ' a cheetah', ' a badly photoshopped picture of PPQ with huge muscles', ' a rigged dice', ' a breadstick', ' a pina colada caught in the rain, I hope you like it', ' a scooby snack', ' a WiiStation one', ' a Swirlyder action figure', ' a Gatorade', ' Don\'t Lose\'s Rae Sremmurd Christmas & Holiday Playlist', ' a Ditto that can only transform into a Castform', ' a life', ' the copy of Pokemon Sun and Pokemon Moon that you wish you had', ' an invitation to join Paradise\'s anime club. Sugio Kawaii Desu Desu!! (◕‿◕✿)', ' Sanjay\'s resignation letter', ' a half-eaten microwavable dinner', ' The self-destroying feeling of loneliness on christmas'];
+        text += 'Inside ' + arg + '\'s present is...' + presents[Math.floor(Math.random() * presents.length)];
+		if (user.hasRank(room.id, '+') || room.id === user.id)
 		{
-			var text = '';
-            var presents = [' A nice rubber red ball', ' 5 dolla, now beat it kid', ' a carton of eggnog!', '**Error 404:** You\'ve been vewy naughty :c', ' a Stonehenge! WHAT DOES IT MEAN?!', ' is another present!', ' not even a kiss', ' You thought I was going to get you something? LMAO', ' 1 trillion billion kazillion dollars! :o', ' my heart c: ', ' coal', ' The Sheep Lord\'s life supply of wool :0', ' *dies', ' Transmuter\'s beard!', ' lifetime supply of hoopla', ' a hug c:', ' Jingle Bjorn\'s password :OOOO', ' Randy ( ͡° ͜ʖ ͡°)', ' some waffles (>\'.\')>#', ' a box of CHOCOLATES!', ' the key to the underworld that gives you the chance to rule the world! muahahaha', ' a brand spanking new girlfriend... for 5 easy payments of $59.99 plusshippingandhandling', '. https://www.youtube.com/watch?v=lrAkb9AZ8Xg&feature=youtu.be', ' juan penny. :J', ' JOHN CENA *horns sound*', ' Lunarixis\' bottomless teapot', ' The magical mario mushroom!', ' The hammer of Tho', ' A bag full of sweg that belongs to... PPQ?', ' A banana (for scale)', ' A subsription to WWE SUUUPEEER SLAAAAM', ' a giant SHAD!', ' Phable\'s mixtape (Caution. May be hot.)', ' a [[jar of hearts]]', '  a terrifying creature appearing to be a blend of a cockroach and a mouse was found by a nuclear testing site. Have fun! :D', '  Shame That\'s secret manga collection', ' Imagi\'s mmm... mmm.. good Tiramisu', ' a fistbump from Saitama! (Caution: You\'ll prolly die)', ' Spieky\'s homemade razor candy', ' a Lunarixis x Don\'t Lose fanfic', ' a copy of The Rick Ross **Certified Boss** Crossfit program', ' a Sir Vivor Fedora and fake moustache!', ' a copy of the Bon Dance audition tape for High School Musical', ' __urkerab__ serenading you with a lullaby u_u', ' DEEZ NUTCRACKERS', ' a picture of Oprah Winfrey', ' is... a paper hat', ' a signed copy of __Muting Zarzel__', ' some rubbing bacon', ' a rotten pancake... it looks... pink?', ' a CAP flyer from Zeonth', ' a single M&M', ' a Nintendo SIXTY FOOOUR', ' a Hawkie egg', ' an onion', ' a bowl of soup', ' two tickets to the Nuclear War Crazed Autocracy', ' a motivational poster featuring rssp1', ' a cheetah', ' a badly photoshopped picture of PPQ with huge muscles', ' a rigged dice', ' a breadstick', ' a pina colada caught in the rain, I hope you like it', ' a scooby snack', ' a WiiStation one', ' a Swirlyder action figure', ' a Gatorade', ' Don\'t Lose\'s Rae Sremmurd Christmas & Holiday Playlist', ' a Ditto that can only transform into a Castform', ' a life', ' the copy of Pokemon Sun and Pokemon Moon that you wish you had', ' an invitation to join Paradise\'s anime club. Sugio Kawaii Desu Desu!! (◕‿◕✿)', ' Sanjay\'s resignation letter', ' a half-eaten microwavable dinner', ' The self-destroying feeling of loneliness on christmas'];
-            text += 'Inside ' + arg + '\'s present is...' + presents[Math.floor(Math.random() * presents.length)];
-			if (user.hasRank(room.id, '+') || room.id === user.id)
-			{
-				this.say(room, text);
-			}
-
-			if (!user.hasRank(room.id, '+'))
-			{
-				this.say(room, '/w ' + user + ', ' + text);
-
-			}
+			this.say(room, text);
 		}
-       },
-            queue: function(arg, by, room, con) {
-            	console.log(by); 
-            if (roomStaff.indexOf(by.id) > -1) {
-                if (!hostQueue) return this.say(con, room, 'There are no users in the queue.');
-                var queueText = '';
-                for (var i = 0; i < hostQueue.length; i++) {
-                    queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' '; //add formatting here, down there just adds on to the end whoops
-                }
-                this.say(con, room, '/announce **Queue:** ' + queueText);
+		if (!user.hasRank(room.id, '+'))
+		{
+			this.say(room, '/w ' + user + ', ' + text);
+		}
+    },
+    queue: function(arg, user, room) {
+        if (user.hasRank(room.id, '%')) {
+            if (hostQueue.length === 0) return this.say(room, 'There are no users in the queue.');
+            var queueText = '';
+            for (var i = 0; i < hostQueue.length; i++) {
+				queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' '; //add formatting here, down there just adds on to the end whoops
             }
-            if (roomStaff.indexOf(by.id) === -1) {
-                if (!hostQueue && room.id(0) !== ',') return this.say(con, room, '/w ' + by + ', There are currently no users in the queue.');
-                var queueText = '';
-                for (var i = 0; i < hostQueue.length; i++) {
-                    queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' ';
-                }
-                if (room.id(0) === ',') return this.say(con, room, '/announce **Queue:** ' + queueText);
-                if (room.charAt(0) !== ',') return this.say(con, room, '/w ' + by + ', /announce **Queue:** ' + queueText);
+            this.say(room, '/announce **Queue:** ' + queueText);
+        } else {
+            if (hostQueue.length === 0 && room.id.charAt(0) !== ',') return this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
+            var queueText = '';
+            for (var i = 0; i < hostQueue.length; i++) {
+                queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' ';
             }
-        },
+            if (room.id.charAt(0) === ',') return this.say(room, '/announce **Queue:** ' + queueText);
+            if (room.id.charAt(0) !== ',') return this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+        }
+	},
 
-        add: function(arg, by, room, con) {
-            if (roomStaff.indexOf(by.id) > -1 && arg) {
-                ids.push(toId(arg));
-                hostQueue.push(arg);
-                this.say(con, room, '**' + arg + '** was added to the queue.');
-            }
-        },
-
-        remove: function(arg, by, room, con) {
-            if (roomStaff.indexOf(by.id) > -1 && arg) {
-                if (ids.indexOf(toId(arg)) !== -1)
-                    var idx = ids.indexOf(toId(arg));
+	add: function(arg, user, room) {
+		console.log(user);
+        if (user.hasRank(room.id, '%') && arg) {
+            ids.push(toId(arg));
+            hostQueue.push(arg);
+            this.say(room, '**' + arg + '** was added to the queue.');
+        }
+    },
+        
+	remove: function(arg, user, room) {
+        if (user.hasRank(room.id, '%') && arg) {
+            if (ids.indexOf(toId(arg)) !== -1) {
+                var idx = ids.indexOf(toId(arg));
                 var purgeQueue = [];
                 var purgeids = [];
                 for (var i = 0; i < hostQueue.length; i++) {
@@ -1530,9 +1512,94 @@ exports.commands = {
                 }
                 hostQueue = purgeQueue;
                 ids = purgeids;
-                this.say(con, room, arg + ' was removed from the queue.');
+                this.say(room, arg + ' was removed from the queue.');
             }
-        }, 
+        }
+	},
+
+	pick: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		if (Users.self.hasRank(room.id, '*')) {
+			let stuff = target.split(",");
+			let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);
+				
+			if (room.id === 'survivor') {
+				this.say(room, "/addhtmlbox " + str);
+			} else {
+				this.say(room, "!htmlbox " + str);
+			}
+		}
+		else {
+			this.say(room, "!pick " + target);
+		}
+	},
+
+	timer: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		let x = Math.floor(target);
+		if (!x || x >= 120 || (x < 10 && x > 2) || x <= 0) return room.say("The timer must be between 10 seconds and 2 minutes.");
+		if (x === 1) x = 60;
+		let minutes = Math.floor(x / 60);
+		let seconds = x % 60;
+		clearTimeout(Games.timeout);
+		this.say(room, "Timer set for " + (minutes > 0 ? "1 minute" + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
+		Games.timeout = setTimeout(() => Games.timer(room), x * 1000);
+	},
+
+	roll: function (target, user, room) {
+		let realtarget = target;
+		if (!user.hasRank(room.id, '+')) return;
+		let plusIndex = target.indexOf("+");
+		let adder = 0;
+		if (plusIndex !== -1) {
+			adder = parseInt(target.substr(plusIndex + 1));
+			let str = adder.toString();
+			if (str.length !== (target.substr(plusIndex + 1)).length) return;
+			if (!adder) return;
+			target = target.substr(0, plusIndex);
+		}
+		let dIndex = target.indexOf("d");
+		let numDice = 1;
+		let roll;
+		if (dIndex !== -1) {
+			numDice = parseInt(target.substr(0, dIndex));;
+			if (!numDice) return;
+			roll = parseInt(target.substr(dIndex + 1));
+			if (!roll) return;	
+		} else {
+			roll = parseInt(target);
+			if (!roll) return;
+		}
+		let rolls = [];
+		let sum = 0;
+		for (let i = 0; i < numDice; i++) {
+			rolls.push(Tools.random(roll) + 1);
+			sum += rolls[i];
+		}
+		if ((Users.self.hasRank(room, "*"))) {
+			if (numDice === 1) {
+				let str = "Roll (1 - " + roll + "): " + rolls[0];
+				if (room.id === 'survivor') {
+					this.say(room, "/addhtmlbox " + str);
+				} else {
+					this.say(room, "!htmlbox " + str);
+				}
+			} else {
+				let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
+				if (room.id === 'survivor') {
+					this.say(room, "/addhtmlbox " + str);
+				} else {
+					this.say(room, "!htmlbox " + str);
+				}
+			}
+		} else {
+			this.say(room, "Rolls: " + rolls.join(",") + " || Total: " + (sum + adder));
+		}
+	},
+
+	join: function (arg, user, room) {
+		this.say(room, '/join ' + arg);
+	},
 };
 
 /* globals toId */
