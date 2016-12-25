@@ -6,7 +6,6 @@
 var http = require('http');
 var cb = require('origindb')('lb');
 var _ = require('lodash');
-var roomStaff = ['aknolan', 'privatepenquin', 'shamethat', 'swirlyder', 'bondance', 'dontlose', 'phable', 'zeonth', 'lunarixis', 'spieky', 'skywardmonado', 'unfixable']
 var hostQueue = [];
 var queueText = '';
 var ids = [];
@@ -632,6 +631,7 @@ exports.commands = {
 		if (roomVoiceList.indexOf(toId(arg)) === -1)
 		{
 			this.say(room, '/roomvoice ' + targetuser);
+			Games.host = targetuser;
 			this.say(room, '/w ' + targetuser + ', You now have permission to host in **Survivor!** To alert users that you\'re hosting use **.sg** in <<survivor>>. When your host is finished, use .done to dehost yourself.');
 
 			var demotionTimer = setTimeout(function()
@@ -668,16 +668,10 @@ exports.commands = {
 
 	done: function(arg, user, room)
 	{
-		if (user.hasRank(room.id, '+'))
-		{
-			var text = '';
-		}
-		else
-		{
-			return false;
-		}
-		text += '/roomdevoice ' + user.name;
-		this.say(room, text);
+	    if (Games.host !== user.id) return;
+	    Games.host = null;
+	    var text = '/roomdevoice ' + user.id;
+	    this.say(room, text);
 	},
 	// Informational Commands:
 
@@ -863,7 +857,7 @@ exports.commands = {
 	{
 		var text = '';
 		if (user.hasRank(room.id, '%'))
-		{
+		  		{
 			text = '';
 		}
 		else if (room.id !== user.id)
@@ -890,17 +884,15 @@ exports.commands = {
 	},
 
 	nexthost: function(arg, user, room) {
-		if (user.hasRank(room.id, '%') && arg)
+		if (user.hasRank(room.id, '%'))
 		{
-			if (host) return this.say(room, host + ' is set as the next host. If this user is unavailable use ``.host [user]`` to override and ``.nexthost [user]`` to set the next host.');
-			host = arg;
-			hostId = toId(arg);
-			this.say(room, arg + ' is set as the next host! Use ``.host ' + arg + '`` when the current host has finished.');
-		}
-		if (user.hasRank(room.id, '+') && !arg)
-		{
-			if (!host) return this.say(room, 'There is no one currently set as the next host.');
-			this.say(room, host + ' is currently set as the next host! Use ``.host ' + host + '`` when the current host has finished.')
+		    if (ids.length === 0) {
+			return this.say(room, "The host queue is empty.");
+		    } else {
+			this.say(room, "/roomvoice " + ids[0]);
+			ids.shift();
+			hostQueue.shift();
+		    }
 		}
 	},
 
@@ -947,8 +939,10 @@ exports.commands = {
 		{
 			return false;
 		}
+		Games.host = user.id;
 		text += '``**SURVGAME;**`` **' + user.name + '** is hosting! ``**/me in**`` to join the game';
 		this.say(room, text);
+		this.say(room, '/modnote ' + user.name + " hosted!");	       
 	},
 
 	usainbot: function(arg, user, room)
