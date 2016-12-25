@@ -1489,7 +1489,6 @@ exports.commands = {
 	},
 
 	add: function(arg, user, room) {
-		console.log(user);
         if (user.hasRank(room.id, '%') && arg) {
             ids.push(toId(arg));
             hostQueue.push(arg);
@@ -1537,7 +1536,7 @@ exports.commands = {
 	timer: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		let x = Math.floor(target);
-		if (!x || x >= 120 || (x < 10 && x > 2) || x <= 0) return room.say("The timer must be between 10 seconds and 2 minutes.");
+		if (!x || x >= 120 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 2 minutes.");
 		if (x === 1) x = 60;
 		let minutes = Math.floor(x / 60);
 		let seconds = x % 60;
@@ -1600,6 +1599,36 @@ exports.commands = {
 	join: function (arg, user, room) {
 		this.say(room, '/join ' + arg);
 	},
+
+	signups: function (target, user, room) {
+	    if (!user.hasRank(room.id, '+')) return;
+	    if (!Games.createGame(target, room)) return;
+	    room.game.signups();
+        },
+
+	startgame: 'start',
+        start: function (target, user, room) {
+	    if (!user.hasRank(room.id, '+') || !room.game) return;
+	    if (typeof room.game.start === 'function') room.game.start();
+        },
+
+	destroy: function (target, user, room) {
+	    /*for (room in Rooms.rooms) {
+		let realRoom = Rooms.rooms[room];
+		if (realRoom.game && typeof realRoom.game.destroy === 'function') realRoom.game.destroy(target, user);
+		}*/
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.destroy === 'function') {
+			room.game.destroy(target, user);      
+		    }
+		    
+		});
+        },
+
+	attack: function (target, room, user) {
+	    if (!room.game) return;
+	    if (typeof room.game.attack === 'function') room.game.attack(target, user);
+        },
 };
 
 /* globals toId */

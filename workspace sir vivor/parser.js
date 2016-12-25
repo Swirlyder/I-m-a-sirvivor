@@ -150,6 +150,11 @@ exports.parse = {
 				if (data) req.write(data);
 				req.end();
 				break;
+		        case 'html':
+		                if (room && room.game && typeof room.game.handlehtml === 'function') {
+				    room.game.handlehtml(spl[2]);
+				}
+				break;
 			case 'updateuser':
 				if (spl[2] !== Config.nick) return;
 
@@ -235,8 +240,14 @@ exports.parse = {
 		}
 	},
 	chatMessage: function (message, user, room) {
+
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
 		message = message.trim();
+		if (message.substr(0, 6) === '/me in' && room.game) {
+		    room.game.join(user);
+		} else if (message.substr(0, 7) === '/me out' && room.game) {
+		    room.game.leave(user);
+		}
 		if (message.substr(0, Config.commandcharacter.length) !== Config.commandcharacter) return false;
 
 		message = message.substr(Config.commandcharacter.length);

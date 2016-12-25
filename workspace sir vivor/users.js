@@ -47,6 +47,10 @@ class User {
 		return this.hasRank(roomid, setting);
 	}
 
+    say(message) {
+	send('|/w ' + this.id + ', ' + message);
+    }
+
 	rename (username) {
 		var oldid = this.id;
 		delete users[oldid];

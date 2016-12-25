@@ -19,7 +19,7 @@ class Player {
 	}
 
 	say(message) {
-		Users.add(this.name).say(message);
+	    Users.get(this.id).say(message);
 	}
 }
 
@@ -39,7 +39,7 @@ class Game {
 	}
 
 	say(message) {
-		this.room.say(message);
+	    Parse.say(this.room, message);
 	}
 
 	html(message) {
@@ -47,11 +47,7 @@ class Game {
 	}
 
 	signups() {
-		if (this.room.id === 'survivor' && Config.server === '') {
-			this.say(".sg");
-		} else {
-			this.say("survgame! If you would like to play, use the command ``/me in``");
-		}
+		this.say("survgame! If you would like to play, use the command ``/me in``");
 		if (this.description) this.say("Description: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		if (this.freeJoin) this.started = true;
@@ -217,10 +213,9 @@ class Game {
 			if (this.players[userID].eliminated) continue;
 			players.push(this.players[userID].name);
 		}
-		this.room.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
+		this.say(room, "**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
 	}
 	handlehtml(message) {
-		message = message[0];
 		message = message.substr(21);
 		if (message.substr(0, 4) === "Roll") {
 			let colonIndex = message.indexOf(":");
@@ -246,7 +241,7 @@ class GamesManager {
 	}
 
 	timer(room) {
-		room.say("**Time's up!**");
+	    Parse.say(room, "**Time's up!**");
 	}
 	onLoad() {
 		this.loadGames();
@@ -289,12 +284,12 @@ class GamesManager {
 		}
 		if (!(id in this.games)) return;
 		if (this.games[id].minigame) return;
-		room.say(this.games[id].description);
+		Parse.say(room, this.games[id].description);
 	}
 
 	createMiniGame(game, room) {
-		if (room.game) return room.say("A game of " + room.game.name + " is already in progress.");
-		if (room.canVote) return room.say("Voting is in progress");
+	    if (room.game) return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
+	    if (room.canVote) return Parse.say(room, "Voting is in progress");
 		this.loadGames();
 		let id = Tools.toId(game);
 		for (let fileID in this.games) {
@@ -306,19 +301,19 @@ class GamesManager {
 				break;
 			}
 		}
-		if (!(id in this.games)) return room.say("The game '" + game.trim() + "' was not found.");
-		if (!this.games[id].minigame) return room.say("Needs to be a minigame!");
+		if (!(id in this.games)) return Parse.say(room, "The game '" + game.trim() + "' was not found.");
+		if (!this.games[id].minigame) return Parse.say(room, "Needs to be a minigame!");
 		this.loadGame(this.fileMap[id]);
 		room.game = new this.games[id].game(room); // eslint-disable-line new-cap
 		room.game.signups();
 	}
 	createGame(game, room) {
-		if (room.canVote) return room.say("Voting is in progress!");
+	    if (room.canVote) return Parse.say(room, "Voting is in progress!");
 		if (room.game) {
 			if (room.game.minigame) {
-				return room.say("A minigame is in progress!");
+			    return Parse.say(room, "A minigame is in progress!");
 			} else {
-				return room.say("A game of " + room.game.name + " is already in progress.");
+			    return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
 			}
 		}
 		let id = Tools.toId(game);
@@ -331,8 +326,8 @@ class GamesManager {
 				break;
 			}
 		}
-		if (!(id in this.games)) return room.say("The game '" + game.trim() + "' was not found.");
-		if (this.games[id].minigame) return room.say("You cannot signup a minigame!");
+		if (!(id in this.games)) return Parse.say(room, "The game '" + game.trim() + "' was not found.");
+		if (this.games[id].minigame) return Parse.say(room, "You cannot signup a minigame!");
 		this.loadGame(this.fileMap[id]);
 		room.game = new this.games[id].game(room); // eslint-disable-line new-cap
 		return room.game;

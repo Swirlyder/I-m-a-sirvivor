@@ -59,7 +59,7 @@ class Risk extends Games.Game {
 				strs.push(player.name + "(" + this.troops.get(player) + ")");
 			}
 			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**:" + strs.join(", "));
-			this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandCharacter + "destroy [name]``");
+			this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandcharacter + "destroy [name]``");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} else {
 			if (this.round === 4) {
