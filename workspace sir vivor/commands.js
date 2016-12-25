@@ -1569,7 +1569,7 @@ exports.commands = {
 			rolls.push(Tools.random(roll) + 1);
 			sum += rolls[i];
 		}
-		if ((Users.self.hasRank(room, "*"))) {
+		if ((Users.self.hasRank(room.id, "*"))) {
 			if (numDice === 1) {
 				let str = "Roll (1 - " + roll + "): " + rolls[0];
 				if (room.id === 'survivor') {
@@ -1619,7 +1619,7 @@ exports.commands = {
 		});
         },
 
-	attack: function (target, room, user) {
+	attack: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.attack === 'function') room.game.attack(target, user);
         },
