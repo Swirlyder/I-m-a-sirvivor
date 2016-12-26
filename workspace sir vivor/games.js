@@ -238,6 +238,9 @@ class GamesManager {
 		this.fileMap = {};
 		this.host = null;
 		this.hosts = [];
+		this.canTheme = true;
+		this.canIntro = true;
+		this.canQueue = true;
 	}
 
 	timer(room) {

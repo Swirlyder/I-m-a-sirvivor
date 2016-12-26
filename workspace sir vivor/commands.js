@@ -661,8 +661,6 @@ exports.commands = {
 		if (!user.hasRank(room.id, '%') || !arg) return false;
 		var targetuser = toId(arg);
 		this.say(room, '/roomdevoice ' + targetuser);
-
-
 	},
 
 
@@ -678,6 +676,7 @@ exports.commands = {
 	theme: 'themes',
 	themes: function(arg, user, room)
 	{
+		if (!Games.canTheme) return;
 		if (user.hasRank(room.id, '+'))
 		{
 			var text = '';
@@ -760,6 +759,10 @@ exports.commands = {
 			text += "The list of game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
 		}
 		this.say(room, text);
+		Games.canTheme = false;
+		var t = setTimeout(function () {
+			Games.canTheme = true;
+		}, 5 * 1000);
 	},
 	tester: function(arg, user, room)
 	{
@@ -785,6 +788,7 @@ exports.commands = {
 
 	intro: function(arg, user, room)
 	{
+		if (!Games.canIntro) return;
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
 			text = '';
@@ -795,6 +799,10 @@ exports.commands = {
 		}
 		text += 'Hello, welcome to Survivor! I\'m the room bot. "Survivor" is a luck-based game that uses Pokémon Showdown\'s /roll feature. For more info, go to: http://survivor-ps.weebly.com/';
 		this.say(room, text);
+		Games.canIntro = false;
+		var t = setTimeout(function () {
+			Games.canIntro = true;
+		}, 5 * 1000);
 	},
 	plug: function(arg, user, room)
 	{
@@ -1464,22 +1472,33 @@ exports.commands = {
 		}
     },
     queue: function(arg, user, room) {
+		if (!Games.canQueue) return;
         if (user.hasRank(room.id, '%')) {
-            if (hostQueue.length === 0) return this.say(room, 'There are no users in the queue.');
-            var queueText = '';
-            for (var i = 0; i < hostQueue.length; i++) {
-				queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' '; //add formatting here, down there just adds on to the end whoops
-            }
-            this.say(room, '/announce **Queue:** ' + queueText);
+            if (hostQueue.length === 0) {
+				this.say(room, 'There are no users in the queue.');
+			} else {
+				var queueText = '';
+				for (var i = 0; i < hostQueue.length; i++) {
+					queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' '; //add formatting here, down there just adds on to the end whoops
+				}
+				this.say(room, '/announce **Queue:** ' + queueText);
+			}
         } else {
-            if (hostQueue.length === 0 && room.id.charAt(0) !== ',') return this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
-            var queueText = '';
-            for (var i = 0; i < hostQueue.length; i++) {
-                queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' ';
-            }
-            if (room.id.charAt(0) === ',') return this.say(room, '/announce **Queue:** ' + queueText);
-            if (room.id.charAt(0) !== ',') return this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+            if (hostQueue.length === 0 && room.id.charAt(0) !== ',') {
+				this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
+			} else {
+				var queueText = '';
+				for (var i = 0; i < hostQueue.length; i++) {
+					queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' ';
+				}
+				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
+				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+			}
         }
+		Games.canQueue = false;
+		var t = setTimeout(function () {
+			Games.canQueue = true;
+		}, 5 * 1000);
 	},
 
 	add: function(arg, user, room) {
@@ -1602,7 +1621,6 @@ exports.commands = {
 
 	endgame: 'end',
 	end: function (target, user, room) {
-		console.log("sup");
 		if (!user.hasRank(room.id, '+')) return;
 		if (!room.game) return;
 		room.game.forceEnd();
