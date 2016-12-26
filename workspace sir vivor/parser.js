@@ -266,7 +266,30 @@ exports.parse = {
 			}
 			if (typeof Commands[cmd] === "function") {
 				cmdr(cmdrMessage);
-				Commands[cmd].call(this, arg, user, room);
+				/*try {
+			Commands[command].call(this, target, this.room, this.user, this.command, this.time);
+		} catch (e) {
+			let stack = e.stack;
+			stack += 'Additional information:\n';
+			stack += 'Command = ' + command + '\n';
+			stack += 'Target = ' + target + '\n';
+			stack += 'Time = ' + new Date(this.time).toLocaleString() + '\n';
+			stack += 'User = ' + this.user.name + '\n';
+			stack += 'Room = ' + (this.room === this.user ? 'in PM' : this.room.id);
+			console.log(stack);
+		}*/
+				try {
+					Commands[cmd].call(this, arg, user, room);
+				} catch (e) {
+					let stack = e.stack;
+					stack += 'Additional information:\n';
+					stack += 'Command = ' + cmd + '\n';
+					stack += 'Target = ' + arg + '\n';
+					stack += 'Time = ' + new Date(this.time).toLocaleString() + '\n';
+					stack += 'User = ' + user.name + '\n';
+					stack += 'Room = ' + (room.id === user.id ? 'in PM' : room.id);
+					console.log(stack);
+				}
 			} else {
 				error("invalid command type for " + cmd + ": " + (typeof Commands[cmd]));
 			}

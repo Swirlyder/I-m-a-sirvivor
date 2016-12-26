@@ -22,7 +22,6 @@ class HG extends Games.Game {
 	}
 
 	onNextRound() {
-		this.curPlayer = null;
 		this.oplayer = null;
 		this.rolla = null;
 		this.rollb = null;
@@ -30,6 +29,7 @@ class HG extends Games.Game {
 			this.say(this.curPlayer.name + " didn't attack anyone and is eliminated!");
 			this.curPlayer.eliminated = true;
 		}
+		this.curPlayer = null;
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
 			this.say("**Winner:** " + winPlayer.name);

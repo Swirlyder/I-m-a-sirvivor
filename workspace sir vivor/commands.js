@@ -1600,6 +1600,19 @@ exports.commands = {
 	    room.game.signups();
         },
 
+	endgame: 'end',
+	end: function (target, user, room) {
+		console.log("sup");
+		if (!user.hasRank(room.id, '+')) return;
+		if (!room.game) return;
+		room.game.forceEnd();
+	},
+
+	moo: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		this.say(room, '/me MOOs');
+	},
+
 	startgame: 'start',
         start: function (target, user, room) {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
