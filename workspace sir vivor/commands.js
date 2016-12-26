@@ -1483,7 +1483,7 @@ exports.commands = {
 	},
 
 	add: function(arg, user, room) {
-        if (user.hasRank(room.id, '%') && arg) {
+        if (user.hasRank('survivor', '%') && arg) {
             ids.push(toId(arg));
             hostQueue.push(arg);
             this.say(room, '**' + arg + '** was added to the queue.');
@@ -1491,7 +1491,7 @@ exports.commands = {
     },
         
 	remove: function(arg, user, room) {
-        if (user.hasRank(room.id, '%') && arg) {
+        if (user.hasRank('survivor', '%') && arg) {
             if (ids.indexOf(toId(arg)) !== -1) {
                 var idx = ids.indexOf(toId(arg));
                 var purgeQueue = [];
