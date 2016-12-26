@@ -1531,18 +1531,12 @@ exports.commands = {
 
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		if (Users.self.hasRank(room.id, '@')) {
-			let stuff = target.split(",");
-			let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);
-				
-			if (room.id === 'survivor') {
-				this.say(room, "/addhtmlbox " + str);
-			} else {
-				this.say(room, "!htmlbox " + str);
-			}
-		}
-		else {
-			this.say(room, "!pick " + target);
+		let stuff = target.split(",");
+		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
+		if (room.id === 'survivor') {
+			this.say(room, "/addhtmlbox " + str);
+		} else {
+			this.say(room, "!htmlbox " + str);
 		}
 	},
 
@@ -1588,24 +1582,20 @@ exports.commands = {
 			rolls.push(Tools.random(roll) + 1);
 			sum += rolls[i];
 		}
-		if ((Users.self.hasRank(room.id, "@"))) {
-			if (numDice === 1) {
-				let str = "Roll (1 - " + roll + "): " + rolls[0];
-				if (room.id === 'survivor') {
-					this.say(room, "/addhtmlbox " + str);
-				} else {
-					this.say(room, "!htmlbox " + str);
-				}
+		if (numDice === 1) {
+			let str = "Roll (1 - " + roll + "): " + rolls[0];
+			if (room.id === 'survivor') {
+				this.say(room, "/addhtmlbox " + str);
 			} else {
-				let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
-				if (room.id === 'survivor') {
-					this.say(room, "/addhtmlbox " + str);
-				} else {
-					this.say(room, "!htmlbox " + str);
-				}
+				this.say(room, "!htmlbox " + str);
 			}
 		} else {
-			this.say(room, "Rolls: " + rolls.join(",") + " || Total: " + (sum + adder));
+			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
+			if (room.id === 'survivor') {
+				this.say(room, "/addhtmlbox " + str);
+			} else {
+				this.say(room, "!htmlbox " + str);
+			}
 		}
 	},
 
