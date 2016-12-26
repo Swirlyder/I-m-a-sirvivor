@@ -666,7 +666,6 @@ exports.commands = {
 
 	done: function(arg, user, room)
 	{
-	    if (Games.host !== user.id) return;
 	    Games.host = null;
 	    var text = '/roomdevoice ' + user.id;
 	    this.say(room, text);
