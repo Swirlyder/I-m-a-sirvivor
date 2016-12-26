@@ -1632,6 +1632,7 @@ exports.commands = {
 		let realRoom = Rooms.rooms[room];
 		if (realRoom.game && typeof realRoom.game.destroy === 'function') realRoom.game.destroy(target, user);
 		}*/
+		if (room.id !== user.id) return;
 	    Rooms.rooms.forEach(function(room) {
 		    if (room.game && typeof room.game.destroy === 'function') {
 			room.game.destroy(target, user);      
