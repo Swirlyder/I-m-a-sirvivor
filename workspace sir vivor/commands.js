@@ -1512,7 +1512,7 @@ exports.commands = {
 
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		if (Users.self.hasRank(room.id, '*')) {
+		if (Users.self.hasRank(room.id, '@')) {
 			let stuff = target.split(",");
 			let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);
 				
@@ -1569,7 +1569,7 @@ exports.commands = {
 			rolls.push(Tools.random(roll) + 1);
 			sum += rolls[i];
 		}
-		if ((Users.self.hasRank(room.id, "*"))) {
+		if ((Users.self.hasRank(room.id, "@"))) {
 			if (numDice === 1) {
 				let str = "Roll (1 - " + roll + "): " + rolls[0];
 				if (room.id === 'survivor') {
