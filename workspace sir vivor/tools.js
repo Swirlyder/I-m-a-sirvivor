@@ -14,6 +14,10 @@ class Tools {
 		this.data = {};
 	}
 
+	loadData() {
+		this.data.pokedex = require('./data/pokedex.js').BattlePokedex;
+	}
+
 	toId(text) {
 		if (!text) return '';
 		if (text.id) text = text.id;
@@ -151,4 +155,5 @@ class Tools {
 }
 
 let tools = new Tools();
+tools.loadData();
 module.exports = tools;

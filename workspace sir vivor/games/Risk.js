@@ -73,6 +73,7 @@ class Risk extends Games.Game {
 			if (this.getRemainingPlayerCount() === 1) {
 				let winPlayer = this.getLastPlayer();
 				this.say("**Winner:** " + winPlayer.name);
+				this.say(".win " + winPlayer.name);
 				this.end();
 				return;
 			} else if (this.getRemainingPlayerCount() === 2) {
@@ -125,6 +126,7 @@ class Risk extends Games.Game {
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
 			this.say("Since people were modkilled, " + winPlayer.name + " won!");
+			this.say(".win " + winPlayer.name);
 			this.end();
 			return;
 		}

@@ -9,6 +9,12 @@ var _ = require('lodash');
 var hostQueue = [];
 var queueText = '';
 var ids = [];
+var data = [];
+
+for (let i in Tools.data.pokedex) {
+	let mon = Tools.data.pokedex[i];
+	data.push(mon.species);
+}
   
 if (Config.serverid === 'showdown')
 {
@@ -663,6 +669,26 @@ exports.commands = {
 		this.say(room, '/roomdevoice ' + targetuser);
 	},
 
+	dt: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		target = toId(target);
+		for (let i = 0; i < data.length; i++) {
+			if (target === toId(data[i])) {
+				return this.say(room, "!dt " + data[i]);
+			}
+		}
+		this.say(room, "No pokemon named " + target + " was found.");
+	},
+
+	autostart: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		if (room.game && typeof room.game.autostart === 'function') room.game.autostart(target);
+	},
+
+	pl: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		if (room.game && typeof room.game.pl === 'function') room.game.pl();
+	},
 
 	done: function(arg, user, room)
 	{

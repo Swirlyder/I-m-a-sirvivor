@@ -90,7 +90,6 @@ class Game {
 		if (typeof this.onEnd === 'function') this.onEnd();
 		this.ended = true;
 		this.room.game = null;
-		if (this.room.id === 'survivor') this.say(".done");
 	}
 
 	forceEnd() {
@@ -213,7 +212,7 @@ class Game {
 			if (this.players[userID].eliminated) continue;
 			players.push(this.players[userID].name);
 		}
-		this.say(room, "**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
+		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
 	}
 	handlehtml(message) {
 		message = message.substr(21);
