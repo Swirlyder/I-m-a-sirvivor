@@ -629,48 +629,31 @@ exports.commands = {
 	// Host commands:
 	roompromote: 'roomvoice',
 	roomvoice: 'host',
-	host: function(arg, user, room)
+	host: function(target, user, room)
 	{
-		if (!user.hasRank(room.id, '%') || !arg) return false;
-		var targetuser = toId(arg);
-		var self = this;
-		if (roomVoiceList.indexOf(toId(arg)) === -1)
-		{
-			this.say(room, '/roomvoice ' + targetuser);
-			Games.host = targetuser;
-			this.say(room, '/w ' + targetuser + ', You now have permission to host in **Survivor!** To alert users that you\'re hosting use **.sg** in <<survivor>>. When your host is finished, use .done to dehost yourself.');
-
-			var demotionTimer = setTimeout(function()
-			{
-				self.say(room, '/roomdevoice ' + targetuser);
-			}, 1800000);
+		if (!user.hasRank(room.id, '%')) {
+			if (!user.hasRank(room.id, '+') || toId(target) !== user.id) return;
 		}
-
-		if (host)
-		{
-			if (toId(arg) === hostId)
-			{
-				host = '';
-				hostId = '';
-				this.say(room, arg + ' was removed as the next host. Use ``.nexthost [user]`` to set the next host.');
-			}
-			if (toId(arg) !== hostId)
-			{
-				host = '';
-				hostId = '';
-			}
+		let realuser = Users.get(target);
+		if (!realuser) return;
+		if (Games.host) {
+			this.say(room, realuser.name + " was added to the hostqueue!");
+			Games.hosts.push(realuser.name);
+			return;
 		}
+		Games.host = realuser;
+		this.say(room, "survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
 	},
-	roomdemote: 'reoomdevoice',
+	/*roomdemote: 'reoomdevoice',
 	roomdevoice: function(arg, user, room)
 	{
 		if (!user.hasRank(room.id, '%') || !arg) return false;
 		var targetuser = toId(arg);
 		this.say(room, '/roomdevoice ' + targetuser);
-	},
+	},*/
 
 	dt: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		target = toId(target);
 		for (let i = 0; i < data.length; i++) {
 			if (target === toId(data[i])) {
@@ -692,17 +675,38 @@ exports.commands = {
 
 	done: function(arg, user, room)
 	{
-	    Games.host = null;
-	    var text = '/roomdevoice ' + user.id;
-	    this.say(room, text);
+	    if (!Games.host || Games.host.id !== user.id) return;
+		Games.host = null;
+		this.say(room, "Thanks for playing!");
 	},
 	// Informational Commands:
+
+	dehost: function (target, user, room) {
+		if (!user.hasRank(room.id, "%")) return;
+		let realuser = Users.get(target);
+		if (!realuser) return;
+		if (Games.host && Games.host.id === realuser.id) {
+			this.say(room, "The game was forcibly ended.");
+			Games.host = null;
+			return;
+		}
+		let i = 0, len = Games.hosts.length;
+		for (; i < len; i++) {
+			if (realuser.id === Tools.toId(Games.hosts[i])) {
+				break;
+			}
+		}
+		if (i !== len) {
+			Games.hosts.splice(i, 1);
+			return this.say(room, realuser.name + " was removed from the hosting queue.");
+		}
+	},
 
 	theme: 'themes',
 	themes: function(arg, user, room)
 	{
 		if (!Games.canTheme) return;
-		if (user.hasRank(room.id, '+'))
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
 		{
 			var text = '';
 		}
@@ -916,17 +920,17 @@ exports.commands = {
 		this.say(room, text);
 	},
 
-	nexthost: function(arg, user, room) {
-		if (user.hasRank(room.id, '%'))
-		{
-		    if (ids.length === 0) {
-			return this.say(room, "The host queue is empty.");
-		    } else {
-			this.say(room, "/roomvoice " + ids[0]);
-			ids.shift();
-			hostQueue.shift();
-		    }
+	nexthost: function (target, user, room) {
+		if (!user.hasRank(room.id, '%')) return;
+		if (Games.host) {
+			return this.say(room, "A game is currently in progress!");
 		}
+		if (Games.hosts.length === 0) {
+			return this.say(room, "The hostqueue is empty.");
+		}
+		let name = Games.hosts.shift();
+		this.say(room, "survgame! " + name + " is hosting! Do ``/me in`` to join!");
+		Games.host = Users.get(name);
 	},
 
 
@@ -1499,22 +1503,22 @@ exports.commands = {
     queue: function(arg, user, room) {
 		if (!Games.canQueue) return;
         if (user.hasRank(room.id, '%')) {
-            if (hostQueue.length === 0) {
+            if (Games.hosts.length === 0) {
 				this.say(room, 'There are no users in the queue.');
 			} else {
 				var queueText = '';
-				for (var i = 0; i < hostQueue.length; i++) {
-					queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' '; //add formatting here, down there just adds on to the end whoops
+				for (var i = 0; i < Games.hosts.length; i++) {
+					queueText += '**' + (i + 1) + '.** ' + Games.hosts[i] + ' '; //add formatting here, down there just adds on to the end whoops
 				}
 				this.say(room, '/announce **Queue:** ' + queueText);
 			}
         } else {
-            if (hostQueue.length === 0 && room.id.charAt(0) !== ',') {
+            if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') {
 				this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
 			} else {
 				var queueText = '';
-				for (var i = 0; i < hostQueue.length; i++) {
-					queueText += '**' + (i + 1) + '.** ' + hostQueue[i] + ' ';
+				for (var i = 0; i < Games.hosts.length; i++) {
+					queueText += '**' + (i + 1) + '.** ' + Games.hosts[i] + ' ';
 				}
 				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
 				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
@@ -1555,7 +1559,7 @@ exports.commands = {
 	},
 
 	pick: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let stuff = target.split(",");
 		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
 		if (room.id === 'survivor') {
@@ -1566,20 +1570,33 @@ exports.commands = {
 	},
 
 	timer: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let x = Math.floor(target);
-		if (!x || x >= 120 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 2 minutes.");
-		if (x === 1) x = 60;
+		if (!x || x > 120 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 2 minutes.");
+		if (x < 10) x *= 60;
 		let minutes = Math.floor(x / 60);
 		let seconds = x % 60;
 		clearTimeout(Games.timeout);
-		this.say(room, "Timer set for " + (minutes > 0 ? "1 minute" + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
+		this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
 		Games.timeout = setTimeout(() => Games.timer(room), x * 1000);
+	},
+
+	weak: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		let types = ["normal", "fire", "water", "grass", "steel", "psychic", "ghost", "dark", "bug", "poison", "ground", "rock", "dragon", "ice", "fairy", "fighting", "flying", "electric"];
+		if (target.endsWith('type')) {
+			target = target.substr(0, target.length - 4);
+		}
+		if (types.indexOf(target) !== -1) {
+			this.say(room, "!weak " + target);
+		} else {
+			this.say(room, "Please enter a valid type.");
+		}
 	},
 
 	roll: function (target, user, room) {
 		let realtarget = target;
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let plusIndex = target.indexOf("+");
 		let adder = 0;
 		if (plusIndex !== -1) {
@@ -1650,7 +1667,7 @@ exports.commands = {
         start: function (target, user, room) {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
-        },
+    },
 
 	destroy: function (target, user, room) {
 	    /*for (room in Rooms.rooms) {
@@ -1664,12 +1681,12 @@ exports.commands = {
 		    }
 		    
 		});
-        },
+    },
 
 	attack: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.attack === 'function') room.game.attack(target, user);
-        },
+    },
 };
 
 /* globals toId */
