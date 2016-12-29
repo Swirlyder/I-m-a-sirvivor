@@ -19,7 +19,7 @@ class Player {
 	}
 
 	say(message) {
-	    Users.get(this.id).say(message);
+	    Users.add(this.id).say(message);
 	}
 }
 
