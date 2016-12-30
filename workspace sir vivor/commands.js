@@ -9,12 +9,6 @@ var _ = require('lodash');
 var hostQueue = [];
 var queueText = '';
 var ids = [];
-var data = [];
-
-for (let i in Tools.data.pokedex) {
-	let mon = Tools.data.pokedex[i];
-	data.push(mon.species);
-}
   
 if (Config.serverid === 'showdown')
 {
@@ -654,6 +648,11 @@ exports.commands = {
 
 	dt: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		var data = [];
+		for (let i in Tools.data.pokedex) {
+			let mon = Tools.data.pokedex[i];
+			data.push(mon.species);
+		}
 		target = toId(target);
 		for (let i = 0; i < data.length; i++) {
 			if (target === toId(data[i])) {
@@ -683,6 +682,13 @@ exports.commands = {
 
 	dehost: function (target, user, room) {
 		if (!user.hasRank(room.id, "%")) return;
+		if (target === "") {
+			if (Games.host) {
+				this.say(room, "The game was forcibly ended.");
+			}
+			Games.host = null;
+			return;
+		}
 		let realuser = Users.get(target);
 		if (!realuser) return;
 		if (Games.host && Games.host.id === realuser.id) {
