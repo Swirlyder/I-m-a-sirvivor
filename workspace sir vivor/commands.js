@@ -637,6 +637,7 @@ exports.commands = {
 		}
 		Games.host = realuser;
 		this.say(room, "survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
+		this.say(room, "/modnote " + realuser.name + " hosted");
 	},
 	/*roomdemote: 'reoomdevoice',
 	roomdevoice: function(arg, user, room)
@@ -936,6 +937,7 @@ exports.commands = {
 		}
 		let name = Games.hosts.shift();
 		this.say(room, "survgame! " + name + " is hosting! Do ``/me in`` to join!");
+		this.say(room, "/modnote " + name + " hosted");
 		Games.host = Users.get(name);
 	},
 
