@@ -810,7 +810,7 @@ exports.commands = {
 	rollsoffame: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
 		{
 			text = '';
 		}
