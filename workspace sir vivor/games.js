@@ -241,6 +241,7 @@ class GamesManager {
 		this.canIntro = true;
 		this.canQueue = true;
 		this.isTimer = false;
+		this.points = null;
 	}
 
 	timer(room) {
