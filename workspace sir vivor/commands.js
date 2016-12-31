@@ -973,23 +973,6 @@ exports.commands = {
 		this.say(room, text);
 	},
 
-	sg: 'survgame',
-	survgame: function(arg, user, room)
-	{
-		if (user.hasRank(room.id, '+'))
-		{
-			var text = '';
-		}
-		else
-		{
-			return false;
-		}
-		Games.host = user.id;
-		text += '``**SURVGAME;**`` **' + user.name + '** is hosting! ``**/me in**`` to join the game';
-		this.say(room, text);
-		this.say(room, '/modnote ' + user.name + " hosted!");	       
-	},
-
 	usainbot: function(arg, user, room)
 	{
 		var text = '';
@@ -1508,6 +1491,9 @@ exports.commands = {
 			this.say(room, '/w ' + user + ', ' + text);
 		}
     },
+	hostqueue: 'queue',
+	que: 'queue',
+	q: 'queue',
     queue: function(arg, user, room) {
 		if (!Games.canQueue) return;
         if (user.hasRank(room.id, '%')) {
@@ -1579,6 +1565,16 @@ exports.commands = {
 
 	timer: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		if (target === "end") {
+			if (Games.isTimer ) {
+				clearTimeout(Games.timeout);
+				this.say(room, "The timer has been ended.");
+				Games.isTimer = false;
+			} else {
+				this.say(room, "There is no timer running!");
+			}
+			return;
+		}
 		let x = Math.floor(target);
 		if (!x || x > 120 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 2 minutes.");
 		if (x < 10) x *= 60;
@@ -1587,6 +1583,7 @@ exports.commands = {
 		clearTimeout(Games.timeout);
 		this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
 		Games.timeout = setTimeout(() => Games.timer(room), x * 1000);
+		Games.isTimer = true;
 	},
 
 	weak: function (target, user, room) {

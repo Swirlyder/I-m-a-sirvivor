@@ -240,10 +240,12 @@ class GamesManager {
 		this.canTheme = true;
 		this.canIntro = true;
 		this.canQueue = true;
+		this.isTimer = false;
 	}
 
 	timer(room) {
 	    Parse.say(room, "**Time's up!**");
+		this.isTimer = false;
 	}
 	onLoad() {
 		this.loadGames();
