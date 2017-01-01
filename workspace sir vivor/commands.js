@@ -691,16 +691,14 @@ exports.commands = {
 			Games.host = null;
 			return;
 		}
-		let realuser = Users.get(target);
-		if (!realuser) return;
-		if (Games.host && Games.host.id === realuser.id) {
+		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
 			Games.host = null;
 			return;
 		}
 		let i = 0, len = Games.hosts.length;
 		for (; i < len; i++) {
-			if (realuser.id === Tools.toId(Games.hosts[i])) {
+			if (target === Tools.toId(Games.hosts[i])) {
 				break;
 			}
 		}
@@ -831,7 +829,7 @@ exports.commands = {
 		if (user.hasRank(room.id, '+')) {
 			if (Games.points) {
 				this.say(room, ".addpoints " + user.name + ", " + Games.points);
-				Games.points = null
+				Games.points = null;
 			} else {
 				this.say(room, "No theme was selected, so I can't give you hostpoints!");
 			}
