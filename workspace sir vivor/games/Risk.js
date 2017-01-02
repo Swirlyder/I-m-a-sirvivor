@@ -38,6 +38,7 @@ class Risk extends Games.Game {
 			this.players[user.id].eliminated = true;
 		} else if (this.started) {
 			user.say("You have latejoined the game of risk!");
+			this.troops.set(this.players[user.id], 100);
 		}
 	}
 

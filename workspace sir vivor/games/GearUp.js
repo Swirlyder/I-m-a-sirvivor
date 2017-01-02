@@ -146,7 +146,7 @@ class GearUp extends Games.Game {
 			if (this.oplayer.eliminated || this.curPlayer.eliminated) {
 				this.handleAttacks();
 			} else {
-				this.say(this.curPlayer.name + " is attacking " + this.oplayer.name + "!");
+				this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
 				this.doPlayerAttack();
 			}
 		}
@@ -157,9 +157,9 @@ class GearUp extends Games.Game {
 		this.rollb = null;
 		let attack = 100 + this.getStats(this.curPlayer, true);
 		let defense = 100 + this.getStats(this.oplayer, false);
-		this.say("Rolling for " + this.curPlayer.name + "'s attack.");
+		this.say("Rolling for **" + this.curPlayer.name + "'s** attack.");
 		this.say("!roll " + attack);
-		this.say("Rolling for " + this.oplayer.name + "'s defense.");
+		this.say("Rolling for **" + this.oplayer.name + "'s** defense.");
 		this.say("!roll " + defense);
 	}
 
@@ -180,7 +180,7 @@ class GearUp extends Games.Game {
 					this.items.set(winPlayer, winItems);
 					this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "** and steals their " + randItem.name + "!");
 				} else {
-					this.say(this.oplayer.name + " defended successfully!");
+					this.say("**" + this.oplayer.name + "** defended successfully!");
 				}
 				this.timeout = setTimeout(() => this.handleAttacks(), 10 * 1000);
 				

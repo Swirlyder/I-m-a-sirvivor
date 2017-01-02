@@ -65,11 +65,11 @@ class Game {
 
 	autostart(target) {
 		let x = Math.floor(target);
-		if (!x || x >= 120 || (x < 10 && x > 2) || x <= 0) return;
-		if (x === 1) x = 60;
+		if (!x || x > 120 || (x < 10 && x > 2) || x <= 0) return;
+		if (x < 10) x *= 60;
 		let minutes = Math.floor(x / 60);
 		let seconds = x % 60;
-		this.say("The game will automatically start in " + (minutes > 0 ? "1 minute, " : "") + seconds + " seconds.");
+		this.say("The game will automatically start in " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
 		this.timeout = setTimeout(() => this.start(), x * 1000);
 	}
 
