@@ -53,7 +53,7 @@ class Room {
 	onRename(username, oldid) {
 		var user = Users.get(oldid);
 		var group = username.charAt(0);
-		if (Games.host && Games.host.id === user.id) {
+		if (Games.host && user && Games.host.id === user.id) {
 			Games.host = user;
 		}
 		this.users.delete(oldid);

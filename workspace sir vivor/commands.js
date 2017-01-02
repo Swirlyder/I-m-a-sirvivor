@@ -630,7 +630,7 @@ exports.commands = {
 		}
 		let realuser = Users.get(target);
 		if (!realuser) return;
-		if (Games.host) {
+		if (Games.host || room.game) {
 			this.say(room, realuser.name + " was added to the hostqueue!");
 			Games.hosts.push(realuser.name);
 			return;
