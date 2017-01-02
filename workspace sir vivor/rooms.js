@@ -53,14 +53,14 @@ class Room {
 	onRename(username, oldid) {
 		var user = Users.get(oldid);
 		var group = username.charAt(0);
-		if (Games.host && user && Games.host.id === user.id) {
-			Games.host = user;
-		}
 		this.users.delete(oldid);
 		if (!user) { // already changed nick
 			user = Users.get(username); 
 		} else if (username.substr(1) !== user.name) { // changing nick
 			user = user.rename(username);
+		}
+		if (Games.host && user && Games.host.id === user.id) {
+			Games.host = user;
 		}
 		this.users.set(user.id, group);
 		user.rooms.set(this.id, group);
