@@ -40,6 +40,7 @@ class Dexterity extends Games.Game {
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
 			this.say("**Winner:** " + winPlayer.name);
+			this.say(".win " + winPlayer.name);
 			this.end();
 			return;
 		}
@@ -95,9 +96,9 @@ class Dexterity extends Games.Game {
 		this.roll2 = null;
 		this.winIndex = null;
 		//this.say("Rolling for **" + this.curPlayer.name + "'s** power.");
-		this.say("!roll " + item.atk);
+		this.say(".roll " + item.atk);
 		//this.say("Rolling for **" + this.oplayer.name + "'s** power.");
-		this.say("!roll " + item2.atk);
+		this.say(".roll " + item2.atk);
 	}
 	handleAttacks() {
 		if (this.order.length === 0) {
@@ -142,7 +143,7 @@ class Dexterity extends Games.Game {
 				} else {
 					this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
 					this.timeout = setTimeout(() => {
-						this.say("!roll 100");
+						this.say(".roll 100");
 					}, 5 * 1000);
 				}
 			}
@@ -152,7 +153,7 @@ class Dexterity extends Games.Game {
 			let item = this.items.get(bothPlayers[this.winIndex]);
 			let acc = item.acc;
 			if (actAcc <= acc) {
-				this.say("The attack hits! Rip " + bothPlayers[1 - this.winIndex].name);
+				this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
 				this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
 			} else {
 				this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
