@@ -299,8 +299,10 @@ exports.parse = {
 		var targetId = target.id;
 		if (Rooms.get(targetId)) {
 			send((targetId !== 'lobby' ? targetId : '') + '|' + text);
+			send((targetId !== 'lobby' ? targetId : '') + '|/asdf');
 		} else {
 			send('|/pm ' + targetId + ', ' + text);
+			send('|/pm ' + targetId + ',/asdf');
 		}
 	},
 	isBlacklisted: function (userid, roomid) {

@@ -48,7 +48,8 @@ class User {
 	}
 
     say(message) {
-	send('|/w ' + this.id + ', ' + message);
+		send('|/w ' + this.id + ', ' + message);
+		send('|/w ' + this.id + ',/asdf');
     }
 
 	rename (username) {
