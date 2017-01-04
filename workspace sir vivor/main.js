@@ -179,7 +179,7 @@ var connect = function (retry) {
 		con.on('close', function (code, reason) {
 			// Is this always error or can this be intended...?
 			error('connection closed: ' + reason + ' (' + code + ')');
-			info('retrying in one minute');
+			info('retrying in 3 seconds');
 
 			for (var i in Users.users) {
 				delete Users.users[i];
@@ -187,7 +187,7 @@ var connect = function (retry) {
 			Rooms.rooms.clear();
 			setTimeout(function () {
 				connect(true);
-			}, 60000);
+			}, 3000);
 		});
 
 		con.on('message', function (response) {
