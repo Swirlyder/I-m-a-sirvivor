@@ -161,11 +161,11 @@ var connect = function (retry) {
 
 	ws.on('connectFailed', function (err) {
 		error('Could not connect to server ' + Config.server + ': ' + err.stack);
-		info('retrying in one minute');
+		info('retrying in 3 seconds');
 
 		setTimeout(function () {
 			connect(true);
-		}, 60000);
+		}, 3000);
 	});
 
 	ws.on('connect', function (con) {
