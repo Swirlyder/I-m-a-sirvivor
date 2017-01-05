@@ -767,7 +767,7 @@ exports.commands = {
 			killer: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 12],
 			rockpaperscissors: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 9],
 			rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 9],
-			eclipse: ['Ecplise Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 9],
+			eclipse: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 9],
 			es: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 9],
 			eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 9],
 			eevee: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 9],
@@ -1673,6 +1673,7 @@ exports.commands = {
 	},
 
 	join: function (arg, user, room) {
+		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);
 	},
 
@@ -1680,7 +1681,7 @@ exports.commands = {
 	    if (!user.hasRank(room.id, '+')) return;
 	    if (!Games.createGame(target, room)) return;
 	    room.game.signups();
-        },
+    },
 
 	endgame: 'end',
 	end: function (target, user, room) {
@@ -1695,23 +1696,23 @@ exports.commands = {
 	},
 
 	startgame: 'start',
-        start: function (target, user, room) {
+       start: function (target, user, room) {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
     },
 
 	destroy: function (target, user, room) {
-	    /*for (room in Rooms.rooms) {
-		let realRoom = Rooms.rooms[room];
-		if (realRoom.game && typeof realRoom.game.destroy === 'function') realRoom.game.destroy(target, user);
-		}*/
 		if (room.id !== user.id) return;
 	    Rooms.rooms.forEach(function(room) {
 		    if (room.game && typeof room.game.destroy === 'function') {
 			room.game.destroy(target, user);      
 		    }
-		    
 		});
+    },
+
+	use: function (target, user, room) {
+	    if (!room.game) return;
+	    if (typeof room.game.use === 'function') room.game.use(target, user);
     },
 
 	attack: function (target, user, room) {

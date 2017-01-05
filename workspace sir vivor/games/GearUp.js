@@ -102,6 +102,7 @@ class GearUp extends Games.Game {
 	elimPlayers() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
+			if (player.eliminated) continue;
 			let curAttack = this.attacks.get(player);
 			if (!curAttack) {
 				player.say("You didn't attack a player this round and were eliminated!");
