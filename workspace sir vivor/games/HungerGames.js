@@ -49,9 +49,6 @@ class HG extends Games.Game {
 				names.push(this.players[userID].name);
 			}
 			this.say("!pick " + names.join(", "));
-			//this.curPlayer = this.players[Object.keys(this.players)[Math.floor(Math.random() * Object.keys(this.players).length)]];
-			//this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
-			//this.timeout = setTimeout(() => this.handleAttack(), 90 * 1000);
 			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		}
 	}
@@ -62,24 +59,6 @@ class HG extends Games.Game {
 			delete this.players[this.curPlayer.id];
 			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 		} else {
-			/*let rolla = 0;
-			let rollb = 0;
-			while (rolla === rollb) {
-				rolla = Math.floor(Math.random() * 100) + 1;
-				rollb = Math.floor(Math.random() * 100) + 1;
-			}
-			this.say("**" + this.curPlayer.name + "** rolls a " + rolla + "!");
-			this.say("**" + this.oplayer.name + "** rolls a " + rollb + "!");
-			if (rolla < rollb) {
-				this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
-				delete this.players[this.curPlayer.id];
-			}
-			else {
-				this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
-				delete this.players[this.oplayer.id];
-			}
-			this.playerCount--;
-			this.timeout = setTimeout(() => this.nextRound(), 10 * 1000);*/
 			this.say("!roll 100");
 			this.say("!roll 100");
 		}
