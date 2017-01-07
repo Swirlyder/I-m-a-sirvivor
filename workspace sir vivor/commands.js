@@ -1673,7 +1673,9 @@ exports.commands = {
 	},
 
 	join: function (arg, user, room) {
+		console.log('hi');
 		if (!user.isExcepted()) return false;
+		console.log('sup');
 		this.say(room, '/join ' + arg);
 	},
 

@@ -215,17 +215,24 @@ class Game {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
 	}
 	handlehtml(message) {
-		message = message.substr(21);
-		if (message.substr(0, 4) === "Roll") {
-			let colonIndex = message.indexOf(":");
-			message = message.substr(colonIndex + 2);
-			message = message.substr(0, message.length - 6);
-			if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
-		} else if (message.substr(4, 2) === "We") {
-			let colonIndex = message.indexOf(":");
-			message = message.substr(colonIndex + 7);
-			message = message.substr(0, message.length - 6);
-			if (typeof this.handlePick === 'function') this.handlePick(message);
+		if (!this.started) return;
+		try {
+			message = message.substr(21);
+			if (message.substr(0, 4) === "Roll") {
+				let colonIndex = message.indexOf(":");
+				message = message.substr(colonIndex + 2);
+				message = message.substr(0, message.length - 6);
+				if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
+			} else if (message.substr(4, 2) === "We") {
+				let colonIndex = message.indexOf(":");
+				message = message.substr(colonIndex + 7);
+				message = message.substr(0, message.length - 6);
+				if (typeof this.handlePick === 'function') this.handlePick(message);
+			}
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
 	}
 }

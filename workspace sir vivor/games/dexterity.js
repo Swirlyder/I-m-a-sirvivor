@@ -29,173 +29,225 @@ class Dexterity extends Games.Game {
 	}
 
 	onStart() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			this.prevAttacks.set(player, []);
-		}
-		this.nextRound();
-	}
-
-	onNextRound() {
-		if (this.getRemainingPlayerCount() === 1) {
-			let winPlayer = this.getLastPlayer();
-			this.say("**Winner:** " + winPlayer.name);
-			this.say(".win " + winPlayer.name);
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				this.prevAttacks.set(player, []);
+			}
+			this.nextRound();
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.end();
 			return;
 		}
-		this.numAttacks = 0;
-		this.pl();
-		this.oplayer = null;
-		this.curPlayer = null;
-		this.order = [];
-		this.canChooseItems = false;
-		this.canAttack = false;
-		this.items.clear();
-		this.attacks.clear();
-		this.roll1 = null;
-		this.roll2 = null;
-		this.chooseStuff();
+	}
+
+	onNextRound() {
+		try {
+			if (this.getRemainingPlayerCount() === 1) {
+				let winPlayer = this.getLastPlayer();
+				this.say("**Winner:** " + winPlayer.name);
+				this.say(".win " + winPlayer.name);
+				this.end();
+				return;
+			}
+			this.numAttacks = 0;
+			this.pl();
+			this.oplayer = null;
+			this.curPlayer = null;
+			this.order = [];
+			this.canChooseItems = false;
+			this.canAttack = false;
+			this.items.clear();
+			this.attacks.clear();
+			this.roll1 = null;
+			this.roll2 = null;
+			this.chooseStuff();
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
+		}
 	}
 
 	chooseStuff() {
-		this.canAttack = true;
-		this.say("PM me your item and opponent now! **Command:** ``" + Config.commandCharacter + "destroy [user], [weapon]``");
-		this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+		try {
+			this.canAttack = true;
+			this.say("PM me your item and opponent now! **Command:** ``" + Config.commandCharacter + "destroy [user], [weapon]``");
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
+		}
 	}
 
 	listRemaining() {
-		let waitings = []
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			let curAttack = this.attacks.get(player);
-			if (!curAttack) waitings.push(player.name);
+		try {
+			let waitings = []
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				let curAttack = this.attacks.get(player);
+				if (!curAttack) waitings.push(player.name);
+			}
+			this.say("Waiting on: "  + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
-		this.say("Waiting on: "  + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 	}
 
 	elimPlayers() {
-		this.canAttack = false;
-		for (let userID in this.getRemainingPlayers()) {
-			let player = this.players[userID];
-			let curAttack = this.attacks.get(player);
-			if (!curAttack) {
-				player.say("You didn't attack a player this round and were eliminated!");
-				this.players[userID].eliminated = true;
+		try {
+			this.canAttack = false;
+			for (let userID in this.getRemainingPlayers()) {
+				let player = this.players[userID];
+				let curAttack = this.attacks.get(player);
+				if (!curAttack) {
+					player.say("You didn't attack a player this round and were eliminated!");
+					this.players[userID].eliminated = true;
+				}
 			}
+			this.handleAttacks();
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
-		this.handleAttacks();
 	}
 
 	doAttacks() {
-		let item = this.items.get(this.curPlayer);
-		let item2 = this.items.get(this.oplayer);
-		this.roll1 = null;
-		this.roll2 = null;
-		this.winIndex = null;
-		//this.say("Rolling for **" + this.curPlayer.name + "'s** power.");
-		this.say(".roll " + item.atk);
-		//this.say("Rolling for **" + this.oplayer.name + "'s** power.");
-		this.say(".roll " + item2.atk);
+		try {
+			let item = this.items.get(this.curPlayer);
+			let item2 = this.items.get(this.oplayer);
+			this.roll1 = null;
+			this.roll2 = null;
+			this.winIndex = null;
+			this.say(".roll " + item.atk);
+			this.say(".roll " + item2.atk);
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
+		}
 	}
 	handleAttacks() {
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			this.curPlayer = this.order.shift();
-			this.oplayer = this.attacks.get(this.curPlayer);
-			if (this.curPlayer.eliminated || this.oplayer.eliminated) {
-				this.handleAttacks()
+		try {
+			if (this.order.length === 0) {
+				this.nextRound();
 			} else {
-				let attackeritem = this.items.get(this.curPlayer);
-				let defenderitem = this.items.get(this.oplayer);
-				this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "** with the **" + attackeritem.name + "**, who defends with the **" + defenderitem.name + "**!");
-				this.timeout = setTimeout(() => this.doAttacks(), 5 * 1000);
+				this.curPlayer = this.order.shift();
+				this.oplayer = this.attacks.get(this.curPlayer);
+				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
+					this.handleAttacks()
+				} else {
+					let attackeritem = this.items.get(this.curPlayer);
+					let defenderitem = this.items.get(this.oplayer);
+					this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "** with the **" + attackeritem.name + "**, who defends with the **" + defenderitem.name + "**!");
+					this.timeout = setTimeout(() => this.doAttacks(), 5 * 1000);
+				}
 			}
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
 	}
 
 	handleRoll(roll) {
-		if (!this.roll1) {
-			this.roll1 = roll;
-		} else if (!this.roll2) {
-			this.roll2 = roll;
-			if (this.roll1 > this.roll2) {
-				this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
-				this.winIndex = 0;
-			} else if (this.roll1 < this.roll2) {
-				this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
-				this.winIndex = 1;
+		try {
+			if (!this.roll1) {
+				this.roll1 = roll;
+			} else if (!this.roll2) {
+				this.roll2 = roll;
+				if (this.roll1 > this.roll2) {
+					this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
+					this.winIndex = 0;
+				} else if (this.roll1 < this.roll2) {
+					this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
+					this.winIndex = 1;
+				} else {
+					this.say("The rolls were a tie! Rerolling...");
+					this.doAttacks();
+				}
+				if (this.winIndex === 0 || this.winIndex === 1) {
+					let bothPlayers = [this.curPlayer, this.oplayer];
+					let item = this.items.get(bothPlayers[this.winIndex]);
+					let acc = item.acc;
+					if (acc === 100) {
+						this.say("The item has 100% accuracy! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
+						this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
+						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+					} else {
+						this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
+						this.timeout = setTimeout(() => {
+							this.say(".roll 100");
+						}, 5 * 1000);
+					}
+				}
 			} else {
-				this.say("The rolls were a tie! Rerolling...");
-				this.doAttacks();
-			}
-			if (this.winIndex === 0 || this.winIndex === 1) {
+				let actAcc = roll;
 				let bothPlayers = [this.curPlayer, this.oplayer];
 				let item = this.items.get(bothPlayers[this.winIndex]);
 				let acc = item.acc;
-				if (acc === 100) {
-					this.say("The item has 100% accuracy! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
+				if (actAcc <= acc) {
+					this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
 					this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
-					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 				} else {
-					this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
-					this.timeout = setTimeout(() => {
-						this.say(".roll 100");
-					}, 5 * 1000);
+					this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
 				}
+				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
-		} else {
-			let actAcc = roll;
-			let bothPlayers = [this.curPlayer, this.oplayer];
-			let item = this.items.get(bothPlayers[this.winIndex]);
-			let acc = item.acc;
-			if (actAcc <= acc) {
-				this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
-				this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
-			} else {
-				this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
-			}
-			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
 	}
 
 	destroy(target, user) {
-		if (!this.canAttack) return;
-		let player = this.players[user.id];
-		if (!player || player.eliminated) return;
-		let split = target.split(",");
-		if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]");
-		let attackedPlayer = this.players[Tools.toId(split[0])];
-		if (!attackedPlayer) return;
-		if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!")
-		let weaponName = Tools.toId(split[1]);
-		let weapon;
-		for (let name in data) {
-			let curWeapon = data[name];
-			if (curWeapon.aliases.indexOf(weaponName) !== -1) {
-				weapon = curWeapon;
-				break;
+		try {
+			if (!this.canAttack) return;
+			let player = this.players[user.id];
+			if (!player || player.eliminated) return;
+			let split = target.split(",");
+			if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]");
+			let attackedPlayer = this.players[Tools.toId(split[0])];
+			if (!attackedPlayer) return;
+			if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!")
+			let weaponName = Tools.toId(split[1]);
+			let weapon;
+			for (let name in data) {
+				let curWeapon = data[name];
+				if (curWeapon.aliases.indexOf(weaponName) !== -1) {
+					weapon = curWeapon;
+					break;
+				}
 			}
-		}
-		if (!weapon) return user.say("That is not a valid weapon!");
-		let prevAttacks = this.prevAttacks.get(player);
-		if (prevAttacks.indexOf(weapon.name) !== -1 && prevAttacks.indexOf(weapon.name) < weapon.cd) return user.say("Your cooldown is not over for that weapon!");
-		let curAtt = this.attacks.get(this.curPlayer);
-		if (curAtt) return user.say("You have already attacked someone this round.");
-		if (attackedPlayer.id === player.id) return user.say("You can't attack yourself.");
-		this.attacks.set(player, attackedPlayer);
-		this.items.set(player, weapon);
-		prevAttacks.unshift(weapon.name);
-		this.prevAttacks.set(player, prevAttacks);
-		this.order.push(player);
-		user.say("You have attacked **" + attackedPlayer.name + "** with the " + weapon.name + "!");
-		this.numAttacks++;
-		if (this.numAttacks === this.getRemainingPlayerCount()) {
-			clearTimeout(this.timeout);
-			this.handleAttacks();
+			if (!weapon) return user.say("That is not a valid weapon!");
+			let prevAttacks = this.prevAttacks.get(player);
+			if (prevAttacks.indexOf(weapon.name) !== -1 && prevAttacks.indexOf(weapon.name) < weapon.cd) return user.say("Your cooldown is not over for that weapon!");
+			let curAtt = this.attacks.get(this.curPlayer);
+			if (curAtt) return user.say("You have already attacked someone this round.");
+			if (attackedPlayer.id === player.id) return user.say("You can't attack yourself.");
+			this.attacks.set(player, attackedPlayer);
+			this.items.set(player, weapon);
+			prevAttacks.unshift(weapon.name);
+			this.prevAttacks.set(player, prevAttacks);
+			this.order.push(player);
+			user.say("You have attacked **" + attackedPlayer.name + "** with the " + weapon.name + "!");
+			this.numAttacks++;
+			if (this.numAttacks === this.getRemainingPlayerCount()) {
+				clearTimeout(this.timeout);
+				this.handleAttacks();
+			}
+		} catch (e) {
+			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.end();
+			return;
 		}
 	}
 }
