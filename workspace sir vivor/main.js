@@ -105,6 +105,9 @@ if (Config.watchconfig) {
 		} catch (e) {}
 	});
 }
+process.on('uncaughtException', err => {
+	console.log(err);
+});
 
 // And now comes the real stuff...
 info('starting server');

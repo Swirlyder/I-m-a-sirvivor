@@ -1290,7 +1290,7 @@ exports.commands = {
 		text += 'Don\'t moq me for all my name changes ;_;';
 		this.say(room, text);
 	},
-	MorganTactician: function(arg, user, room)
+	morgantactician: function(arg, user, room)
 	{
 		var text = '';
 		if (user.hasRank(room.id, '+'))
@@ -1332,7 +1332,7 @@ exports.commands = {
 		text += 'What IS UP SurvivorAlert NATION, it\'s your host, Kiiilleeeeer saaaaaaanjaaaaaaaay, let\'s get riiiioooooooooght into the meeeeeeeeemes!';
 		this.say(room, text);
 	},
-	'micro': 'microwavable',
+	micro: 'microwavable',
 	microwavable: function(arg, user, room)
 	{
 		var text = '';
@@ -1394,7 +1394,7 @@ exports.commands = {
 	ai: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
 		{
 			text = '';
 		}
@@ -1550,34 +1550,6 @@ exports.commands = {
 		}, 5 * 1000);
 	},
 
-	add: function(arg, user, room) {
-        if (user.hasRank('survivor', '%') && arg) {
-            ids.push(toId(arg));
-            hostQueue.push(arg);
-            this.say(room, '**' + arg + '** was added to the queue.');
-        }
-    },
-        
-	remove: function(arg, user, room) {
-        if (user.hasRank('survivor', '%') && arg) {
-            if (ids.indexOf(toId(arg)) !== -1) {
-                var idx = ids.indexOf(toId(arg));
-                var purgeQueue = [];
-                var purgeids = [];
-                for (var i = 0; i < hostQueue.length; i++) {
-                    if (i === idx) {
-                        continue;
-                    }
-                    purgeQueue.push(hostQueue[i]);
-                    purgeids.push(toId(hostQueue[i]));
-                }
-                hostQueue = purgeQueue;
-                ids = purgeids;
-                this.say(room, arg + ' was removed from the queue.');
-            }
-        }
-	},
-
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let stuff = target.split(",");
@@ -1673,9 +1645,7 @@ exports.commands = {
 	},
 
 	join: function (arg, user, room) {
-		console.log('hi');
 		if (!user.isExcepted()) return false;
-		console.log('sup');
 		this.say(room, '/join ' + arg);
 	},
 

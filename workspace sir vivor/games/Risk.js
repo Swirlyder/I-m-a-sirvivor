@@ -23,6 +23,10 @@ class Risk extends Games.Game {
 		this.canLateJoin = true;
 	}
 
+	onSignups() {
+		console.log(money);
+	}
+
 	onStart() {
 		try {
 		for (let userID in this.players) {
