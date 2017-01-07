@@ -130,7 +130,7 @@ class RPS extends Games.Game {
 			this.win = true;
 			let diff = ((rpsA - rpsB) + 3) % 3;
 			if (num === 0) {
-				this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + " with **" + stuff[rpsA] + "**, who defends with **" + stuff[rpsB] + "**.");
+				this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "** with **" + stuff[rpsA] + "**, who defends with **" + stuff[rpsB] + "**.");
 			}
 			if (diff === 1) {
 				this.say("!roll 125");
