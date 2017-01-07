@@ -204,7 +204,7 @@ exports.parse = {
 				var user = Users.get(username);
 				var group = username.charAt(0);
 				if (!user) user = Users.add(username);
-				if (user === Users.self) return false;
+				//if (user === Users.self) return false;
 
 				spl = spl.slice(4).join('|');
 				if (spl.startsWith('/invite ') && user.hasRank(group, '%') &&
