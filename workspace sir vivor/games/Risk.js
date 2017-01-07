@@ -208,7 +208,7 @@ class Risk extends Games.Game {
 
 	handlePick(message) {
 		if (!this.curPlayer) {
-			let parenIndex = message.indexOf("(");
+			let parenIndex = message.lastIndexOf("(");
 			this.curPlayer = this.players[Tools.toId(message.substr(0, parenIndex))];
 			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
 		}
