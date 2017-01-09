@@ -126,8 +126,8 @@ class Dexterity extends Games.Game {
 			this.roll1 = null;
 			this.roll2 = null;
 			this.winIndex = null;
-			this.say(".roll " + item.atk);
-			this.say(".roll " + item2.atk);
+			this.say("!roll " + item.atk);
+			this.say("!roll " + item2.atk);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.end();
