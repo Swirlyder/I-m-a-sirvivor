@@ -51,6 +51,7 @@ class Game {
 		if (this.description) this.say("Description: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		if (this.freeJoin) this.started = true;
+		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
 	}
 
 	start() {
@@ -85,6 +86,13 @@ class Game {
 	}
 
 	end() {
+		if (this.getRemainingPlayerCount() === 1) {
+			let winPlayer = this.getLastPlayer();
+			this.say("**Winner:** " + winPlayer.name);
+			if (this.playerCount > 3) {
+				this.say(".win " + winPlayer.name);
+			}
+		}
 		if (this.ended) return;
 		if (this.timeout) clearTimeout(this.timeout);
 		if (typeof this.onEnd === 'function') this.onEnd();
