@@ -211,7 +211,7 @@ class Dexterity extends Games.Game {
 			let player = this.players[user.id];
 			if (!player || player.eliminated) return;
 			let split = target.split(",");
-			if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]");
+			if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]``");
 			let attackedPlayer = this.players[Tools.toId(split[0])];
 			if (!attackedPlayer) return;
 			if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!")
