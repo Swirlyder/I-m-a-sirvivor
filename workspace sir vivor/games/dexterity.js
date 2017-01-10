@@ -181,7 +181,7 @@ class Dexterity extends Games.Game {
 					} else {
 						this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
 						this.timeout = setTimeout(() => {
-							this.say(".roll 100");
+							this.say("!roll 100");
 						}, 5 * 1000);
 					}
 				}
