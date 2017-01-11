@@ -704,7 +704,7 @@ exports.commands = {
 		}
 		if (i !== len) {
 			Games.hosts.splice(i, 1);
-			return this.say(room, realuser.name + " was removed from the hosting queue.");
+			return this.say(room, target + " was removed from the hosting queue.");
 		}
 	},
 
