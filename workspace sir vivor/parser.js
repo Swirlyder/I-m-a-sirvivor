@@ -192,7 +192,7 @@ exports.parse = {
 				var username = spl[3];
 				var user = Users.get(username);
 				if (!user) return false; // various "chat" responses contain other data
-				if (user === Users.self) return false;
+				//if (user === Users.self) return false;
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 
 				spl = spl.slice(4).join('|');
