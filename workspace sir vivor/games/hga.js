@@ -46,7 +46,6 @@ class HGA extends Games.Game {
     }
 
     nick(target, user) {
-		console.log('hi');
 		if (!target) return;
 		let player = this.players[user.id];
 		if (!player) return;
