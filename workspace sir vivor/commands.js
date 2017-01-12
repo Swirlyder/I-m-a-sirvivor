@@ -1644,7 +1644,17 @@ exports.commands = {
 		}
 	},
 
+	nick: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.nick === 'function') {
+			room.game.nick(target, user);      
+		    }
+		});
+    },
+
 	join: function (arg, user, room) {
+		console.log('hi');
 		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);
 	},

@@ -240,7 +240,7 @@ exports.parse = {
 		}
 	},
 	chatMessage: function (message, user, room) {
-
+		console.log('hi1');
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
 		message = message.trim();
 		if (message.substr(0, 6) === '/me in' && room.game) {
@@ -248,17 +248,19 @@ exports.parse = {
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
 		}
+		console.log(message);
 		if (message.substr(0, Config.commandcharacter.length) !== Config.commandcharacter) return false;
-
+		console.log('hi3');
 		message = message.substr(Config.commandcharacter.length);
 		var index = message.indexOf(' ');
 		var arg = '';
 		var cmd = message;
 		if (index > -1) {
+			console.log('hi4');
 			cmd = cmd.substr(0, index);
 			arg = message.substr(index + 1).trim();
 		}
-
+	console.log('hi');
 		if (!!Commands[cmd]) {
 			let failsafe = 0;
 			while (typeof Commands[cmd] !== "function" && failsafe++ < 10) {

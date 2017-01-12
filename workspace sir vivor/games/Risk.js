@@ -141,7 +141,7 @@ class Risk extends Games.Game {
 			for (let userID in this.players) {
 				let player = this.players[userID];
 				let curAttack = this.attacks.get(player);
-				if (!curAttack) {
+				if (!curAttack && !player.eliminated) {
 					player.say("You didn't attack a country this round and were eliminated!");
 					this.players[userID].eliminated = true;
 				}
@@ -149,7 +149,6 @@ class Risk extends Games.Game {
 			if (this.getRemainingPlayerCount() === 1) {
 				let winPlayer = this.getLastPlayer();
 				this.say("Since people were modkilled, " + winPlayer.name + " won!");
-				this.say(".win " + winPlayer.name);
 				this.end();
 				return;
 			}
