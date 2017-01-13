@@ -253,7 +253,6 @@ exports.parse = {
 		var arg = '';
 		var cmd = message;
 		if (index > -1) {
-			console.log('hi4');
 			cmd = cmd.substr(0, index);
 			arg = message.substr(index + 1).trim();
 		}
