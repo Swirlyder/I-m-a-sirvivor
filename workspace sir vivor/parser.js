@@ -256,6 +256,7 @@ exports.parse = {
 			cmd = cmd.substr(0, index);
 			arg = message.substr(index + 1).trim();
 		}
+		cmd = Tools.toId(cmd);
 		if (!!Commands[cmd]) {
 			let failsafe = 0;
 			while (typeof Commands[cmd] !== "function" && failsafe++ < 10) {
