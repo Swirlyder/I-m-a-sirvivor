@@ -1092,8 +1092,8 @@ exports.commands = {
 		this.say(room, text);
 	},
 	luna: 'lunar',
-	'lunar': 'lunarixis',
-	'lunarixis': function(arg, user, room)
+	lunar: 'lunarixis',
+	lunarixis: function(arg, user, room)
 	{
 		var text = '';
 		if (user.hasRank(room.id, '+'))
@@ -1107,7 +1107,6 @@ exports.commands = {
 		text += '/me sips tea';
 		this.say(room, text);
 	},
-	Spieky: 'spieky',
 	spieky: function(arg, user, room)
 	{
 		var text = '';
@@ -1123,7 +1122,7 @@ exports.commands = {
 		this.say(room, text);
 		
 	},
-	zeonth: 'zeo',
+	zeo: 'zeonth',
 	zeonth: function(arg, user, room)
 	{
 		var text = '';
@@ -1138,7 +1137,7 @@ exports.commands = {
 		text += 'A friendly reminder that Zeonth shamelessly advertises the <<cap>> metagame here';
 		this.say(room, text);
 	},
-	deetah: 'deets',
+	deets: 'deetah',
 	deetah: function(arg, user, room)
 	{
 		var text = '';
@@ -1153,7 +1152,7 @@ exports.commands = {
 		text += '/addhtmlbox <center><img src="https://media.giphy.com/media/lXiRDbPcRYfUgxOak/giphy.gif" width=231 height=150/></center>';
 		this.say(room, text);
 	},
-	dl: 'dont lose',
+	dontlose: 'dl',
 	dl: function(arg, user, room)
 	{
 		var text = '';

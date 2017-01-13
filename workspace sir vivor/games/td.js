@@ -55,6 +55,7 @@ class TD extends Games.Game {
 				strs.push(player.name + '[' + this.troops.get(player) + ']');
 			}
 			this.say("!pick " + strs.join(", "));
+			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		}
 	}
 
@@ -85,6 +86,7 @@ class TD extends Games.Game {
 					this.troops.set(losePlayer, loseTroops - diff);
 				}
 				this.curPlayer = null;
+				clearTimeout(this.timeout);
 				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 			}
 		}
