@@ -1,10 +1,10 @@
 'use strict';
 
-const name = 'Hunger Games';
-const description = 'Classic but with a twist: No alliances. Game rules: http://survivor-ps.weebly.com/hunger-games.html';
+const name = 'Hunger Games Spotlight';
+const description = '**Hunger Games Spotlight**: __Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/hunger-games.html';
 const id = Tools.toId(name);
 
-class HG extends Games.Game {
+class HGS extends Games.Game {
 	constructor(room) {
 		super(room);
 		this.name = name;
@@ -150,5 +150,5 @@ class HG extends Games.Game {
 exports.name = name;
 exports.id = id;
 exports.description = description;
-exports.game = HG;
-exports.aliases = ["hg"];
+exports.game = HGS;
+exports.aliases = ["hgs"];

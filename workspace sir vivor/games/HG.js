@@ -1,38 +1,10 @@
 'use strict';
 
-const name = "Gear Up";
-const description = "**Gear Up**: __So you have items? You think you're cool? Pffft! You totally shouldn't click this link and learn about Gear Up (Long Games)__ Game rules: http://survivor-ps.weebly.com/gear-up.html";
+const name = "Hunger Games";
+const description = "**Hunger Games**: __Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/gear-up.html";
 const id = toId(name);
 
-const items = {
-	ts: {name: "Toy Sword", aliases: ["ts", "toysword"], effects: {attack: 10}, class: 0},
-	pcs: {name: "Poorly Crafted Sword", aliases: ["pcs", "poorlycraftedsword"], effects: {attack: 20}, class: 0},
-	wms: {name: "Well Made Sword", aliases: ["wms", "wellmadesword"], effects: {attack: 30}, class: 0},
-	ks: {name: "Knight Sword", aliases: ["ks", "knightsword"], effects: {attack: 40}, class:0 },
-	ms: {name: "Master Sword", effects: {attack: 50}, class: 0},
-	ph: {name: "Paper Hat", aliases: ["ph", "paperhat"], effects: {defense: 3}, class: 1},
-	ih: {name: "Iron Helmet", effects: {defense: 6}, class: 1},
-	sh: {name: "Steel Helmet", effects: {defense: 9}, class: 1},
-	th: {name: "Titanium Helmet", effects: {defense: 12}, class: 1},
-	imh:{name: "Impenetrable Helmet", effects: {defense: 15}, class: 1},
-	pt: {name: "Paper Tunic", aliases: ["pt", "papertunic"], effects: {defense: 4}, class: 2},
-	it: {name: "Iron Chestplate", effects: {defense: 8}, class: 2},
-	st: {name: "Steel Chestplate", effects: {defense: 12}, class: 2},
-	tt: {name: "Titanium Chestplate", effects: {defense: 16}, class: 2},
-	imt:{name: "Impenetrable Chestplate", effects: {defense: 20}, class: 2},
-	pp: {name: "Paper Pants", aliases: ["pp", "paperpants"], effects: {defense: 2}, class: 3},
-	il: {name: "Iron Leggings", effects: {defense: 4}, class: 3},
-	sl: {name: "Steel Leggings", effects: {defense: 6}, class: 3},
-	tl: {name: "Titanium Leggings", effects: {defense: 8}, class: 3},
-	iml:{name: "Impenetrable Leggings", effects: {defense: 10}, class: 3},
-	ps: {name: "Paper Shoes", aliases: ["ps", "papershoes"], effects: {defense: 1}, class: 4},
-	ib: {name: "Iron Boots", effects: {defense: 2}, class: 4},
-	sb: {name: "Steel Boots", effects: {defense: 3}, class: 4},
-	tb: {name: "Titanium Boots", effects: {defense: 4}, class: 4},
-	imb:{name: "Impenetrable Boots", effects: {defense: 5}, class: 4},
-}
-
-class GearUp extends Games.Game {
+class HG extends Games.Game {
 	constructor(room) {
 		super(room);
 		this.name = name;
@@ -61,26 +33,13 @@ class GearUp extends Games.Game {
 			if (this.getRemainingPlayerCount() === 1) {
 				this.end();
 				return;
-			} else if (this.getRemainingPlayerCount() === 0) {
-				this.say("Everyone was mked!");
-				this.end();
+			} else if (this.getRemainingPlayerCount() === 2) {
+				let playersLeft = this.getRemainingPlayers();
+				this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
+				this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
+				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+				this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
 				return;
-			}
-			for (let userID in this.players) {
-				let player = this.players[userID];
-				if (player.eliminated) continue;
-				let curCards = this.items.get(player);
-				let card = items[Tools.sample(Object.keys(items))];
-				if (this.round !== 1) {
-					player.say("You were awarded " + card.name + " for surviving another round!");
-				} else {
-					player.say("Your starting item is: " + card.name);
-				}
-				let attackGain = 0;
-				let defenseGain = 0;
-				curCards.push(card);
-				this.items.set(player, curCards);
-				player.say("Current stat bonuses: **ATK:** " + this.getStats(player, true) + ", **DEF:**" + this.getStats(player, false) + ".");
 			}
 			this.numAttacks = 0;
 			this.canAttack = true;
@@ -132,36 +91,6 @@ class GearUp extends Games.Game {
 			return;
 		}
 	}
-	
-	getStats(player, attack) {
-		try {
-			let items = this.items.get(player);
-			let maxes = [0,0,0,0,0,0];
-			for (let i = 0; i < items.length; i++) {
-				let item = items[i];
-				let effects = item.effects;
-				let value;
-				if (attack) {
-					value = effects.attack;
-				} else {
-					value = effects.defense;
-				}
-				if (value) {
-					let index = item.class;
-					maxes[index] = Math.max(maxes[index], value);
-				}
-			}
-			let sum = 0;
-			for (let i = 0; i < 6; i++) {
-				sum += maxes[i];
-			}
-			return sum;
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.end();
-			return;
-		}
-	}
 
 	handleAttacks() {
 		try {
@@ -190,12 +119,8 @@ class GearUp extends Games.Game {
 		try {
 			this.rolla = null;
 			this.rollb = null;
-			let attack = 100 + this.getStats(this.curPlayer, true);
-			let defense = 100 + this.getStats(this.oplayer, false);
-			this.say("Rolling for **" + this.curPlayer.name + "'s** attack.");
-			this.say("!roll " + attack);
-			this.say("Rolling for **" + this.oplayer.name + "'s** defense.");
-			this.say("!roll " + defense);
+			this.say("!roll 100");
+			this.say("!roll 100");
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.end();
@@ -214,20 +139,15 @@ class GearUp extends Games.Game {
 					if (this.rolla > this.rollb) {
 						winPlayer = this.curPlayer;
 						losePlayer = this.oplayer;
-						let winItems = this.items.get(winPlayer), loseItems = this.items.get(losePlayer);
-						let randItem = Tools.sample(loseItems);
-						winItems.push(randItem);
-						this.players[losePlayer.id].eliminated = true;
-						this.items.set(winPlayer, winItems);
-						this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "** and steals their " + randItem.name + "!");
 					} else {
-						this.say("**" + this.oplayer.name + "** defended successfully!");
+						winPlayer = this.oplayer;
+						losePlayer = this.curPlayer;
 					}
+					this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "**!");
+					losePlayer.eliminated = true;
 					this.timeout = setTimeout(() => this.handleAttacks(), 10 * 1000);
 				} else {
 					this.say("The rolls were the same! rerolling...");
-					this.rolla = null;
-					this.rollb = null;
 					this.doPlayerAttack();
 				}
 			}
@@ -275,8 +195,8 @@ class GearUp extends Games.Game {
 	}
 }
 
-exports.game = GearUp;
+exports.game = HG;
 exports.name = name;
 exports.id = id;
+exports.aliases = ['hg'];
 exports.description = description;
-exports.aliases = [];

@@ -1653,6 +1653,15 @@ exports.commands = {
 		});
     },
 
+	type: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.type === 'function') {
+				room.game.type(target, user);      
+		    }
+		});
+    },
+
 	join: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);

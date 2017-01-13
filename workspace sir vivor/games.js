@@ -285,7 +285,9 @@ class GamesManager {
 			if (!file.endsWith('.js')) continue;
 			let fileName = file;
 			file = require('./games/' + file);
-			if (file.game && file.name && file.id) this.games[file.id] = file;
+			if (file.game && file.name && file.id)  {
+				this.games[file.id] = file;
+			}
 			this.aliases[file.name] = file.aliases;
 			this.fileMap[file.id] = fileName;
 		}

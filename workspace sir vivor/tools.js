@@ -16,6 +16,8 @@ class Tools {
 
 	loadData() {
 		this.data.pokedex = require('./data/pokedex.js').BattlePokedex;
+		this.data.typeChart = require('./data/effects.js').BattleEffectiveness;
+		this.data.convertType = require('./data/effects.js').convertType;
 	}
 
 	toId(text) {
