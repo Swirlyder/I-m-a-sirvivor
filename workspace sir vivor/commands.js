@@ -139,6 +139,7 @@ exports.commands = {
 		arg = arg.substr(arg.indexOf(']') + 1).trim();
 		this.say(tarRoom, arg);
 	},
+
 	js: function(arg, user, room)
 	{
 		if (!user.isExcepted()) return false;
@@ -1663,6 +1664,15 @@ exports.commands = {
 	    if (!Games.createGame(target, room)) return;
 	    room.game.signups();
     },
+
+	randomgame: function (arg, user, room) {
+		if (room.game || Games.host || room === user || !user.hasRank(room, '+')) return;
+		console.log("ok");
+		let id = Tools.sample(Object.keys(Games.games));
+		console.log(id);
+		Games.createGame(id, room);
+		room.game.signups();
+	},
 
 	endgame: 'end',
 	end: function (target, user, room) {
