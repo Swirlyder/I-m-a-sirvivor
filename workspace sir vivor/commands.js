@@ -1667,9 +1667,7 @@ exports.commands = {
 
 	randomgame: function (arg, user, room) {
 		if (room.game || Games.host || room === user || !user.hasRank(room, '+')) return;
-		console.log("ok");
 		let id = Tools.sample(Object.keys(Games.games));
-		console.log(id);
 		Games.createGame(id, room);
 		room.game.signups();
 	},
