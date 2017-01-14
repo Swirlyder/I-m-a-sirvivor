@@ -81,7 +81,8 @@ class HT extends Games.Game {
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[this.cur]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1 - this.cur]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+			let type1 = this.turnFirstUpper(this.types.get(this.curPlayer)), type2 = this.turnFirstUpper(this.types.get(this.oplayer));
+			this.say("Only **" + this.curPlayer.name + "**, who is a **" + type1 + "** type and **" + this.oplayer.name + "** the **" + type2 + "** type are left! Moving directly to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			this.canAttack = true;
@@ -166,10 +167,17 @@ class HT extends Games.Game {
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			} else {
 				if (this.rolla > this.rollb) {
-					this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
+					this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
 					this.oplayer.eliminated = true;
 				} else {
 					this.say("**" + this.oplayer.name + "** defended successfully!");
+					if (this.cur) {
+						let player = this.curPlayer;
+						this.curPlayer = this.oplayer;
+						this.oplayer = player;
+						this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+						return;
+					}
 				}
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
