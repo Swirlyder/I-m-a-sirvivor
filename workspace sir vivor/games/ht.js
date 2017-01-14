@@ -31,7 +31,7 @@ class HT extends Games.Game {
 			waitings.push(player.name);
 		}
 		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimNicks(), 30 * 1000);
+		this.timeout = setTimeout(() => this.elimTypes(), 30 * 1000);
     }
 
     elimTypes() {
