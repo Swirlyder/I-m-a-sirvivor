@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Hidden Type';
-const description = '**Hidden Type**: __The theme that won our April 2015\'s NBT!__ Game rules: http://survivor-ps.weebly.com/hunger-games-anon.html';
+const description = '**Hidden Type**: __The theme that won our April 2015\'s NBT!__ Game rules: http://survivor-ps.weebly.com/hidden-type.html';
 const id = Tools.toId(name);
 
 class HT extends Games.Game {

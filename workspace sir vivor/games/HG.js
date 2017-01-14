@@ -1,7 +1,7 @@
 'use strict';
 
 const name = "Hunger Games";
-const description = "**Hunger Games**: __Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/gear-up.html";
+const description = "**Hunger Games**: __Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/hunger-games.html";
 const id = toId(name);
 
 class HG extends Games.Game {
