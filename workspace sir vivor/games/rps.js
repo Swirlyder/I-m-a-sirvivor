@@ -152,7 +152,7 @@ class RPS extends Games.Game {
 			let rpsA = this.rps.get(this.curPlayer);
 			let rpsB = this.rps.get(this.oplayer);
 			if (rpsA === rpsB) {
-				this.say("**" + this.curPlayer.name + "** attacked **" + this.oplayer.name + "**, but they both used " + stuff[rpsA]);
+				this.say("**" + this.curPlayer.name + "** attacked **" + this.oplayer.name + "**, but they both used " + stuff[rpsA] + '.');
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else {
 				this.win = true;
