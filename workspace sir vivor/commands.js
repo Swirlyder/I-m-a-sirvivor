@@ -1716,6 +1716,24 @@ exports.commands = {
 	    if (!room.game) return;
 	    if (typeof room.game.attack === 'function') room.game.attack(target, user);
     },
+
+	choose: function (target, user, room) {
+	    if (!room.game) return;
+	    if (typeof room.game.choose === 'function') room.game.choose(target, user);
+    },
+
+	play: function (target, user, room) {
+	    if (!room.game) return;
+	    if (typeof room.game.play === 'function') room.game.play(target, user);
+    },
+	hand: 'mons',
+	mons: function (target, user, room) {
+		console.log("hi");
+	    if (!room.game) return;
+		console.log("ok");
+	    if (typeof room.game.mons === 'function') room.game.mons(target, user);
+		console.log("bad");
+    },
 };
 
 /* globals toId */
