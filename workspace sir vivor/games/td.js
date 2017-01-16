@@ -103,9 +103,7 @@ class TD extends Games.Game {
 	attack(target, user) {
 		if (!this.curPlayer) return;
 		if (this.curPlayer.name !== user.name) return;
-		let otherUser = Users.get(target);
-		if (!otherUser) return;
-		let oplayer = this.players[otherUser.id];
+		let oplayer = this.players[Tools.toId(target)];
 		if (!oplayer || oplayer.eliminated) return;
 		if (oplayer.name === this.curPlayer.name) {
 			this.say(">Attacking yourself.");
