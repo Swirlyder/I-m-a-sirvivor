@@ -90,7 +90,7 @@ class HGA extends Games.Game {
 			this.order = [];
 			this.numAttacks = 0;
 			this.attacks.clear();
-			this.say("**Nicks**: " + nicks.join(", "));
+			this.say("**Nicks**: " + Tools.shuffle(nicks).join(", "));
 			this.say("**Names**: " + names.join(", "));
 			this.say("PM me your attacks with ``" + Config.commandCharacter + "destroy [nickname]``!");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
