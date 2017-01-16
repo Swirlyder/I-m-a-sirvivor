@@ -1676,6 +1676,9 @@ exports.commands = {
 	randomgame: function (arg, user, room) {
 		if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
 		let id = Tools.sample(Object.keys(Games.games));
+		while (id === 'eclipse' || id === 'eclipsesurvivor') {
+			id = Tools.sample(Object.keys(Games.games));
+		}
 		Games.createGame(id, room);
 		room.game.signups();
 	},
@@ -1728,11 +1731,8 @@ exports.commands = {
     },
 	hand: 'mons',
 	mons: function (target, user, room) {
-		console.log("hi");
 	    if (!room.game) return;
-		console.log("ok");
 	    if (typeof room.game.mons === 'function') room.game.mons(target, user);
-		console.log("bad");
     },
 };
 

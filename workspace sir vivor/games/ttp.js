@@ -245,7 +245,6 @@ class TTP extends Games.Game {
 	}
 
 	mons(target, user) {
-		console.log("hi");
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
 		let mons = this.mons.get(player);
