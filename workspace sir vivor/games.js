@@ -54,6 +54,15 @@ class Game {
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
 	}
 
+	getPlayerNames(players) {
+		if (!players) players = this.players;
+		let names = [];
+		for (let i in players) {
+			names.push(players[i].name);
+		}
+		return names.join(", ");
+	}
+
 	start() {
 		if (this.started) return;
 		if (this.playerCount < 1) {

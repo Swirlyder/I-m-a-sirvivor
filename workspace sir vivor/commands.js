@@ -1725,6 +1725,11 @@ exports.commands = {
 	    if (typeof room.game.choose === 'function') room.game.choose(target, user);
     },
 
+	suspect: function (target, user, room) {
+	    if (!room.game) return;
+	    if (typeof room.game.suspect === 'function') room.game.suspect(target, user);
+    },
+
 	play: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.play === 'function') room.game.play(target, user);
@@ -1732,7 +1737,7 @@ exports.commands = {
 	hand: 'mons',
 	mons: function (target, user, room) {
 	    if (!room.game) return;
-	    if (typeof room.game.mons === 'function') room.game.mons(target, user);
+	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
     },
 };
 

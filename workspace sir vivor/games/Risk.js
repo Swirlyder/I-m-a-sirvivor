@@ -240,6 +240,7 @@ class Risk extends Games.Game {
 							this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
 							this.players[this.oplayer.id].eliminated = true;
 						}
+						this.attackPlayer = null;
 						this.timeout = setTimeout(() => this.nextRound(), 10 * 1000);
 					} else {
 						this.say("The rolls were the same! rerolling...");

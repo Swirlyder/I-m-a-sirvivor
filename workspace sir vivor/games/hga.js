@@ -38,8 +38,8 @@ class HGA extends Games.Game {
 			let player = this.players[userID];
 			if (player.eliminated) continue;
 			if (!player.nick) {
-			player.say("You never chose a nickname!");
-			player.eliminated = true;
+				player.say("You never chose a nickname!");
+				player.eliminated = true;
 			}
 		}
 		this.nextRound();
@@ -112,8 +112,8 @@ class HGA extends Games.Game {
 			let player = this.players[userID];
 			if (player.eliminated) continue;
 			if (!this.attacks.has(player)) {
-			player.say("You didn't choose someone to attack this round and have been eliminated!");
-			player.eliminated = true;
+				player.say("You didn't choose someone to attack this round and have been eliminated!");
+				player.eliminated = true;
 			}
 		}
 		this.handleAttacks();
