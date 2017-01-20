@@ -31,7 +31,6 @@ class TTP extends Games.Game {
 			let mons = [mon1, mon2, mon3];
 			this.index += 3;
 			this.mons.set(this.players[userID], mons);
-			console.log(mons);
 		}
 		this.order = Object.keys(this.players);
 		this.handoutMon();
