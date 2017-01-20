@@ -266,6 +266,7 @@ class GamesManager {
 		this.canQueue = true;
 		this.isTimer = false;
 		this.points = null;
+		this.excepted = [];
 	}
 
 	timer(room) {

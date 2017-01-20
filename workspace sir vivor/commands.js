@@ -1597,9 +1597,39 @@ exports.commands = {
 		}
 	},
 
+	allowroll: function (target, user, room) {
+		if (!Games.host || Games.host.id !== user.id) return;
+		if (!target) return;
+		let split = target.split(",");
+		let goodnames = [], badnames = [];
+		let i;
+		for (i = 0; i < split.length && Games.excepted.length < 2; i++) {
+			let user = Users.get(Tools.toId(split[i]));
+			if (!user) continue;
+			goodnames.push(user.name);
+			Games.excepted.push(user.id);
+		}
+		for (; i < split.length; i++) {
+			let user = Users.get(Tools.toId(split[i]));
+			if (!user) continue;
+			badnames.push(user.name);
+		}
+		if (goodnames.length > 0 && badnames.length > 0) {
+			this.say(room, goodnames.join(", ") + " were allowed a roll! Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
+		} else if (goodnames.length > 0) {
+			this.say(room, goodnames.join(", ") + " were allowed a roll!");
+		} else {
+			this.say(room, "Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
+		}
+	},
+
 	roll: function (target, user, room) {
 		let realtarget = target;
-		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
+			let index = Games.excepted.indexOf(user.id);
+			if (index === -1) return;
+			Games.excepted.splice(index, 1);
+		}
 		let plusIndex = target.indexOf("+");
 		let adder = 0;
 		if (plusIndex !== -1) {
