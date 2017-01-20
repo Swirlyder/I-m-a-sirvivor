@@ -31,6 +31,7 @@ class TTP extends Games.Game {
 			let mons = [mon1, mon2, mon3];
 			this.index += 3;
 			this.mons.set(this.players[userID], mons);
+			console.log(mons);
 		}
 		this.order = Object.keys(this.players);
 		this.handoutMon();
@@ -176,6 +177,7 @@ class TTP extends Games.Game {
 					}
 					this.mons.set(winPlayer, mons);
 					winPlayer.say("You were awarded " + names.join(", ") + " for surviving!");
+					this.index += 2;
 				}
 				this.stat = null;
 				this.curPlayer = null;
@@ -227,15 +229,15 @@ class TTP extends Games.Game {
 		let mons = this.mons.get(player);
 		for (let i = 0; i < mons.length; i++) {
 			let curMon = mons[i];
-			if (Tools.toId(curMon.species) === Tools.toId(target)); {
-				index = i;
+			if (Tools.toId(curMon.species) === Tools.toId(target)) {
+				index = i + 1;
 				break;
 			}
 		}
-		if (!index && index !== 0) return user.say("You don't have [" + mon.species + "].");
+		if (!index) return user.say("You don't have [" + mon.species + "].");
 		user.say("You have played **" + mon.species + "**!");
 		this.attackMons.set(player, mon);
-		mons.splice(index, 1);
+		mons.splice(index - 1, 1);
 		this.mons.set(player, mons);
 		this.numPlayed++;
 		if (this.numPlayed === 2) {

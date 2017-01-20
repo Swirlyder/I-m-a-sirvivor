@@ -277,7 +277,8 @@ class GamesManager {
 	}
 
 	loadGame(fileName) {
-		delete require.cache[Config.homepath + fileName];
+		var path = process.cwd();
+		delete require.cache[path + '\\games\\' + fileName];
 		let file = require('./games/' + fileName);
 		if (file.game && file.name && file.id) this.games[file.id] = file;
 		this.aliases[file.name] = file.aliases;
@@ -339,13 +340,8 @@ class GamesManager {
 		room.game.signups();
 	}
 	createGame(game, room) {
-	    if (room.canVote) return Parse.say(room, "Voting is in progress!");
 		if (room.game) {
-			if (room.game.minigame) {
-			    return Parse.say(room, "A minigame is in progress!");
-			} else {
-			    return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
-			}
+			return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
 		}
 		let id = Tools.toId(game);
 		for (let fileID in this.games) {
