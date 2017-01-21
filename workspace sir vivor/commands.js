@@ -81,7 +81,7 @@ exports.commands = {
 	git: function(arg, user, room)
 	{
 		var text = (room === user || user.isExcepted()) ? '' : '/pm ' + user.id + ', ';
-		text += '**Pokemon Showdown Bot** source code: ' + Config.fork;
+		text += '**Sir Vivor Bot** source code: ' + Config.fork;
 		this.say(room, text);
 	},
 	help: 'guide',
