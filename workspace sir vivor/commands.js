@@ -626,9 +626,7 @@ exports.commands = {
 	roomvoice: 'host',
 	host: function(target, user, room)
 	{
-		if (!user.hasRank(room.id, '%')) {
-			if (!user.hasRank(room.id, '+') || toId(target) !== user.id) return;
-		}
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
 		let realuser = Users.get(target);
 		if (!realuser) return;
 		if (Games.host || room.game) {
@@ -1622,7 +1620,7 @@ exports.commands = {
 			this.say(room, "Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
 		}
 	},
-
+	dice: 'roll',
 	roll: function (target, user, room) {
 		let realtarget = target;
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
@@ -1735,7 +1733,7 @@ exports.commands = {
 		if (room.id !== user.id) return;
 	    Rooms.rooms.forEach(function(room) {
 		    if (room.game && typeof room.game.destroy === 'function') {
-			room.game.destroy(target, user);      
+				room.game.destroy(target, user);      
 		    }
 		});
     },
