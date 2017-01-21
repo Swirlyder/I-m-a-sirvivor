@@ -240,6 +240,7 @@ exports.parse = {
 		}
 	},
 	chatMessage: function (message, user, room) {
+		
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
 		message = message.trim();
 		if (message.substr(0, 6) === '/me in' && room.game) {

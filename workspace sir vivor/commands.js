@@ -112,14 +112,20 @@ exports.commands = {
 		if (!user.isExcepted()) return false;
 		try
 		{
+			var path = process.cwd();
+			delete require.cache[path + '\\commands.js'];
 			this.uncacheTree('./commands.js');
-			Commands = require('./commands.js').commands;
+			global.Commands = Commands = require('./commands.js').commands;
 			this.say(room, 'Commands reloaded.');
 		}
 		catch (e)
 		{
 			error('failed to reload: ' + e.stack);
 		}
+	},
+	join: function (arg, user, room) {
+		console.log('hi');
+		this.say(room, '/join ' + arg);
 	},
 	custom: function(arg, user, room)
 	{

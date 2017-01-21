@@ -5,7 +5,7 @@
  * and tracks their userlists. Room command and modding settings are
  * loaded on room join, if present.
  */
-
+'use strict';
 var Rooms = Object.create(null);
 var rooms = Rooms.rooms = new Map();
 
