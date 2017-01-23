@@ -831,8 +831,25 @@ exports.commands = {
 
 	win: function (arg, user, room) {
 		if (!Games.host || Games.host.id !== user.id) return;
-		this.say(room, 'The winner is ' + arg + '! Thanks for playing!');
-		Games.host = null;
+		if (user.hasRank(room.id, '+')) {
+			if (Games.points) {
+				this.say(room, ".addpoints " + user.name + ", " + Games.points);
+				Games.points = null;
+			} else {
+				this.say(room, "No theme was selected, so I can't give you hostpoints!");
+			}
+			Games.host = null;
+			this.say(room, "The winner is " + arg + "!");
+		} else {
+			if (Games.points) {
+				this.say(room, ".addpoints " + user.name + ", " + Games.points);
+				this.say(room, ".win " + arg);
+				this.say(room, "Thanks for playing!");
+				Games.host = null;
+			} else {
+				this.say(room, "Please select a theme before winning a person!");
+			}
+		}
 	},
 
 	intro: function(arg, user, room)

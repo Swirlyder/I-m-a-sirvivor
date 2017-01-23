@@ -98,6 +98,9 @@ class Game {
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
 			this.say("**Winner:** " + winPlayer.name);
+			if (this.playerCount > 3) {
+				this.say(".win " + winPlayer.name);
+			}
 		}
 		if (this.ended) return;
 		if (this.timeout) clearTimeout(this.timeout);
