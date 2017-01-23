@@ -688,7 +688,7 @@ exports.commands = {
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
-		if (!user.hasRank(room.id, "%")) return;
+	        if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
 		if (target === "") {
 			if (Games.host) {
 				this.say(room, "The game was forcibly ended.");
