@@ -703,7 +703,7 @@ exports.commands = {
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
-		if (!user.hasRank(room.id, "%")) return;
+	        if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
 		if (target === "") {
 			if (Games.host) {
 				this.say(room, "The game was forcibly ended.");
@@ -846,25 +846,8 @@ exports.commands = {
 
 	win: function (arg, user, room) {
 		if (!Games.host || Games.host.id !== user.id) return;
-		if (user.hasRank(room.id, '+')) {
-			if (Games.points) {
-				this.say(room, ".addpoints " + user.name + ", " + Games.points);
-				Games.points = null;
-			} else {
-				this.say(room, "No theme was selected, so I can't give you hostpoints!");
-			}
-			Games.host = null;
-			this.say(room, "The winner is " + arg + "!");
-		} else {
-			if (Games.points) {
-				this.say(room, ".addpoints " + user.name + ", " + Games.points);
-				this.say(room, ".win " + arg);
-				this.say(room, "Thanks for playing!");
-				Games.host = null;
-			} else {
-				this.say(room, "Please select a theme before winning a person!");
-			}
-		}
+		this.say(room, 'The winner is ' + arg + '! Thanks for playing!');
+		Games.host = null;
 	},
 
 	intro: function(arg, user, room)
