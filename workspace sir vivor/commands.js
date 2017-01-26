@@ -3,6 +3,21 @@
  *
  * @license MIT license
  */
+var GoogleSpreadsheet = require('google-spreadsheet');
+var async = require('async');
+ 
+// spreadsheet key is the long id in the sheets URL 
+
+
+
+// If modifying these scopes, delete your previously saved credentials
+// at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
+
+/**
+ * Print the names and majors of students in a sample spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ */
+
 var http = require('http');
 var cb = require('origindb')('lb');
 var _ = require('lodash');
@@ -883,6 +898,42 @@ exports.commands = {
 		}
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
+	},
+	dd: function (arg, user, room) {
+		var sheet;
+		async.series([
+			function setAuth(step) {
+		// see notes below for authentication instructions! 
+				var doc = new GoogleSpreadsheet('1v1NluETpaeiF37rLw4YbXL8Fb0T5MAOvC9RE8FbLH1k');
+
+				var creds = require('./client_secret.json');
+			// OR, if you cannot save the file locally (like on heroku) 
+				var creds_json = {
+					client_email: 'stuff-667@starlit-surge-156604.iam.gserviceaccount.com',
+					private_key: 'd8e5b032fde29054d817b6fd5a11cafc66311c93'
+				}
+				console.log('hi');
+				doc.useServiceAccountAuth(creds, step);
+			},
+			function getInfoAndWorksheets(step) {
+				console.log('sup');
+				doc.getInfo(function(err, info) {
+					console.log('Loaded doc: '+info.title+' by '+info.author.email);
+					sheet = info.worksheets[0];
+					console.log('sheet 1: '+sheet.title+' '+sheet.rowCount+'x'+sheet.colCount);
+					step();
+				});
+			},
+			function workingWithRows(step) {
+				console.log('nerd');
+    // google provides some query options 
+				sheet.getRows({
+					
+				}, function( err, rows ){
+					console.log('Read '+rows.length+' rows');
+					});
+				},
+			]);
 	},
 	nbt: function(arg, user, room)
 	{

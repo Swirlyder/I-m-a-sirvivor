@@ -64,7 +64,7 @@ class TTP extends Games.Game {
 				this.oplayer.eliminated = true;
 				names.push("**" + this.oplayer.name + "**");
 			}
-			this.say(names.join(" and ") + (names.length > 1 ? "were" : "was") + " mked for not playing a mon!");
+			this.say(names.join(" and ") + (names.length > 1 ?  "were" : " was") + " mked for not playing a mon!");
 		} else if (this.statPlayer) {
 			this.say("**" + this.statPlayer.name + "** didn't choose a stat!");
 			this.statPlayer.eliminated = true;
@@ -73,7 +73,7 @@ class TTP extends Games.Game {
 			this.curPlayer.eliminated = true;
 		}
 		if (this.getRemainingPlayerCount() === 0) {
-			this.say("Everyone awas mked!");
+			this.say("Everyone was mked!");
 			this.end();
 			return;
 		}

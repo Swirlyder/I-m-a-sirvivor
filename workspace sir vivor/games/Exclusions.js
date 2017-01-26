@@ -75,6 +75,7 @@ class EXC extends Games.Game {
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
 			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+			this.finals = true;
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			this.canAttack = true;
@@ -180,20 +181,21 @@ class EXC extends Games.Game {
 			this.rolla = roll;
 		} else {
 			this.rollb = roll;
-			let winPlayer, losePlayer;
 			if (this.rolla === this.rollb) {
 				this.say("The rolls were the same! Rerolling...");
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			} else {
+				let winPlayer, losePlayer;
 				if (this.rolla > this.rollb) {
-					winPlayer = this.curPlayer;
-					losePlayer = this.oplayer;
+					this.say("**" + this.curPlayer + "** beats up **" + this.oplayer + "**!");
+					this.oplayer.eliminated = true;
+					
+				} else if (this.finals) {
+					this.say("**" + this.oplayer + "** beats up **" + this.curPlayer + "**!");
+					this.curPlayer.eliminated = true;
 				} else {
-					winPlayer = this.oplayer;
-					losePlayer = this.curPlayer;
+					this.say("**" + this.oplayer.name + "** defended successfully!");
 				}
-				this.say("**" + winPlayer.nick + "** beats up **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
-				losePlayer.eliminated = true;
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
 		}
