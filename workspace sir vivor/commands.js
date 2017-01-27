@@ -651,8 +651,19 @@ exports.commands = {
 		let realuser = Users.get(target);
 		if (!realuser) return;
 		if (Games.host || room.game) {
-			this.say(room, realuser.name + " was added to the hostqueue!");
-			Games.hosts.push(realuser.name);
+			target = Tools.toId(realuser.name);
+			let i = 0, len = Games.hosts.length;
+			for (; i < len; i++) {
+				if (target === Tools.toId(Games.hosts[i])) {
+					break;
+				}
+			}
+			if (i !== len) {
+				this.say(room, realuser.name + " is already on the hostqueue.");
+			} else {
+				this.say(room, realuser.name + " was added to the hostqueue!");
+				Games.hosts.push(realuser.name);
+			}
 			return;
 		}
 		Games.host = realuser;
@@ -703,7 +714,7 @@ exports.commands = {
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
-	        if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
+	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
 		if (target === "") {
 			if (Games.host) {
 				this.say(room, "The game was forcibly ended.");
