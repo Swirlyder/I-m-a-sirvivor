@@ -128,7 +128,7 @@ exports.commands = {
 		try
 		{
 			var path = process.cwd();
-			delete require.cache[path + '\\commands.js'];
+			delete require.cache[path + ((path.indexOf('\\') === -1) ? '/' : '\\') +'commands.js'];
 			this.uncacheTree('./commands.js');
 			global.Commands = Commands = require('./commands.js').commands;
 			this.say(room, 'Commands reloaded.');

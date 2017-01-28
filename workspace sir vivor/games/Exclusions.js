@@ -187,14 +187,14 @@ class EXC extends Games.Game {
 			} else {
 				let winPlayer, losePlayer;
 				if (this.rolla > this.rollb) {
-					this.say("**" + this.curPlayer + "** beats up **" + this.oplayer + "**!");
+					this.say("**" + this.curPlayer.nick + "** beats up **" + this.oplayer.nick + "**, who was actually **" + this.oplayer.name + "**!");
 					this.oplayer.eliminated = true;
 					
 				} else if (this.finals) {
-					this.say("**" + this.oplayer + "** beats up **" + this.curPlayer + "**!");
+					this.say("**" + this.oplayer.nick + "** beats up **" + this.curPlayer.nick + "**, who was actually **" + this.curPlayer.name + "**!");
 					this.curPlayer.eliminated = true;
 				} else {
-					this.say("**" + this.oplayer.name + "** defended successfully!");
+					this.say("**" + this.oplayer.nick + "** defended successfully!");
 				}
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
