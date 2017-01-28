@@ -1701,13 +1701,13 @@ exports.commands = {
 			if (!roll) return;
 		}
 		let rolls = [];
-		let sum = 0;
+		let sum = adder || 0;
 		for (let i = 0; i < numDice; i++) {
 			rolls.push(Tools.random(roll) + 1);
 			sum += rolls[i];
 		}
 		if (numDice === 1) {
-			let str = "Roll (1 - " + roll + "): " + rolls[0];
+			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
 			if (room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
 			} else {
