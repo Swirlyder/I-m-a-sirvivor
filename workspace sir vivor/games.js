@@ -264,6 +264,66 @@ class GamesManager {
 		this.isTimer = false;
 		this.points = null;
 		this.excepted = [];
+		this.numHosts = {};
+	}
+
+	importHosts() {
+		try {
+			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json'));
+			console.log(this.numHosts);
+		} catch (e) {};
+	}
+
+	exportHosts() {
+		fs.writeFileSync('./databases/hosts.json', JSON.stringify(this.numHosts));
+		//fs.writeFileSync('./databases/' + roomid + '.json', JSON.stringify(this.databases[roomid]))
+	}
+
+	addHost(user) {
+		if (user.id) {
+			user = user.id;
+		}
+		user = Tools.toId(user);
+		let time = Math.floor(new Date().getTime() / 1000);
+		if (user in this.numHosts) {
+			this.numHosts[user].push(time);
+		} else {
+			this.numHosts[user] = [time];
+		}
+	}
+
+	getHosts(user, days) {
+		user = Tools.toId(user);
+		let curTime = Math.floor(new Date().getTime() / 1000);
+		if (!(user in this.numHosts)) {
+			return ("**" + user + "** has never hosted.");
+		} else {
+			let time = days * 60 * 60 * 24;
+			let hosts = this.numHosts[user];
+			let numHosts = 0;
+			for (let i in hosts) {
+				let hostTime = hosts[i];
+				if (Math.abs(curTime - hostTime) < time) {
+					numHosts++;
+				}
+			}
+			if (numHosts === 0) {
+				return ("**" + user + "** has not hosted in the last " + days + " day" + (days > 1 ? "s" : "") + ".");
+			} else {
+				return ("**" + user + "** has hosted " + numHosts + " time" + (numHosts > 1 ? "s" : "") + " in the last " + days + " day" + (days > 1 ? "s" : "") + ".");
+			}
+		}
+	}
+
+	removeHost(user) {
+		if (user.id) {
+			user = user.id;
+		}
+		user = Tools.toId(user);
+		if (!(user in this.numHosts)) return false;
+		if (this.numHosts[user].length === 0) return false;
+		this.numHosts[user].splice(this.numHosts[user].length - 1, 1);
+		return true;
 	}
 
 	timer(room) {
@@ -299,6 +359,7 @@ class GamesManager {
 			this.aliases[file.name] = file.aliases;
 			this.fileMap[file.id] = fileName;
 		}
+		this.importHosts();
 	}
 
 	sayDescription(game, room) {
@@ -362,5 +423,7 @@ class GamesManager {
 let Games = new GamesManager();
 Games.Game = Game;
 Games.Player = Player;
+Games.backupInterval = setInterval(() => Games.exportHosts(), 60 * 1000);
+
 
 module.exports = Games;

@@ -647,7 +647,7 @@ exports.commands = {
 	roomvoice: 'host',
 	host: function(target, user, room)
 	{
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let realuser = Users.get(target);
 		if (!realuser) return;
 		if (Games.host || room.game) {
@@ -669,7 +669,34 @@ exports.commands = {
 		Games.host = realuser;
 		this.say(room, "survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
 		this.say(room, "/modnote " + realuser.name + " hosted");
+		Games.addHost(realuser);
 		Games.points = null;
+	},
+
+	userhosts: function (target, user, room) {
+		if (!user.hasRank('survivor', '%') || room !== user) return;
+		if (!target) return user.say("Please specify a user.");
+		let split = target.split(",");
+		let realuser = split[0];
+		let numDays = 7;
+		if (split.length > 1) {
+			numDays = Math.floor(Tools.toId(split[1]));
+		} 
+		if (!numDays) {
+			numDays = 7;
+		}
+		user.say(Games.getHosts(realuser, numDays));
+	},
+
+	removehost: function (target, user, room) {
+		if (!user.hasRank('survivor', '%') || room !== user) return;
+		if (!target) return user.say("Please specify a user.");
+		if (Games.removeHost(target)) {
+			user.say("One host has been removed from " + target);
+			this.say(Rooms.get('survivor'), '/modnote ' + user.name + " removed a host from " + target);
+		} else {
+			user.say("That user hasn't hosted recently.");
+		}
 	},
 	/*roomdemote: 'reoomdevoice',
 	roomdevoice: function(arg, user, room)
@@ -1014,6 +1041,7 @@ exports.commands = {
 		this.say(room, "survgame! " + name + " is hosting! Do ``/me in`` to join!");
 		this.say(room, "/modnote " + name + " hosted");
 		Games.host = Users.get(name);
+		Games.addHost(name);
 		Games.points = null;
 	},
 
