@@ -118,7 +118,7 @@ class Axew extends Games.Game {
 				}
 				strs.push('<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br></div>"); 
 			} else {
-				
+				strs.push('<div style="float: left; width: 50%"><img src="http://play.pokemonshowdown.com/sprites/bwicons/0.png" width="32" height="32" /><b><u>' + card + '</u></b><br>' + shortdescription[card] + "<br><br><br></div>");
 			}
 			//<div class="infobox"><div style="height: 80px"><div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/422.png" width="32" height="32" /><b><u>Shellos</u></b><br>Water<br></div></div></div>
 			//<div class="infobox"><div style="height: 240px"><div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/207.png" width="32" height="32" /><b><u>Gligar</u></b><br>Purple<br>Ground/Flying<br><br></div>
@@ -127,7 +127,7 @@ class Axew extends Games.Game {
 	}
 
 	sayDrawCards(cards, player) {
-		if (Users.self.hasRank(this.room, '+')) {
+		if (Users.self.hasRank(this.room.id, '+')) {
 			let str = this.getString(this.cards.get(player));
 			player.say("You drew:");
 			this.say("/pminfobox " + player.id + ", " + str);
@@ -147,7 +147,7 @@ class Axew extends Games.Game {
 	}
 
 	sayCards(player, isStart) {
-		if (Users.self.hasRank(this.room, '+')) {
+		if (Users.self.hasRank(this.room.id, '+')) {
 			let str = this.getString(this.cards.get(player));
 			player.say((isStart ? "Starting" : "Current") + " hand: ");
 			console.log('/n' + str + '/n');
