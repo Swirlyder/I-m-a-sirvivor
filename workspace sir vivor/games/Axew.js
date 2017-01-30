@@ -42,7 +42,7 @@ class Axew extends Games.Game {
 		for (let i in mons) {
 			this.mons.push(Tools.data.pokedex[mons[i]].species);
 		}
-		this.numCards = 7;
+		this.numCards = 1;
 		this.battleRound = 0;
 		this.curPlayer = null;
 		this.types = null;
@@ -102,7 +102,7 @@ class Axew extends Games.Game {
 
 	getString(cards) {
 		let height = Math.floor((cards.length + 1) / 2) * 80;
-		let start = '<div class="infobox"><div style="height: "' + height + '>';
+		let start = '<div class="infobox"><div style="height: ' + height + 'px">';
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
@@ -116,10 +116,12 @@ class Axew extends Games.Game {
 				} else {
 					num = mon.num.toString();
 				}
-				strs.push('<div style = "float: left; width: 50%"<img src= "http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width = "32" height = "32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br></div>"); 
+				strs.push('<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br></div>"); 
 			} else {
 				
 			}
+			//<div class="infobox"><div style="height: 80px"><div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/422.png" width="32" height="32" /><b><u>Shellos</u></b><br>Water<br></div></div></div>
+			//<div class="infobox"><div style="height: 240px"><div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/207.png" width="32" height="32" /><b><u>Gligar</u></b><br>Purple<br>Ground/Flying<br><br></div>
 		}
 		return (start + strs.join("") + "</div></div>");
 	}
