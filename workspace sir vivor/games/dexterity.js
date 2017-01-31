@@ -161,10 +161,10 @@ class Dexterity extends Games.Game {
 			} else if (!this.roll2) {
 				this.roll2 = roll;
 				if (this.roll1 > this.roll2) {
-					this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
+					this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
 					this.winIndex = 0;
 				} else if (this.roll1 < this.roll2) {
-					this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
+					this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
 					this.winIndex = 1;
 				} else {
 					this.say("The rolls were a tie! Rerolling...");

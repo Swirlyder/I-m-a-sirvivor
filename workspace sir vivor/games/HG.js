@@ -143,7 +143,7 @@ class HG extends Games.Game {
 						winPlayer = this.oplayer;
 						losePlayer = this.curPlayer;
 					}
-					this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "**!");
+					this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
 					losePlayer.eliminated = true;
 					this.timeout = setTimeout(() => this.handleAttacks(), 10 * 1000);
 				} else {

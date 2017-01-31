@@ -265,6 +265,14 @@ class GamesManager {
 		this.points = null;
 		this.excepted = [];
 		this.numHosts = {};
+		this.destroyMsg = [
+		"annihilates",
+		"beats up",
+		"reks",
+		"destroys",
+		"demolishes",
+		"decimates",
+		]
 	}
 
 	importHosts() {

@@ -165,7 +165,7 @@ class TTP extends Games.Game {
 					winPlayer = this.oplayer;
 					losePlayer = this.curPlayer;
 				}
-				this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "**!")
+				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!")
 				losePlayer.eliminated = true;
 				let mons = this.mons.get(winPlayer);
 				if (mons.length === 1) {

@@ -219,7 +219,7 @@ class GearUp extends Games.Game {
 						winItems.push(randItem);
 						this.players[losePlayer.id].eliminated = true;
 						this.items.set(winPlayer, winItems);
-						this.say("**" + winPlayer.name + "** beats up **" + losePlayer.name + "** and steals their " + randItem.name + "!");
+						this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "** and steals their " + randItem.name + "!");
 					} else {
 						this.say("**" + this.oplayer.name + "** defended successfully!");
 					}

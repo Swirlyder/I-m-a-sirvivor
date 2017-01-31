@@ -87,11 +87,11 @@ class HGS extends Games.Game {
 				this.rollb = Math.floor(roll);
 				if (this.rolla !== this.rollb) {
 					if (this.rolla < this.rollb) {
-						this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
-						this.players[this.curPlayer.id].eliminated = true;
+						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
+						this.curPlayer.eliminated = true;
 					} else if (this.rolla > this.rollb) {
-						this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
-						this.players[this.oplayer.id].eliminated = true;
+						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
+						this.oplayer.eliminated = true;
 					}
 					this.curPlayer = null;			
 					this.timeout = setTimeout(() => this.nextRound(), 10 * 1000);

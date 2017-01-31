@@ -185,7 +185,7 @@ class RPS extends Games.Game {
 				if (this.rolla !== this.rollb) {
 					if (this.win) {
 						if (this.rolla > this.rollb) {
-							this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**!");
+							this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
 							this.oplayer.eliminated = true;
 						} else {
 							this.say("**" + this.oplayer.name + "** defended successfully!");
@@ -194,7 +194,7 @@ class RPS extends Games.Game {
 						if (this.rolla > this.rollb) {
 							this.say("**" + this.curPlayer.name + "** defended successfully!");
 						} else {
-							this.say("**" + this.oplayer.name + "** beats up **" + this.curPlayer.name + "**!");
+							this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
 							this.curPlayer.eliminated = true;
 						}
 					}

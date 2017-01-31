@@ -159,7 +159,7 @@ class HGA extends Games.Game {
 				winPlayer = this.oplayer;
 				losePlayer = this.curPlayer;
 			}
-			this.say("**" + winPlayer.nick + "** beats up **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
+			this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
 			losePlayer.eliminated = true;
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}

@@ -167,7 +167,7 @@ class HT extends Games.Game {
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			} else {
 				if (this.rolla > this.rollb) {
-					this.say("**" + this.curPlayer.name + "** beats up **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
+					this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
 					this.oplayer.eliminated = true;
 				} else {
 					this.say("**" + this.oplayer.name + "** defended successfully!");

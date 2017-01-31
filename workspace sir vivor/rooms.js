@@ -11,12 +11,12 @@ var rooms = Rooms.rooms = new Map();
 
 Rooms.join = function () {
 	for (let i = 0; i < Config.rooms.length; i++) {
-		let room = toId(Config.rooms[i]);
+		let room = Config.rooms[i];
 		if (room === 'lobby' && Config.serverid === 'showdown') continue;
 		send('|/join ' + room);
 	}
 	for (let i = 0; i < Config.privaterooms.length; i++) {
-		let room = toId(Config.privaterooms[i]);
+		let room = Config.privaterooms[i];
 		if (room === 'lobby' && Config.serverid === 'showdown') continue;
 		send('|/join ' + room);
 	}
