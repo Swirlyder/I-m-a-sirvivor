@@ -3,7 +3,7 @@
 npm-debug.log
 config.js
 settings.json
-
+/databases/hosts.json
 .hg
 .bzr
 .svn
