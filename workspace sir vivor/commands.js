@@ -968,7 +968,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += 'Info on **Next Big Theme** can be found here: http://goo.gl/Ar7BaB';
+		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1S0B56HqvYD6kS87hrkjuav0c2zlG9RlNVMhew1e_nvo/edit';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
