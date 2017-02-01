@@ -56,7 +56,7 @@ class HT extends Games.Game {
 		if (!player || player.eliminated) return;
 		target = Tools.toId(target);
 		if (target.endsWith('type')) target = target.substr(0, target.length - 4);
-		if (!Tools.data.convertType[target]) return user.say("Invalid type.");
+		if (target in Tools.data.convertType) return user.say("Invalid type.");
 		if (this.types.has(player)) return user.say("You have already chosen a type!");
 		this.types.set(player, target);
 		user.say("You have chosen the **" + this.turnFirstUpper(target) + "** type!");
