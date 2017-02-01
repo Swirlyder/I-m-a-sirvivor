@@ -45,7 +45,7 @@ class TD extends Games.Game {
 			let index = Math.floor(Math.random() * 2);
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[index]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1 - index]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+		this.say("Only **" + this.curPlayer.name + "[" + this.troops.get(this.curPlayer) + "]** and **" + this.oplayer.name + "[" + this.troops.get(this.oplayer) + "]** are left! Moving directly to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			let strs = [];
