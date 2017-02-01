@@ -53,7 +53,6 @@ class TTP extends Games.Game {
 	}
 
 	onNextRound() {
-		this.attackMons.clear();
 		if (this.stat) {
 			let names = [];
 			if (!this.attackMons.get(this.curPlayer)) {
@@ -64,7 +63,7 @@ class TTP extends Games.Game {
 				this.oplayer.eliminated = true;
 				names.push("**" + this.oplayer.name + "**");
 			}
-			this.say(names.join(" and ") + (names.length > 1 ?  "were" : " was") + " mked for not playing a mon!");
+			this.say(names.join(" and ") + (names.length > 1 ?  " were" : " was") + " mked for not playing a mon!");
 		} else if (this.statPlayer) {
 			this.say("**" + this.statPlayer.name + "** didn't choose a stat!");
 			this.statPlayer.eliminated = true;
@@ -72,6 +71,7 @@ class TTP extends Games.Game {
 			this.say("**" + this.curPlayer.name + "** didn't choose anyone to attack and is eliminated!");
 			this.curPlayer.eliminated = true;
 		}
+		this.attackMons.clear();
 		if (this.getRemainingPlayerCount() === 0) {
 			this.say("Everyone was mked!");
 			this.end();
