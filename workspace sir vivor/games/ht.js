@@ -15,6 +15,7 @@ class HT extends Games.Game {
 		this.numTypes = 0;
 		this.types = new Map();
 		this.order = [];
+		this.isFinals = false;
     }
 
     onStart() {
@@ -72,11 +73,12 @@ class HT extends Games.Game {
 			this.end();
 			return;
 		} else if (this.getRemainingPlayerCount() === 2) {
-			if (this.cur) {
+			if (this.isFinals) {
 				this.cur = 1 - this.cur;
 			} else {
 				this.cur = Math.floor(Math.random() * 2);
 			}
+			this.isFinals = true;
 			this.canAttack = false;
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[this.cur]];
