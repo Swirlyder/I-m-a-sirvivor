@@ -7,7 +7,7 @@ const id = Tools.toId(name);
 const data = {"twig": {atk:50, acc:100, name: "Twig", aliases: ["twig", "stick"], cd: 0},
 			  "club": {atk:75, acc:85, name: "Club", aliases: ["club"], cd: 0},
 			  "sword":{atk:100, acc:70, name: "Classic Sword", aliases: ["sword", "classicsword"], cd: 0},
-			  "jabulin": {atk:125, acc:50, name: "Jabulin of Pain", aliases: ["jabulin", "jabulinofpain"], cd: 0},
+			  "jabulin": {atk:125, acc:50, name: "Jabulin of Pain", aliases: ["jabulin", "jabulinofpain", "jab"], cd: 0},
 			  "sofa": {atk:135, acc:40, name: "Sofa of Median", aliases: ["sofa", "sofaofmedian"], cd: 1},
 			  "ax": {atk:150, acc:30, name: "Mass O' Ax", aliases: ["ax", "axe", "massoax"], cd: 2},
 "death": {atk:200, acc:10, name: "30lbs lance of Diamond known simply as DEATH", aliases: ["death", "30lbslanceofdiamondknownsimplyasDEATH"], cd: 3}};
