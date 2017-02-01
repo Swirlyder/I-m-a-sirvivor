@@ -965,7 +965,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 
 		text += 'Info on **Next Big Theme** can be found here: http://goo.gl/Ar7BaB';
@@ -980,7 +980,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'This has been discontinued but what\'s left of the **Survivor Rankings** can be found here: http://goo.gl/jAucyT';
 		this.say(room, text);
@@ -994,7 +994,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'How To Host: http://survivor-ps.weebly.com/how-to-host.html';
 		this.say(room, text);
@@ -1008,7 +1008,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Hello, welcome to Survivor. Here we play a series of Survivor games. Survivor is a game based on dice rolls,  some games require less luck than others. Example attack: http://i.imgur.com/lKDjvWi.png';
 		this.say(room, text);
@@ -1023,7 +1023,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Survivor Themes and How to Play Them: http://survivor-ps.weebly.com/themes-and-more.html';
 		this.say(room, text);
@@ -1056,7 +1056,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Aussie man of mystery who always beats Beo at RNG';
 		this.say(room, text);
@@ -1071,7 +1071,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'The best eyebrows on PS! and Smogon bar none~';
 		this.say(room, text);
@@ -1086,7 +1086,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Inferior consumer model';
 		this.say(room, text);
@@ -1102,7 +1102,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Lol, more like can\'t dance';
 		this.say(room, text);
@@ -1117,7 +1117,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += ' "I have to go, night!"';
 		this.say(room, text);
@@ -1131,7 +1131,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'woof!';
 		this.say(room, text);
@@ -1163,7 +1163,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'S-S-Senpai!';
 		this.say(room, text);
@@ -1179,7 +1179,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '/me sips tea';
 		this.say(room, text);
@@ -1193,7 +1193,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Global Roomowner, Administrator and all around Good Guy!';
 		this.say(room, text);
@@ -1209,7 +1209,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'A friendly reminder that Zeonth shamelessly advertises the <<cap>> metagame here';
 		this.say(room, text);
@@ -1224,7 +1224,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '/addhtmlbox <center><img src="https://media.giphy.com/media/lXiRDbPcRYfUgxOak/giphy.gif" width=231 height=150/></center>';
 		this.say(room, text);
@@ -1239,7 +1239,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'dont lose? HA! More like dont win :^)';
 		this.say(room, text);
@@ -1254,7 +1254,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Famous for .woof and needs to update his number by 2 years';
 		this.say(room, text);
@@ -1269,7 +1269,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Which random username will he switch to now?';
 		this.say(room, text);
@@ -1284,7 +1284,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Survivor\'s Resident Russian Spy';
 		this.say(room, text);
@@ -1299,7 +1299,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Hey, what\'s up guys it\'s Soccer here';
 		this.say(room, text);
@@ -1315,7 +1315,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Bon Dance, Aknolan, PenQuin and Swirlyder; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		this.say(room, text);
@@ -1330,7 +1330,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Anime was a mistake';
 		this.say(room, text);
@@ -1345,7 +1345,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Survivor\'s most toxic presence';
 		this.say(room, text);
@@ -1362,7 +1362,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Don\'t moq me for all my name changes ;_;';
 		this.say(room, text);
@@ -1376,7 +1376,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'Emma☯Femcario: Wind Waker, Amiibo Hunter, and  the 5 time Survivor Champion!';
 		this.say(room, text);
@@ -1390,7 +1390,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '/ME dabs';
 		this.say(room, text);
@@ -1404,7 +1404,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'What IS UP SurvivorAlert NATION, it\'s your host, Kiiilleeeeer saaaaaaanjaaaaaaaay, let\'s get riiiioooooooooght into the meeeeeeeeemes!';
 		this.say(room, text);
@@ -1419,7 +1419,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '*GGGHHHH*....beep beep bepp....beep beep beep...beep bee-';
 		this.say(room, text);
@@ -1433,7 +1433,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'H E N K A B O Y S';
 		this.say(room, text);
@@ -1448,7 +1448,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '"OM Goodness! Leave OM Room alone..." ;~;';
 		this.say(room, text);
@@ -1462,7 +1462,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += 'meow!';
 		this.say(room, text);
@@ -1477,7 +1477,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '**Attacker Immunity:** __The attacker doesnt die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
 		this.say(room, text);
@@ -1491,7 +1491,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
@@ -1506,7 +1506,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id+ ', ';
 		}
 		text += '**Golf:** __Lower rolls win. Opposite of normal survivor__';
 		this.say(room, text);
@@ -1521,7 +1521,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack__';
 		this.say(room, text);
@@ -1540,7 +1540,7 @@ exports.commands = {
 
 		if (!user.hasRank(room.id, '+'))
 		{
-			this.say(room, '/w ' + user + ', ' + text);
+			this.say(room, '/w ' + user.id + ', ' + text);
 		}
 	},
 
@@ -1549,13 +1549,9 @@ exports.commands = {
 		var text = '';
 		var gifs = ['/addhtmlbox <center><img src="http://media2.giphy.com/media/u7hjTwuewz3Gw/giphy.gif" width=225 height=175/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/31c91db0b76d312b966c6adfe1c3940a/tumblr_nz57a2TvRC1u17v9ro1_540.gif" width=270 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/1gyIAEh.gif" width=380 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/RDtW8Gr.gif" width=222 height=200/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/qR77BXg.gif" width=250 height=225/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/2PZ8XUR.gif" width=385 height=216/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/451d21ddbde24e207a6f7ddd92206445/tumblr_inline_nt0ujvAJ8P1qjzu7m_500.gif" width=238 height=223/></center>', '/addhtmlbox <center><img src="http://www.keysmashblog.com/wp-content/uploads/2013/02/wig-snatching.gif" width=333 height=217/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/5f2015d7ba3f93f6c258e039d377287d/tumblr_inline_nn2r5c94m11qbxex9_500.gif" width=382 height=215/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/IFOqV6m.gif" width=387 height=218/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/hSv7KYd.gif" width=267 height=219/></center>'];
 		text += gifs[Math.floor(Math.random() * gifs.length)];
-		if (user.hasRank(room.id, '#') || room.id === user.id)
+		if (user.hasRank(room.id, '#'))
 		{
 			this.say(room, text);
-		}
-		if (!user.hasRank(room.id, '+'))
-		{
-			this.say(room, '/w ' + user + ', ' + text);
 		}
 	},
 
@@ -1567,15 +1563,9 @@ exports.commands = {
 			var gifs = ['/addhtmlbox <center><img src="http://i.imgur.com/BzaMLzD.gif" width=345 height=194/> <br> Source: Fairy Tail</center>', '/addhtmlbox <center><img src="http://i.imgur.com/2qzxwG4.gif" width=345 height=195/> <br> Source: Toradora</center>', '/addhtmlbox <center><img src="http://i.imgur.com/BjAbTzB.gif" width=222 height=192/> <br> Source: Daily Lives of High School Boys</center>', '/addhtmlbox <center><img src="http://i.imgur.com/ys6IrQs.gif" width=267 height=191/> <br> Source:The World God Only Knows</center>', '/addhtmlbox <center><img src="http://i.imgur.com/IK4fVLX.gif" width=345 height=190/> <br> Source: Soul Eater</center>', '/addhtmlbox <center><img src="http://i.imgur.com/UE6AEZs.gif" width=353 height=196/> <br> Source: Gintama</center>', '/addhtmlbox <center><img src="http://i.imgur.com/sy6202O.gif" width=286 height=194/> <br> Source: YuriYuri</center>', '/addhtmlbox <center><img src="http://i.imgur.com/Bo1SjJX.gif" width=296 height=194/> <br> Source: Deadman Wonderland</center>', '/addhtmlbox <center><img src="http://i.imgur.com/KjTewQ7.gif" width=341 height=192/> <br> Source: Carnival Phantasm</center>', '/addhtmlbox <center><img src="http://i.imgur.com/RYaPwBT.gif" width=345 height=192/> <br> Source: Space Brothers</center>', '/addhtmlbox <center><img src="http://i.imgur.com/82lBuUf.gif" width=345 height=194/> <br> Source: Full Metal Alchemist: Brotherhood</center>', '/addhtmlbox <center><img src="http://media3.giphy.com/media/12dO0uYqeMVOy4/giphy.gif" width=260 height=195/> <br> Source: FLCL</center>', '/addhtmlbox <center><img src="https://66.media.tumblr.com/9f5d4e129f998f0c4358bf26a6d12a13/tumblr_nf0jxhnU9p1tyak95o1_500.gif" width=357 height=192/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://i.imgur.com/bYYRBiu.gif" width=286 height=194/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://pa1.narvii.com/5649/565e7d8046bd4b6223d153ce308086c42d06b773_hq.gif" width=385 height=190/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/14jigRRwHoGSo8/giphy.gif" width=342 height=192/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/LbvSbAz7CMmg8/giphy.gif" width=325 height=195/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="http://67.media.tumblr.com/ad16541d6ef3ee701c3308204574e0af/tumblr_nmd1mskOr91qam6y9o9_500.gif" width=450 height=195/> <br> Source: Kekkai Sensen</center>'];
 
 			text += gifs[Math.floor(Math.random() * gifs.length)];
-			if (user.hasRank(room.id, '#') || room.id === user.id)
+			if (user.hasRank(room.id, '#'))
 			{
 				this.say(room, text);
-			}
-
-			if (!user.hasRank(room.id, '+'))
-			{
-				this.say(room, '/w ' + user + ', ' + text);
-
 			}
 		}
 	},
@@ -1591,9 +1581,19 @@ exports.commands = {
 		}
 		if (!user.hasRank(room.id, '+'))
 		{
-			this.say(room, '/w ' + user + ', ' + text);
+			this.say(room, '/w ' + user.id + ', ' + text);
 		}
     },
+
+	mods: function (arg,user, room) {
+		var text = 'Host it your way, with these custom mods: http://survivor-ps.weebly.com/custommodifications.html';
+		if (user.hasRank(room.id, '+')) {
+			this.say(room, text);
+		} else {
+			user.say(text);
+		}
+	},
+
 	hostqueue: 'queue',
 	que: 'queue',
 	q: 'queue',
