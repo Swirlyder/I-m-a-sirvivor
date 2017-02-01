@@ -1599,7 +1599,7 @@ exports.commands = {
 	q: 'queue',
     queue: function(arg, user, room) {
 		if (!Games.canQueue) return;
-        if (user.hasRank(room.id, '%')) {
+        if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
             if (Games.hosts.length === 0) {
 				this.say(room, 'There are no users in the queue.');
 			} else {

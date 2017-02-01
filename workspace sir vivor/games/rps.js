@@ -65,7 +65,7 @@ class RPS extends Games.Game {
 			for (let userID in this.players) {
 				let player = this.players[userID];
 				if (player.eliminated) continue;
-				let curAttack = this.straightRPS ? this.rps.get(player) : this.attacks.get(player);
+				let curAttack = this.straightRPS ? this.rps.has(player) : this.attacks.has(player);
 				if (!curAttack) waitings.push(player.name);
 			}
 			this.say("Waiting on: "  + waitings.join(", "));
@@ -83,7 +83,7 @@ class RPS extends Games.Game {
 		for (let userID in this.players) {
 			let player = this.players[userID];
 			if (player.eliminated) continue;
-			let curAttack = this.straightRPS ? this.rps.get(player) : this.attacks.get(player);
+			let curAttack = this.straightRPS ? this.rps.has(player) : this.attacks.has(player);
 			if (!curAttack) {
 				player.say("You didn't attack a player this round and were eliminated!");
 				this.players[userID].eliminated = true;
