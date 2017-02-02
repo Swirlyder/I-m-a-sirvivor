@@ -723,12 +723,12 @@ exports.commands = {
 	},
 
 	autostart: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (room.game && typeof room.game.autostart === 'function') room.game.autostart(target);
 	},
 
 	pl: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
 	},
 
@@ -1775,7 +1775,7 @@ exports.commands = {
 	},
 
 	signups: function (target, user, room) {
-	    if (!user.hasRank(room.id, '+')) return;
+	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 	    if (!Games.createGame(target, room)) return;
 	    room.game.signups();
     },
