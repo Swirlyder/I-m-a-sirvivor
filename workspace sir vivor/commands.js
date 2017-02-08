@@ -1807,6 +1807,11 @@ exports.commands = {
 		room.game.forceEnd();
 	},
 
+	submit: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
+		this.say(room, 'Visit https://docs.google.com/forms/d/e/1FAIpQLSeY2Ndt-wC3iUXsY4yKVnGarHTBa1a4C75UYYLHpHH1qzsCrQ/viewform#responses to submit jokes and roasts!');
+	},
+
 	moo: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		this.say(room, '/me MOOs');
