@@ -1827,6 +1827,21 @@ exports.commands = {
 		});
     },
 
+	roast: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad'];
+		this.say(room, Tools.sample(roasts));
+	}
+
+	action: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.action === 'function') {
+				room.game.action(target, user);      
+		    }
+		});
+    },
+
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);
