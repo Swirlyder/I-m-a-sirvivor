@@ -311,6 +311,7 @@ exports.parse = {
 		}
 	},
 	say: function (target, text) {
+		if (!target) return;
 		var targetId = target.id;
 		if (Rooms.get(targetId)) {
 			send((targetId !== 'lobby' ? targetId : '') + '|' + text);

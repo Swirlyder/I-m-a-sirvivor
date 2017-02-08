@@ -30,7 +30,7 @@ class Dexterity extends Games.Game {
 	onStart() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			this.cards.set(player, ["Will-o-Wisp", "Spore", "Helping Hand"];
+			this.cards.set(player, ["Will-o-Wisp", "Spore", "Helping Hand"]);
 			this.points.set(player, 0);
 		}
 		this.nextRound();
@@ -44,7 +44,7 @@ class Dexterity extends Games.Game {
 			this.expectingSpore = true;
 			this.expectingWow = false;
 			this.attack.clear();
-			this.say("Please pm me your attacks and spores with ``" + Config.commandCharacter + "destroy [user]``, " Config.commandCharacter + "action spore, [user]``");
+			this.say("Please pm me your attacks and spores with ``" + Config.commandCharacter + "destroy [user]``, " + Config.commandCharacter + "action spore, [user]``");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
