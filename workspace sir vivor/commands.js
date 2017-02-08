@@ -749,6 +749,9 @@ exports.commands = {
 			Games.host = null;
 			return;
 		}
+		if (room.game) {
+			room.game.forceEnd();
+		}
 		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
 			Games.host = null;
@@ -1406,7 +1409,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'What IS UP SurvivorAlert NATION, it\'s your host, Kiiilleeeeer saaaaaaanjaaaaaaaay, let\'s get riiiioooooooooght into the meeeeeeeeemes!';
+		text += '404 command not found';
 		this.say(room, text);
 	},
 	micro: 'microwavable',
@@ -1536,6 +1539,7 @@ exports.commands = {
 		if (user.hasRank(room.id, '+') || room.id === user.id)
 		{
 			this.say(room, text);
+			return;
 		}
 
 		if (!user.hasRank(room.id, '+'))
@@ -1793,7 +1797,13 @@ exports.commands = {
 	endgame: 'end',
 	end: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		if (!room.game) return;
+		if (!room.game) {
+			if (Games.host) {
+				Games.host = null;
+				this.say(room, 'The game was forcibly ended.');
+			}
+			return;
+		}
 		room.game.forceEnd();
 	},
 
@@ -1803,7 +1813,7 @@ exports.commands = {
 	},
 
 	startgame: 'start',
-       start: function (target, user, room) {
+    start: function (target, user, room) {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
     },

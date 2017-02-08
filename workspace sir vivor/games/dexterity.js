@@ -37,6 +37,7 @@ class Dexterity extends Games.Game {
 			this.nextRound();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -62,6 +63,7 @@ class Dexterity extends Games.Game {
 			this.chooseStuff();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -74,6 +76,7 @@ class Dexterity extends Games.Game {
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -92,6 +95,7 @@ class Dexterity extends Games.Game {
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -111,6 +115,7 @@ class Dexterity extends Games.Game {
 			this.handleAttacks();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -127,6 +132,7 @@ class Dexterity extends Games.Game {
 			this.say("!roll " + item2.atk);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -149,6 +155,7 @@ class Dexterity extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -200,6 +207,7 @@ class Dexterity extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -243,6 +251,7 @@ class Dexterity extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}

@@ -80,6 +80,7 @@ global.stripCommands = function (text) {
 try {
 	global.Config = require('./config.js');
 } catch (e) {
+	console.log(e);
 	error('config.js doesn\'t exist; are you sure you copied config-example.js to config.js?');
 	process.exit(-1);
 }
@@ -106,6 +107,7 @@ if (Config.watchconfig) {
 	});
 }
 process.on('uncaughtException', err => {
+	Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Moo, An error occurred! ' + err);
 	console.log(err);
 });
 

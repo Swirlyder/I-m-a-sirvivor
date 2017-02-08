@@ -38,6 +38,10 @@ class Game {
 		this.canRejoin = false;
 	}
 
+	mailbreak() {
+		Parse.this(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!');
+	}
+
 	say(message) {
 	    Parse.say(this.room, message);
 	}

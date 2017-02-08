@@ -21,6 +21,7 @@ class RPS extends Games.Game {
 			this.nextRound();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -54,6 +55,7 @@ class RPS extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -72,6 +74,7 @@ class RPS extends Games.Game {
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -96,6 +99,7 @@ class RPS extends Games.Game {
 		}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -140,6 +144,7 @@ class RPS extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -171,6 +176,7 @@ class RPS extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -206,6 +212,7 @@ class RPS extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
@@ -253,6 +260,7 @@ class RPS extends Games.Game {
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			this.mailbreak();
 			this.end();
 			return;
 		}
