@@ -62,6 +62,9 @@ exports.parse = {
 				let users = spl[2].substr(7);
 				room = Rooms.add(roomid, !Config.rooms.includes(roomid));
 				room.onUserlist(users);
+				if (room.id === 'survivor') {
+					Parse.say(room, '/roomauth survivor');
+				}
 				return ok('joined ' + room.id);
 			}
 		}
@@ -199,6 +202,19 @@ exports.parse = {
 				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
 				this.chatMessage(spl, user, room);
 				break;
+			case 'popup':
+				var stuff = spl.slice();
+				stuff.splice(0,2);
+				var thing = stuff.join("|").split('||||');
+				Config.canHost = [];
+				for (let i = 0; i < thing.length; i++) {
+					let names = thing[i].split("||");
+					if (names[0].indexOf('+') === -1) continue;
+					let realnames = names[1].split(",");
+					for (let j = 0; j < realnames.length; j++) {
+						Config.canHost.push(Tools.toId(realnames[j]));
+					}
+				}
 			case 'pm':
 				var username = spl[2];
 				var user = Users.get(username);
