@@ -153,9 +153,9 @@ exports.parse = {
 				if (data) req.write(data);
 				req.end();
 				break;
-		        case 'html':
-		                if (room && room.game && typeof room.game.handlehtml === 'function') {
-				    room.game.handlehtml(spl[2]);
+		     case 'html':
+		        if (room && room.game && typeof room.game.handlehtml === 'function') {
+					room.game.handlehtml(spl[2]);
 				}
 				break;
 			case 'updateuser':

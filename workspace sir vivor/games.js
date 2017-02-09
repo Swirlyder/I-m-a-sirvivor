@@ -246,6 +246,19 @@ class Game {
 				message = message.substr(colonIndex + 7);
 				message = message.substr(0, message.length - 6);
 				if (typeof this.handlePick === 'function') this.handlePick(message);
+			} else {
+				if (message.indexOf("rolls") !== -1) {
+					let colonIndex = message.indexOf(":");
+					message = message.substr(colonIndex + 2);
+					let finalIndex = message.indexOf("<");
+					message = message.substr(0, finalIndex);
+					let rolls = [];
+					message = message.split(", ");
+					for (let i = 0; i < message.length; i++) {
+						rolls.push(Math.floor(message[i]));
+					}
+					if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
+				}
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
