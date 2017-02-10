@@ -75,6 +75,7 @@ class Poles extends Games.Game {
 		let names = [];
 		for (let userID in this.players) {
 			let player = this.players[userID];
+			if (player.eliminated) continue;
 			let points = this.points.get(player);
 			if (points > maxPoints) {
 				maxPoints = points;
@@ -105,6 +106,7 @@ class Poles extends Games.Game {
 		let names = [];
 		for (let userID in this.players) {
 			let player = this.players[userID];
+			if (player.eliminated) continue;
 			let points = this.points.get(player);
 			if (points < minPoints) {
 				this.bestplayers = [player];
