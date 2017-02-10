@@ -46,10 +46,12 @@ class Poles extends Games.Game {
 			let names = [];
 			for (let userID in this.players) {
 				let player = this.players[userID];
+				if (player.eliminated) continue;
 				let points = this.points.get(player);
 				maxPoints = Math.max(maxPoints, points);
 				names.push(player.name + "[" + points + "]");
 			}
+			this.say("**Players (" + names.length + "):** " + names.join(", "));
 			if (maxPoints >= 5) {
 				this.say("Somebody has reached 5 points! We will now begin finals.");
 				this.timeout = setTimeout(() => this.finalAttackee(), 5 * 1000);
@@ -60,9 +62,8 @@ class Poles extends Games.Game {
 				this.spores = [];
 				this.order = [];
 				this.isSpored.clear();
-				this.say("**Players (" + names.length + "):** " + names.join(", "));
 				this.say("Please pm me your attacks and spores with ``" + Config.commandCharacter + "destroy [user]``, ``" + Config.commandCharacter + "action spore, [user]``");
-				this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+				this.timeout = setTimeout(() => this.elimPlayers(), 90 * 1000);
 			}
 		}
 	}
@@ -140,6 +141,8 @@ class Poles extends Games.Game {
 	}
 
 	sayFinalRolls() {
+	    this.rolla= null;
+	    this.rollb = null;
 		this.say("!roll 100");
 		this.say("!roll 100");
 	}
@@ -260,7 +263,7 @@ class Poles extends Games.Game {
 		this.rolla = null;
 		this.rollb = null;
 		let adda = (this.attackHelps.length - this.attackWows.length) * 30;
-		let addb = (this.defenseHelps.length - this.defenseWows.length);
+		let addb = (this.defenseHelps.length - this.defenseWows.length) * 30;
 		let rolla = 100+adda, rollb = 100+addb;
 		if (rolla < 0) rolla = 10;
 		if (rollb < 0) rollb = 10;
@@ -370,10 +373,16 @@ class Poles extends Games.Game {
 			return user.say("Usage: ``" + Config.commandCharacter + "action [card], [user]``");
 		}
 		let card = Tools.toId(target[0]);
-		let posscards = ["spore", "willowisp", "helpinghand"];
+		let posscards = ["spore", "willowisp", "wow", "wisp", "hh", "helpinghand"];
 		let index = posscards.indexOf(card);
 		if (index === -1) {
 			return user.say("Invalid card.");
+		}
+		if (card === "hh") {
+		    card = "helpinghand";		   
+		}
+		if (card === "wisp" || card === "wow") {
+		    card = "willowisp";
 		}
 		let cards = this.cards.get(player);
 		let i;
@@ -419,11 +428,14 @@ class Poles extends Games.Game {
 			if (!attacked) {
 				return user.say("Invalid player.");
 			}
-			if (attacked !== this.currentPlayer && attacked !== this.oplayer) {
+			if (attacked !== this.curPlayer && attacked !== this.oplayer) {
 				return user.say("You can only use " + realnames[card] + " on the players currently up!");
 			}
 			this.actions.set(player, [realnames[card], attacked]);
+			cards.splice(i,1);
+			this.cards.set(player,cards);
 			return user.say("You have used " + realnames[card] + " on **" + attacked.name + "**!");
+
 		}
 	}
 
