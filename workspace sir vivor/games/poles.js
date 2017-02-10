@@ -220,39 +220,39 @@ class Poles extends Games.Game {
 			if (target === this.curPlayer && card === "Helping Hand") {
 				this.attackHelps.push(name);
 			} else if (target === this.curPlayer && card === "Will-o-Wisp") {
-				this.attackWows.push(player.name);
+				this.attackWows.push(name);
 			} else if (card === "Helping Hand") {
-				this.defenseHelps.push(player.name);
+				this.defenseHelps.push(name);
 			} else {
-				this.defenseWows.push(player.name);
+				this.defenseWows.push(name);
 			}
 		}
 		if (this.attackWows.length > 0) {
 			if (this.attackWows.length === 1) {
 				this.say(this.attackWows.join(", ") + " Will-o-Wisps **" + this.curPlayer.name + "**");
 			} else {
-				this.say(this.attackWows.join(", ") + "all Will-o-Wisp **" + this.curPlayer.name + "**");
+				this.say(this.attackWows.join(", ") + " all Will-o-Wisp **" + this.curPlayer.name + "**");
 			}
 		}
 		if (this.defenseWows.length > 0) {
 			if (this.defenseWows.length === 1) {
 				this.say(this.defenseWows.join(", ") + " Will-o-Wisps **" + this.oplayer.name + "**");
 			} else {
-				this.say(this.defenseWows.join(", ") + "all Will-o-Wisp **" + this.oplayer.name + "**");
+				this.say(this.defenseWows.join(", ") + " all Will-o-Wisp **" + this.oplayer.name + "**");
 			}
 		}
 		if (this.attackHelps.length > 0) {
 			if (this.attackHelps.length === 1) {
 				this.say(this.attackHelps.join(", ") + " Helping Hands **" + this.curPlayer.name + "**");
 			} else {
-				this.say(this.attackHelps.join(", ") + "all Helping Hand **" + this.curPlayer.name + "**");
+				this.say(this.attackHelps.join(", ") + " all Helping Hand **" + this.curPlayer.name + "**");
 			}
 		}
 		if (this.defenseHelps.length > 0) {
 			if (this.defenseHelps.length === 1) {
 				this.say(this.defenseHelps.join(", ") + " Helping Hands **" + this.oplayer.name + "**");
 			} else {
-				this.say(this.defenseHelps.join(", ") + "all Helping Hand **" + this.oplayer.name + "**");
+				this.say(this.defenseHelps.join(", ") + " all Helping Hand **" + this.oplayer.name + "**");
 			}
 		}
 		if ((this.defenseHelps.length + this.attackHelps.length + this.defenseWows.length + this.attackWows.length) === 0) {

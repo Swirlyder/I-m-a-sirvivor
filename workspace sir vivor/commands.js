@@ -723,7 +723,7 @@ exports.commands = {
 	},
 
 	autostart: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank(room.id, '+')) return;
 		if (room.game && typeof room.game.autostart === 'function') room.game.autostart(target);
 	},
 
@@ -1787,7 +1787,7 @@ exports.commands = {
 	randomgame: function (arg, user, room) {
 		if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
 		let id = Tools.sample(Object.keys(Games.games));
-		while (id === 'eclipse' || id === 'eclipsesurvivor') {
+		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(Object.keys(Games.games));
 		}
 		Games.createGame(id, room);

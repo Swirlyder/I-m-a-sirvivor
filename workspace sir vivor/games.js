@@ -283,13 +283,14 @@ class GamesManager {
 		this.excepted = [];
 		this.numHosts = {};
 		this.destroyMsg = [
-		"annihilates",
-		"beats up",
-		"reks",
-		"destroys",
-		"demolishes",
-		"decimates",
-		]
+			"annihilates",
+			"beats up",
+			"reks",
+			"destroys",
+			"demolishes",
+			"decimates",
+		];
+		this.lastGame = null;
 	}
 
 	importHosts() {
@@ -387,42 +388,6 @@ class GamesManager {
 		this.importHosts();
 	}
 
-	sayDescription(game, room) {
-		let id = Tools.toId(game);
-		for (let fileID in this.games) {
-			let game = this.games[fileID];
-			if (game.aliases.indexOf(id) !== -1) {
-				id = fileID;
-				break;
-			} else if (id === fileID) {
-				break;
-			}
-		}
-		if (!(id in this.games)) return;
-		if (this.games[id].minigame) return;
-		Parse.say(room, this.games[id].description);
-	}
-
-	createMiniGame(game, room) {
-	    if (room.game) return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
-	    if (room.canVote) return Parse.say(room, "Voting is in progress");
-		this.loadGames();
-		let id = Tools.toId(game);
-		for (let fileID in this.games) {
-			let game = this.games[fileID];
-			if (game.aliases.indexOf(id) !== -1) {
-				id = fileID;
-				break;
-			} else if (id === fileID) {
-				break;
-			}
-		}
-		if (!(id in this.games)) return Parse.say(room, "The game '" + game.trim() + "' was not found.");
-		if (!this.games[id].minigame) return Parse.say(room, "Needs to be a minigame!");
-		this.loadGame(this.fileMap[id]);
-		room.game = new this.games[id].game(room); // eslint-disable-line new-cap
-		room.game.signups();
-	}
 	createGame(game, room) {
 		if (room.game) {
 			return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
@@ -441,6 +406,7 @@ class GamesManager {
 		if (this.games[id].minigame) return Parse.say(room, "You cannot signup a minigame!");
 		this.loadGame(this.fileMap[id]);
 		room.game = new this.games[id].game(room); // eslint-disable-line new-cap
+		this.lastGame = id;
 		return room.game;
 	}
 }
