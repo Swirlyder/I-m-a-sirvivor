@@ -1876,6 +1876,124 @@ exports.commands = {
 	    if (!room.game) return;
 	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
     },
+
+	first: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		dd.addFirst(target);
+		return user.say("First place points awarded to: **" + target + "**.");
+	},
+	
+	second: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		dd.addSecond(target);
+		return user.say("Second place points awarded to: **" + target + "**.");	
+	},
+	
+	hostpoints: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		dd.addHost(target);
+		return user.say("Host points awarded to: **" + target + "**.");
+	},
+	
+	participation: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		let split = target.split(",");
+		for (let i = 0; i < split.length; i++) {
+			dd.addPart(split[i]);
+		}
+		return user.say("Participation points awarded to: **" + split.join("**, **") + "**.");
+	},
+
+	rmfirst: 'removefirst',
+	removefirst: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		if (dd.removeFirst(target)) {
+			return user.say("First place removed from: **" + target + "**.");
+		} else {
+			return user.say("**" + target + "** has never won a game!");
+		}
+	},
+	
+	rmsecond: 'removesecond',
+	removesecond: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		if (dd.removeSecond(target)) {
+			return user.say("Second place removed from: **" + target + "**.");
+		} else {
+			return user.say("**" + target + "** has never placed second!");
+		}
+		
+	},
+
+	rmhost: 'removehost',
+	removehost: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		if (dd.removeHost(target)) {
+			return user.say("Host removed from: **" + target + "**.");
+		} else {
+			return user.say("**" + target + "** has never hosted dd!");
+		}
+	},
+	removeparts: 'removepart',
+	removeparticipation: 'removepart',
+	rmpart: 'removepart',
+	rmparts: 'removepart',
+	removepart: function (target, user, room) {
+		if (room.id !== user.id || !target) return;
+		if (!user.hasRank('survivor', '%')) return;
+		let split = target.split(",");
+		let good = [];
+		let bad = [];
+		for (let i = 0; i < split.length; i++) {
+			let name = split[i];
+			if (dd.removePart(name)) {
+				good.push(name);
+			} else {
+				bad.push(name);
+			}
+		}
+		if (good.length > 0 && bad.length > 0) {
+			return user.say("Participations removed from: **" + good.join("**, **") + "**. I was unable to remove participation from **" + bad.join("**, **") + "**.");
+		} else if (good.length > 0) {
+			return user.say("Participations removed from: **" + good.join("**, **") + "**.");
+		} else {
+			return user.say("I was unable to remove participations from **" + bad.join("**, **") + "**.");
+		}
+	},
+	top: function (target, user, room) {
+		if (room.id !== user.id || !user.hasRank(room.id, '+')) return;
+		let num = Math.floor(target);
+		if (!num) num = 5;
+		let sorted = dd.getSorted();
+		if (num > sorted.length) num = sorted.length;
+		let strs = [];
+		for (let i = Math.max(0, num - 5); i < num; i++) {
+			strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 3) + ")");
+		}
+		room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
+	},
+	
+	points: function (target, user, room) {
+		if (room.id !== user.id) return;
+		target = Tools.toId(target);
+		if (!(target in dd.dd)) {
+			return user.say("**" + target + "** does not have any points.");
+		}
+		let sorted = dd.getSorted();
+		for (let i = 0; i < sorted.length; i++) {
+			let stuff = sorted[i];
+			if (Tools.toId(stuff[4]) === target) {
+				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + (4*stuff[0] + 10*stuff[1] + 5*stuff[2] + 2*stuff[3]) + " points.");
+			}
+		}
+	}
 };
 
 /* globals toId */
