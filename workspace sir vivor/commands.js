@@ -1906,7 +1906,7 @@ exports.commands = {
 		for (let i = 0; i < split.length; i++) {
 			dd.addPart(split[i]);
 		}
-		return user.say("Participation points awarded to: **" + split.join("**, **") + "**.");
+		return user.say("Participation points awarded to: **" + split.join("**,**") + "**.");
 	},
 
 	rmfirst: 'removefirst',
@@ -1961,30 +1961,64 @@ exports.commands = {
 			}
 		}
 		if (good.length > 0 && bad.length > 0) {
-			return user.say("Participations removed from: **" + good.join("**, **") + "**. I was unable to remove participation from **" + bad.join("**, **") + "**.");
+			return user.say("Participations removed from: **" + good.join("**,**") + "**. I was unable to remove participation from **" + bad.join("**, **") + "**.");
 		} else if (good.length > 0) {
-			return user.say("Participations removed from: **" + good.join("**, **") + "**.");
+			return user.say("Participations removed from: **" + good.join("**,**") + "**.");
 		} else {
 			return user.say("I was unable to remove participations from **" + bad.join("**, **") + "**.");
 		}
 	},
 	toppoints: 'top',
 	top: function (target, user, room) {
-		if (room.id !== user.id || !user.hasRank(room.id, '+')) return;
+		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let num = Math.floor(target);
 		if (!num) num = 5;
 		let sorted = dd.getSorted();
 		if (num > sorted.length) num = sorted.length;
-		let strs = [];
-		for (let i = Math.max(0, num - 5); i < num; i++) {
-			strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
+		if (room.id === user.id) {
+			let strs = [];
+			for (let i = Math.max(0, num - 5); i < num; i++) {
+				strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
+			}
+			room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));			
+		} else {
+			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
+			for (let i = 0; i < 7; i++) {
+				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b>" + indices[i] + "</b></td>";
+			}
+			let real = [4,1,2,3,0];
+			let strs = [];
+			for (let i = Math.max(0, num - 5); i < num; i++) {
+				let strx = "<tr>";
+				for (let j = 0; j < 7; j++) {
+					let stuff;
+					if (j === 0) {
+						stuff = i+1;
+					} else if (j === 6) {
+						stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2
+					} else {
+						stuff = sorted[i][real[j - 1]];
+					}
+					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b> " + stuff + "</b></td>";
+				}
+				strs.push(strx);
+			}
+			str += strs.join("");
+			str += "</table></body></html></div>";
+
+			if (room.id === 'survivor') {
+				room.say("/addhtmlbox " + str);
+			} else {
+				console.log(str);
+				Parse.say(room, "!htmlbox " + str);
+			}
 		}
-		room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
 	},
 	
 	rename: function (target, user, room) {
 		if (room.id !== user.id || !user.hasRank('survivor', '%')) return;
-		let realt = Tools.toId(target);
+		let split = target.split(",");
 		if (!(realt in dd.dd)) {
 			return user.say("**" + target + "** is not on the dd leaderboard.");
 		} else {
