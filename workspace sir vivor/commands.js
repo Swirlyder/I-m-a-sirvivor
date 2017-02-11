@@ -1982,6 +1982,18 @@ exports.commands = {
 		room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
 	},
 	
+	rename: function (target, user, room) {
+		if (room.id !== user.id || !user.hasRank('survivor', '%')) return;
+		let realt = Tools.toId(target);
+		if (!(realt in dd.dd)) {
+			return user.say("**" + target + "** is not on the dd leaderboard.");
+		} else {
+			let oldname = dd.dd[realt].name;
+			dd.dd[realt].name = target;
+			return user.say("**" + oldname + "** has been renamed to **" + target + "**.");
+		}
+	},
+
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
