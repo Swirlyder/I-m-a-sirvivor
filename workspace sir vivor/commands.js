@@ -1876,28 +1876,29 @@ exports.commands = {
 	    if (!room.game) return;
 	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
     },
-
+	firsts: 'first',
 	first: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
 		dd.addFirst(target);
 		return user.say("First place points awarded to: **" + target + "**.");
 	},
-	
+	seconds: 'second',
 	second: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
 		dd.addSecond(target);
 		return user.say("Second place points awarded to: **" + target + "**.");	
 	},
-	
+	hp: 'hostpoints'
 	hostpoints: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
 		dd.addHost(target);
 		return user.say("Host points awarded to: **" + target + "**.");
 	},
-	
+	part: 'participation',
+	parts: 'participation',
 	participation: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
@@ -1928,10 +1929,10 @@ exports.commands = {
 		} else {
 			return user.say("**" + target + "** has never placed second!");
 		}
-		
 	},
 
 	rmhost: 'removehost',
+	rmhosts: 'removehost',
 	removehost: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
@@ -1967,6 +1968,7 @@ exports.commands = {
 			return user.say("I was unable to remove participations from **" + bad.join("**, **") + "**.");
 		}
 	},
+	toppoints: 'top',
 	top: function (target, user, room) {
 		if (room.id !== user.id || !user.hasRank(room.id, '+')) return;
 		let num = Math.floor(target);
@@ -1975,7 +1977,7 @@ exports.commands = {
 		if (num > sorted.length) num = sorted.length;
 		let strs = [];
 		for (let i = Math.max(0, num - 5); i < num; i++) {
-			strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 3) + ")");
+			strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
 		}
 		room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
 	},
