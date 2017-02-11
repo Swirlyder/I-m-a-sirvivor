@@ -1890,7 +1890,7 @@ exports.commands = {
 		dd.addSecond(target);
 		return user.say("Second place points awarded to: **" + target + "**.");	
 	},
-	hp: 'hostpoints'
+	hp: 'hostpoints',
 	hostpoints: function (target, user, room) {
 		if (room.id !== user.id || !target) return;
 		if (!user.hasRank('survivor', '%')) return;
