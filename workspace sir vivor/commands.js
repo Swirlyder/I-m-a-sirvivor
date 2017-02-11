@@ -2008,7 +2008,7 @@ exports.commands = {
 			str += "</table></body></html></div>";
 
 			if (room.id === 'survivor') {
-				room.say("/addhtmlbox " + str);
+				Parse.say(room, "/addhtmlbox " + str);
 			} else {
 				console.log(str);
 				Parse.say(room, "!htmlbox " + str);
