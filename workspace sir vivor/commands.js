@@ -2041,7 +2041,24 @@ exports.commands = {
 				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + (4*stuff[0] + 10*stuff[1] + 5*stuff[2] + 2*stuff[3]) + " points.");
 			}
 		}
-	}
+	},
+
+	lastgame: function (target, user, room) {
+		if (room.id !== user.id || !user.hasRank('survivor', '%')) return;
+		let numFirsts = 0;
+		let sorted = dd.getSorted();
+		for (let i = 0; i < sorted.length; i++) {
+			numFirsts += sorted[i][1];
+		}
+		let month = new Date().getMonth();
+		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		console.log(numFirsts);
+		if (numFirsts === 0) {
+			return user.say("No games have been updated yet this month!");
+		}
+		return user.say("The last Daily Deathmatch to be updated was the " + (numFirsts%2 === 0 ? "6pm EST" : "11am EST") + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");
+		
+	},
 };
 
 /* globals toId */
