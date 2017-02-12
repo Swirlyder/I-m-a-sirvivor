@@ -1834,7 +1834,7 @@ exports.commands = {
 
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
-		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as OM Room\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + "[username], is as good as Sanjay's music taste __You thought this was going to be a roast? Well nope, take this as a compliment :)__"];
+		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as OM Room\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste __You thought this was going to be a roast? Well nope, take this as a compliment :)__"];
 		this.say(room, Tools.sample(roasts));
 	},
 
