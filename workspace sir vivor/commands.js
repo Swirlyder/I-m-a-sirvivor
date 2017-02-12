@@ -1834,7 +1834,7 @@ exports.commands = {
 
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
-		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as OM Room\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste __You thought this was going to be a roast? Well nope, take this as a compliment :)__"];
+		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as OM Room\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste. __You thought this was going to be a roast? Well nope, take this as a compliment :)__"];
 		this.say(room, Tools.sample(roasts));
 	},
 
@@ -1985,7 +1985,7 @@ exports.commands = {
 			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
 			for (let i = 0; i < 7; i++) {
-				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b>" + indices[i] + "</b></td>";
+				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
 			let real = [4,1,2,3,0];
 			let strs = [];
@@ -2000,7 +2000,7 @@ exports.commands = {
 					} else {
 						stuff = sorted[i][real[j - 1]];
 					}
-					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b> " + stuff + "</b></td>";
+					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx);
 			}
