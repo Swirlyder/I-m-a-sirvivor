@@ -245,6 +245,9 @@ class Game {
 				let colonIndex = message.indexOf(":");
 				message = message.substr(colonIndex + 7);
 				message = message.substr(0, message.length - 6);
+				while (message.indexOf('&') !== -1) {
+					message = message.substr(0, message.indexOf('&'));
+				}
 				if (typeof this.handlePick === 'function') this.handlePick(message);
 			} else {
 				if (message.indexOf("rolls") !== -1) {

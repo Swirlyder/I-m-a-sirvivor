@@ -114,6 +114,9 @@ class HGS extends Games.Game {
 	}
 
 	handlePick(message) {
+		while (message.indexOf('&') !== -1) {
+			message = message.substr(0, message.indexOf('&'));
+		}
 		try {
 			if (!this.curPlayer) {
 				this.curPlayer = this.players[Tools.toId(message)];

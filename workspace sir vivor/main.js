@@ -115,6 +115,23 @@ process.on('uncaughtException', err => {
 info('starting server');
 var WebSocketClient = require('websocket').client;
 global.Tools = require('./tools.js');
+function sumDigits(num) {
+	if (num < 10) return num;
+	return (num%10) + sumDigits(Math.floor(num/10));
+}
+function isPower(base, num) {
+	if (num === 1) return true;
+	if (num%base !== 0) return false;
+	return isPower(base, num/base);
+}
+for (let i in Tools.data.pokedex) {
+	let mon = Tools.data.pokedex[i];
+	let bst = 0;
+	for (let k in mon.baseStats) {
+		bst += mon.baseStats[k];
+	}
+	if (bst%100 === 69) console.log(mon.species);
+}
 global.dd = require('./dd.js');
 dd.importData();
 global.Commands = require('./commands.js').commands;
