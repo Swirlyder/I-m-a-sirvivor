@@ -81,6 +81,7 @@ class EXC extends Games.Game {
 			this.canAttack = true;
 			this.numAttacks = 0;
 			this.pl();
+			this.attacks.clear();
 			this.say("PM me your attacks with ``" + Config.commandCharacter + "destroy [user]``!");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
