@@ -1786,16 +1786,13 @@ exports.commands = {
 	},
 
     signups: function (target, user, room) {
-	    
-	if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-	return room.say("Scripted games are taking a short break for now.");
-	    if (!Games.createGame(target, room)) return;
-	    room.game.signups();
-    },
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+			if (!Games.createGame(target, room)) return;
+			room.game.signups();
+		},
 
 	randomgame: function (arg, user, room) {
 	    if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
-	    return room.say("Scripted games are taking a short break for now.");
 		let id = Tools.sample(Object.keys(Games.games));
 		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(Object.keys(Games.games));

@@ -112,7 +112,9 @@ class Game {
 
 	forceEnd() {
 		if (this.ended) return;
-		if (this.timeout) clearTimeout(this.timeout);
+		if (this.timeout) {
+			clearTimeout(this.timeout);
+		}
 		this.say("The game was forcibly ended.");
 		this.ended = true;
 		this.room.game = null;
@@ -121,6 +123,10 @@ class Game {
 	nextRound() {
 		if (this.timeout) clearTimeout(this.timeout);
 		this.round++;
+		if (this.getRemainingPlayerCount() < 2) {
+			this.end();
+			return;
+		}
 		if (typeof this.onNextRound === 'function') this.onNextRound();
 	}
 

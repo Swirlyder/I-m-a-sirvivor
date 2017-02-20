@@ -29,6 +29,10 @@ class Room {
 		this.users = new Map();
 	}
 
+	say(message) {
+		Parse.say(this, message);
+	}
+	
 	onUserlist(users) {
 		if (users === '0') return false; // no users in room
 		users = users.split(',');
