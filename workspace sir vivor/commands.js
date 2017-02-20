@@ -113,7 +113,14 @@ exports.commands = {
 		}
 		this.say(room, text);
 	},
-
+    reconnect: 'off',
+    disconnect: 'off',
+        crash: 'off',
+        off: function(arg, user, room) {
+            if (!user.hasRank('survivor', '%')) return false;
+	    room.say("/logout");
+	    connect();
+	},
 	/**
 	 * Dev commands
 	 *
@@ -1778,14 +1785,17 @@ exports.commands = {
 		this.say(room, '/join ' + arg);
 	},
 
-	signups: function (target, user, room) {
-	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+    signups: function (target, user, room) {
+	    
+	if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+	return room.say("Scripted games are taking a short break for now.");
 	    if (!Games.createGame(target, room)) return;
 	    room.game.signups();
     },
 
 	randomgame: function (arg, user, room) {
-		if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
+	    if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
+	    return room.say("Scripted games are taking a short break for now.");
 		let id = Tools.sample(Object.keys(Games.games));
 		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(Object.keys(Games.games));
