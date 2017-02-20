@@ -1885,30 +1885,30 @@ exports.commands = {
     },
 	firsts: 'first',
 	first: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addFirst(target);
 		return user.say("First place points awarded to: **" + target + "**.");
 	},
 	seconds: 'second',
 	second: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addSecond(target);
 		return user.say("Second place points awarded to: **" + target + "**.");	
 	},
 	hp: 'hostpoints',
 	hostpoints: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addHost(target);
 		return user.say("Host points awarded to: **" + target + "**.");
 	},
 	part: 'participation',
 	parts: 'participation',
 	participation: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		for (let i = 0; i < split.length; i++) {
 			dd.addPart(split[i]);
@@ -1918,8 +1918,8 @@ exports.commands = {
 
 	rmfirst: 'removefirst',
 	removefirst: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (dd.removeFirst(target)) {
 			return user.say("First place removed from: **" + target + "**.");
 		} else {
@@ -1929,8 +1929,8 @@ exports.commands = {
 	
 	rmsecond: 'removesecond',
 	removesecond: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (dd.removeSecond(target)) {
 			return user.say("Second place removed from: **" + target + "**.");
 		} else {
@@ -1941,8 +1941,8 @@ exports.commands = {
 	rmhost: 'removehost',
 	rmhosts: 'removehost',
 	removehost: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (dd.removeHost(target)) {
 			return user.say("Host removed from: **" + target + "**.");
 		} else {
@@ -1954,8 +1954,8 @@ exports.commands = {
 	rmpart: 'removepart',
 	rmparts: 'removepart',
 	removepart: function (target, user, room) {
-		if (room.id !== user.id || !target) return;
-		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		let good = [];
 		let bad = [];
@@ -2024,7 +2024,8 @@ exports.commands = {
 	},
 	
 	rename: function (target, user, room) {
-		if (room.id !== user.id || !user.hasRank('survivor', '%')) return;
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		if (!(realt in dd.dd)) {
 			return user.say("**" + target + "** is not on the dd leaderboard.");
@@ -2038,6 +2039,7 @@ exports.commands = {
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
+		if (!target) target = user.id;
 		if (!(target in dd.dd)) {
 			return user.say("**" + target + "** does not have any points.");
 		}
@@ -2051,7 +2053,7 @@ exports.commands = {
 	},
 
 	lastgame: function (target, user, room) {
-		if (room.id !== user.id || !user.hasRank('survivor', '%')) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let numFirsts = 0;
 		let sorted = dd.getSorted();
 		for (let i = 0; i < sorted.length; i++) {
