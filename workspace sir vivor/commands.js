@@ -692,7 +692,7 @@ exports.commands = {
 	pants: function (target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
-		text += '/me is done with life.';
+		text += '/me puts on pants.';
 		this.say(room,text);
 	},
 
