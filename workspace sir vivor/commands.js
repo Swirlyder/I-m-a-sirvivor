@@ -656,7 +656,7 @@ exports.commands = {
 	{
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let realuser = Users.get(target);
-		if (!realuser) return;
+		if (!realuser) return this.say(room, "You can only host somebody currently in the room.");
 		if (Games.host || room.game) {
 			target = Tools.toId(realuser.name);
 			let i = 0, len = Games.hosts.length;
