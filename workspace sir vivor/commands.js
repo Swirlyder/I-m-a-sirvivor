@@ -131,7 +131,7 @@ exports.commands = {
 
 	reload: function(arg, user, room)
 	{
-		if (!user.isExcepted()) return false;
+		if (!user.hasRank(room.id, '%')) return;
 		try
 		{
 			var path = process.cwd();
@@ -748,7 +748,8 @@ exports.commands = {
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
-	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
+	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		target = Tools.toId(target);
 		if (target === "") {
 			if (Games.host) {
 				this.say(room, "The game was forcibly ended.");
@@ -758,6 +759,7 @@ exports.commands = {
 		}
 		if (room.game) {
 			room.game.forceEnd();
+			return;
 		}
 		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
