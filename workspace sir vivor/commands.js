@@ -689,6 +689,13 @@ exports.commands = {
 		}
 	},
 
+	pants: function (target, user, room) {
+		let text = '';
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
+		text += '/me is done with life.';
+		this.say(room,text);
+	},
+
 	userhosts: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') || room !== user) return;
 		if (!target) return user.say("Please specify a user.");

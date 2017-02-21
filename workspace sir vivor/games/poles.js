@@ -41,6 +41,12 @@ class Poles extends Games.Game {
 		if (this.getRemainingPlayerCount() === 1) {
 			this.end();
 			return;
+		} else if (this.getRemainingPlayerCount() === 2) {
+			this.say("Since we're down to two players, we're just gonna start finals yo.");
+			let lastPlayers = this.getRemainingPlayers();
+			this.curPlayer = this.players[Object.keys(lastPlayers)[0]];
+			this.oplayer = this.players[Object.keys(lastPlayers)[1]];
+			this.finalAttack();
 		} else {
 			let maxPoints = 0;
 			let names = [];
@@ -93,9 +99,8 @@ class Poles extends Games.Game {
 			this.timeout = setTimeout(() => this.finalDefend(), 5 * 1000);
 		} else {
 			this.say(names.join(", ") + " are all tied for the most points and will have a roll battle to see who advances to the finals!");
-			this.timeout = setTimeout(() => function() {
-				this.say("!roll " + names.length + "d100");
-			});
+			this.length = names.length;
+			this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
 		}
 	}
 
@@ -124,10 +129,13 @@ class Poles extends Games.Game {
 			this.timeout = setTimeout(() => this.finalAttack(), 5 * 1000);
 		} else {
 			this.say(names.join(", ") + " are all tied for the least points and will have a roll battle to see who advances to the finals!");
-			this.timeout = setTimeout(() => function() {
-				this.say("!roll " + names.length + "d100");
-			});
+			this.length = names.length;
+			this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
 		}
+	}
+
+	sayMultiRolls() {
+		this.say("!roll " + this.length + "d100");
 	}
 
 	finalAttack() {
@@ -143,7 +151,7 @@ class Poles extends Games.Game {
 	}
 
 	sayFinalRolls() {
-	    this.rolla= null;
+	    this.rolla = null;
 	    this.rollb = null;
 		this.say("!roll 100");
 		this.say("!roll 100");
@@ -361,6 +369,9 @@ class Poles extends Games.Game {
 		}
 		if (this.attacks.has(player)) {
 			return user.say("You have already attacked someone this round!");
+		}
+		if (attacked.id === user.id) {
+			return user.say("You can't attack yourself...");
 		}
 		this.attacks.set(player, attacked);
 		this.order.push(player);
