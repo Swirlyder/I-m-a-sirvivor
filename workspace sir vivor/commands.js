@@ -673,11 +673,20 @@ exports.commands = {
 			}
 			return;
 		}
-		Games.host = realuser;
-		this.say(room, "survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
-		this.say(room, "/modnote " + realuser.name + " hosted");
-		Games.addHost(realuser);
-		Games.points = null;
+		if (Games.hosts.length > 0) {
+			let name = Games.hosts.shift();
+			Games.hosts.push(realuser.name);
+			this.say(room, realuser.name + " was added to the hostqueue!");
+			this.say(room, "survgame! " + name + " is hosting! Do ``/me in`` to join!");
+			this.say(room, "/modnote " + name + " hosted");
+			Games.host = Users.get(name);
+			Games.addHost(Games.host);
+		} else {
+			Games.host = realuser;
+			this.say(room, "survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
+			this.say(room, "/modnote " + realuser.name + " hosted");
+			Games.addHost(realuser);
+		}
 	},
 
 	userhosts: function (target, user, room) {
