@@ -688,12 +688,13 @@ exports.commands = {
 			Games.addHost(realuser);
 		}
 	},
-
+	
+	phantom: 'pants',
 	pants: function (target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
-		text += '/me puts on pants.';
-		this.say(room,text);
+		text += '.done with life';
+		this.say(room, text);
 	},
 
 	userhosts: function (target, user, room) {
@@ -1607,6 +1608,7 @@ exports.commands = {
 		if (user.hasRank(room.id, '+') || room.id === user.id)
 		{
 			this.say(room, text);
+			return;
 		}
 		if (!user.hasRank(room.id, '+'))
 		{
