@@ -37,7 +37,7 @@ exports.commandcharacter = exports.commandCharacter = '.';
  
 // The default rank is the minimum rank that can use a command in a room when
 // no rank is specified in settings.json
-exports.defaultrank = '%';
+exports.defaultrank = '+';
  
 // The server's bygroups, in order from lowest to highest priority.
 exports.groups = {
