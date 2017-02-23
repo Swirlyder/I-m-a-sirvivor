@@ -123,7 +123,7 @@ class TTP extends Games.Game {
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
 			console.log(card);
-			let mon = Tools.data.pokedex[Tools.toId(card)];
+			let mon = Tools.data.pokedex[Tools.toId(card.species)];
 			let num;
 			if (mon.num < 10) {
 				num = '00' + mon.num.toString();
