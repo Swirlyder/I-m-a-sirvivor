@@ -47,8 +47,8 @@ class TTP extends Games.Game {
 			for (let i = 0; i < 3; i++) {
 				names.push("**" + mons[i].species + "**");
 			}
-			player.say("Starting hand: " + names.join(", "));
-			this.timeout = setTimeout(() => this.handoutMon(), 2 * 1000);
+			this.sayHand(player);
+			this.timeout = setTimeout(() => this.handoutMon(), 3 * 1000);
 		}
 	}
 
@@ -114,6 +114,29 @@ class TTP extends Games.Game {
 		}
 	}
 
+	sayHand(player) {
+		let cards = this.mons.get(player);
+		if (!cards) return;
+		let height = Math.floor((cards.length + 1) / 2) * 65;
+		let start = '<div class="infobox"><div style="height: ' + height + 'px">';
+		let strs = [];
+		for (let i = 0, len = cards.length; i < len; i++) {
+			let card = cards[i];
+			let mon = Tools.data.pokedex[Tools.toId(card)];
+			let num;
+			if (mon.num < 10) {
+				num = '00' + mon.num.toString();
+			} else if (mon.num < 100) {
+				num = '0' + mon.num.toString();
+			} else {
+				num = mon.num.toString();
+			}
+			strs.push('<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br><br></div>");
+		}
+		player.say("Current hand: ");
+		this.say("/pminfobox " + player.id + ", " + (start + str.join("") + "</div></div>"));
+	}
+
 	handleAttack() {
 		this.say("!pick " + this.curPlayer.name + ", " + this.oplayer.name);
 	}
@@ -175,7 +198,7 @@ class TTP extends Games.Game {
 						names.push("**" + mons[i + 1].species + "**");
 					}
 					this.mons.set(winPlayer, mons);
-					winPlayer.say("You were awarded " + names.join(", ") + " for surviving!");
+					this.sayHand(winPlayer);
 					this.index += 2;
 				}
 				this.stat = null;
@@ -248,12 +271,7 @@ class TTP extends Games.Game {
 	hand(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
-		let mons = this.mons.get(player);
-		let names = [];
-		for (let i = 0; i < mons.length; i++) {
-			names.push("**" + mons[i].species + "**");
-		}
-		user.say("Current hand: " + names.join(", "));
+		this.sayHand(player);
 	}
 }
 

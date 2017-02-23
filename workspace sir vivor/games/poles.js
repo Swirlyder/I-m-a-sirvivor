@@ -69,11 +69,21 @@ class Poles extends Games.Game {
 				this.order = [];
 				this.isSpored.clear();
 				this.say("Please pm me your attacks and spores with ``" + Config.commandCharacter + "destroy [user]``, ``" + Config.commandCharacter + "action spore, [user]``");
-				this.timeout = setTimeout(() => this.elimPlayers(), 90 * 1000);
+				this.timeout = setTimeout(() => this.listRemainingPlayers(), 60 * 1000);
 			}
 		}
 	}
 
+	listRemainingPlayers() {
+		let waitings = [];
+		for (let userID in this.players) {
+			let player = this.players[userID];
+			if (!player.eliminated && !this.attacks.has(player)) waitings.push(player.name);
+		}
+		if (waitings.length > 0) this.say("Waiting on: " + waitings.join(", "));
+		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+	}
+	
 	finalAttackee() {
 		let maxPoints = 0;
 		this.bestplayers = [];
@@ -173,9 +183,9 @@ class Poles extends Games.Game {
 		for (let userID in this.getRemainingPlayers()) {
 			let player = this.players[userID];
 			let curAttack = this.attacks.get(player);
-			if (!curAttack) {
+			if (!player.eliminated && !curAttack) {
 				player.say("You didn't attack a player this round and were eliminated!");
-				this.players[userID].eliminated = true;
+				player.eliminated = true;
 			}
 		}
 		this.saySpores();
