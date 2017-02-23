@@ -135,7 +135,7 @@ class TTP extends Games.Game {
 			strs.push('<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br><br></div>");
 		}
 		player.say("Current hand: ");
-		this.say("/pminfobox " + player.id + ", " + (start + str.join("") + "</div></div>"));
+		Rooms.get('survivor').say("/pminfobox " + player.id + ", " + (start + str.join("") + "</div></div>"));
 	}
 
 	handleAttack() {
