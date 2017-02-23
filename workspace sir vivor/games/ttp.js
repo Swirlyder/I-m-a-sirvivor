@@ -122,6 +122,7 @@ class TTP extends Games.Game {
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
+			console.log(card);
 			let mon = Tools.data.pokedex[Tools.toId(card)];
 			let num;
 			if (mon.num < 10) {
