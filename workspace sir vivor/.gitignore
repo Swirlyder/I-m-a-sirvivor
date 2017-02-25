@@ -8,3 +8,5 @@ settings.json
 .hg
 .bzr
 .svn
+*~
+*#
