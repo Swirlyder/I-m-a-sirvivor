@@ -240,7 +240,8 @@ class Game {
 	}
 	handlehtml(message) {
 		if (!this.started) return;
-		try {
+		console.log(message);
+		//try {
 			message = message.substr(21);
 			if (message.substr(0, 4) === "Roll") {
 				let colonIndex = message.indexOf(":");
@@ -252,8 +253,12 @@ class Game {
 				message = message.substr(colonIndex + 7);
 				message = message.substr(0, message.length - 6);
 				while (message.indexOf('&') !== -1) {
-					message = message.substr(0, message.indexOf('&'));
+					console.log(message.substr(0, message.indexOf('&')));
+					console.log(message.substr(message.indexOf(';')) + 1);
+					console.log(message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';')) + 1);
+					message = message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';') + 1);
 				}
+				console.log(message);
 				if (typeof this.handlePick === 'function') this.handlePick(message);
 			} else {
 				if (message.indexOf("rolls") !== -1) {
@@ -269,11 +274,12 @@ class Game {
 					if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
 				}
 			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.end();
-			return;
-		}
+		//} catch (e) {
+			//this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
+			//console.log(e);
+			//this.end();
+			//return;
+		//}
 	}
 }
 

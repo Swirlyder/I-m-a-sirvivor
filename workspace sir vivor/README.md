@@ -1,17 +1,15 @@
-## THIS PROJECT IS ABANDONED AND NO LONGER MAINTAINED AS OF 8/8/2015. FORK AT YOUR OWN RISK.
-
 Pokemon-Showdown-Bot
 ====================
 
-A chat bot for [Pokémon Showdown][1]. This bot has a number of commands, some helpful and some less so, as well as the capability to mod. It only reacts to basic offences such as flooding/caps/stretching.
+A chat bot for the Survivor Room on [Pokémon Showdown][1]. This bot has a number of commands, some helpful and some less so, as well as the capability to moderate, and play games. 
 
-  [1]: http://www.pokemonshowdown.com/
+  [1]: http://www.pokemonshowdown.com/survivor
 
 
 Installation
 ------------
 
-Pokémon Showdown Bot requires [node.js][2] to run.
+Sir Vivor requires [node.js][2] to run.
 This bot has not been tested on every `node.js` version possible, but has the same version requirements as [Pokémon Showdown][3]: either v0.6.3 through v0.8.22, or v0.10.2 and up.
 Install `node.js` if you don't have it yet, try the last stable version.
 
@@ -24,6 +22,7 @@ To install dependencies, run:
 
 Copy `config-example.js` to `config.js` and edit the needed variables.
 To change the commands that the bot responds to, edit `commands.js`.
+To create a new game, add a file to the `games` directory
 
 Now, to start the bot, use:
 
@@ -43,10 +42,9 @@ Everyone is more than welcome to contribute to the bot.
 However, please refrain from adding more example commands.
 
 Credits:
- - Morfent (Development)
- - TalkTakesTime (Development)
- - Quinella (Development)
- - Rival Nick (Guide)
+ - Morfent/TalkTakesTime/Quinella/Rival Nick (Original Bot)
+ - Hawkie (First customization for survivor)
+ - CheeseMuffin (More development)
 
 License
 -------
