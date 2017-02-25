@@ -405,9 +405,11 @@ exports.parse = {
 
 		roomData.times.push(now);
 
-		// this deals with punishing rulebreakers, but note that the bot can't think, so it might make mistakes
-		if (Config.allowmute && Users.self.hasRank(roomid, '%') && Config.whitelist.indexOf(userid) < 0) {
-			let useDefault = !(this.settings.modding && this.settings.modding[roomid]);
+	    // this deals with punishing rulebreakers, but note that the bot can't think, so it might make mistakes
+	    console.log(Users.self.hasRank(roomid, '%'));
+		if (Config.allowmute && Config.whitelist.indexOf(userid) < 0) {
+		    let useDefault = !(this.settings.modding && this.settings.modding[roomid]);
+		    console.log(useDefault);
 			let pointVal = 0;
 			let muteMessage = '';
 			let modSettings = useDefault ? null : this.settings.modding[roomid];
