@@ -49,6 +49,6 @@ Credits:
 License
 -------
 
-Pokémon Showdown Bot is distributed under the terms of the [MIT License][5].
+Sir Vivor is distributed under the terms of the [MIT License][5].
 
-  [5]: https://github.com/Quinella/Pokemon-Showdown-Bot/blob/master/LICENSE
+  [5]: https://github.com/Swirlyder/I-m-a-sirvivor/blob/master/workspace%20sir%20vivor/README.md
