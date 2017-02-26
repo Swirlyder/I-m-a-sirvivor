@@ -949,42 +949,7 @@ exports.commands = {
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
 	},
-	dd: function (arg, user, room) {
-		var sheet;
-		async.series([
-			function setAuth(step) {
-		// see notes below for authentication instructions! 
-				var doc = new GoogleSpreadsheet('1v1NluETpaeiF37rLw4YbXL8Fb0T5MAOvC9RE8FbLH1k');
 
-				var creds = require('./client_secret.json');
-			// OR, if you cannot save the file locally (like on heroku) 
-				var creds_json = {
-					client_email: 'stuff-667@starlit-surge-156604.iam.gserviceaccount.com',
-					private_key: 'd8e5b032fde29054d817b6fd5a11cafc66311c93'
-				}
-				console.log('hi');
-				doc.useServiceAccountAuth(creds, step);
-			},
-			function getInfoAndWorksheets(step) {
-				console.log('sup');
-				doc.getInfo(function(err, info) {
-					console.log('Loaded doc: '+info.title+' by '+info.author.email);
-					sheet = info.worksheets[0];
-					console.log('sheet 1: '+sheet.title+' '+sheet.rowCount+'x'+sheet.colCount);
-					step();
-				});
-			},
-			function workingWithRows(step) {
-				console.log('nerd');
-    // google provides some query options 
-				sheet.getRows({
-					
-				}, function( err, rows ){
-					console.log('Read '+rows.length+' rows');
-					});
-				},
-			]);
-	},
 	nbt: function(arg, user, room)
 	{
 		var text = '';
@@ -1903,6 +1868,24 @@ exports.commands = {
 	    if (!room.game) return;
 	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
     },
+	dd: 'addpoints',
+	apts: 'addpoints',
+	apt: 'addpoints',
+	addpoints: function (target, user, room) {
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = (target.indexOf(',') === -1 ? target.split("|") : target.split(","));
+		if (split.length < 4) return room.say("You have to specify the host, winner, second place, and at least one participant");
+		dd.addHost(split[0]);
+		dd.addFirst(split[1]);
+		dd.addSecond(split[2]);
+		let names = []
+		for (let i = 3; i < split.length; i++) {
+			dd.addPart(split[i]);
+			names.push(split[i].trim());
+		}
+		room.say("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
+		room.say("Participation points awarded to: **" + names.join(", ") + "**.");
+	},
 	firsts: 'first',
 	first: function (target, user, room) {
 		if (!target) return;
@@ -1935,6 +1918,7 @@ exports.commands = {
 		}
 		return user.say("Participation points awarded to: **" + split.join("**,**") + "**.");
 	},
+
 
 	rmfirst: 'removefirst',
 	removefirst: function (target, user, room) {

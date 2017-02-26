@@ -21,7 +21,7 @@ class DD {
 	}
 
 	addHost(user) {
-		let name = user;
+		let name = user.trim();
 		let id = Tools.toId(name);
 		if (!(id in this.dd)) {
 			this.dd[id] = {
@@ -37,14 +37,14 @@ class DD {
 	}
 
 	addFirst(user) {
-		let id = Tools.toId(user);
+		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
 				hosts: 0,
 				firsts: 1,
 				seconds: 0,
 				parts: 0,
-				name: user,
+				name: user.trim(),
 			}
 		} else {
 			this.dd[id].firsts++;
@@ -52,14 +52,14 @@ class DD {
 	}
 
 	addSecond(user) {
-		let id = Tools.toId(user);
+		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
 				hosts: 0,
 				firsts: 0,
 				seconds: 1,
 				parts: 0,
-				name: user,
+				name: user.trim(),
 			}
 		} else {
 			this.dd[id].seconds++;
@@ -67,14 +67,14 @@ class DD {
 	}
 
 	addPart(user) {
-		let id = Tools.toId(user);
+		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
 				hosts: 0,
 				firsts: 0,
 				seconds: 0,
 				parts: 1,
-				name: user,
+				name: user.trim(),
 			}
 		} else {
 			this.dd[id].parts++;
