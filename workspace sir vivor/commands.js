@@ -1987,11 +1987,30 @@ exports.commands = {
 		let sorted = dd.getSorted();
 		if (num > sorted.length) num = sorted.length;
 		if (room.id === user.id) {
+			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let indices = ["Rank", "Name", "Points"];
+			for (let i = 0; i < 3; i++) {
+				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
+			}
 			let strs = [];
 			for (let i = Math.max(0, num - 5); i < num; i++) {
-				strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
+				let strx = "<tr>";
+				for (let j = 0; j < 3; j++) {
+					let stuff;
+					if (j === 0) stuff = i + 1;
+					else if (j === 1) stuff = sorted[i][4];
+					else stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2;
+					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
+				}
+				strs.push(strx);
 			}
-			room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));			
+			//for (let i = Math.max(0, num - 5); i < num; i++) {
+				//strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
+			//}
+			//room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
+			str += strs.join("");
+			str += "</table></body></html></div>";	
+			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
 			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
@@ -2007,7 +2026,7 @@ exports.commands = {
 					if (j === 0) {
 						stuff = i+1;
 					} else if (j === 6) {
-						stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2
+						stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2;
 					} else {
 						stuff = sorted[i][real[j - 1]];
 					}
