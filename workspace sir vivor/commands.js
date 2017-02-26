@@ -2004,10 +2004,6 @@ exports.commands = {
 				}
 				strs.push(strx);
 			}
-			//for (let i = Math.max(0, num - 5); i < num; i++) {
-				//strs.push(i+1 + Tools.getSuffix(i+1) + ": __" + sorted[i][4] + "__(" + (sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2) + ")");
-			//}
-			//room.say("``Top " + num + " of " + sorted.length + "``: " + strs.join(", "));
 			str += strs.join("");
 			str += "</table></body></html></div>";	
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
@@ -2044,6 +2040,18 @@ exports.commands = {
 				Parse.say(room, "!htmlbox " + str);
 			}
 		}
+		let numFirsts = 0;
+		for (let i = 0; i < sorted.length; i++) {
+			numFirsts += sorted[i][1];
+		}
+		console.log(numFirsts);
+		let month = new Date().getMonth();
+		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		console.log(numFirsts);
+		if (numFirsts === 0) {
+			return room.say("No games have been updated yet this month!");
+		}
+		return room.say("The last Daily Deathmatch to be updated was the " + (numFirsts%2 === 0 ? "6pm EST" : "11am EST") + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");		
 	},
 	
 	rename: function (target, user, room) {
@@ -2090,7 +2098,6 @@ exports.commands = {
 			return room.say("No games have been updated yet this month!");
 		}
 		return room.say("The last Daily Deathmatch to be updated was the " + (numFirsts%2 === 0 ? "6pm EST" : "11am EST") + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");
-		
 	},
 };
 
