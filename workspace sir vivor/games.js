@@ -39,7 +39,7 @@ class Game {
 	}
 
 	mailbreak() {
-		Parse.this(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!');
+		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!');
 	}
 
 	say(message) {

@@ -1992,6 +1992,7 @@ exports.commands = {
 			for (let i = 0; i < 3; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
+			str += "</tr>"
 			let strs = [];
 			for (let i = Math.max(0, num - 5); i < num; i++) {
 				let strx = "<tr>";
@@ -2002,7 +2003,7 @@ exports.commands = {
 					else stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2;
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
-				strs.push(strx);
+				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
 			str += "</table></body></html></div>";	
@@ -2013,6 +2014,7 @@ exports.commands = {
 			for (let i = 0; i < 7; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
+			str += "</tr>"
 			let real = [4,1,2,3,0];
 			let strs = [];
 			for (let i = Math.max(0, num - 5); i < num; i++) {
@@ -2028,7 +2030,7 @@ exports.commands = {
 					}
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
-				strs.push(strx);
+				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
 			str += "</table></body></html></div>";
