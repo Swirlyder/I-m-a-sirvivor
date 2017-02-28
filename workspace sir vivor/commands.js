@@ -1979,6 +1979,12 @@ exports.commands = {
 			return user.say("I was unable to remove participations from **" + bad.join("**, **") + "**.");
 		}
 	},
+	testroom: function (target, user, room) {
+		if (!user.hasRank(room.id, '@')) return;
+		this.say("/makegroupchat testing");
+		this.say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
+		this.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+	},
 	toppoints: 'top',
 	top: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;

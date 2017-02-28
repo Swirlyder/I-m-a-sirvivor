@@ -317,9 +317,22 @@ class GamesManager {
 
 	exportHosts() {
 		fs.writeFileSync('./databases/hosts.json', JSON.stringify(this.numHosts));
-		//fs.writeFileSync('./databases/' + roomid + '.json', JSON.stringify(this.databases[roomid]))
 	}
 
+	importHost() {
+		let id = fs.readFileSync('./databases/host.json');
+		if (id) Games.host = Users.get(id);
+		else Games.host = null;
+		if (!Games.host) Games.host = null;
+	}
+
+	exportHost() {
+		if (Games.host) {
+			fs.writeFileSync('./databases/host.json', this.host.id);
+		} else {
+			fs.writeFileSync('./databases/host.json', '');
+		}
+	}
 	addHost(user) {
 		if (user.id) {
 			user = user.id;
@@ -430,6 +443,7 @@ let Games = new GamesManager();
 Games.Game = Game;
 Games.Player = Player;
 Games.backupInterval = setInterval(() => Games.exportHosts(), 60 * 1000);
+Games.backupHostInterval = setInterval(() => Games.exportHost(), 60 * 1000);
 
 
 module.exports = Games;
