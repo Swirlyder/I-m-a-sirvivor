@@ -1980,10 +1980,10 @@ exports.commands = {
 		}
 	},
 	testroom: function (target, user, room) {
-		if (!user.hasRank(room.id, '@')) return;
-		this.say("/makegroupchat testing");
-		this.say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
-		this.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+		if (!user.hasRank('survivor', '@')) return;
+		Rooms.get('survivor').say("/makegroupchat testing");
+		Rooms.get('survivor').say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
+		room.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
 	},
 	toppoints: 'top',
 	top: function (target, user, room) {
