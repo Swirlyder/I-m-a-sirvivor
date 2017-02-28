@@ -77,7 +77,7 @@ class Eevee extends Games.Game {
 			this.canAttack = true;
 			this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()));
 			this.say("Please pm me your attack with ``" + Config.commandCharacter + "destroy [user]``");
-			this.timeout = setTimeout(() => listRemaining(), 60 * 1000);
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
 
@@ -122,8 +122,8 @@ class Eevee extends Games.Game {
 
 	doPlayerAttack() {
 		this.rolla = null, this.rollb = null;
-		let eevee1 = this.eevees.get(this.curPlayer);
-		let eevee2 = this.eevees.get(this.oplayer);
+		this.eevee1 = this.eevees.get(this.curPlayer);
+		this.eevee2 = this.eevees.get(this.oplayer);
 		this.doinga = true, this.doingb = true;
 		if (this.eevee1 === 'Umbreon') this.doingb = false;
 		if (this.eevee2 === 'Umbreon') this.doinga = false;

@@ -320,8 +320,11 @@ class GamesManager {
 	}
 
 	importHost() {
-		let id = fs.readFileSync('./databases/host.json');
-		if (id) Games.host = Users.get(id);
+		let id = fs.readFileSync('./databases/host.json').toString();
+		if (id) {
+			console.log(id);
+			Games.host = Users.get(id);
+		}
 		else Games.host = null;
 		if (!Games.host) Games.host = null;
 	}
