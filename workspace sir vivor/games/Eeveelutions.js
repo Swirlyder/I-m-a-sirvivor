@@ -127,8 +127,8 @@ class Eevee extends Games.Game {
 		this.doinga = true, this.doingb = true;
 		if (this.eevee1 === 'Umbreon') this.doingb = false;
 		if (this.eevee2 === 'Umbreon') this.doinga = false;
-		if (this.eevee1 === 'Espeon') this.eevee1 = eevee2;
-		if (this.eevee2 === 'Espeon') this.eevee2 = eevee1;
+		if (this.eevee1 === 'Espeon') this.eevee1 = this.eevee2;
+		if (this.eevee2 === 'Espeon') this.eevee2 = this.eevee1;
 		this.roll1 = 100, this.roll2 = 100;
 		console.log(this.eevee1 + "," + this.eevee2);
 		if (this.doinga) {
