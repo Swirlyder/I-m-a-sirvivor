@@ -414,6 +414,7 @@ class GamesManager {
 			this.fileMap[file.id] = fileName;
 		}
 		this.importHosts();
+		this.importHost();
 	}
 
 	createGame(game, room) {
