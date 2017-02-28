@@ -774,10 +774,6 @@ exports.commands = {
 			Games.host = null;
 			return;
 		}
-		if (room.game) {
-			room.game.forceEnd();
-			return;
-		}
 		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
 			Games.host = null;
@@ -792,6 +788,10 @@ exports.commands = {
 		if (i !== len) {
 			Games.hosts.splice(i, 1);
 			return this.say(room, target + " was removed from the hosting queue.");
+		}
+		if (room.game) {
+			room.game.forceEnd();
+			return;
 		}
 	},
 
@@ -1751,10 +1751,20 @@ exports.commands = {
 		if (room.id !== user.id) return;
 	    Rooms.rooms.forEach(function(room) {
 		    if (room.game && typeof room.game.nick === 'function') {
-			room.game.nick(target, user);      
+				room.game.nick(target, user);      
 		    }
 		});
     },
+
+	eevee: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.eevee === 'function') {
+				room.game.eevee(target, user);      
+		    }
+		});
+    },
+
 
 	type: function (target, user, room) {
 		if (room.id !== user.id) return;

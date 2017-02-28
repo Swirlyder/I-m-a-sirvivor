@@ -218,13 +218,13 @@ class Eevee extends Games.Game {
 						this.say("Rolling for **" + this.oplayer.name + "**'s dodge chance!");
 						this.say("!roll 100");
 					} else {
-						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
+						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**, who was a " + this.eevees.get(this.oplayer) + "!");
 						this.oplayer.eliminated = true;
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 					}
 				} else {
 					if (this.finals) {
-						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
+						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**, who was a " + this.eevees.get(this.curPlayer) + "!");
 						this.curPlayer.eliminated = true;
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 					} else {
