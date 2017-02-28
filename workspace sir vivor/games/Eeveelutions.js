@@ -154,6 +154,9 @@ class Eevee extends Games.Game {
 			if (this.eevee2 === 'Leafeon') {
 				this.roll2 += 25
 			}
+			if (this.eevee2 === 'Sylveon') {
+				this.roll1 -= 25;
+			}
 		}
 		console.log(this.roll1 + "," + this.roll2);
 		this.say("!roll " + this.roll1);
