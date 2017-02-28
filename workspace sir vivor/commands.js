@@ -688,7 +688,7 @@ exports.commands = {
 			Games.addHost(realuser);
 		}
 	},
-	
+	phantomgenius: 'pants',
 	phantom: 'pants',
 	pants: function (target, user, room) {
 		let text = '';
