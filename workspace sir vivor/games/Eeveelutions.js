@@ -211,7 +211,7 @@ class Eevee extends Games.Game {
 			} else {
 				if (this.rolla > this.rollb) {
 					if (this.eevee2 === 'Eevee' && this.getRemainingPlayerCount() > 3 && !this.hasUsedEevee.has(this.oplayer)) {
-						this.say("**" + this.oplayer + "** Runs Away as eevee!")
+						this.say("**" + this.oplayer.name + "** Runs Away as eevee!")
 						this.hasUsedEevee.set(this.oplayer, true);
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 					} else if (this.eevee2 === 'Glaceon') {
