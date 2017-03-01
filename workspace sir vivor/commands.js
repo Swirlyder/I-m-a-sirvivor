@@ -2092,14 +2092,13 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
-		console.log(numFirsts);
 		let month = new Date().getMonth();
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		console.log(numFirsts);
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
-		return room.say("The last Daily Deathmatch to be updated was the " + (numFirsts%2 === 0 ? "6pm EST" : "11am EST") + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");		
+		let times = ['6pm EST', '2am EST', '10am EST']
+		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");		
 	},
 	
 	rename: function (target, user, room) {
