@@ -24,7 +24,19 @@ var _ = require('lodash');
 var hostQueue = [];
 var queueText = '';
 var ids = [];
-  
+ 
+let millisToTime = function(millis){
+	let seconds = millis/1000;
+	let hours = Math.floor(seconds/3600);
+	let minutes = Math.floor((seconds-hours*3600)/60);
+	let response;
+	if(hours>0){
+		response = hours + " hour" + (hours === 1 ? "" : "s") + " and " + minutes + " minute" + (minutes === 1 ? "" : "s");
+	}else{
+		response = minutes + " minute" + (minutes === 1 ? "" : "s");
+	}
+	return response;
+};
 if (Config.serverid === 'showdown')
 {
 	var https = require('https');
@@ -1670,8 +1682,26 @@ exports.commands = {
 		}
 	},
 
+	next: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
+		let d = new Date();
+		let n = d.getHours();
+		let m = d.getMinutes();
+		let millis = (m === 0 ? 0 : (60 - m) * 60 * 1000)
+		if (n < 7) {
+			millis += (6 - n) * 60 * 60 * 1000;
+		} else if (n < 15) {
+			millis += (14 - n) * 60 * 60 * 1000;
+		} else if (n < 23) {
+			millis += (22 - n) * 60 * 60 * 1000;
+		} else {
+			millis += (30 - n) * 60 * 60 * 1000;
+		}
+		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
+	},
+	
 	allowroll: function (target, user, room) {
-		if (!Games.host || Games.host.id !== user.id) return;
+		if (!user.hasRank(room.id, '%') && !Games.host || Games.host.id !== user.id) return;
 		if (!target) return;
 		let split = target.split(",");
 		let goodnames = [], badnames = [];
