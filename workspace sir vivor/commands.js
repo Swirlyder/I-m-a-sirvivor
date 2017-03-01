@@ -1703,25 +1703,32 @@ exports.commands = {
 		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id)) return;
 		if (!target) return;
 		let split = target.split(",");
-		let goodnames = [], badnames = [];
+		let goodnames = [], badnames = [], alreadynames = [];
 		let i;
 		for (i = 0; i < split.length && Games.excepted.length < 2; i++) {
 			let user = Users.get(Tools.toId(split[i]));
 			if (!user) continue;
+			if (user.hasRank(room.id, '+')) {
+				alreadynames.push(user.name);
+				continue;
+			}
 			goodnames.push(user.name);
 			Games.excepted.push(user.id);
 		}
 		for (; i < split.length; i++) {
 			let user = Users.get(Tools.toId(split[i]));
-			if (!user) continue;
+			if (!user) ;
 			badnames.push(user.name);
 		}
 		if (goodnames.length > 0 && badnames.length > 0) {
 			this.say(room, goodnames.join(", ") + " were allowed a roll! Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
 		} else if (goodnames.length > 0) {
 			this.say(room, goodnames.join(", ") + " were allowed a roll!");
-		} else {
+		} else if (badnames.length > 0) {
 			this.say(room, "Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
+		}
+		if (alreadynames.length > 0) {
+			this.say(room, alreadynames.join(", ") + " could not be given a roll, since they already have access to the command.");
 		}
 	},
 	dice: 'roll',
