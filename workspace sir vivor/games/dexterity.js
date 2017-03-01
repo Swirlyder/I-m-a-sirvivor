@@ -15,6 +15,7 @@ const data = {"twig": {atk:50, acc:100, name: "Twig", aliases: ["twig", "stick"]
 class Dexterity extends Games.Game {
 	constructor(room) {
 		super(room);
+		this.blah = 0;
 		this.id = id;
 		this.description = description;
 		this.name = name;

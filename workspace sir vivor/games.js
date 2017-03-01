@@ -285,6 +285,7 @@ class Game {
 
 class GamesManager {
 	constructor() {
+		this.blah = null;
 		this.games = {};
 		this.aliases = {};
 		this.fileMap = {};

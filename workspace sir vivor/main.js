@@ -23,6 +23,7 @@ require('babel/register')({
 	],
 	optional: ['asyncToGenerator']
 });
+var chokidar = require('chokidar');
 require('sugar');
 global.colors = require('colors');
 
@@ -124,6 +125,37 @@ global.Parse = require('./parser.js').parse;
 global.Games = require('./games.js');
 Games.loadGames();
 global.Connection = null;
+fs.watchFile('./commands.js', function (curr, prev) {
+	if (curr.mtime <= prev.mtime) return;
+	try {
+		delete require.cache[require.resolve('./commands.js')];
+		Config = require('./config.js');
+		info('reloaded commands');
+	} catch (e) {}
+});
+var watcher = chokidar.watch('./games', {ignored: /^\./, persistent: true});
+function reloadGames () {
+	delete require.cache[require.resolve('./games.js')];
+	Games = require('./games.js');
+	Games.loadGames();
+	info('Games reloaded.');
+}
+watcher
+  .on('add', function(path) {
+	  reloadGames();
+  })
+  .on('change', function(path) {
+	  reloadGames();
+  });
+fs.watchFile('./games.js', function (curr, prev) {
+	if (curr.mtime <= prev.mtime) return;
+	try {
+		delete require.cache[require.resolve('./games.js')];
+		Games = require('./games.js');
+		Games.loadGames();
+		info('Games reloaded.');
+	} catch (e) {}
+});
 
 var queue = [];
 var dequeueTimeout = null;

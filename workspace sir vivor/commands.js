@@ -143,19 +143,18 @@ exports.commands = {
 
 	reload: function(arg, user, room)
 	{
-		if (!user.hasRank(room.id, '%')) return;
-		try
-		{
-			var path = process.cwd();
-			delete require.cache[path + ((path.indexOf('\\') === -1) ? '/' : '\\') +'commands.js'];
-			this.uncacheTree('./commands.js');
-			global.Commands = Commands = require('./commands.js').commands;
-			this.say(room, 'Commands reloaded.');
-		}
-		catch (e)
-		{
-			error('failed to reload: ' + e.stack);
-		}
+		if (!user.isExcepted()) return false;
+		delete require.cache[require.resolve('./commands.js')];
+		global.Commands = require('./commands.js').commands;
+		this.say(room, 'Commands reloaded.');
+	},
+	
+	reloadgames: function (arg,user,room) {
+		if (!user.isExcepted()) return false;
+		delete require.cache[require.resolve('./games.js')];
+		global.Games = require('./games.js');
+		Games.loadGames();
+		this.say(room, 'Games reloaded.');
 	},
 	join: function (arg, user, room) {
 		console.log('hi');
@@ -2098,7 +2097,7 @@ exports.commands = {
 			return room.say("No games have been updated yet this month!");
 		}
 		let times = ['6pm EST', '2am EST', '10am EST']
-		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");		
+		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
 	},
 	
 	rename: function (target, user, room) {
