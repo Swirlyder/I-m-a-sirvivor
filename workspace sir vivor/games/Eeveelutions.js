@@ -195,7 +195,7 @@ class Eevee extends Games.Game {
 	handleRolla() {
 		if (this.eevee1 === 'Vaporeon' && this.rolla < 26) {
 			this.rolla = null;
-			this.say("**" + this.currentPlayer.name + "** gets a reroll, as they were a Vaporeon!");
+			this.say("**" + this.curPlayer.name + "** gets a reroll, as they were a Vaporeon!");
 			this.say("!roll " + this.roll1);
 		} else {
 			this.say("!roll " + this.roll2);
