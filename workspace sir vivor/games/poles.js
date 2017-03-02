@@ -298,8 +298,14 @@ class Poles extends Games.Game {
 			losePlayer.eliminated = true;
 		} else if (winPlayer === this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "** and gains 2 points!");
+			let points = this.points.get(this.curPlayer);
+			points += 2;
+			this.points.set(this.curPlayer, points);
 		} else {
 			this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "** and gains 1 point!");
+			let points = this.points.get(this.oplayer);
+			points += 1;
+			this.points.set(this.oplayer, points);
 		}
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
