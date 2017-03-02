@@ -67,11 +67,12 @@ class HGS extends Games.Game {
 		try {
 			if (!this.oplayer) {
 				this.say("**" + this.curPlayer.name + "** didn't choose a player and is eliminated!");
-				delete this.players[this.curPlayer.id];
+				this.curPlayer.eliminated = true;
 				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 			} else {
-				this.say("!roll 100");
-				this.say("!roll 100");
+				this.roll1 = 100;
+				this.roll2 = 100;
+				this.sayPlayerRolls();
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
@@ -80,54 +81,17 @@ class HGS extends Games.Game {
 			return;
 		}
 	}
-
-	handleRoll(roll) {
-		try {
-			if (!this.rolla) {
-				this.rolla = Math.floor(roll);
-			} else if (!this.rollb) {
-				this.rollb = Math.floor(roll);
-				if (this.rolla !== this.rollb) {
-					if (this.rolla < this.rollb) {
-						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
-						this.curPlayer.eliminated = true;
-					} else if (this.rolla > this.rollb) {
-						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
-						this.oplayer.eliminated = true;
-					}
-					this.curPlayer = null;			
-					this.timeout = setTimeout(() => this.nextRound(), 10 * 1000);
-				} else {
-					this.say("The rolls were the same! rerolling...");
-					this.rolla = null;
-					this.rollb = null;
-					this.handleAttack();
-				}
-				this.timeout = setTimeout(() => this.handleAttack(), 90 * 1000);
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
+	handleWinner(winPlayer, losePlayer) {
+		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+		losePlayer.eliminated = true;
+		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 	}
 
 	handlePick(message) {
-		while (message.indexOf('&') !== -1) {
-			message = message.substr(0, message.indexOf('&'));
-		}
-		try {
-			if (!this.curPlayer) {
-				this.curPlayer = this.players[Tools.toId(message)];
-				this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
+		if (!this.curPlayer) {
+			this.curPlayer = this.players[Tools.toId(message)];
+			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
+		} 
 	}
 
 	attack(target, user) {
@@ -158,3 +122,4 @@ exports.id = id;
 exports.description = description;
 exports.game = HGS;
 exports.aliases = ["hgs"];
+exports.modes = ['Golf'];

@@ -138,33 +138,16 @@ class HGA extends Games.Game {
     doPlayerAttack() {
 		this.rolla = null;
 		this.rollb = null;
-		this.say("!roll 100");
-		this.say("!roll 100");
+		this.roll1 = 100;
+		this.roll2 = 100;
+		this.sayPlayerRolls();
     }
 
-    handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
-		} else {
-			this.rollb = roll;
-			let winPlayer, losePlayer;
-			if (this.rolla === this.rollb) {
-			this.say("The rolls were the same! Rerolling...");
-			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-			} else {
-			if (this.rolla > this.rollb) {
-				winPlayer = this.curPlayer;
-				losePlayer = this.oplayer;
-			} else {
-				winPlayer = this.oplayer;
-				losePlayer = this.curPlayer;
-			}
-			this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
-			losePlayer.eliminated = true;
-			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-			}
-		}
-    }
+	handleWinner(winPlayer, losePlayer) {
+		this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
+		losePlayer.eliminated = true;
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+	}
 
     destroy(target, user) {
 		let player = this.players[user.id];
@@ -197,3 +180,4 @@ exports.id = id;
 exports.aliases = ['hga'];
 exports.game = HGA;
 exports.description = description;
+exports.modes = ['Golf'];

@@ -138,24 +138,25 @@ class HT extends Games.Game {
 		this.rolla = null;
 		this.rollb = null;
 		let eff = Tools.data.typeChart[Tools.data.convertType[this.types.get(this.curPlayer)]][Tools.data.convertType[this.types.get(this.oplayer)]];
-		let roll1, roll2
+		let roll1, roll2;
 		if (eff === 0) {
 			this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "**, but the defending type is immune!");
-			this.say("!roll 75");
-			this.say("!roll 125");
+			this.roll1 = 75;
+			this.roll2 = 125;
 		} else  if (eff === 0.5) {
 			this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "**, but the defending type resists the attacking type!");
-			this.say("!roll 75");
-			this.say("!roll 100");
+			this.roll1 = 75;
+			this.roll2 = 100;
 		} else if (eff === 1) {
 			this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "**, but the attack is neutral.");
-			this.say("!roll 100");
-			this.say("!roll 100");
+			this.roll1 = 100;
+			this.roll2 = 100;
 		} else {
 			this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "** super-effectively!");
-			this.say("!roll 125");
-			this.say("!roll 100");
+			this.roll1 = 125;
+			this.roll2 = 100;
 		}
+		this.sayPlayerRolls();
     }
 
     handleRoll(roll) {

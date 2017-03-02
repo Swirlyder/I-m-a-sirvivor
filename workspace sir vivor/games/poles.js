@@ -284,54 +284,24 @@ class Poles extends Games.Game {
 		this.rollb = null;
 		let adda = (this.attackHelps.length - this.attackWows.length) * 30;
 		let addb = (this.defenseHelps.length - this.defenseWows.length) * 30;
-		let rolla = 100+adda, rollb = 100+addb;
+		let rolla = 100 + adda, rollb = 100 + addb;
 		if (rolla < 0) rolla = 10;
 		if (rollb < 0) rollb = 10;
-		this.say("!roll " + rolla);
-		this.say("!roll " + rollb);
+		this.roll1 = rolla;
+		this.roll2 = rollb;
+		this.sayPlayerRolls();
 	}
 
-	handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
+	handleWinner(winPlayer, losePlayer) {
+		if (this.finals) {
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+			losePlayer.eliminated = true;
+		} else if (winPlayer === this.curPlayer) {
+			this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "** and gains 2 points!");
 		} else {
-			this.rollb = roll;
-			if (this.rolla !== this.rollb) {
-				if (this.rolla > this.rollb) {
-					if (this.finals) {
-						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
-						this.oplayer.eliminated = true;
-					} else {
-						this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "** and gains 2 points!");
-					}
-					let points = this.points.get(this.curPlayer);
-					points += 2;
-					this.points.set(this.curPlayer, points);
-				} else {
-					if (this.finals) {
-						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
-						this.curPlayer.eliminated = true;
-					} else {
-						this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "** and gains 1 point!");
-					}
-					let points = this.points.get(this.oplayer);
-					points += 1;
-					this.points.set(this.oplayer, points);
-				}
-				if (this.finals) {
-					this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
-				} else {
-					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-				}
-			} else {
-				this.say("The rolls were the same! Rerolling...");
-				if (this.finals) {
-					this.timeout = setTimeout(() => this.sayFinalRolls(), 5 * 1000);
-				} else {
-					this.timeout = setTimeout(() => this.doAttack(), 5 * 1000);
-				}
-			}
+			this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "** and gains 1 point!");
 		}
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
 	handleRolls(rolls) {
@@ -479,3 +449,4 @@ exports.id = id;
 exports.description = description;
 exports.game = Poles;
 exports.aliases = [];
+exports.modes = ['Golf'];

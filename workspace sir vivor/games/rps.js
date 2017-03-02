@@ -166,13 +166,14 @@ class RPS extends Games.Game {
 					this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "** with **" + stuff[rpsA] + "**, who defends with **" + stuff[rpsB] + "**.");
 				}
 				if (diff === 1) {
-					this.say("!roll 125");
-					this.say("!roll 100");
+					this.roll1 = 125;
+					this.roll2 = 100;
 				} else {
+					this.roll1 = 100;
+					this.roll2 = 125;
 					this.win = false;
-					this.say("!roll 100");
-					this.say("!roll 125");
 				}
+				this.sayPlayerRolls();
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
@@ -181,41 +182,14 @@ class RPS extends Games.Game {
 			return;
 		}
 	}
-
-	handleRoll(roll) {
-		try {
-			if (!this.rolla) {
-				this.rolla = roll;
-			} else {
-				this.rollb = roll;
-				if (this.rolla !== this.rollb) {
-					if (this.win) {
-						if (this.rolla > this.rollb) {
-							this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
-							this.oplayer.eliminated = true;
-						} else {
-							this.say("**" + this.oplayer.name + "** defended successfully!");
-						}
-					} else {
-						if (this.rolla > this.rollb) {
-							this.say("**" + this.curPlayer.name + "** defended successfully!");
-						} else {
-							this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
-							this.curPlayer.eliminated = true;
-						}
-					}
-					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-				} else {
-					this.say("The rolls were the same! rerolling...");
-					this.timeout = setTimeout(this.doPlayerAttack(1), 5 * 1000);
-				}
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+	handleWinner(winPlayer, losePlayer) {
+		if ((this.win && winPlayer === this.curPlayer) || (!this.win && winPlayer === this.oplayer)) {
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+			losePlayer.eliminated = true;
+		} else {
+			this.say("**" + winPlayer.name + "** defended successfully!");
 		}
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
 	destroy(target, user) {

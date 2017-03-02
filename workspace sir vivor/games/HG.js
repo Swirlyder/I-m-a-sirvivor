@@ -10,7 +10,6 @@ class HG extends Games.Game {
 		this.name = name;
 		this.description = description;
 		this.id = id;
-		this.items = new Map();
 		this.attacks = new Map();
 	}
 
@@ -124,8 +123,9 @@ class HG extends Games.Game {
 		try {
 			this.rolla = null;
 			this.rollb = null;
-			this.say("!roll 100");
-			this.say("!roll 100");
+			this.roll1 = 100;
+			this.roll2 = 100;
+			this.sayPlayerRolls();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.mailbreak();
@@ -134,6 +134,11 @@ class HG extends Games.Game {
 		}
 	}
 
+	handleWinner(winPlayer, losePlayer) {
+		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "!");
+		losePlayer.eliminated = true;
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+	}
 	handleRoll(roll) {
 		try {
 			if (!this.rolla) {

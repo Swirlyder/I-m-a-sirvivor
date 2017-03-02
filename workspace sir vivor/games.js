@@ -39,6 +39,7 @@ class Game {
 		this.winners = new Map();
 		this.parentGame = null;
 		this.childGame = null;
+		this.golf = false;
 	}
 
 	mailbreak() {
@@ -258,7 +259,7 @@ class Game {
 				this.timeout = setTimeout(() => sayPlayerRolls(), 5 * 1000);
 			} else {
 				let winPlayer, losePlayer;
-				if (this.rolla > this.rollb) {
+				if (this.rolla > this.rollb && (!this.golf)) {
 					winPlayer = this.curPlayer;
 					losePlayer = this.oplayer;
 				} else {
@@ -566,6 +567,7 @@ loadGames() {
 			if (game.modes) {
 				let modes = game.modes.slice();
 				game.modes = {};
+				console.log('sup');
 				for (let i = 0, len = modes.length; i < len; i++) {
 					let modeId = Tools.toId(modes[i]);
 					if (!(modeId in this.modes)) throw new Error(game.name + " mode '" + modeId + "' does not exist.");
@@ -578,6 +580,7 @@ loadGames() {
 						id = game.id + this.modes[modeId].id;
 					}
 					if (!(id in this.aliases)) this.aliases[id] = game.id + ',' + modeId;
+					console.log(this.aliases[id]);
 					if (this.modes[modeId].aliases) {
 						if (!game.modeAliases) game.modeAliases = {};
 						for (let i = 0, len = this.modes[modeId].aliases.length; i < len; i++) {
@@ -603,8 +606,10 @@ loadGames() {
 		target = target.split(',');
 		let format = target.shift();
 		let id = Tools.toId(format);
+		console.log('id is ' + id);
 		if (id in this.aliases) {
 			id = this.aliases[id];
+			console.log(id + ',' + target.join(','));
 			if (id.includes(',')) return this.getFormat(id + ',' + target.join(','));
 		}
 		if (!(id in this.games)) return;

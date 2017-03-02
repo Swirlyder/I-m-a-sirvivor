@@ -255,3 +255,4 @@ exports.id = id;
 exports.name = name;
 exports.description = description;
 exports.aliases = [];
+exports.modes = ['Golf'];

@@ -28,8 +28,9 @@ class TD extends Games.Game {
 	doPlayerAttack() {
 		this.rolla = null;
 		this.rollb = null;
-		this.say("!roll 100");
-		this.say("!roll 100");
+		this.roll1 = 100;
+		this.roll2 = 100;
+		this.sayPlayerRolls();
 	}
 
 	onNextRound() {
@@ -59,37 +60,18 @@ class TD extends Games.Game {
 		}
 	}
 
-	handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
+	handleWinner(winPlayer, losePlayer) {
+		let diff = Math.abs(this.rolla - this.rollb);
+		let loseTroops = this.troops.get(losePlayer);
+		if (diff >= loseTroops) {
+			this.say("**" + losePlayer.name + "** lost all of their troops!");
+			losePlayer.eliminated = true;
 		} else {
-			this.rollb = roll;
-			if (this.rolla === this.rollb) {
-				this.say("The rolls were the same! rerolling...");
-				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-			} else {
-				let winPlayer, losePlayer;
-				if (this.rolla > this.rollb) {
-					winPlayer = this.curPlayer;
-					losePlayer = this.oplayer;
-				} else {
-					winPlayer = this.oplayer;
-					losePlayer = this.curPlayer;
-				}
-				let loseTroops = this.troops.get(losePlayer);
-				let diff = Math.abs(this.rolla - this.rollb);
-				if (diff >= loseTroops) {
-					this.say("**" + losePlayer.name + "** lost all of their troops!");
-					losePlayer.eliminated = true;
-				} else {
-					this.say("**" + losePlayer.name + "** lost " + diff + " troop" + (diff > 1 ? "s" : "") + "!");
-					this.troops.set(losePlayer, loseTroops - diff);
-				}
-				this.curPlayer = null;
-				clearTimeout(this.timeout);
-				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
-			}
+			this.say("**" + losePlayer.name + "** lost " + diff + " troop" + (diff > 1 ? "s" : "") + "!");
+			this.troops.set(losePlayer, loseTroops - diff);
 		}
+		this.curPlayer = null;
+		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 	}
 
 	handlePick(pick) {
@@ -122,3 +104,4 @@ exports.id = id;
 exports.description = description;
 exports.game = TD;
 exports.aliases = ['td'];
+exports.modes = ['Golf'];

@@ -171,8 +171,30 @@ class TTP extends Games.Game {
 		let mon2 = this.attackMons.get(this.oplayer);
 		this.rolla = null;
 		this.rollb = null;
-		this.say("!roll " + mon1.baseStats[this.stat]);
-		this.say("!roll " + mon2.baseStats[this.stat]);
+		this.roll1 = mon1.baseStats[this.stat];
+		this.roll2 = mon2.baseStats[this.stat];
+		this.sayPlayerRolls();
+	}
+
+	handleWinner(winPlayer, losePlayer) {
+		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!")
+		losePlayer.eliminated = true;
+		let mons = this.mons.get(winPlayer);
+		if (mons.length === 1) {
+			let names = [];
+			for (let i = 0; i < 2; i++) {
+				mons.push(Tools.data.pokedex[this.data[this.index + i]]);
+				names.push("**" + mons[i + 1].species + "**");
+			}
+			this.mons.set(winPlayer, mons);
+			this.sayHand(winPlayer);
+			this.index += 2;
+		}
+		this.stat = null;
+		this.curPlayer = null;
+		this.statPlayer = null;
+		this.oplayer = null;
+		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);		
 	}
 
 	handleRoll(roll) {
@@ -281,3 +303,4 @@ exports.id = id;
 exports.description = description;
 exports.aliases = ['ttp'];
 exports.game = TTP;
+exports.modes = ['Golf']

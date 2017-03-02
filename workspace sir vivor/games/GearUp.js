@@ -192,7 +192,7 @@ class GearUp extends Games.Game {
 		}
 	}
 
-	doPlayerAttack() {
+	sayPlayerRolls() {
 		try {
 			this.rolla = null;
 			this.rollb = null;
@@ -245,6 +245,20 @@ class GearUp extends Games.Game {
 			return;
 		}
 	}
+	
+	handleWinner(winPlayer, losePlayer) {
+		if (winPlayer === this.curPlayer) {
+			let winItems = this.items.get(winPlayer), loseItems = this.items.get(losePlayer);
+			let randItem = Tools.sample(loseItems);
+			winItems.push(randItem);
+			this.players[losePlayer.id].eliminated = true;
+			this.items.set(winPlayer, winItems);
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "** and steals their " + randItem.name + "!");			
+		} else {
+			this.say("**" + this.oplayer.name + "** defended successfully!");
+		}
+		this.timeout = setTimeout(() => this.nexthandleAttacks(), 5 * 1000);
+	}
 
 	destroy(target, user) {
 		try {
@@ -289,3 +303,4 @@ exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.aliases = [];
+exports.modes = ['Golf'];

@@ -189,10 +189,9 @@ class Risk extends Games.Game {
 
 	doCountryAttack() {
 		try {
-			let curTroops = this.troops.get(this.curPlayer);
-			let enemyTroops = this.attackedCountry.armies;
-			this.say("!roll " + curTroops);
-			this.say("!roll " + enemyTroops);
+			this.roll1 = this.troops.get(this.curPlayer);
+			this.roll2 = this.attackedCountry.armies;
+			this.sayPlayerRolls();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.mailbreak();
@@ -203,15 +202,33 @@ class Risk extends Games.Game {
 
 	doPlayerAttack() {
 		try {
-			let troops1 = this.troops.get(this.curPlayer);
-			let troops2 = this.troops.get(this.oplayer);
-			this.say("!roll " + troops1);
-			this.say("!roll " + troops2);
+			this.roll1 = this.troops.get(this.curPlayer);
+			this.roll2 = this.troops.get(this.oplayer);
+			this.sayPlayerRolls();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
 			this.mailbreak();
 			this.end();
 			return;
+		}
+	}
+
+	handleWinner(winPlayer, losePlayer) {
+		if (this.doingCountry) {
+			if (winPlayer === this.curPlayer) {
+				this.say("**" + this.curPlayer.name + "** defeats " + this.attackedCountry.name + " and gains " + this.attackedCountry.gain + " troops!");
+				let troops = this.troops.get(this.curPlayer);
+				troops += this.attackedCountry.gain;
+				this.troops.set(this.curPlayer, troops);
+			} else {
+				this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
+				this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
+			}
+			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+		} else {
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+			losePlayer.eliminated = true;
+			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 		}
 	}
 
@@ -224,7 +241,6 @@ class Risk extends Games.Game {
 				if (this.doingCountry) {
 					if (this.rolla < this.rollb) {
 						this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
-						this.troops.set(this.curPlayer, 100);
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 					} else if (this.rolla > this.rollb) {
 						this.say("**" + this.curPlayer.name + "** defeats " + this.attackedCountry.name + " and gains " + this.attackedCountry.gain + " troops!");
