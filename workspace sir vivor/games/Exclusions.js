@@ -164,7 +164,7 @@ class EXC extends Games.Game {
 			if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 				this.handleAttacks();
 			} else {
-				this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.nick + "**!");
+				this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.name + "**!");
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			}
 		}
@@ -173,34 +173,20 @@ class EXC extends Games.Game {
 	doPlayerAttack() {
 		this.rolla = null;
 		this.rollb = null;
-		this.say("!roll 100");
-		this.say("!roll 100");
+		this.roll1 = 100;
+		this.roll2 = 100;
+		this.sayPlayerRolls();
     }
 
-	handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
+	handleWinner(winPlayer, losePlayer) {
+		if (winPlayer === this.curPlayer) {
+			this.say("**" + winPlayer.nick + "** beats up **" + this.oplayer.name + "**, whose nickname was **" + this.oplayer.nick + "**!");
+			this.oplayer.eliminated = true;
 		} else {
-			this.rollb = roll;
-			if (this.rolla === this.rollb) {
-				this.say("The rolls were the same! Rerolling...");
-				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-			} else {
-				let winPlayer, losePlayer;
-				if (this.rolla > this.rollb) {
-					this.say("**" + this.curPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.nick + "**, who was actually **" + this.oplayer.name + "**!");
-					this.oplayer.eliminated = true;
-					
-				} else if (this.finals) {
-					this.say("**" + this.oplayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.nick + "**, who was actually **" + this.curPlayer.name + "**!");
-					this.curPlayer.eliminated = true;
-				} else {
-					this.say("**" + this.oplayer.nick + "** defended successfully!");
-				}
-				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-			}
+			this.say("**" + winPlayer.name + "** defends successfully!");
 		}
-    }
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+	}
 
 	handlePick(pick) {
 		this.nickPlayer = this.players[Tools.toId(pick)];

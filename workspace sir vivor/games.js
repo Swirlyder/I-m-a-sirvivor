@@ -36,6 +36,9 @@ class Game {
 		this.minigame = false;
 		this.canLateJoin = false;
 		this.canRejoin = false;
+		this.winners = new Map();
+		this.parentGame = null;
+		this.childGame = null;
 	}
 
 	mailbreak() {
@@ -238,6 +241,34 @@ class Game {
 		}
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
 	}
+
+	sayPlayerRolls() {
+		if (this.roll1 && this.roll2) {
+			this.say("!roll " + this.roll1);
+			this.say("!roll " + this.roll2);
+		}
+	}
+
+	handleRoll(roll) { 
+		if (!this.rolla) this.rolla = roll;
+		else {
+			this.rollb = roll;
+			if (this.rolla === this.rollb) {
+				this.say("The rolls were the same. Rerolling...");
+				this.timeout = setTimeout(() => sayPlayerRolls(), 5 * 1000);
+			} else {
+				let winPlayer, losePlayer;
+				if (this.rolla > this.rollb) {
+					winPlayer = this.curPlayer;
+					losePlayer = this.oplayer;
+				} else {
+					winPlayer = this.oplayer;
+					losePlayer = this.curPlayer;
+				}
+				if (typeof this.handleWinner === 'function') this.handleWinner(winPlayer, losePlayer);
+			}
+		}
+	}
 	handlehtml(message) {
 		if (!this.started) return;
 		console.log(message);
@@ -285,8 +316,10 @@ class Game {
 
 class GamesManager {
 	constructor() {
-		this.blah = null;
 		this.games = {};
+		this.modes = {};
+		this.aliases = {};
+		this.commands = {};
 		this.aliases = {};
 		this.fileMap = {};
 		this.host = null;
@@ -307,6 +340,7 @@ class GamesManager {
 			"decimates",
 		];
 		this.lastGame = null;
+		
 	}
 
 	importHosts() {
@@ -400,47 +434,237 @@ class GamesManager {
 		this.aliases[file.name] = file.aliases;
 	}
 
-	loadGames() {
+loadGames() {
 		let games;
 		try {
 			games = fs.readdirSync('./games');
 		} catch (e) {}
 		if (!games) return;
 		for (let i = 0, len = games.length; i < len; i++) {
-			let file = games[i];
-			if (!file.endsWith('.js')) continue;
-			let fileName = file;
-			file = require('./games/' + file);
-			if (file.game && file.name && file.id)  {
-				this.games[file.id] = file;
-			}
-			this.aliases[file.name] = file.aliases;
-			this.fileMap[file.id] = fileName;
+			let game = games[i];
+			if (!game.endsWith('.js')) continue;
+			game = require('./games/' + game);
+			this.games[game.id] = game;
 		}
-		this.importHosts();
+
+		let modes;
+		try {
+			modes = fs.readdirSync('./games/modes');
+		} catch (e) {}
+		if (modes) {
+			for (let i = 0, len = modes.length; i < len; i++) {
+				let mode = modes[i];
+				if (!mode.endsWith('.js')) continue;
+				mode = require('./games/modes/' + mode);
+				this.modes[mode.id] = mode;
+				if (mode.commands) {
+					if (i in this.commands && this.commands[i] !== mode.commands[i]) throw new Error(mode.name + " command '" + i + "' is already used for a different game function (" + this.commands[i] + ").");
+					for (let i in mode.commands) {
+						if (i in Commands) {
+							if (i in this.commands) continue;
+							throw new Error(mode.name + " mode command '" + i + "' is already a command.");
+						}
+						let gameFunction = mode.commands[i];
+						this.commands[i] = gameFunction;
+						if (gameFunction in mode.commands && gameFunction !== i) {
+							Commands[i] = gameFunction;
+							continue;
+						}
+						Commands[i] = function (target, room, user, command, time) {
+							if (room.game) {
+								if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
+							} else if (room === user) {
+								user.rooms.forEach(function (value, room) {
+									if (room.game && room.game.pmCommands && (room.game.pmCommands === true || i in room.game.pmCommands) && typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
+								});
+							}
+						};
+					}
+				}
+			}
+
+			for (let i in this.modes) {
+				let mode = this.modes[i];
+				if (mode.aliases) {
+					for (let i = 0, len = mode.aliases.length; i < len; i++) {
+						let alias = Tools.toId(mode.aliases[i]);
+						if (alias in this.modes) throw new Error(mode.name + " alias '" + alias + "' is already a mode.");
+						this.modes[alias] = mode;
+						mode.aliases[i] = alias;
+					}
+				}
+			}
+		}
+
+		for (let i in this.games) {
+			let game = this.games[i];
+			if (game.inherits) {
+				if (!game.install) throw new Error(game.name + " must have an install method to inherit from other games.");
+				let parentId = Tools.toId(game.inherits);
+				if (parentId === game.id || !(parentId in this.games)) throw new Error(game.name + " inherits from an invalid game.");
+				if (!this.games[parentId].install) throw new Error(game.name + "'s parent game '" + game.inherits + "' must have an install method.");
+				game.inherits = parentId;
+			}
+			if (game.commands) {
+				for (let i in game.commands) {
+					if (i in this.commands && this.commands[i] !== game.commands[i]) throw new Error(game.name + " command '" + i + "' is already used for a different game function (" + this.commands[i] + ").");
+					if (i in Commands) {
+						if (i in this.commands) continue;
+						throw new Error(game.name + " command '" + i + "' is already a command.");
+					}
+					let gameFunction = game.commands[i];
+					this.commands[i] = gameFunction;
+					if (gameFunction in game.commands && gameFunction !== i) {
+						Commands[i] = gameFunction;
+						continue;
+					}
+					Commands[i] = function (target, room, user, command, time) {
+						if (room.game) {
+							if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
+						} else if (room === user) {
+							Rooms.rooms.forEach(function (value, room) {
+								if (room.game && room.game.pmCommands && (room.game.pmCommands === true || i in room.game.pmCommands) && typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
+							});
+						}
+					};
+				}
+			}
+			if (game.aliases) {
+				for (let i = 0, len = game.aliases.length; i < len; i++) {
+					let alias = Tools.toId(game.aliases[i]);
+					if (!(alias in this.aliases) && !(alias in this.games)) this.aliases[alias] = game.id;
+				}
+			}
+			if (game.variations) {
+				let variations = game.variations.slice();
+				game.variations = {};
+				for (let i = 0, len = variations.length; i < len; i++) {
+					let variation = variations[i];
+					let id = Tools.toId(variation.name);
+					if (id in this.games) throw new Error(game.name + " variation '" + variation.name + "' is already a game.");
+					variation.id = id;
+					let variationId = Tools.toId(variation.variation);
+					if (variationId in this.modes) throw new Error(variation.name + "'s variation '" + variation.variation + "' exists as a mode.");
+					variation.variationId = variationId;
+					game.variations[variationId] = variation;
+					if (!(id in this.aliases)) this.aliases[id] = game.id + ',' + variationId;
+					if (variation.aliases) {
+						for (let i = 0, len = variation.aliases.length; i < len; i++) {
+							let alias = Tools.toId(variation.aliases[i]);
+							if (!(alias in this.aliases) && !(alias in this.modes)) this.aliases[alias] = game.id + ',' + variationId;
+						}
+					}
+					if (variation.variationAliases) {
+						if (!game.variationAliases) game.variationAliases = {};
+						for (let i = 0, len = variation.variationAliases.length; i < len; i++) {
+							let alias = Tools.toId(variation.variationAliases[i]);
+							if (!(alias in game.variationAliases) && !(alias in this.modes)) game.variationAliases[alias] = variationId;
+						}
+					}
+				}
+			}
+			if (game.modes) {
+				let modes = game.modes.slice();
+				game.modes = {};
+				for (let i = 0, len = modes.length; i < len; i++) {
+					let modeId = Tools.toId(modes[i]);
+					if (!(modeId in this.modes)) throw new Error(game.name + " mode '" + modeId + "' does not exist.");
+					game.modes[modeId] = modeId;
+					let prefix = this.modes[modeId].naming === 'prefix';
+					let id;
+					if (prefix) {
+						id = this.modes[modeId].id + game.id;
+					} else {
+						id = game.id + this.modes[modeId].id;
+					}
+					if (!(id in this.aliases)) this.aliases[id] = game.id + ',' + modeId;
+					if (this.modes[modeId].aliases) {
+						if (!game.modeAliases) game.modeAliases = {};
+						for (let i = 0, len = this.modes[modeId].aliases.length; i < len; i++) {
+							game.modeAliases[this.modes[modeId].aliases[i]] = modeId;
+							let id;
+							if (prefix) {
+								id = this.modes[modeId].aliases[i] + game.id;
+							} else {
+								id = game.id + this.modes[modeId].aliases[i];
+							}
+							if (!(id in this.aliases)) this.aliases[id] = game.id + ',' + modeId;
+						}
+					}
+				}
+			}
+		}
 		this.importHost();
+		this.importHosts();
 	}
 
-	createGame(game, room) {
-		if (room.game) {
-			return Parse.say(room, "A game of " + room.game.name + " is already in progress.");
+	getFormat(target) {
+		if (typeof target === 'object') return target;
+		target = target.split(',');
+		let format = target.shift();
+		let id = Tools.toId(format);
+		if (id in this.aliases) {
+			id = this.aliases[id];
+			if (id.includes(',')) return this.getFormat(id + ',' + target.join(','));
 		}
-		let id = Tools.toId(game);
-		for (let fileID in this.games) {
-			let game = this.games[fileID];
-			if (game.aliases.indexOf(id) !== -1) {
-				id = fileID;
-				break;
-			} else if (id === fileID) {
-				break;
+		if (!(id in this.games)) return;
+		format = Object.assign({}, this.games[id]);
+		let variation, mode;
+		for (let i = 0, len = target.length; i < len; i++) {
+			let id = Tools.toId(target[i]);
+			if (format.variations) {
+				if (format.variationAliases && id in format.variationAliases) id = format.variationAliases[id];
+				if (id in format.variations) variation = format.variations[id];
+			}
+			if (format.modes) {
+				if (format.modeAliases && id in format.modeAliases) id = format.modeAliases[id];
+				if (id in format.modes) mode = format.modes[id];
 			}
 		}
-		if (!(id in this.games)) return Parse.say(room, "The game '" + game.trim() + "' was not found.");
-		if (this.games[id].minigame) return Parse.say(room, "You cannot signup a minigame!");
-		this.loadGame(this.fileMap[id]);
-		room.game = new this.games[id].game(room); // eslint-disable-line new-cap
-		this.lastGame = id;
+		if (variation) Object.assign(format, variation);
+		if (mode) format.modeId = mode;
+		return format;
+	}
+
+	createGame(target, room) {
+		if (room.game) {
+			room.say("A game of " + room.game.name + " is already in progress.");
+			return false;
+		}
+		let format = this.getFormat(target);
+		let baseClass;
+		if (format.inherits) {
+			let parentFormat = format;
+			let parentFormats = [];
+			while (parentFormat.inherits) {
+				parentFormat = this.games[parentFormat.inherits];
+				if (parentFormats.includes(parentFormat)) throw new Error("Infinite inherit loop created by " + format.name + ".");
+				parentFormats.unshift(parentFormat);
+			}
+			baseClass = Game;
+			for (let i = 0, len = parentFormats.length; i < len; i++) {
+				baseClass = parentFormats[i].install(baseClass);
+			}
+			baseClass = format.install(baseClass);
+		} else if (format.install) {
+			baseClass = format.install(Game);
+		} else {
+			baseClass = format.game;
+		}
+		room.game = new baseClass(room); // eslint-disable-line new-cap
+		Object.assign(room.game, format);
+		if (format.modeId) this.modes[format.modeId].mode.call(room.game);
 		return room.game;
+	}
+
+	createChildGame(format, parentGame) {
+		parentGame.room.game = null;
+		let childGame = this.createGame(format, parentGame.room);
+		parentGame.childGame = childGame;
+		childGame.parentGame = parentGame;
+		childGame.players = parentGame.players;
+		childGame.playerCount = parentGame.playerCount;
+		return childGame;
 	}
 }
 
