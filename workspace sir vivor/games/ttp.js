@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Top Trumps Pokebattle';
-const description = '**Top Trumps Pokebattle**: __Where your partners\' lesser strengths can become their greatest assets.__ Game rules: http://survivor-ps.weebly.com/top-trumps-pokebattle.html';
+const description = '__Where your partners\' lesser strengths can become their greatest assets.__ Game rules: http://survivor-ps.weebly.com/top-trumps-pokebattle.html';
 const id = Tools.toId(name);
 const names = {
 	'atk': 'Attack',

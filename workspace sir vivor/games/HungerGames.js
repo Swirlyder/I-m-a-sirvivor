@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Hunger Games Spotlight';
-const description = '**Hunger Games Spotlight**: __Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/hunger-games.html';
+const description = '__Classic but with a twist: No alliances.__ Game rules: http://survivor-ps.weebly.com/hunger-games.html';
 const id = Tools.toId(name);
 
 class HGS extends Games.Game {

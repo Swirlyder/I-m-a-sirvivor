@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Dexterity';
-const description = '**Dexterity**: __Where accuracy can give you the advantage or just make you fail...__ Game rules: http://survivor-ps.weebly.com/dexterity.html';
+const description = '__Where accuracy can give you the advantage or just make you fail...__ Game rules: http://survivor-ps.weebly.com/dexterity.html';
 const id = Tools.toId(name);
 
 const data = {"twig": {atk:50, acc:100, name: "Twig", aliases: ["twig", "stick"], cd: 0},

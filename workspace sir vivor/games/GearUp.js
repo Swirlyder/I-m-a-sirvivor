@@ -1,7 +1,7 @@
 'use strict';
 
 const name = "Gear Up";
-const description = "**Gear Up**: __So you have items? You think you're cool? Pffft! You totally shouldn't click this link and learn about Gear Up (Long Games)__ Game rules: http://survivor-ps.weebly.com/gear-up.html";
+const description = "__So you have items? You think you're cool? Pffft! You totally shouldn't click this link and learn about Gear Up (Long Games)__ Game rules: http://survivor-ps.weebly.com/gear-up.html";
 const id = toId(name);
 
 const items = {

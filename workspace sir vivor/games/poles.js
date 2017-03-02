@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Poles';
-const description = '**Poles**: __Your power is within the cards, can you use them wisely?__ Game rules: http://survivor-ps.weebly.com/poles.html';
+const description = '__Your power is within the cards, can you use them wisely?__ Game rules: http://survivor-ps.weebly.com/poles.html';
 const id = Tools.toId(name);
 
 const realnames = {

@@ -1,6 +1,6 @@
 'use strict';
-const name = "RPS";
-const description = "**Rock, Paper, Scissors**: __Winner of NBT #2!__ Game rules: http://survivor-ps.weebly.com/rock-paper-scissors.html";
+const name = "Rock, Paper, Scissors";
+const description = "*__Winner of NBT #2!__ Game rules: http://survivor-ps.weebly.com/rock-paper-scissors.html";
 const id = Tools.toId(name);
 let stuff = ["Rock", "Paper", "Scissors"];
 class RPS extends Games.Game {

@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Eclipse';
-const description = "**Eclipse Survivor**: __Winner of NBT #5!__ Game rules: http://survivor-ps.weebly.com/eclipse-survivor.html";
+const description = "__Winner of NBT #5!__ Game rules: http://survivor-ps.weebly.com/eclipse-survivor.html";
 const id = Tools.toId(name);
 
 class Eclipse extends Games.Game {

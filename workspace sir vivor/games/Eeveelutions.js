@@ -2,7 +2,7 @@
 
 const name = "Eeveelutions"
 const id = Tools.toId(name);
-const description = "**Eeveelutions**: __More than one kind? I can't beleevee this!__ Game rules: http://survivor-ps.weebly.com/eeveelutions.html";
+const description = "__More than one kind? I can't beleevee this!__ Game rules: http://survivor-ps.weebly.com/eeveelutions.html";
 
 class Eevee extends Games.Game {
 	constructor(room) {

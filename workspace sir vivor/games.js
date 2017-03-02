@@ -55,8 +55,9 @@ class Game {
 	}
 
 	signups() {
+		console.log(this);
 		this.say("survgame! If you would like to play, use the command ``/me in``");
-		if (this.description) this.say(this.description);
+		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + this.name + "**:" + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		if (this.freeJoin) this.started = true;
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
