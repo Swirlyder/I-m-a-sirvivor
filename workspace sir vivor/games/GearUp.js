@@ -181,7 +181,7 @@ class GearUp extends Games.Game {
 					this.handleAttacks();
 				} else {
 					this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
-					this.doPlayerAttack();
+					this.sayPlayerRolls();
 				}
 			}
 		} catch (e) {
