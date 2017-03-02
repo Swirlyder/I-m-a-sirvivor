@@ -260,7 +260,7 @@ class Game {
 				this.timeout = setTimeout(() => sayPlayerRolls(), 5 * 1000);
 			} else {
 				let winPlayer, losePlayer;
-				if (this.rolla > this.rollb && (!this.golf)) {
+				if (this.rolla > this.rollb && (!this.golf) || (this.rolla < this.rollb && this.golf)) {
 					winPlayer = this.curPlayer;
 					losePlayer = this.oplayer;
 				} else {
