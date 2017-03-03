@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Tower Defense';
-const description = '**Tower Defense**: __Can you defend your tower? Who will be left standing when the dust settles? (Long Games)__ Game rules: http://survivor-ps.weebly.com/tower-defense.html';
+const description = '__Can you defend your tower? Who will be left standing when the dust settles? (Long Games)__ Game rules: http://survivor-ps.weebly.com/tower-defense.html';
 const id = Tools.toId(name);
 
 class TD extends Games.Game {
