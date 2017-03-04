@@ -222,7 +222,7 @@ class Risk extends Games.Game {
 				this.troops.set(this.curPlayer, troops);
 			} else {
 				this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
-				this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
+				this.troops.set(this.curPlayer, 100);
 			}
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		} else {
