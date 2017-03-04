@@ -2018,11 +2018,11 @@ exports.commands = {
 			}
 		}
 		if (good.length > 0 && bad.length > 0) {
-			return user.say("Participations removed from: **" + good.join("**,**") + "**. I was unable to remove participation from **" + bad.join("**, **") + "**.");
+			return user.say("Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.");
 		} else if (good.length > 0) {
-			return user.say("Participations removed from: **" + good.join("**,**") + "**.");
+			return user.say("Participations removed from: **" + good.join(", ") + "**.");
 		} else {
-			return user.say("I was unable to remove participations from **" + bad.join("**, **") + "**.");
+			return user.say("I was unable to remove participations from **" + bad.join(", ") + "**.");
 		}
 	},
 	testroom: function (target, user, room) {

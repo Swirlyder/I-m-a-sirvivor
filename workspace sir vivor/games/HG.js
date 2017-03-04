@@ -15,10 +15,6 @@ class HG extends Games.Game {
 
 	onStart() {
 		try {
-			for (let userID in this.players) {
-				let player = this.players[userID];
-				this.items.set(player, []);
-			}	
 			this.nextRound();
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
