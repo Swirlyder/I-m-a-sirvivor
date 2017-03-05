@@ -2110,7 +2110,7 @@ exports.commands = {
 	rename: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
+		let realt = Tools.toId(target);
 		if (!(realt in dd.dd)) {
 			return user.say("**" + target + "** is not on the dd leaderboard.");
 		} else {
