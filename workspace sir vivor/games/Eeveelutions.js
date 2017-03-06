@@ -88,7 +88,7 @@ class Eevee extends Games.Game {
 			if (!player.eliminated && !this.attacks.has(player)) waitings.push(player.name);
 		}
 		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		this.timeout = setTimeout(() => this.elimRemaining(), 30 * 1000);
 	}
 
 	elimRemaining() {
@@ -173,7 +173,7 @@ class Eevee extends Games.Game {
 				this.say("Fortunately for **" + this.oplayer.name + "**, they dodged the attack!");
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else {
-				this.say("Unfortunately, **" + this.oplayer.name + "** was unable to dodge the attack.");
+				this.say("Unfortunately, **" + this.oplayer.name + "** (a " + this.eevees.get(this.player)+ ") was unable to dodge the attack.");
 				this.oplayer.eliminated = true;
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
@@ -260,7 +260,7 @@ class Eevee extends Games.Game {
 	destroy(target, user) {
 		if (!this.canAttack) return;
 		let curPlayer = this.players[user.id];
-		if (!curPlayer) return;
+		if (!curPlayer || curPlayer.eliminated) return;
 		let realID = toId(target);
 		let oplayer = this.players[realID];
 		if (!oplayer) {

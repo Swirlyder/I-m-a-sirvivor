@@ -71,6 +71,7 @@ class EXC extends Games.Game {
 			return;
 		} else if (this.getRemainingPlayerCount() === 2) {
 			this.canAttack = false;
+			this.finals = true;
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
@@ -179,8 +180,8 @@ class EXC extends Games.Game {
     }
 
 	handleWinner(winPlayer, losePlayer) {
-		if (winPlayer === this.curPlayer) {
-			this.say("**" + winPlayer.nick + "** beats up **" + this.oplayer.name + "**, whose nickname was **" + this.oplayer.nick + "**!");
+		if ((winPlayer === this.curPlayer) || this.finals) {
+			this.say("**" + winPlayer.nick + "** beats up **" + losePlayer.name + "**, whose nickname was **" + losePlayer.nick + "**!");
 			this.oplayer.eliminated = true;
 		} else {
 			this.say("**" + winPlayer.name + "** defends successfully!");

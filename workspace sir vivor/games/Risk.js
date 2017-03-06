@@ -222,63 +222,16 @@ class Risk extends Games.Game {
 				this.troops.set(this.curPlayer, troops);
 			} else {
 				this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
+				console.log(this.troops.get(this.curPlayer));
 				this.troops.set(this.curPlayer, 100);
+				console.log(this.troops.get(this.curPlayer));
+
 			}
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		} else {
 			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
 			losePlayer.eliminated = true;
 			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
-		}
-	}
-
-	handleRoll(roll) {
-		try {
-			if (!this.rolla) {
-				this.rolla = roll;
-			} else {
-				this.rollb = roll;
-				if (this.doingCountry) {
-					if (this.rolla < this.rollb) {
-						this.say("**" + this.curPlayer.name + "** lost to " + this.attackedCountry.name + ". Their troops were reset to 100.");
-						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-					} else if (this.rolla > this.rollb) {
-						this.say("**" + this.curPlayer.name + "** defeats " + this.attackedCountry.name + " and gains " + this.attackedCountry.gain + " troops!");
-						let troops = this.troops.get(this.curPlayer);
-						troops += this.attackedCountry.gain;
-						this.troops.set(this.curPlayer, troops);
-						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-					} else {
-						this.say("The rolls were a tie! Rerolling...");
-						this.rolla = null;
-						this.rollb = null;
-						this.doCountryAttack();
-					}
-				} else {
-					this.rollb = Math.floor(roll);
-					if (this.rolla !== this.rollb) {
-						if (this.rolla < this.rollb) {
-							this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
-							this.curPlayer.eliminated = true;
-						} else if (this.rolla > this.rollb) {
-							this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
-							this.oplayer.eliminated = true;
-						}
-						this.attackPlayer = null;
-						this.timeout = setTimeout(() => this.nextRound(), 10 * 1000);
-					} else {
-						this.say("The rolls were the same! rerolling...");
-						this.rolla = null;
-						this.rollb = null;
-						this.doPlayerAttack();
-					}
-				}
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
 		}
 	}
 

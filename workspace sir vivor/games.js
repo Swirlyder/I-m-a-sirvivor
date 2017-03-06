@@ -128,10 +128,10 @@ class Game {
 	nextRound() {
 		if (this.timeout) clearTimeout(this.timeout);
 		this.round++;
-		if (this.getRemainingPlayerCount() < 2) {
-			this.end();
-			return;
-		}
+		//if (this.getRemainingPlayerCount() < 2) {
+		//	this.end();
+		//	return;
+		//}
 		if (typeof this.onNextRound === 'function') this.onNextRound();
 	}
 
