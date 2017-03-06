@@ -2106,7 +2106,23 @@ exports.commands = {
 		let times = ['6pm EST', '2am EST', '10am EST']
 		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
 	},
-	
+
+	azu: 'azuuli',
+	azuuli: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '/me explodes';
+		this.say(room, text);
+	},
+
 	rename: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
