@@ -699,6 +699,14 @@ exports.commands = {
 			Games.addHost(realuser);
 		}
 	},
+	subhost: function (target, user, room) {
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!Games.host) return room.say("No host is currently active.");
+		user = Users.get(Tools.toId(target));
+		if (!user) return room.say("You can only host somebody currently in the room.");
+		Games.host = user;
+		room.say("**" + Games.host.name + "** has subbed in as the host!");
+	},
 	phantomgenius: 'pants',
 	phantom: 'pants',
 	pants: function (target, user, room) {
@@ -1965,6 +1973,7 @@ exports.commands = {
 		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which three games are hosted daily at 2AM, 10AM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
 		this.say(room, text);
 	},
+
 	firsts: 'first',
 	first: function (target, user, room) {
 		if (!target) return;

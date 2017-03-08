@@ -18,7 +18,8 @@ class Bounty extends Games.Game {
 		this.hasBeenAttacked = new Map();
 		this.order = [];
 		this.blocked = new Map();
-		this.hasUseActions = new Map();
+		this.hasUsedAction = new Map();
+		this.trappersUsed = new Map();
 	}
 
 	onStart() {
@@ -57,6 +58,7 @@ class Bounty extends Games.Game {
 		this.blocked.clear();
 		this.attacks.clear();
 		this.playerActions.clear();
+		this.trappersUsed.clear();
 		this.numAttacks = 0;
 		this.canAttack = true;
 		this.order = [];
@@ -185,7 +187,14 @@ class Bounty extends Games.Game {
 		} else if (role === "Private Eye") {
 			
 		} else if (role === "The Medium") {
-			
+			if (this.hasUsedAction.has(player)) {
+				return user.say("You've already used your action.");
+			} else if (this.round !== 1) {
+				return user.say("You can only use your action on the first round");
+			} else {
+				let player = this.players[Tools.toId(target)];
+				if (!player) return user.say
+			}
 		} else {
 			return user.say("Your character does not have a role that can play an action");
 		}
