@@ -132,9 +132,14 @@ class Bounty extends Games.Game {
 					if (role1 === 'Sleeping' && !this.hasBeenAttacked(this.curPlayer)) {
 						this.handleAttacks();
 					} else {
-						this.hasBeenAttacked.set(this.oplayer, true);
-						this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
-						this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+						if (this.blocked.has(this.curPlayer)) {
+							this.say("**" + this.curPlayer.name + "'s** attack was blocked by the trapper!");
+							this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+						} else {
+							this.hasBeenAttacked.set(this.oplayer, true);
+							this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
+							this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+						}
 					}
 				}
 			}
@@ -169,10 +174,23 @@ class Bounty extends Games.Game {
 	}
 
 	action(target, user) {
-		
+		if (!this.canAttack) return;
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		let role = this.playerRoles.get(player);
+		if (role === "Trapper") {
+			
+		} else if (role === "Misinformer") {
+			
+		} else if (role === "Private Eye") {
+			
+		} else if (role === "The Medium") {
+			
+		} else {
+			return user.say("Your character does not have a role that can play an action");
+		}
 	}
 }
-
 
 exports.name = name;
 exports.id = id;

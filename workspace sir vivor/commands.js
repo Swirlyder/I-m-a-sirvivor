@@ -1688,7 +1688,7 @@ exports.commands = {
 		let d = new Date();
 		let n = d.getHours();
 		let m = d.getMinutes();
-		let millis = (m === 0 ? 0 : (60 - m) * 60 * 1000)
+		let millis = (60 - m) * 60 * 1000
 		if (n < 7) {
 			millis += (6 - n) * 60 * 60 * 1000;
 		} else if (n < 15) {
@@ -1934,7 +1934,6 @@ exports.commands = {
 	    if (!room.game) return;
 	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
     },
-	dd: 'addpoints',
 	apts: 'addpoints',
 	apt: 'addpoints',
 	addpoints: function (target, user, room) {
@@ -1951,6 +1950,20 @@ exports.commands = {
 		}
 		room.say("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
 		room.say("Participation points awarded to: **" + names.join(", ") + "**.");
+	},
+	dd: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += "Daily Deathmatch is Survivor's system for official games, in which three games are hosted daily at 2AM, 10AM and 6PM EST, for every Daily Deathmatch you participate in, you will earn points towards a monthly leaderboard. Whoever has the most points at the end of the month will be crowned the champion";
+		this.say(room, text);
 	},
 	firsts: 'first',
 	first: function (target, user, room) {
