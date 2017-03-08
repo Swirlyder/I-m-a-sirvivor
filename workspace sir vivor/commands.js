@@ -775,6 +775,8 @@ exports.commands = {
 				return this.restrictReply('/makegroupchat' +roomname);
 			    return this.restrictReply('/join groupchat-sirvivor-' +roomname);
 			    return this.restrictReply('/modjoin +');
+			    return this.pmReply(/roommod ' +tarUser');
+			    return this.pmReply(/invite ' +tarUser');
 			}
 			
 		} else {
