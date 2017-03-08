@@ -73,7 +73,7 @@ for (let i in Config.groups)
 }
 var host = '';
 var hostId = '';
-var roomVoiceList = ['deetah', 'Henka', 'Inactive', 'lilblueshuppet', 'pancake', 'phantomgenius', 'spieky', 'vividsunset', 'wishes'];
+var roomVoiceList = ['deetah', 'Henka', 'Inactive', 'lilblueshuppet', 'pancake', 'phantomgenius', 'spieky', 'vividsunset', 'hurl', 'wishes'];
 
 function isPM(roomid, userid)
 {
