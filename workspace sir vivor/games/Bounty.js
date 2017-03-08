@@ -144,7 +144,7 @@ class Bounty extends Games.Game {
 	destroy(target, user) {
 		if (!this.canAttack) return;
 		let player = this.players[user.id];
-		if (!player || player.eliminated) continue;
+		if (!player || player.eliminated) return;
 		let targetPlayer = this.player[Tools.toId(target)];
 		if (!targetPlayer) return user.say("That player is not in the game!");
 		if (targetPlayer.eliminated) return user.say("That player has already been eliminated!");
