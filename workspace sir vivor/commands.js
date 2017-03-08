@@ -778,7 +778,7 @@ exports.commands = {
 			}
 			
 		} else {
-			return this.Reply('**cannot make gc**');
+			return this.Reply('**An Error Occured While Making The Groupchat, Try Again Later**');
 		}
 		
 	},
