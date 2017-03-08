@@ -72,15 +72,7 @@ class TTP extends Games.Game {
 			this.curPlayer.eliminated = true;
 		}
 		this.attackMons.clear();
-		if (this.getRemainingPlayerCount() === 0) {
-			this.say("Everyone was mked!");
-			this.end();
-			return;
-		}
-		if (this.getRemainingPlayerCount() === 1) {
-			this.end();
-			return;
-		} else if (this.getRemainingPlayerCount() === 2) {
+		if (this.getRemainingPlayerCount() === 2) {
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
@@ -117,12 +109,11 @@ class TTP extends Games.Game {
 	sayHand(player) {
 		let cards = this.mons.get(player);
 		if (!cards) return;
-		let height = Math.floor((cards.length + 1) / 2) * 65;
+		let height = Math.floor((cards.length + 1) / 2) * 165;
 		let start = '<div class="infobox"><div style="height: ' + height + 'px">';
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
-			console.log(card);
 			let mon = Tools.data.pokedex[Tools.toId(card.species)];
 			let num;
 			if (mon.num < 10) {
@@ -132,9 +123,14 @@ class TTP extends Games.Game {
 			} else {
 				num = mon.num.toString();
 			}
-			strs.push('<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br>" + mon.types.join("/") + "<br><br></div>");
+			let str = '<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br><ul>";
+			for (let j in mon.baseStats) {
+				str += "<li><b>" + Tools.turnFirstUpper(j) + "</b>: " + mon.baseStats[j] + "</li>";
+			}
+			strs.push(str + "</ul></div>");
 		}
 		player.say("Current hand: ");
+		console.log(start + strs.join("") + "</div></div>");
 		Rooms.get('survivor').say("/pminfobox " + player.id + ", " + (start + strs.join("") + "</div></div>"));
 	}
 

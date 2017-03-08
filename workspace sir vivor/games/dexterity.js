@@ -46,10 +46,6 @@ class Dexterity extends Games.Game {
 
 	onNextRound() {
 		try {
-			if (this.getRemainingPlayerCount() === 1) {
-				this.end();
-				return;
-			}
 			this.numAttacks = 0;
 			this.pl();
 			this.oplayer = null;
@@ -256,6 +252,17 @@ class Dexterity extends Games.Game {
 			this.end();
 			return;
 		}
+	}
+
+	weapons(target, user) {
+		let start = "<div class = \"infobox\"><html>";
+		for (let i in data) {
+			let weapon = data[i];
+			start += "<b><u>" + weapon.name + "</u></b><ul><li>Damage: " + weapon.atk + " </li><li>Accuracy: " + weapon.acc + "</li></ul>";
+		}
+		start += "</html></div>";
+		console.log(start);
+		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
 	}
 }
 

@@ -1827,7 +1827,7 @@ exports.commands = {
 	randomgame: function (arg, user, room) {
 	    if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
 		let id = Tools.sample(Object.keys(Games.games));
-		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
+		while (id === 'bounty' || id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(Object.keys(Games.games));
 		}
 		Games.createGame(id, room);
@@ -1887,6 +1887,24 @@ exports.commands = {
 		});
     },
 
+	actions: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.actions === 'function') {
+				room.game.actions(target, user);      
+		    }
+		});
+    },
+
+	weapons: function (target, user, room) {
+		if (room.id !== user.id) return;
+	    Rooms.rooms.forEach(function(room) {
+		    if (room.game && typeof room.game.weapons === 'function') {
+				room.game.weapons(target, user);      
+		    }
+		});
+    },
+	
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);
