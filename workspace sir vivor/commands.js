@@ -1962,7 +1962,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user + ', ';
 		}
-		text += "Daily Deathmatch is Survivor's system for official games, in which three games are hosted daily at 2AM, 10AM and 6PM EST, for every Daily Deathmatch you participate in, you will earn points towards a monthly leaderboard. Whoever has the most points at the end of the month will be crowned the champion";
+		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which three games are hosted daily at 2AM, 10AM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
 		this.say(room, text);
 	},
 	firsts: 'first',
