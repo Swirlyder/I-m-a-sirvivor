@@ -69,7 +69,7 @@ class Dexterity extends Games.Game {
 	chooseStuff() {
 		try {
 			this.canAttack = true;
-			this.say("PM me your item and opponent now! **Command:** ``" + Config.commandCharacter + "destroy [user], [weapon]``");
+			this.say("PM me your item and opponent now! **Command:** ``" + Config.commandCharacter + "destroy [user], [weapon]``. You can also use ``" + Config.commandCharacter + "weapons`` (in pms) to see the available weapons");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
