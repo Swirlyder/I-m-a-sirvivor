@@ -257,7 +257,7 @@ class Game {
 			this.rollb = roll;
 			if (this.rolla === this.rollb) {
 				this.say("The rolls were the same. Rerolling...");
-				this.timeout = setTimeout(() => sayPlayerRolls(), 5 * 1000);
+				this.timeout = setTimeout(() => this.sayPlayerRolls(), 5 * 1000);
 			} else {
 				let winPlayer, losePlayer;
 				if (this.rolla > this.rollb && (!this.golf) || (this.rolla < this.rollb && this.golf)) {
