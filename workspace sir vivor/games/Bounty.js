@@ -185,7 +185,7 @@ class Bounty extends Games.Game {
 				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 					this.handleAttacks();
 				} else {
-					if (role1 === 'Sleeping' && !this.hasBeenAttacked(this.curPlayer)) {
+					if (role1 === 'Sleeping' && !this.hasBeenAttacked.get(this.curPlayer)) {
 						this.handleAttacks();
 					} else {
 						if (this.blocked.has(this.curPlayer)) {
