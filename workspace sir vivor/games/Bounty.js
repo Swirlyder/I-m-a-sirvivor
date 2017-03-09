@@ -66,14 +66,16 @@ class Bounty extends Games.Game {
 		this.reveals = [];
 		if (this.getRemainingPlayerCount() === 2) {
 			if (this.finals) {
-				this.num = 1 - this.num;
+				let player = this.curPlayer;
+				this.curPlayer = this.oplayer;
+				this.oplayer = player;
 			} else {
 				this.finals = true;
 				this.num = Math.floor(Math.random() * 2);
+				let lastPlayers = this.shufflePlayers(this.getRemainingPlayers());
+				this.curPlayer = lastPlayers[this.num];
+				this.oplayer = lastPlayers[1 - this.num];
 			}
-			let lastPlayers = this.shufflePlayers(this.getRemainingPlayers());
-			this.curPlayer = lastPlayers[this.num];
-			this.oplayer = lastPlayers[1 - this.num];
 			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving straight to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
@@ -126,7 +128,18 @@ class Bounty extends Games.Game {
 			let role1 = this.playerRoles.get(this.curPlayer), role2 = this.playerRoles.get(this.oplayer);
 			this.oplayer.eliminated = true;
 			if (role2 === "Bomb") {
-				this.say(start + ", but **" + this.oplayer.name + "** was also a bomb! RIP them both");
+				if (role1 === "Bounty") {
+					for (let i in this.players) {
+						if (i !== this.oplayer.id) {
+							this.players[i].eliminated = true;
+						}
+					}				
+					this.start(", who was the bomb, but **" + this.curPlayer.name + "** was the bounty! GG **" + this.oplayer.name + "**!");
+					this.end();
+					return;
+				} else {
+					this.say(start + ", but **" + this.oplayer.name + "** was also a bomb! RIP them both");
+				}
 				this.curPlayer.eliminated = true;
 				this.oplayer.eliminated = true;
 			} else if (role2 === "Bounty") {
