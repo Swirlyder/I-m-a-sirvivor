@@ -94,7 +94,8 @@ class Poke extends Games.Game {
 			this.matchups.push([player1, player2]);
 		}
 		this.say("/wall " + (this.finals ? "Final round " : "Round " + this.round) + " matchups! " + this.matchups.map(v => v[0].name + " vs. " + v[1].name).join(", ") + "." + (nomatchups.length > 0 ? (" Bye: " + nomatchups[0].name + ".") : ""))
-		this.say("/wall Use " + Config.commandCharacter + "check [link] when you are done with your battle, and make sure the tier is Gen 7 Anything Goes!");
+		this.say("/wall Use " + Config.commandCharacter + "check [link] when you are done with your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite sir vivor`` as well");
+		this.say("/wall To prevent scouting, you can use ``/modjoin +`` followed by ``/roomvoice sirvivor``");
 		this.numMatches = 0;
 		this.numTotal = this.matchups.length;
 		if (nomatchups.length > 0) {
