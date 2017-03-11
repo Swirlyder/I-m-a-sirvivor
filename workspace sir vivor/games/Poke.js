@@ -28,7 +28,7 @@ class Poke extends Games.Game {
 	handoutmon() {
 		if (this.order.length === 0) {
 			this.say("/wall You have 1 minute to make your teams!");
-			this.timeout = setTimeout(() => this.nextRound(), 0 * 60 * 1000);
+			this.timeout = setTimeout(() => this.nextRound(), 1 * 60 * 1000);
 		} else {
 			let player = this.players[Tools.toId(this.order.shift())];
 			let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
@@ -38,7 +38,6 @@ class Poke extends Games.Game {
 			if (mon.baseSpecies) {
 				mon = Tools.data.pokedex[Tools.toId(mon.baseSpecies)];
 			}
-			mon = Tools.data.pokedex['machamp'];
 			player.say("Your pokemon is **" + mon.species + "**!");
 			this.mons.set(player, mon);
 			this.hasAdvanced.set(player, true);
