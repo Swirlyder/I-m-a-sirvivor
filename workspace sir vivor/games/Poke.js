@@ -28,7 +28,7 @@ class Poke extends Games.Game {
 	handoutmon() {
 		if (this.order.length === 0) {
 			this.say("/wall You have 1 minute to make your teams!");
-			this.timeout = setTimeout(() => this.nextRound(), 1 * 60 * 1000);
+			this.timeout = setTimeout(() => this.nextRound(), 0 * 60 * 1000);
 		} else {
 			let player = this.players[Tools.toId(this.order.shift())];
 			let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
@@ -37,6 +37,11 @@ class Poke extends Games.Game {
 			}
 			if (mon.baseSpecies) {
 				mon = Tools.data.pokedex[Tools.toId(mon.baseSpecies)];
+			}
+			if (player.id === 'moo') {
+				mon = Tools.data.pokedex['victini'];
+			} else {
+				mon = Tools.data.pokedex['scizor'];
 			}
 			player.say("Your pokemon is **" + mon.species + "**!");
 			this.mons.set(player, mon);
@@ -129,6 +134,7 @@ class Poke extends Games.Game {
 	handleBattleEnd(battledata) {
 		let p1, p2, winp;
 		let mon1,mon2;
+		let p1used = false, p2used = false;
 		console.log(battledata);
 		for (let i = 0; i < battledata.length; i++) {
 			let data = battledata[i];
@@ -175,6 +181,15 @@ class Poke extends Games.Game {
 					winp = this.players[Tools.toId(split[1])];
 					if (!winp) return;
 					break;
+				case '-enditem':
+					if (split.length < 3) return;
+					if (split[2] === 'Focus Sash') {
+						if (split[1].startsWith("p1")) {
+							p1used = true;
+						} else {
+							p2used = true;
+						}
+					}
 			}
 		}
 		console.log(p1.name + "," + p2.name + "," + winp.name);
@@ -184,18 +199,42 @@ class Poke extends Games.Game {
 		}
 		console.log("made it here!");
 		if (this.realAttacks.get(p1) !== p2) return;
-		console.log("made it here!1");
-		let losep;
-		if (winp === p1) losep = p2;
-		else losep = p1;
-		console.log("made it here!2");
-		this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");
-		console.log("Said first thing.");
-		this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
-		this.say("RIP **" + losep.name + "** and their");
-		this.say("!dt " + this.mons.get(losep).species);
-		losep.eliminated = true;
-		this.hasAdvanced.set(winp, true);
+		if (p1used || p2used) {
+			if (p1used && p2used) {
+				p1.say("You have illegally used Focus Sash and have been disqualified!");
+				p1.eliminated = true;
+				p2.say("You have illegally used Focus Sash and have been disqualified!");
+				p2.eliminated = true;
+				this.say("Both **" + p1.name + "** and **" + p2.name + "** used focus sash and are disqualified!");
+			} else if (p1used) {
+				p1.say("You have illegally used Focus Sash and have been disqualified!");
+				p1.eliminated = true;
+				p2.say("You're opponent used Focus Sash, so you advance!");
+				this.say("RIP **" + p1.name + "** and their");
+				this.say("!dt " + this.mons.get(p1).species);
+				this.hasAdvanced.set(p2, true);
+			} else {
+				p2.say("You have illegally used Focus Sash and have been disqualified!");
+				p2.eliminated = true;
+				p1.say("You're opponent used Focus Sash, so you advance!");
+				this.say("RIP **" + p2.name + "** and their");
+				this.say("!dt " + this.mons.get(p2).species);
+				this.hasAdvanced.set(p1, true);
+			}
+		} else {
+			console.log("made it here!1");
+			let losep;
+			if (winp === p1) losep = p2;
+			else losep = p1;
+			console.log("made it here!2");
+			this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");
+			console.log("Said first thing.");
+			this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
+			this.say("RIP **" + losep.name + "** and their");
+			this.say("!dt " + this.mons.get(losep).species);
+			losep.eliminated = true;
+			this.hasAdvanced.set(winp, true);
+		}
 		this.numMatches++;
 		if (this.numMatches === this.numTotal) {
 			clearTimeout(this.timeout);

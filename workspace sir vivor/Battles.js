@@ -2,7 +2,6 @@ class Battle {
 	constructor(name) {
 		this.name = name;
 		this.data = [];
-		this.users = {};
 	} 
 	handleMessages(spl) {
 		for (let i = 0; i < spl.length; i++) {
