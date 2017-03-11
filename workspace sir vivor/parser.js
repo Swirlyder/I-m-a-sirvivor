@@ -52,11 +52,11 @@ exports.parse = {
 
 		var room = null;
 		if (message.indexOf('\n') < 0) return this.message(message, room);
-
+		let roomid;
 		var spl = message.split('\n');
 		if (spl[0].charAt(0) === '>') {
 			if (spl[1].substr(1, 10) === 'tournament') return false;
-			let roomid = spl.shift().substr(1);
+			roomid = spl.shift().substr(1);
 			room = Rooms.get(roomid);
 			if (spl[0].substr(1, 4) === 'init') {
 				if (spl[0].indexOf('battle') !== -1) {
@@ -71,9 +71,12 @@ exports.parse = {
 				return ok('joined ' + room.id);					
 			}
 		}
-
-		for (let i = 0, len = spl.length; i < len; i++) {
-			this.message(spl[i], room);
+		if (roomid in Battles.battles) {
+			Battles.addBattle(roomid).handleMessages(spl);
+		} else {
+			for (let i = 0, len = spl.length; i < len; i++) {
+				this.message(spl[i], room);
+			}
 		}
 	},
 	message: function (message, room) {

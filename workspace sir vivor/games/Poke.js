@@ -28,7 +28,7 @@ class Poke extends Games.Game {
 	handoutmon() {
 		if (this.order.length === 0) {
 			this.say("/wall You have 1 minute to make your teams!");
-			this.timeout = setTimeout(() => this.nextRound(), 1 * 60 * 1000);
+			this.timeout = setTimeout(() => this.nextRound(), 0 * 60 * 1000);
 		} else {
 			let player = this.players[Tools.toId(this.order.shift())];
 			let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
@@ -37,7 +37,8 @@ class Poke extends Games.Game {
 			}
 			if (mon.baseSpecies) {
 				mon = Tools.data.pokedex[Tools.toId(mon.baseSpecies)];
-			} 
+			}
+			mon = Tools.data.pokedex['machamp'];
 			player.say("Your pokemon is **" + mon.species + "**!");
 			this.mons.set(player, mon);
 			this.hasAdvanced.set(player, true);
@@ -94,8 +95,8 @@ class Poke extends Games.Game {
 			this.matchups.push([player1, player2]);
 		}
 		this.say("/wall " + (this.finals ? "Final round " : "Round " + this.round) + " matchups! " + this.matchups.map(v => v[0].name + " vs. " + v[1].name).join(", ") + "." + (nomatchups.length > 0 ? (" Bye: " + nomatchups[0].name + ".") : ""))
-		this.say("/wall Use " + Config.commandCharacter + "check [link] when you are done with your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite sir vivor`` as well");
-		this.say("/wall To prevent scouting, you can use ``/modjoin +`` followed by ``/roomvoice sirvivor``");
+		this.say("/wall Use " + Config.commandCharacter + "check [link] during your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite Sir Vivor`` as well");
+		this.say("/wall To prevent scouting, you can use ``/modjoin +`` followed by ``/roomvoice Sir Vivor`` (before inviting).");
 		this.numMatches = 0;
 		this.numTotal = this.matchups.length;
 		if (nomatchups.length > 0) {
@@ -192,6 +193,8 @@ class Poke extends Games.Game {
 		this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");
 		console.log("Said first thing.");
 		this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
+		this.say("RIP **" + losep.name + "** and their");
+		this.say("!dt " + this.mons.get(losep).species);
 		losep.eliminated = true;
 		this.hasAdvanced.set(winp, true);
 		this.numMatches++;

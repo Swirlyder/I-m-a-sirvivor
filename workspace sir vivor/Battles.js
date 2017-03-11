@@ -8,6 +8,7 @@ class Battle {
 		for (let i = 0; i < spl.length; i++) {
 			this.handleMessage(spl[i]);
 		}
+		
 	}
 	handleMessage(message) {
 		let split = message.split("|");
@@ -19,8 +20,9 @@ class Battle {
 				if (room.game && typeof room.game.handleBattleEnd === 'function') room.game.handleBattleEnd(data);
 			});
 			this.data = [];
+			Rooms.get('survivor').say("/leave " + this.name);
 		}
-		Rooms.get('survivor').say("/leave " + this.name);
+		
 	}
 }
 

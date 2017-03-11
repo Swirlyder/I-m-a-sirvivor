@@ -190,7 +190,7 @@ class Game {
 	leave(user) {
 		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
 		this.removePlayer(user);
-		user.say("You have left the game of " + this.name + "!");
+		user.say("You have left the game of " + this.name + ".");
 		if (typeof this.onLeave === 'function') this.onLeave(user);
 	}
 
