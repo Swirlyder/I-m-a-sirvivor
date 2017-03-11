@@ -1835,7 +1835,7 @@ exports.commands = {
 	randomgame: function (arg, user, room) {
 	    if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
 		let id = Tools.sample(Object.keys(Games.games));
-		while (id === 'bounty' || id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
+		while (id === 'pokesurvivor' || id === 'poke' || id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(Object.keys(Games.games));
 		}
 		Games.createGame(id, room);
