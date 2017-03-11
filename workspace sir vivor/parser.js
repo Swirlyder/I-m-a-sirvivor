@@ -59,13 +59,16 @@ exports.parse = {
 			let roomid = spl.shift().substr(1);
 			room = Rooms.get(roomid);
 			if (spl[0].substr(1, 4) === 'init') {
+				if (spl[0].indexOf('battle') !== -1) {
+					Battles.addBattle(roomid).handleMessages(spl);
+				}
 				let users = spl[2].substr(7);
 				room = Rooms.add(roomid, !Config.rooms.includes(roomid));
 				room.onUserlist(users);
 				if (room.id === 'survivor') {
 					Parse.say(room, '/roomauth survivor');
 				}
-				return ok('joined ' + room.id);
+				return ok('joined ' + room.id);					
 			}
 		}
 
@@ -158,6 +161,8 @@ exports.parse = {
 					room.game.handlehtml(spl[2]);
 				}
 				break;
+			case 'battle':
+				Battles.handleMessage(splitMessage.join("|"));
 			case 'updateuser':
 				if (spl[2] !== Config.nick) return;
 

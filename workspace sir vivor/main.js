@@ -107,15 +107,16 @@ if (Config.watchconfig) {
 		} catch (e) {}
 	});
 }
-process.on('uncaughtException', err => {
-	Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Moo, An error occurred! ' + err);
-	console.log(err);
-});
+//process.on('uncaughtException', err => {
+//	Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Moo, An error occurred! ' + err);
+//	console.log(err);
+//});
 
 // And now comes the real stuff...
 info('starting server');
 var WebSocketClient = require('websocket').client;
 global.Tools = require('./tools.js');
+global.Battles = require('./Battles.js');
 global.dd = require('./dd.js');
 dd.importData();
 global.Commands = require('./commands.js').commands;

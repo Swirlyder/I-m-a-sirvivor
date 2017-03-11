@@ -42,8 +42,8 @@ class Game {
 		this.golf = false;
 	}
 
-	mailbreak() {
-		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!');
+	mailbreak(e) {
+		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!' + (e ? e : ""));
 	}
 
 	say(message) {
@@ -55,7 +55,6 @@ class Game {
 	}
 
 	signups() {
-		console.log(this);
 		this.say("survgame! If you would like to play, use the command ``/me in``");
 		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + this.name + "**:" + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
@@ -275,46 +274,34 @@ class Game {
 	}
 	handlehtml(message) {
 		if (!this.started) return;
-		console.log(message);
-		//try {
-			message = message.substr(21);
-			if (message.substr(0, 4) === "Roll") {
+		message = message.substr(21);
+		if (message.substr(0, 4) === "Roll") {
+			let colonIndex = message.indexOf(":");
+			message = message.substr(colonIndex + 2);
+			message = message.substr(0, message.length - 6);
+			if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
+		} else if (message.substr(4, 2) === "We") {
+			let colonIndex = message.indexOf(":");
+			message = message.substr(colonIndex + 7);
+			message = message.substr(0, message.length - 6);
+			while (message.indexOf('&') !== -1) {
+				message = message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';') + 1);
+			}
+			if (typeof this.handlePick === 'function') this.handlePick(message);
+		} else {
+			if (message.indexOf("rolls") !== -1) {
 				let colonIndex = message.indexOf(":");
 				message = message.substr(colonIndex + 2);
-				message = message.substr(0, message.length - 6);
-				if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
-			} else if (message.substr(4, 2) === "We") {
-				let colonIndex = message.indexOf(":");
-				message = message.substr(colonIndex + 7);
-				message = message.substr(0, message.length - 6);
-				while (message.indexOf('&') !== -1) {
-					console.log(message.substr(0, message.indexOf('&')));
-					console.log(message.substr(message.indexOf(';')) + 1);
-					console.log(message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';')) + 1);
-					message = message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';') + 1);
+				let finalIndex = message.indexOf("<");
+				message = message.substr(0, finalIndex);
+				let rolls = [];
+				message = message.split(", ");
+				for (let i = 0; i < message.length; i++) {
+					rolls.push(Math.floor(message[i]));
 				}
-				console.log(message);
-				if (typeof this.handlePick === 'function') this.handlePick(message);
-			} else {
-				if (message.indexOf("rolls") !== -1) {
-					let colonIndex = message.indexOf(":");
-					message = message.substr(colonIndex + 2);
-					let finalIndex = message.indexOf("<");
-					message = message.substr(0, finalIndex);
-					let rolls = [];
-					message = message.split(", ");
-					for (let i = 0; i < message.length; i++) {
-						rolls.push(Math.floor(message[i]));
-					}
-					if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
-				}
+				if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
 			}
-		//} catch (e) {
-			//this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			//console.log(e);
-			//this.end();
-			//return;
-		//}
+		}
 	}
 }
 
@@ -350,7 +337,6 @@ class GamesManager {
 	importHosts() {
 		try {
 			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json'));
-			console.log(this.numHosts);
 		} catch (e) {};
 	}
 
@@ -361,7 +347,6 @@ class GamesManager {
 	importHost() {
 		let id = fs.readFileSync('./databases/host.json').toString();
 		if (id) {
-			console.log(id);
 			Games.host = Users.get(id);
 		}
 		else Games.host = null;
@@ -478,7 +463,7 @@ loadGames() {
 							if (room.game) {
 								if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 							} else if (room === user) {
-								user.rooms.forEach(function (value, room) {
+							Rooms.rooms.forEach(function (value, room) {
 									if (room.game && room.game.pmCommands && (room.game.pmCommands === true || i in room.game.pmCommands) && typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 								});
 							}
@@ -526,7 +511,7 @@ loadGames() {
 						if (room.game) {
 							if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 						} else if (room === user) {
-							Rooms.rooms.forEach(function (value, room) {
+							Rooms.rooms.forEach(function (room) {
 								if (room.game && room.game.pmCommands && (room.game.pmCommands === true || i in room.game.pmCommands) && typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 							});
 						}
@@ -570,7 +555,6 @@ loadGames() {
 			if (game.modes) {
 				let modes = game.modes.slice();
 				game.modes = {};
-				console.log('sup');
 				for (let i = 0, len = modes.length; i < len; i++) {
 					let modeId = Tools.toId(modes[i]);
 					if (!(modeId in this.modes)) throw new Error(game.name + " mode '" + modeId + "' does not exist.");
@@ -583,7 +567,6 @@ loadGames() {
 						id = game.id + this.modes[modeId].id;
 					}
 					if (!(id in this.aliases)) this.aliases[id] = game.id + ',' + modeId;
-					console.log(this.aliases[id]);
 					if (this.modes[modeId].aliases) {
 						if (!game.modeAliases) game.modeAliases = {};
 						for (let i = 0, len = this.modes[modeId].aliases.length; i < len; i++) {
@@ -609,10 +592,8 @@ loadGames() {
 		target = target.split(',');
 		let format = target.shift();
 		let id = Tools.toId(format);
-		console.log('id is ' + id);
 		if (id in this.aliases) {
 			id = this.aliases[id];
-			console.log(id + ',' + target.join(','));
 			if (id.includes(',')) return this.getFormat(id + ',' + target.join(','));
 		}
 		if (!(id in this.games)) return;
