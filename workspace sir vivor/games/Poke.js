@@ -38,11 +38,6 @@ class Poke extends Games.Game {
 			if (mon.baseSpecies) {
 				mon = Tools.data.pokedex[Tools.toId(mon.baseSpecies)];
 			}
-			if (player.id === 'moo') {
-				mon = Tools.data.pokedex['victini'];
-			} else {
-				mon = Tools.data.pokedex['scizor'];
-			}
 			player.say("Your pokemon is **" + mon.species + "**!");
 			this.mons.set(player, mon);
 			this.hasAdvanced.set(player, true);

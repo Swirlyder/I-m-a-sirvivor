@@ -116,6 +116,7 @@ if (Config.watchconfig) {
 info('starting server');
 var WebSocketClient = require('websocket').client;
 global.Tools = require('./tools.js');
+
 global.Battles = require('./Battles.js');
 global.dd = require('./dd.js');
 dd.importData();
