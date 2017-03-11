@@ -1183,7 +1183,7 @@ exports.commands = {
 		text += 'S-S-Senpai!';
 		this.say(room, text);
 	},
-	luna: 'lunar',
+
 	lunar: 'lunarixis',
 	lunarixis: function(arg, user, room)
 	{
