@@ -111,7 +111,11 @@ class Outlaws extends Games.Game {
 
 	handleWinner(winPlayer, losePlayer) {
 		if ((winPlayer === this.curPlayer) || this.finals) {
-			
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + " and steals one gang member!");
+			let troops = this.troops.get(winPlayer);
+			troops++;
+			this.troops.set(winPlayer, troops);
+			losePlayer.eliminated = true;
 		} else {
 			this.say("**" + winPlayer.name + "** defends successfully!");
 		}
