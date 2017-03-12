@@ -41,8 +41,10 @@ class Outlaws extends Games.Game {
 		let names = [];
 		for (let userID in this.players) {
 			let player = this.players[userID];
+			if (player.eliminated) continue;
 			names.push(player.name + "[" + this.troops.get(player) + "]");
 		}
+		this.say("**Players: (" + this.getRemainingPlayerCount() + ")**: " + names.join(", "));
 		this.say("Everyone please pm me your target! **Command:** ``" + Config.commandCharacter + "destroy [user]`` (in pms)");
 		this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 	}
@@ -104,16 +106,20 @@ class Outlaws extends Games.Game {
 	}
 
 	doPlayerAttack() {
-		this.rolla = this.troops.get(this.curPlayer) + "d100";
-		this.rollb = this.troops.get(this.oplayer) + "d100";
+		this.roll1 = this.troops.get(this.curPlayer) + "d100";
+		this.roll2 = this.troops.get(this.oplayer) + "d100";
 		this.sayPlayerRolls();
 	}
 
 	handleWinner(winPlayer, losePlayer) {
-		if ((winPlayer === this.curPlayer) || this.finals) {
-			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + " and steals one gang member!");
+		if ((winPlayer === this.curPlayer) || this.finals || this.variation) {
+			let numTroops = 1;
+			if (this.variation) {
+				numTroops = this.troops.get(losePlayer);
+			}
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "** and steals " + numTroops + " gang member" + (numTroops > 1 ? "s" : "")+ "!");
 			let troops = this.troops.get(winPlayer);
-			troops++;
+			troops += numTroops;
 			this.troops.set(winPlayer, troops);
 			losePlayer.eliminated = true;
 		} else {
@@ -165,3 +171,11 @@ exports.name = name;
 exports.id = id;
 exports.aliases = [];
 exports.description = description;
+exports.variations = [
+	{
+		name: "Outlaws Chaos",
+		aliases: [],
+		variation: "Chaos",
+		variationAliases: ['chaos'],
+	},
+]
