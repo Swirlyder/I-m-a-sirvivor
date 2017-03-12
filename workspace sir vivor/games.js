@@ -40,10 +40,14 @@ class Game {
 		this.parentGame = null;
 		this.childGame = null;
 		this.golf = false;
+		this.max = false;
+		this.sum = true;
 	}
 
 	mailbreak(e) {
 		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!' + (e ? e : ""));
+		this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as they can.");
+		this.end();
 	}
 
 	say(message) {
@@ -72,13 +76,17 @@ class Game {
 	}
 
 	start() {
-		if (this.started) return;
-		if (this.playerCount < 1) {
-			this.say("The game needs at least two players to start!");
-			return;
+		try {
+			if (this.started) return;
+			if (this.playerCount < 1) {
+				this.say("The game needs at least two players to start!");
+				return;
+			}
+			this.started = true;
+			if (typeof this.onStart === 'function') this.onStart();
+		} catch (e) {
+			this.mailbreak();
 		}
-		this.started = true;
-		if (typeof this.onStart === 'function') this.onStart();
 	}
 
 	autostart(target) {
@@ -125,13 +133,17 @@ class Game {
 	}
 
 	nextRound() {
-		if (this.timeout) clearTimeout(this.timeout);
-		this.round++;
-		if (this.getRemainingPlayerCount() < 2) {
-			this.end();
-			return;
+		try {
+			if (this.timeout) clearTimeout(this.timeout);
+			this.round++;
+			if (this.getRemainingPlayerCount() < 2) {
+				this.end();
+				return;
+			}
+			if (typeof this.onNextRound === 'function') this.onNextRound();
+		} catch (e) {
+			this.mailbreak();
 		}
-		if (typeof this.onNextRound === 'function') this.onNextRound();
 	}
 
 	addPlayer(user) {
@@ -271,6 +283,20 @@ class Game {
 				if (typeof this.handleWinner === 'function') this.handleWinner(winPlayer, losePlayer);
 			}
 		}
+	}
+
+	handleRolls(rolls) {
+		let roll = 0;
+		if (this.max) {
+			for (let i = 0; i < rolls.length; i++) {
+				roll = Math.max(roll, rolls[i]);
+			}
+		} else {
+			for (let i = 0; i < rolls.length; i++) {
+				roll += rolls[i];
+			}
+		}
+		if (typeof this.handleRoll === 'function') this.handleRoll(roll);
 	}
 	handlehtml(message) {
 		if (!this.started) return;
