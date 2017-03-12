@@ -1,6 +1,6 @@
 'use strict';
 
-const name = "Hunger Games";
+const name = "Outlaws";
 const description = "__[Insert \"high noon\" meme here]__ Game rules: http://survivor-ps.weebly.com/outlaws.html";
 const id = toId(name);
 
