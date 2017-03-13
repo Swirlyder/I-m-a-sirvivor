@@ -6,10 +6,10 @@ const BACKUP_INTERVAL = 60 * 1000;
 class DD {
 	constructor() {
 		this.dd = {};
-		this.hostpoints = 3;
+		this.hostpoints = 4;
 		this.firstpoints = 10;
 		this.secondpoints = 5;
-		this.realhostpoints = 4;
+		this.realhostpoints = 33;
 		this.partpoints = 2;
 	}
 
@@ -38,7 +38,11 @@ class DD {
 				name: user,
 			}
 		} else {
-			this.dd[id].realhosts++;
+			if (this.dd[id].realhosts) {
+				this.dd[id].realhosts++;
+			} else {
+				this.dd[id].realhosts = 1;
+			}
 		}
 	}
 
