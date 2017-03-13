@@ -1699,11 +1699,12 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000
-		if (n < 7) {
-			millis += (5 - n) * 60 * 60 * 1000;
-		} else if (n < 15) {
+		console.log(n);
+		if (n < 9) {
+			millis += (8 - n) * 60 * 60 * 1000;
+		} else if (n < 16) {
 			millis += (15 - n) * 60 * 60 * 1000;
-		} else if (n < 23) {
+		} else if (n < 22) {
 			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
 			millis += (29 - n) * 60 * 60 * 1000;
