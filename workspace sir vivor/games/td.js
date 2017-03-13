@@ -37,6 +37,7 @@ class TD extends Games.Game {
 		if (this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** didn't choose someone to attack and is eliminated!");
 			this.curPlayer.eliminated = true;
+			this.curPlayer = null;
 		}
 		if (this.getRemainingPlayerCount() === 1) {
 			this.end();

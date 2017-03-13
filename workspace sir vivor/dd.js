@@ -6,6 +6,11 @@ const BACKUP_INTERVAL = 60 * 1000;
 class DD {
 	constructor() {
 		this.dd = {};
+		this.hostpoints = 3;
+		this.firstpoints = 10;
+		this.secondpoints = 5;
+		this.realhostpoints = 4;
+		this.partpoints = 2;
 	}
 
 	importData() {
@@ -25,14 +30,15 @@ class DD {
 		let id = Tools.toId(name);
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				hosts: 1,
+				hosts: 0,
 				firsts: 0,
 				seconds: 0,
 				parts: 0,
+				realhosts: 1,
 				name: user,
 			}
 		} else {
-			this.dd[id].hosts++;
+			this.dd[id].realhosts++;
 		}
 	}
 
@@ -44,6 +50,7 @@ class DD {
 				firsts: 1,
 				seconds: 0,
 				parts: 0,
+				realhosts: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -59,6 +66,7 @@ class DD {
 				firsts: 0,
 				seconds: 1,
 				parts: 0,
+				realhosts: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -74,6 +82,7 @@ class DD {
 				firsts: 0,
 				seconds: 0,
 				parts: 1,
+				realhosts: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -83,10 +92,10 @@ class DD {
 
 	removeHost(user) {
 		let id = Tools.toId(user);
-		if (!(id in this.dd) || this.dd[id].hosts === 0) {
-			return false
+		if (!(id in this.dd) || this.dd[id].realhosts === 0) {
+			return false;
 		} else {
-			this.dd[id].hosts--;
+			this.dd[id].realhosts--;
 			return true;
 		}
 	}
@@ -121,15 +130,19 @@ class DD {
 		}
 	}
 
+	getPoints(item) {
+		return this.hostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + this.realhostpoints * item[5];
+	}
+
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.hosts, item.firsts, item.seconds, item.parts, item.name]);
+			items.push([item.hosts, item.firsts, item.seconds, item.parts, item.name, (item.realhosts ? item.realhosts : 0)]);
 		}
-		items.sort(function(first,second) {
-			let points1 = 4*first[0] + 10*first[1] + 5*first[2] + 2*first[3];
-			let points2 = 4*second[0] + 10*second[1] + 5*second[2] + 2*second[3];
+		items.sort(function(first, second) {
+			let points1 = dd.getPoints(first);
+			let points2 = dd.getPoints(second);
 			if (points1 !== points2) return points2 - points1;
 			if (first[1] !== second[1]) return second[1] - first[1];
 			if (first[2] !== second[2]) return second[2] - first[2];

@@ -2096,7 +2096,7 @@ exports.commands = {
 					let stuff;
 					if (j === 0) stuff = i + 1;
 					else if (j === 1) stuff = sorted[i][4];
-					else stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2;
+					else stuff = dd.getPoints(sorted[i]);
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx + "</tr>");
@@ -2120,9 +2120,13 @@ exports.commands = {
 					if (j === 0) {
 						stuff = i+1;
 					} else if (j === 6) {
-						stuff = sorted[i][0] * 4 + sorted[i][1] * 10 + sorted[i][2] * 5 + sorted[i][3] * 2;
+						stuff = dd.getPoints(sorted[i]);
 					} else {
-						stuff = sorted[i][real[j - 1]];
+						if (real[j - 1] === 0) {
+							stuff = sorted[i][0] + sorted[i][5];
+						} else {
+							stuff = sorted[i][real[j - 1]];
+						}
 					}
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
@@ -2147,7 +2151,7 @@ exports.commands = {
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
-		let times = ['6pm EST', '2am EST', '10am EST']
+		let times = ['6pm EST', '2am EST', '12pm EST']
 		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
 	},
 
@@ -2210,7 +2214,8 @@ exports.commands = {
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
-		return room.say("The last Daily Deathmatch to be updated was the " + (numFirsts%2 === 0 ? "6pm EST" : "11am EST") + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");
+		let times = ['6pm EST', '2am EST', '12pm EST']
+		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
 	},
 };
 
