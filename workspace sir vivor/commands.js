@@ -2195,7 +2195,7 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
 			if (Tools.toId(stuff[4]) === target) {
-				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + (4*stuff[0] + 10*stuff[1] + 5*stuff[2] + 2*stuff[3]) + " points.");
+				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points.");
 			}
 		}
 	},
