@@ -1700,13 +1700,13 @@ exports.commands = {
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000
 		if (n < 7) {
-			millis += (6 - n) * 60 * 60 * 1000;
+			millis += (5 - n) * 60 * 60 * 1000;
 		} else if (n < 15) {
-			millis += (14 - n) * 60 * 60 * 1000;
+			millis += (15 - n) * 60 * 60 * 1000;
 		} else if (n < 23) {
-			millis += (22 - n) * 60 * 60 * 1000;
+			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
-			millis += (30 - n) * 60 * 60 * 1000;
+			millis += (29 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
