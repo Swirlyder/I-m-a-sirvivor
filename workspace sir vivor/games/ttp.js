@@ -22,7 +22,12 @@ class TTP extends Games.Game {
 	}
 
 	onStart() {
-		this.data = Tools.shuffle(Object.keys(Tools.data.pokedex));
+		let data = Tools.shuffle(Object.keys(Tools.data.pokedex));
+		this.data = [];
+		for (let i = 0; i < data.length; i++) {
+			let mon = Tools.data.pokedex[data[i]];
+			if (mon.num > 0) this.data.push(data[i]);
+		}
 		this.index = 0;
 		for (let userID in this.players) {
 			let mon1 = Tools.data.pokedex[this.data[this.index]];
