@@ -1744,6 +1744,12 @@ exports.commands = {
 			this.say(room, alreadynames.join(", ") + " could not be given a roll, since they already have access to the command.");
 		}
 	},
+	clearallowrolls: 'clearallowroll',
+	clearallowroll: function (target, user, room) {
+		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id)) return;
+		Games.excepted = [];
+		room.say("Rolls have been cleared");
+	},
 	dice: 'roll',
 	roll: function (target, user, room) {
 		let realtarget = target;

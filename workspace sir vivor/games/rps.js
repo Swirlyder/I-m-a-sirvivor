@@ -214,7 +214,9 @@ class RPS extends Games.Game {
 					return user.say("**Usage:** ``" + Config.commandCharacter + "destroy [user], [rps]``");
 				}
 				let attackedPlayer = this.players[Tools.toId(split[0])];
-				if (!attackedPlayer || attackedPlayer.eliminated) return;
+				if (!attackedPlayer) return user.say("That player is not in the game!");
+				if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!");
+				if (attackedPlayer.id === player.id) return user.say(">Attacking yourself.");
 				let index = this.poss.indexOf(Tools.toId(split[1]));
 				if (index === -1) {
 					return user.say("That is not a valid rps attack!");
