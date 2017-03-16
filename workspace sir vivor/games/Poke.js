@@ -18,6 +18,22 @@ class Poke extends Games.Game {
 		this.finals = false;
 	} 
 
+	onLeave(user) {
+		let player = this.players[user.id];
+		if (!player) return;
+		if (this.realAttacks.has(player)) {
+			let attacked = this.realAttacks.get(player);
+			if (this.hasAdvanced.has(attacked)) return;
+			attacked.say("You're opponent left, so you're in to the next round!");
+			this.hasAdvanced.set(attacked, true);
+			this.numMatches++;
+			if (this.numMatches === this.numTotal) {
+				clearTimeout(this.timeout);
+				this.nextRound();
+			}
+		}
+	}
+
 	onStart() {
 		this.say("Now handing out mons!");
 		this.order = Object.keys(this.players);
@@ -53,6 +69,10 @@ class Poke extends Games.Game {
 				player.say("You never did your battle!");
 				player.eliminated = true;
 			}
+		}
+		if (this.getRemainingPlayerCount() < 2) {
+			this.end();
+			return;
 		}
 		this.hasAdvanced.clear();
 		this.attacks.clear();
@@ -130,25 +150,25 @@ class Poke extends Games.Game {
 		let p1, p2, winp;
 		let mon1,mon2;
 		let p1used = false, p2used = false;
-		console.log(battledata);
+		//console.log(battledata);
 		for (let i = 0; i < battledata.length; i++) {
 			let data = battledata[i];
 			let split = data.split("|");
 			split.shift();
-			console.log(split)
+			//console.log(split)
 			switch (split[0]) {
 				case 'player':
 					if (split.length < 3) continue;
 					if (split[1] === 'p1') {
 						p1 = this.players[Tools.toId(split[2])];
 						if (!p1) {
-							console.log("rip p1");
+							//console.log("rip p1");
 							return;
 						}
 					} else {
 						p2 = this.players[Tools.toId(split[2])];
 						if (!p2) {
-							console.log("rip p2");
+							//console.log("rip p2");
 							return;
 						}
 					}
@@ -156,16 +176,16 @@ class Poke extends Games.Game {
 				case 'poke':
 					if (split.length < 3) continue;
 					let mon = Tools.data.pokedex[Tools.toId(split[2].split(",")[0])];
-					console.log(mon);
+					//console.log(mon);
 					if (split[1] === 'p1') {
 						if (mon1) {
-							console.log("rip mon1");
+							//console.log("rip mon1");
 							return;
 						};
 						mon1 = mon;
 					} else {
 						if (mon2) {
-							console.log("rip mon2");
+							//console.log("rip mon2");
 							return;
 						}
 						mon2 = mon;
@@ -187,12 +207,12 @@ class Poke extends Games.Game {
 					}
 			}
 		}
-		console.log(p1.name + "," + p2.name + "," + winp.name);
+		//console.log(p1.name + "," + p2.name + "," + winp.name);
 		if (!this.isValidMon(mon1,p1) || !this.isValidMon(mon2, p2)) {
 			console.log('rip mons');
 			return;
 		}
-		console.log("made it here!");
+		//console.log("made it here!");
 		if (this.realAttacks.get(p1) !== p2) return;
 		if (p1used || p2used) {
 			if (p1used && p2used) {
@@ -217,13 +237,13 @@ class Poke extends Games.Game {
 				this.hasAdvanced.set(p1, true);
 			}
 		} else {
-			console.log("made it here!1");
+			//console.log("made it here!1");
 			let losep;
 			if (winp === p1) losep = p2;
 			else losep = p1;
-			console.log("made it here!2");
+			//console.log("made it here!2");
 			this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");
-			console.log("Said first thing.");
+			//console.log("Said first thing.");
 			this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
 			this.say("RIP **" + losep.name + "** and their");
 			this.say("!dt " + this.mons.get(losep).species);
