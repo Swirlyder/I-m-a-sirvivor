@@ -1624,7 +1624,7 @@ exports.commands = {
 			} else {
 				var queueText = '';
 				for (var i = 0; i < Games.hosts.length; i++) {
-					queueText += '**' + (i + 1) + '.** ' + Games.hosts[i] + ' '; //add formatting here, down there just adds on to the end whoops
+					queueText += '**' + (i + 1) + '.** __' + Games.hosts[i] + '__ '; //add formatting here, down there just adds on to the end whoops
 				}
 				this.say(room, '/announce **Queue:** ' + queueText);
 			}
@@ -1634,7 +1634,7 @@ exports.commands = {
 			} else {
 				var queueText = '';
 				for (var i = 0; i < Games.hosts.length; i++) {
-					queueText += '**' + (i + 1) + '.** ' + Games.hosts[i] + ' ';
+					queueText += '**' + (i + 1) + '.** __' + Games.hosts[i] + '__ ';
 				}
 				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
 				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
