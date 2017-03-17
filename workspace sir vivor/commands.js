@@ -1421,7 +1421,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '/me RESIGNs';
+		text += '/ME resigns';
 		this.say(room, text);
 	},
 	micro: 'microwavable',

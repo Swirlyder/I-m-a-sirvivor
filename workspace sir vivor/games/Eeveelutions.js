@@ -173,7 +173,7 @@ class Eevee extends Games.Game {
 				this.say("Fortunately for **" + this.oplayer.name + "**, they dodged the attack!");
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else {
-				this.say("Unfortunately, **" + this.oplayer.name + "** (a " + this.eevees.get(this.player)+ ") was unable to dodge the attack.");
+				this.say("Unfortunately, **" + this.oplayer.name + "** (a " + this.eevees.get(this.oplayer)+ ") was unable to dodge the attack.");
 				this.oplayer.eliminated = true;
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
@@ -193,7 +193,7 @@ class Eevee extends Games.Game {
 		}
 	}
 	handleRolla() {
-		if (this.eevee1 === 'Vaporeon' && this.rolla < 26) {
+		if (this.eevee1 === 'Vaporeon' && this.rolla < 26 && this.eevee2 !== 'Umbreon') {
 			this.rolla = null;
 			this.say("**" + this.curPlayer.name + "** gets a reroll, as they were a Vaporeon!");
 			this.say("!roll " + this.roll1);
@@ -202,7 +202,7 @@ class Eevee extends Games.Game {
 		}
 	}
 	handleRollb() {
-		if (this.eevee2 === 'Vaporeon' && this.rollb < 26) {
+		if (this.eevee2 === 'Vaporeon' && this.rollb < 26 && this.eevee1 !== 'Umbreon') {
 			this.rollb = null;
 			this.say("**" + this.oplayer.name + "** gets a reroll, as they were a Vaporeon!");
 			this.say("!roll " + this.roll2);
@@ -212,11 +212,11 @@ class Eevee extends Games.Game {
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			} else {
 				if (this.rolla > this.rollb) {
-					if (this.eevee2 === 'Eevee' && this.getRemainingPlayerCount() > 3 && !this.hasUsedEevee.has(this.oplayer)) {
+					if (this.eevee2 === 'Eevee' && this.eevee1 !== 'Umbreon' && this.getRemainingPlayerCount() > 3 && !this.hasUsedEevee.has(this.oplayer)) {
 						this.say("**" + this.oplayer.name + "** Runs Away as eevee!")
 						this.hasUsedEevee.set(this.oplayer, true);
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-					} else if (this.eevee2 === 'Glaceon') {
+					} else if (this.eevee2 === 'Glaceon' && this.eevee1 !== 'Umbreon') {
 						this.say("Rolling for **" + this.oplayer.name + "**'s dodge chance!");
 						this.say("!roll 100");
 					} else {
