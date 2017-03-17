@@ -707,12 +707,10 @@ exports.commands = {
 		Games.host = user;
 		room.say("**" + Games.host.name + "** has subbed in as the host!");
 	},
-	phantomgenius: 'pants',
-	phantom: 'pants',
-	pants: function (target, user, room) {
+	cyclotic: function (target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
-		text += '.done with life';
+		text += '/me runs in circles endlessly';
 		this.say(room, text);
 	},
 
@@ -1423,7 +1421,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '404 command not found';
+		text += '/me RESIGNs';
 		this.say(room, text);
 	},
 	micro: 'microwavable',
