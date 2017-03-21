@@ -235,7 +235,7 @@ class GearUp extends Games.Game {
 					this.say("The rolls were the same! rerolling...");
 					this.rolla = null;
 					this.rollb = null;
-					this.doPlayerAttack();
+					this.sayPlayerRolls();
 				}
 			}
 		} catch (e) {

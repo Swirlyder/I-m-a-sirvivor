@@ -43,11 +43,16 @@ class TD extends Games.Game {
 			this.end();
 			return;
 		} else if (this.getRemainingPlayerCount() === 2) {
+			if (this.finals) {
+				this.num = 1 - this.num;
+			} else {
+				this.finals = true;
+				this.num = Math.floor(Math.random() * 2)
+			}
 			let playersLeft = this.getRemainingPlayers();
-			let index = Math.floor(Math.random() * 2);
-			this.curPlayer = playersLeft[Object.keys(playersLeft)[index]];
-			this.oplayer = playersLeft[Object.keys(playersLeft)[1 - index]];
-		this.say("Only **" + this.curPlayer.name + "[" + this.troops.get(this.curPlayer) + "]** and **" + this.oplayer.name + "[" + this.troops.get(this.oplayer) + "]** are left! Moving directly to attacks.");
+			this.curPlayer = playersLeft[Object.keys(playersLeft)[this.num]];
+			this.oplayer = playersLeft[Object.keys(playersLeft)[1 - this.num]];
+			this.say("Only **" + this.curPlayer.name + "[" + this.troops.get(this.curPlayer) + "]** and **" + this.oplayer.name + "[" + this.troops.get(this.oplayer) + "]** are left! Moving directly to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			let strs = [];
