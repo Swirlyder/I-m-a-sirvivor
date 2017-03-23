@@ -48,6 +48,9 @@ class Poke extends Games.Game {
 		} else {
 			let player = this.players[Tools.toId(this.order.shift())];
 			let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
+			while (mon.num < 1) {
+				mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
+			}
 			while (mon.evos) {
 				mon = Tools.data.pokedex[mon.evos[0]];
 			}
