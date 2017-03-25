@@ -24,23 +24,15 @@ class Risk extends Games.Game {
 	}
 
 	onStart() {
-		try {
 		for (let userID in this.players) {
 			let player = this.players[userID];
 			this.troops.set(player, 100);
 		}
 		this.doingCountry = true;
 		this.nextRound();
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
 	}
 
 	onJoin(user) {
-		try {
 		if (this.started && this.round > 2) {
 			user.say("Too late to join, rip!");
 			this.players[user.id].eliminated = true;
@@ -48,76 +40,63 @@ class Risk extends Games.Game {
 			user.say("You have latejoined the game of risk!");
 			this.troops.set(this.players[user.id], 100);
 		}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
 	}
 
 	onNextRound() {
-		try {
-			this.canAttack = true;
-			this.attacks.clear();
-			this.numAttacks = 0;
-			if (this.getRemainingPlayerCount() === 0) {
-				this.say("Everyone was mked!");
+		this.canAttack = true;
+		this.attacks.clear();
+		this.numAttacks = 0;
+		if (this.getRemainingPlayerCount() === 0) {
+			this.say("Everyone was mked!");
+			this.end();
+			return;
+		}
+		if (this.round < 4) {
+			this.order = [];
+			let strs = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				strs.push(player.name + "(" + this.troops.get(player) + ")");
+			}
+			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**:" + strs.join(", "));
+			this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandcharacter + "destroy [name]``");
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+		} else {
+			if (this.round === 4) {
+				this.doingCountry = false;
+				this.say("It is now time for hunger games, with the number of troops you earned from before!");
+			}
+			if (this.attackPlayer) {
+				this.say(this.curPlayer.name + " didn't attack anyone and is eliminated!");
+				this.curPlayer.eliminated = true;
+			}
+			if (this.getRemainingPlayerCount() === 1) {
 				this.end();
 				return;
-			}
-			if (this.round < 4) {
-				this.order = [];
+			} else if (this.getRemainingPlayerCount() === 2) {
+				this.rolla = null;
+				this.rollb = null;
+				let playersLeft = this.getRemainingPlayers();
+				this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
+				this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
+				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+			} else {
+				this.curPlayer = null;
+				this.oplayer = null;
+				this.rolla = null;
+				this.rollb = null;
 				let strs = [];
 				for (let userID in this.players) {
 					let player = this.players[userID];
 					if (player.eliminated) continue;
 					strs.push(player.name + "(" + this.troops.get(player) + ")");
 				}
-				this.say("**Players: (" + this.getRemainingPlayerCount() + ")**:" + strs.join(", "));
-				this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandcharacter + "destroy [name]``");
-				this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
-			} else {
-				if (this.round === 4) {
-					this.doingCountry = false;
-					this.say("It is now time for hunger games, with the number of troops you earned from before!");
-				}
-				if (this.attackPlayer) {
-					this.say(this.curPlayer.name + " didn't attack anyone and is eliminated!");
-					this.curPlayer.eliminated = true;
-				}
-				if (this.getRemainingPlayerCount() === 1) {
-					this.end();
-					return;
-				} else if (this.getRemainingPlayerCount() === 2) {
-					this.rolla = null;
-					this.rollb = null;
-					let playersLeft = this.getRemainingPlayers();
-					this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
-					this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-					this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
-					this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-				} else {
-					this.curPlayer = null;
-					this.oplayer = null;
-					this.rolla = null;
-					this.rollb = null;
-					let strs = [];
-					for (let userID in this.players) {
-						let player = this.players[userID];
-						if (player.eliminated) continue;
-						strs.push(player.name + "(" + this.troops.get(player) + ")");
-					}
-					this.say("!pick " + strs.join(", "));
-					this.attackPlayer = true;
-					this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
-				}
+				this.say("!pick " + strs.join(", "));
+				this.attackPlayer = true;
+				this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
 		}
 	}
 
@@ -133,10 +112,7 @@ class Risk extends Games.Game {
 			this.say("Waiting on: "  + waitings.join(", "));
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -158,10 +134,7 @@ class Risk extends Games.Game {
 			}
 			this.handleAttacks();
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -180,10 +153,7 @@ class Risk extends Games.Game {
 				this.timeout = setTimeout(() => this.doCountryAttack(), 5 * 1000);
 			}
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -193,10 +163,7 @@ class Risk extends Games.Game {
 			this.roll2 = this.attackedCountry.armies;
 			this.sayPlayerRolls();
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -236,47 +203,32 @@ class Risk extends Games.Game {
 	}
 
 	handlePick(message) {
-		try {
-			if (!this.curPlayer) {
-				let parenIndex = message.lastIndexOf("(");
-				this.curPlayer = this.players[Tools.toId(message.substr(0, parenIndex))];
-				this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+		if (!this.curPlayer) {
+			let parenIndex = message.lastIndexOf("(");
+			this.curPlayer = this.players[Tools.toId(message.substr(0, parenIndex))];
+			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
 		}
 	}
 
 	attack(target, user) {
-		try {
-			if (!this.curPlayer) return;
-			if (this.curPlayer.name !== user.name) return;
-			let otherUser = Users.get(target);
-			if (!otherUser) return;
-			let oplayer = this.players[otherUser.id];
-			if (!oplayer || oplayer.eliminated) return;
-			if (oplayer.name === this.curPlayer.name) {
-				this.say(">Attacking yourself.");
-				return;
-			}
-			this.attackPlayer = false;
-			this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
-			clearTimeout(this.timeout);
-			this.oplayer = oplayer;
-			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
+		if (!this.curPlayer) return;
+		if (this.curPlayer.name !== user.name) return;
+		let otherUser = Users.get(target);
+		if (!otherUser) return;
+		let oplayer = this.players[otherUser.id];
+		if (!oplayer || oplayer.eliminated) return;
+		if (oplayer.name === this.curPlayer.name) {
+			this.say(">Attacking yourself.");
 			return;
 		}
+		this.attackPlayer = false;
+		this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
+		clearTimeout(this.timeout);
+		this.oplayer = oplayer;
+		this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 	}
 
 	destroy(target, user) {
-		try {
 		if (!this.canAttack) return;
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
@@ -303,12 +255,6 @@ class Risk extends Games.Game {
 			clearTimeout(this.timeout);
 			this.handleAttacks();
 		}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
 	}
 }
 
@@ -317,3 +263,7 @@ exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.aliases = [];
+exports.commands = {
+	destroy: "destroy",
+	attack: "attack",
+}

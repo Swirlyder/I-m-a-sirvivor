@@ -25,48 +25,40 @@ class HT extends Games.Game {
     }
 
     listTypesLeft() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (this.types.has(player)) continue;
-			waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (this.types.has(player)) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimTypes(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimTypes(), 30 * 1000);
     }
 
     elimTypes() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.types.has(player)) {
-				player.say("You never chose a type!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.types.has(player)) {
+					player.say("You never chose a type!");
+					player.eliminated = true;
+				}
 			}
+			this.nextRound();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.nextRound();
     }
 
 	turnFirstUpper(str) {
 		if (str.length === 0) return "";
 		return str.charAt(0).toUpperCase() + str.substr(1);
 	}
-
-    type(target, user) {
-		let player = this.players[user.id];
-		if (!player || player.eliminated) return;
-		target = Tools.toId(target);
-		if (target.endsWith('type')) target = target.substr(0, target.length - 4);
-		if (!(target in Tools.data.convertType)) return user.say("Invalid type.");
-		if (this.types.has(player)) return user.say("You have already chosen a type!");
-		this.types.set(player, target);
-		user.say("You have chosen the **" + this.turnFirstUpper(target) + "** type!");
-		this.numTypes++;
-		if (this.numTypes === this.playerCount) {
-			clearTimeout(this.timeout);
-			this.nextRound();
-		}
-    }
 
     onNextRound() {
 		if (this.getRemainingPlayerCount() === 1) {
@@ -97,40 +89,52 @@ class HT extends Games.Game {
 		}
     }
     listRemaining() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (this.attacks.has(player) || player.eliminated) continue;
-			waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (this.attacks.has(player) || player.eliminated) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
     }
 
     elimPlayers() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.attacks.has(player)) {
-				player.say("You didn't choose someone to attack this round and have been eliminated!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.attacks.has(player)) {
+					player.say("You didn't choose someone to attack this round and have been eliminated!");
+					player.eliminated = true;
+				}
 			}
+			this.handleAttacks();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.handleAttacks();
     }
 
     handleAttacks() {
-		this.canAttack = false;
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			this.curPlayer = this.order.shift();
-			this.oplayer = this.attacks.get(this.curPlayer);
-			if (this.curPlayer.eliminated || this.oplayer.eliminated) {
-				this.handleAttacks();
+		try {
+			this.canAttack = false;
+			if (this.order.length === 0) {
+				this.nextRound();
 			} else {
-				this.doPlayerAttack();
+				this.curPlayer = this.order.shift();
+				this.oplayer = this.attacks.get(this.curPlayer);
+				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
+					this.handleAttacks();
+				} else {
+					this.doPlayerAttack();
+				}
 			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
     }
 
@@ -216,6 +220,23 @@ class HT extends Games.Game {
 			this.handleAttacks();
 		}
     }
+
+	type(target, user) {
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		target = Tools.toId(target);
+		if (target.endsWith('type')) target = target.substr(0, target.length - 4);
+		if (!(target in Tools.data.convertType)) return user.say("Invalid type.");
+		if (this.types.has(player)) return user.say("You have already chosen a type!");
+		this.types.set(player, target);
+		user.say("You have chosen the **" + this.turnFirstUpper(target) + "** type!");
+		this.numTypes++;
+		if (this.numTypes === this.playerCount) {
+			clearTimeout(this.timeout);
+			this.nextRound();
+		}
+    }
+
 }
 
 exports.name = name;
@@ -223,3 +244,12 @@ exports.id = id;
 exports.aliases = ['ht'];
 exports.game = HT;
 exports.description = description;
+exports.commands = {
+	destroy: "destroy",
+	type: "type",
+}
+
+exports.pmCommands = {
+	destroy: true,
+	type: true,
+}

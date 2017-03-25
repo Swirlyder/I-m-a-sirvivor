@@ -39,26 +39,34 @@ class Eevee extends Games.Game {
 	}
 
 	listEeveeWaits() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.eevees.has(player)) waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.eevees.has(player)) waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimEevees(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimEevees(), 30 * 1000);
 	}
 
 	elimEevees() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.eevees.has(player)) {
-				player.say("You never chose an eevee!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.eevees.has(player)) {
+					player.say("You never chose an eevee!");
+					player.eliminated = true;
+				}
 			}
+			this.nextRound();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.nextRound();
 	}
 
 	onNextRound() {
@@ -82,25 +90,33 @@ class Eevee extends Games.Game {
 	}
 
 	listRemaining() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (!player.eliminated && !this.attacks.has(player)) waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (!player.eliminated && !this.attacks.has(player)) waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimRemaining(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimRemaining(), 30 * 1000);
 	}
 
 	elimRemaining() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.attacks.has(player)) {
-				player.say("You never attacked anyone this round!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.attacks.has(player)) {
+					player.say("You never attacked anyone this round!");
+					player.eliminated = true;
+				}
 			}
+			this.handleAttacks();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.handleAttacks();
 	}
 
 	handleAttacks() {
@@ -285,11 +301,6 @@ class Eevee extends Games.Game {
 			clearTimeout(this.timeout);
 			this.handleAttacks();
 		}
-	} catch (e) {
-		this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-		this.mailbreak();
-		this.end();
-		return;
 	}
 }
 
@@ -298,3 +309,12 @@ exports.id = id;
 exports.description = description;
 exports.game = Eevee;
 exports.aliases = ["eevee"];
+exports.commands = {
+	destroy: "destroy",
+	eevee: "eevee",
+}
+
+exports.pmCommands = {
+	destroy: true,
+	eevee: true,
+}

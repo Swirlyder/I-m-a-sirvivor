@@ -25,14 +25,6 @@ class TD extends Games.Game {
 		this.nextRound();
 	}
 
-	doPlayerAttack() {
-		this.rolla = null;
-		this.rollb = null;
-		this.roll1 = 100;
-		this.roll2 = 100;
-		this.sayPlayerRolls();
-	}
-
 	onNextRound() {
 		if (this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** didn't choose someone to attack and is eliminated!");
@@ -66,6 +58,14 @@ class TD extends Games.Game {
 		}
 	}
 
+	doPlayerAttack() {
+		this.rolla = null;
+		this.rollb = null;
+		this.roll1 = 100;
+		this.roll2 = 100;
+		this.sayPlayerRolls();
+	}
+	
 	handleWinner(winPlayer, losePlayer) {
 		let diff = Math.abs(this.rolla - this.rollb);
 		let loseTroops = this.troops.get(losePlayer);
@@ -111,3 +111,6 @@ exports.description = description;
 exports.game = TD;
 exports.aliases = ['td'];
 exports.modes = ['Golf'];
+exports.commands = {
+	attack: "attack",
+}

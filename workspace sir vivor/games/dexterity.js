@@ -91,10 +91,7 @@ class Dexterity extends Games.Game {
 			this.say("Waiting on: "  + waitings.join(", "));
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -111,10 +108,7 @@ class Dexterity extends Games.Game {
 			}
 			this.handleAttacks();
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -128,10 +122,7 @@ class Dexterity extends Games.Game {
 			this.say("!roll " + item.atk);
 			this.say("!roll " + item2.atk);
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 	handleAttacks() {
@@ -151,106 +142,89 @@ class Dexterity extends Games.Game {
 				}
 			}
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
 	handleRoll(roll) {
-		try {
-			if (!this.roll1) {
-				this.roll1 = roll;
-			} else if (!this.roll2) {
-				this.roll2 = roll;
-				if (this.roll1 > this.roll2) {
-					this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
-					this.winIndex = 0;
-				} else if (this.roll1 < this.roll2) {
-					this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
-					this.winIndex = 1;
-				} else {
-					this.say("The rolls were a tie! Rerolling...");
-					this.doAttacks();
-				}
-				if (this.winIndex === 0 || this.winIndex === 1) {
-					let bothPlayers = [this.curPlayer, this.oplayer];
-					let item = this.items.get(bothPlayers[this.winIndex]);
-					let acc = item.acc;
-					if (acc === 100) {
-						this.say("The item has 100% accuracy! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
-						this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
-						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-					} else {
-						this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
-						this.timeout = setTimeout(() => {
-							this.say("!roll 100");
-						}, 5 * 1000);
-					}
-				}
+		if (!this.roll1) {
+			this.roll1 = roll;
+		} else if (!this.roll2) {
+			this.roll2 = roll;
+			if (this.roll1 > this.roll2) {
+				this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**!");
+				this.winIndex = 0;
+			} else if (this.roll1 < this.roll2) {
+				this.say("**" + this.oplayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.curPlayer.name + "**!");
+				this.winIndex = 1;
 			} else {
-				let actAcc = roll;
+				this.say("The rolls were a tie! Rerolling...");
+				this.doAttacks();
+			}
+			if (this.winIndex === 0 || this.winIndex === 1) {
 				let bothPlayers = [this.curPlayer, this.oplayer];
 				let item = this.items.get(bothPlayers[this.winIndex]);
 				let acc = item.acc;
-				if (actAcc <= acc) {
-					this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
+				if (acc === 100) {
+					this.say("The item has 100% accuracy! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
 					this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
+					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 				} else {
-					this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
+					this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");
+					this.timeout = setTimeout(() => {
+						this.say("!roll 100");
+					}, 5 * 1000);
 				}
-				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+		} else {
+			let actAcc = roll;
+			let bothPlayers = [this.curPlayer, this.oplayer];
+			let item = this.items.get(bothPlayers[this.winIndex]);
+			let acc = item.acc;
+			if (actAcc <= acc) {
+				this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
+				this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
+			} else {
+				this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
+			}
+			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		}
 	}
 
 	destroy(target, user) {
-		try {
-			if (!this.canAttack) return;
-			let player = this.players[user.id];
-			if (!player || player.eliminated) return;
-			let split = target.split(",");
-			if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]``");
-			let attackedPlayer = this.players[Tools.toId(split[0])];
-			if (!attackedPlayer) return;
-			if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!")
-			let weaponName = Tools.toId(split[1]);
-			let weapon;
-			for (let name in data) {
-				let curWeapon = data[name];
-				if (curWeapon.aliases.indexOf(weaponName) !== -1) {
-					weapon = curWeapon;
-					break;
-				}
+		if (!this.canAttack) return;
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [weapon]``");
+		let attackedPlayer = this.players[Tools.toId(split[0])];
+		if (!attackedPlayer) return;
+		if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!")
+		let weaponName = Tools.toId(split[1]);
+		let weapon;
+		for (let name in data) {
+			let curWeapon = data[name];
+			if (curWeapon.aliases.indexOf(weaponName) !== -1) {
+				weapon = curWeapon;
+				break;
 			}
-			if (!weapon) return user.say("That is not a valid weapon!");
-			let prevAttacks = this.prevAttacks.get(player);
-			if (prevAttacks.indexOf(weapon.name) !== -1 && prevAttacks.indexOf(weapon.name) < weapon.cd) return user.say("Your cooldown is not over for that weapon!");
-			let curAtt = this.attacks.get(this.curPlayer);
-			if (curAtt) return user.say("You have already attacked someone this round.");
-			if (attackedPlayer.id === player.id) return user.say("You can't attack yourself.");
-			this.attacks.set(player, attackedPlayer);
-			this.items.set(player, weapon);
-			prevAttacks.unshift(weapon.name);
-			this.prevAttacks.set(player, prevAttacks);
-			this.order.push(player);
-			user.say("You have attacked **" + attackedPlayer.name + "** with the " + weapon.name + "!");
-			this.numAttacks++;
-			if (this.numAttacks === this.getRemainingPlayerCount()) {
-				clearTimeout(this.timeout);
-				this.handleAttacks();
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+		}
+		if (!weapon) return user.say("That is not a valid weapon!");
+		let prevAttacks = this.prevAttacks.get(player);
+		if (prevAttacks.indexOf(weapon.name) !== -1 && prevAttacks.indexOf(weapon.name) < weapon.cd) return user.say("Your cooldown is not over for that weapon!");
+		let curAtt = this.attacks.get(this.curPlayer);
+		if (curAtt) return user.say("You have already attacked someone this round.");
+		if (attackedPlayer.id === player.id) return user.say("You can't attack yourself.");
+		this.attacks.set(player, attackedPlayer);
+		this.items.set(player, weapon);
+		prevAttacks.unshift(weapon.name);
+		this.prevAttacks.set(player, prevAttacks);
+		this.order.push(player);
+		user.say("You have attacked **" + attackedPlayer.name + "** with the " + weapon.name + "!");
+		this.numAttacks++;
+		if (this.numAttacks === this.getRemainingPlayerCount()) {
+			clearTimeout(this.timeout);
+			this.handleAttacks();
 		}
 	}
 
@@ -271,3 +245,11 @@ exports.id = id;
 exports.description = description;
 exports.game = Dexterity;
 exports.aliases = ["dext", "dex"];
+exports.commands = {
+	destroy: "destroy", 
+	weapons: "weapons",
+}
+exports.pmCommands = {
+	destroy: true,
+	weapons: true,
+}

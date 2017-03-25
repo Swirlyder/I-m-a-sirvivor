@@ -21,47 +21,34 @@ class EXC extends Games.Game {
     }
 
 	listNicksLeft() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.nick) continue;
-			waitings.push(player.name);
-		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimNicks(), 30 * 1000);
-    }
-
-	nick(target, user) {
-		if (!target) return;
-		let player = this.players[user.id];
-		if (!player) return;
-		if (player.nick) return user.say("You have already chosen a nickname!");
-		if (this.nicks.indexOf(Tools.toId(target)) !== -1) return user.say("Somebody has already chosen that nickname!");
-		if (Tools.toId(target).length !== target.length) {
-			return user.say("Your nickname can only contain alphanumeric characters.");
-		}
-		if (target.length > 15) {
-			return user.say("Your nickname can only be 15 characters long.");
-		}
-		player.nick = target;
-		this.nicks.push(Tools.toId(target));
-		user.say("You have chosen your nickname as **" + target + "**!");
-		if (this.nicks.length === this.playerCount) {
-			clearTimeout(this.timeout);
-			this.nextRound();
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.nick) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimNicks(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
     }
 
 	elimNicks() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!player.nick) {
-				player.say("You never chose a nickname!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!player.nick) {
+					player.say("You never chose a nickname!");
+					player.eliminated = true;
+				}
 			}
+			this.nextRound();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.nextRound();
     }
 
 	onNextRound() {
@@ -89,26 +76,34 @@ class EXC extends Games.Game {
 	}
 
 	listRemaining() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (this.attacks.has(player) || player.eliminated) continue;
-			waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (this.attacks.has(player) || player.eliminated) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
     }
 
 	elimPlayers() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.attacks.has(player)) {
-				player.say("You didn't choose someone to attack this round and have been eliminated!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.attacks.has(player)) {
+					player.say("You didn't choose someone to attack this round and have been eliminated!");
+					player.eliminated = true;
+				}
 			}
+			this.setOrder();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.setOrder();
     }
 
 	setOrder() {
@@ -130,24 +125,28 @@ class EXC extends Games.Game {
 	}
 
 	doNextNick() {
-		if (this.nicks.length === 0) {
-			this.startAttacks();
-		} else {
-			let nick = this.nicks[0];
-			let realp;
-			for (let userID in this.players) {
-				let player = this.players[userID];
-				if (player.nick === nick) {
-					realp = player;
-					break;
+		try {
+			if (this.nicks.length === 0) {
+				this.startAttacks();
+			} else {
+				let nick = this.nicks[0];
+				let realp;
+				for (let userID in this.players) {
+					let player = this.players[userID];
+					if (player.nick === nick) {
+						realp = player;
+						break;
+					}
+				}
+				if (realp.eliminated) {
+					this.nicks.shift();
+					this.doNextNick();
+				} else {
+					this.say("!pick " + this.getPlayerNames(this.getRemainingPlayers()));
 				}
 			}
-			if (realp.eliminated) {
-				this.nicks.shift();
-				this.doNextNick();
-			} else {
-				this.say("!pick " + this.getPlayerNames(this.getRemainingPlayers()));
-			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -157,17 +156,21 @@ class EXC extends Games.Game {
 	}
 
 	handleAttacks() {
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			this.curPlayer = this.order.shift();
-			this.oplayer = this.attacks.get(this.curPlayer);
-			if (this.curPlayer.eliminated || this.oplayer.eliminated) {
-				this.handleAttacks();
+		try {
+			if (this.order.length === 0) {
+				this.nextRound();
 			} else {
-				this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.name + "**!");
-				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+				this.curPlayer = this.order.shift();
+				this.oplayer = this.attacks.get(this.curPlayer);
+				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
+					this.handleAttacks();
+				} else {
+					this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.name + "**!");
+					this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+				}
 			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
     }
 
@@ -197,10 +200,14 @@ class EXC extends Games.Game {
 	}
 
 	elimPlayer() {
-		this.nickPlayer.eliminated = true;
-		this.say("**" + this.nickPlayer.name + "** never suspected anyone!");
-		this.nickPlayer = null;
-		this.timeout = setTimeout(() => this.doNextNick(), 5 * 1000);
+		try {
+			this.nickPlayer.eliminated = true;
+			this.say("**" + this.nickPlayer.name + "** never suspected anyone!");
+			this.nickPlayer = null;
+			this.timeout = setTimeout(() => this.doNextNick(), 5 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
+		}
 	}
 
 	suspect(target, user) {
@@ -249,6 +256,27 @@ class EXC extends Games.Game {
 			this.setOrder();
 		}
 	}
+
+	nick(target, user) {
+		if (!target) return;
+		let player = this.players[user.id];
+		if (!player) return;
+		if (player.nick) return user.say("You have already chosen a nickname!");
+		if (this.nicks.indexOf(Tools.toId(target)) !== -1) return user.say("Somebody has already chosen that nickname!");
+		if (Tools.toId(target).length !== target.length) {
+			return user.say("Your nickname can only contain alphanumeric characters.");
+		}
+		if (target.length > 15) {
+			return user.say("Your nickname can only be 15 characters long.");
+		}
+		player.nick = target;
+		this.nicks.push(Tools.toId(target));
+		user.say("You have chosen your nickname as **" + target + "**!");
+		if (this.nicks.length === this.playerCount) {
+			clearTimeout(this.timeout);
+			this.nextRound();
+		}
+    }
 }
 
 exports.game = EXC;
@@ -257,3 +285,12 @@ exports.name = name;
 exports.description = description;
 exports.aliases = [];
 exports.modes = ['Golf'];
+exports.commands = {
+	nick: "nick", 
+	destroy: "destroy",
+	suspect: "suspect",
+}
+exports.pmCommands = {
+	nick: true,
+	destroy: true,
+}

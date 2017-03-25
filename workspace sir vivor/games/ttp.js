@@ -42,18 +42,22 @@ class TTP extends Games.Game {
 	}
 
 	handoutMon() {
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			let curUser = this.order.shift();
-			let player = this.players[curUser];
-			let mons = this.mons.get(player);
-			let names = [];
-			for (let i = 0; i < 3; i++) {
-				names.push("**" + mons[i].species + "**");
+		try {
+			if (this.order.length === 0) {
+				this.nextRound();
+			} else {
+				let curUser = this.order.shift();
+				let player = this.players[curUser];
+				let mons = this.mons.get(player);
+				let names = [];
+				for (let i = 0; i < 3; i++) {
+					names.push("**" + mons[i].species + "**");
+				}
+				this.sayHand(player);
+				this.timeout = setTimeout(() => this.handoutMon(), 3 * 1000);
 			}
-			this.sayHand(player);
-			this.timeout = setTimeout(() => this.handoutMon(), 3 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -135,27 +139,12 @@ class TTP extends Games.Game {
 			strs.push(str + "</ul></div>");
 		}
 		player.say("Current hand: ");
-		console.log(start + strs.join("") + "</div></div>");
+		//console.log(start + strs.join("") + "</div></div>");
 		Rooms.get('survivor').say("/pminfobox " + player.id + ", " + (start + strs.join("") + "</div></div>"));
 	}
 
 	handleAttack() {
 		this.say("!pick " + this.curPlayer.name + ", " + this.oplayer.name);
-	}
-
-	attack(target, user) {
-		if (!this.curPlayer || this.oplayer) return;
-		if (this.curPlayer.name !== user.name) return;
-		let oplayer = this.players[Tools.toId(target)];
-		if (!oplayer || oplayer.eliminated) return;
-		if (oplayer.name === this.curPlayer.name) {
-			this.say(">Attacking yourself.");
-			return;
-		}
-		this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
-		clearTimeout(this.timeout);
-		this.oplayer = oplayer;
-		this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
 	}
 
 	doPlayerAttack() {
@@ -168,13 +157,17 @@ class TTP extends Games.Game {
 	}
 
 	doRolls() {
-		let mon1 = this.attackMons.get(this.curPlayer);
-		let mon2 = this.attackMons.get(this.oplayer);
-		this.rolla = null;
-		this.rollb = null;
-		this.roll1 = mon1.baseStats[this.stat];
-		this.roll2 = mon2.baseStats[this.stat];
-		this.sayPlayerRolls();
+		try {
+			let mon1 = this.attackMons.get(this.curPlayer);
+			let mon2 = this.attackMons.get(this.oplayer);
+			this.rolla = null;
+			this.rollb = null;
+			this.roll1 = mon1.baseStats[this.stat];
+			this.roll2 = mon2.baseStats[this.stat];
+			this.sayPlayerRolls();
+		} catch (e) {
+			this.mailbreak(e);
+		}
 	}
 
 	handleWinner(winPlayer, losePlayer) {
@@ -198,7 +191,7 @@ class TTP extends Games.Game {
 		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);		
 	}
 
-	handleRoll(roll) {
+	/*handleRoll(roll) {
 		if (!this.rolla) {
 			this.rolla = roll;
 		} else {
@@ -235,16 +228,35 @@ class TTP extends Games.Game {
 				this.timeout = setTimeout(() => this.doRolls(), 5 * 1000);
 			}
 		}
-	}
+	}*/
 
 	listWaiting() {
-		let names = [];
-		if (!this.attackMons.get(this.curPlayer)) names.push(this.curPlayer.name);
-		if (!this.attackMons.get(this.oplayer)) names.push(this.oplayer.name);
-		this.say("Waiting on: " + names.join(", "));
-		this.timeout = setTimeout(() => this.nextRound(), 30 * 1000);
+		try {
+			let names = [];
+			if (!this.attackMons.get(this.curPlayer)) names.push(this.curPlayer.name);
+			if (!this.attackMons.get(this.oplayer)) names.push(this.oplayer.name);
+			this.say("Waiting on: " + names.join(", "));
+			this.timeout = setTimeout(() => this.nextRound(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
+		}
 	}
 
+	attack(target, user) {
+		if (!this.curPlayer || this.oplayer) return;
+		if (this.curPlayer.name !== user.name) return;
+		let oplayer = this.players[Tools.toId(target)];
+		if (!oplayer || oplayer.eliminated) return;
+		if (oplayer.name === this.curPlayer.name) {
+			this.say(">Attacking yourself.");
+			return;
+		}
+		this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
+		clearTimeout(this.timeout);
+		this.oplayer = oplayer;
+		this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
+	}
+	
 	choose(target, user) {
 		if (!this.statPlayer || this.stat) return;
 		if (this.statPlayer.name !== user.name) return;
@@ -305,3 +317,14 @@ exports.description = description;
 exports.aliases = ['ttp'];
 exports.game = TTP;
 exports.modes = ['Golf']
+exports.commands = {
+	hand: "hand",
+	mons: "hand",
+	attack: "attack",
+	choose: "choose",
+	play: "play",
+}
+
+exports.pmCommands = {
+	hand: true,
+}

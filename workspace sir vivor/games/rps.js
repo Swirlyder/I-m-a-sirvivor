@@ -17,47 +17,33 @@ class RPS extends Games.Game {
 	}
 
 	onStart() {
-		try {
-			this.nextRound();
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
-		}
+		this.nextRound();
 	}
 
 	onNextRound() {
-		try {
-			if (this.getRemainingPlayerCount() === 1) {
-				this.end();
-				return;
-			} else if (this.getRemainingPlayerCount() === 2) {
-				this.straightRPS = true;
-				this.canAttack = true;
-				let playersLeft = this.getRemainingPlayers();
-				this.rps.clear();
-				this.attacks.clear();
-				this.numAttacks = 0;
-				this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
-				this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your rps choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
-				this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
-			} else {
-				this.numAttacks = 0;
-				this.canAttack = true;
-				this.order = [];
-				this.attacks.clear();
-				this.rps.clear();
-				this.pl();
-				this.say("Everyone please pm me your attacks! **Command:** ``" + Config.commandCharacter + "destroy [user], [rps]``")
-				this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
+		if (this.getRemainingPlayerCount() === 1) {
 			this.end();
 			return;
+		} else if (this.getRemainingPlayerCount() === 2) {
+			this.straightRPS = true;
+			this.canAttack = true;
+			let playersLeft = this.getRemainingPlayers();
+			this.rps.clear();
+			this.attacks.clear();
+			this.numAttacks = 0;
+			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
+			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
+			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your rps choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+		} else {
+			this.numAttacks = 0;
+			this.canAttack = true;
+			this.order = [];
+			this.attacks.clear();
+			this.rps.clear();
+			this.pl();
+			this.say("Everyone please pm me your attacks! **Command:** ``" + Config.commandCharacter + "destroy [user], [rps]``")
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
 
@@ -73,35 +59,25 @@ class RPS extends Games.Game {
 			this.say("Waiting on: "  + waitings.join(", "));
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
 	elimPlayers() {
 		try {
-		this.canAttack = false;
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			let curAttack = this.straightRPS ? this.rps.has(player) : this.attacks.has(player);
-			if (!curAttack) {
-				player.say("You didn't attack a player this round and were eliminated!");
-				this.players[userID].eliminated = true;
+			this.canAttack = false;
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				let curAttack = this.straightRPS ? this.rps.has(player) : this.attacks.has(player);
+				if (!curAttack) {
+					player.say("You didn't attack a player this round and were eliminated!");
+					this.players[userID].eliminated = true;
+				}
 			}
-		}
-		if (this.getRemainingPlayerCount() < 2) {
-			this.nextRound();
-		} else {
 			this.handleAttacks();
-		}
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -143,10 +119,7 @@ class RPS extends Games.Game {
 				}
 			}
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -176,10 +149,7 @@ class RPS extends Games.Game {
 				this.sayPlayerRolls();
 			}
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 	handleWinner(winPlayer, losePlayer) {
@@ -193,52 +163,45 @@ class RPS extends Games.Game {
 	}
 
 	destroy(target, user) {
-		try {
-			if (!this.canAttack) return;
-			let player = this.players[user.id];
-			if (!player || player.eliminated) return;
-			if (this.straightRPS) {
-				let index = this.poss.indexOf(Tools.toId(target));
-				if (index === -1) {
-					return user.say("That is not a valid rps attack!");
-				}
-				if (this.rps.has(player)) {
-					return user.say("You have already chosen this round!");
-				}
-				user.say("You have chosen " + stuff[index%3]);
-				this.order.push(player);
-				this.rps.set(player, index%3);
-			} else {
-				let split = target.split(",");
-				if (split.length !== 2) {
-					return user.say("**Usage:** ``" + Config.commandCharacter + "destroy [user], [rps]``");
-				}
-				let attackedPlayer = this.players[Tools.toId(split[0])];
-				if (!attackedPlayer) return user.say("That player is not in the game!");
-				if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!");
-				if (attackedPlayer.id === player.id) return user.say(">Attacking yourself.");
-				let index = this.poss.indexOf(Tools.toId(split[1]));
-				if (index === -1) {
-					return user.say("That is not a valid rps attack!");
-				}
-				if (this.attacks.has(player)) {
-					return user.say("You have already attacked someone this round.");
-				}
-				this.attacks.set(player, attackedPlayer);
-				user.say("You have chosen to attack **" + attackedPlayer.name + "** with " + stuff[index%3] + "!");
-				this.order.push(player);
-				this.rps.set(player, index%3);
+		if (!this.canAttack) return;
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		if (this.straightRPS) {
+			let index = this.poss.indexOf(Tools.toId(target));
+			if (index === -1) {
+				return user.say("That is not a valid rps attack!");
 			}
-			this.numAttacks++;
-			if (this.numAttacks === this.getRemainingPlayerCount()) {
-				clearTimeout(this.timeout);
-				this.handleAttacks();
+			if (this.rps.has(player)) {
+				return user.say("You have already chosen this round!");
 			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			user.say("You have chosen " + stuff[index%3]);
+			this.order.push(player);
+			this.rps.set(player, index%3);
+		} else {
+			let split = target.split(",");
+			if (split.length !== 2) {
+				return user.say("**Usage:** ``" + Config.commandCharacter + "destroy [user], [rps]``");
+			}
+			let attackedPlayer = this.players[Tools.toId(split[0])];
+			if (!attackedPlayer) return user.say("That player is not in the game!");
+			if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!");
+			if (attackedPlayer.id === player.id) return user.say(">Attacking yourself.");
+			let index = this.poss.indexOf(Tools.toId(split[1]));
+			if (index === -1) {
+				return user.say("That is not a valid rps attack!");
+			}
+			if (this.attacks.has(player)) {
+				return user.say("You have already attacked someone this round.");
+			}
+			this.attacks.set(player, attackedPlayer);
+			user.say("You have chosen to attack **" + attackedPlayer.name + "** with " + stuff[index%3] + "!");
+			this.order.push(player);
+			this.rps.set(player, index%3);
+		}
+		this.numAttacks++;
+		if (this.numAttacks === this.getRemainingPlayerCount()) {
+			clearTimeout(this.timeout);
+			this.handleAttacks();
 		}
 	}
 }
@@ -248,3 +211,9 @@ exports.description = description;
 exports.id = id;
 exports.game = RPS;
 exports.aliases = ['rockpaperscissors', 'rps'];
+exports.commands = {
+	destroy: "destroy",
+}
+exports.pmCommands = {
+	destroy: true,
+}

@@ -85,62 +85,70 @@ class Poles extends Games.Game {
 	}
 	
 	finalAttackee() {
-		let maxPoints = 0;
-		this.bestplayers = [];
-		this.finalAttacker = true;
-		let names = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			let points = this.points.get(player);
-			if (points > maxPoints) {
-				maxPoints = points;
-				this.bestplayers = [player];
-				names = ["**" + player.name + "**"];
-			} else if (points === maxPoints) {
-				this.bestplayers.push(player);
-				names.push("**" + player.name + "**");
+		try {
+			let maxPoints = 0;
+			this.bestplayers = [];
+			this.finalAttacker = true;
+			let names = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				let points = this.points.get(player);
+				if (points > maxPoints) {
+					maxPoints = points;
+					this.bestplayers = [player];
+					names = ["**" + player.name + "**"];
+				} else if (points === maxPoints) {
+					this.bestplayers.push(player);
+					names.push("**" + player.name + "**");
+				}
 			}
-		}
-		if (names.length === 1) {
-			this.say(names[0] + " has the most points and advances to the finals!");
-			this.curPlayer = this.bestplayers[0];
-			this.finalAttacker = false;
-			this.timeout = setTimeout(() => this.finalDefend(), 5 * 1000);
-		} else {
-			this.say(names.join(", ") + " are all tied for the most points and will have a roll battle to see who advances to the finals!");
-			this.length = names.length;
-			this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+			if (names.length === 1) {
+				this.say(names[0] + " has the most points and advances to the finals!");
+				this.curPlayer = this.bestplayers[0];
+				this.finalAttacker = false;
+				this.timeout = setTimeout(() => this.finalDefend(), 5 * 1000);
+			} else {
+				this.say(names.join(", ") + " are all tied for the most points and will have a roll battle to see who advances to the finals!");
+				this.length = names.length;
+				this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
 	finalDefend() {
-		let minPoints = 100;
-		this.bestplayers = [];
-		this.finalDefender = true;
-		let names = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			let points = this.points.get(player);
-			if (points < minPoints) {
-				this.bestplayers = [player];
-				minPoints = points;
-				names = ["**" + player.name + "**"];
-			} else if (points === minPoints) {
-				this.bestplayers.push(player);
-				names.push("**" + player.name + "**");
+		try {
+			let minPoints = 100;
+			this.bestplayers = [];
+			this.finalDefender = true;
+			let names = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				let points = this.points.get(player);
+				if (points < minPoints) {
+					this.bestplayers = [player];
+					minPoints = points;
+					names = ["**" + player.name + "**"];
+				} else if (points === minPoints) {
+					this.bestplayers.push(player);
+					names.push("**" + player.name + "**");
+				}
 			}
-		}
-		if (names.length === 1) {
-			this.say(names[0] + " has the least points and advances to the finals!");
-			this.oplayer = this.bestplayers[0];
-			this.finalDefender = false;
-			this.timeout = setTimeout(() => this.finalAttack(), 5 * 1000);
-		} else {
-			this.say(names.join(", ") + " are all tied for the least points and will have a roll battle to see who advances to the finals!");
-			this.length = names.length;
-			this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+			if (names.length === 1) {
+				this.say(names[0] + " has the least points and advances to the finals!");
+				this.oplayer = this.bestplayers[0];
+				this.finalDefender = false;
+				this.timeout = setTimeout(() => this.finalAttack(), 5 * 1000);
+			} else {
+				this.say(names.join(", ") + " are all tied for the least points and will have a roll battle to see who advances to the finals!");
+				this.length = names.length;
+				this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -149,15 +157,19 @@ class Poles extends Games.Game {
 	}
 
 	finalAttack() {
-		this.say("**FINALS!** **" + this.curPlayer.name + "** is facing **" + this.oplayer.name + "**!");
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player !== this.curPlayer && player !== this.oplayer) {
-				player.eliminated = true;
+		try {
+			this.say("**FINALS!** **" + this.curPlayer.name + "** is facing **" + this.oplayer.name + "**!");
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player !== this.curPlayer && player !== this.oplayer) {
+					player.eliminated = true;
+				}
 			}
+			this.finals = true;
+			this.sayFinalRolls();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.finals = true;
-		this.sayFinalRolls();
 	}
 
 	sayFinalRolls() {
@@ -168,128 +180,152 @@ class Poles extends Games.Game {
 	}
 
 	listRemaining() {
-		let waitings = []
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			let curAttack = this.attacks.get(player);
-			if (!curAttack) waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				let curAttack = this.attacks.get(player);
+				if (!curAttack) waitings.push(player.name);
+			}
+			this.say("Waiting on: "  + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: "  + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 	}
 
 	elimPlayers() {
-		for (let userID in this.getRemainingPlayers()) {
-			let player = this.players[userID];
-			let curAttack = this.attacks.get(player);
-			if (!player.eliminated && !curAttack) {
-				player.say("You didn't attack a player this round and were eliminated!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.getRemainingPlayers()) {
+				let player = this.players[userID];
+				let curAttack = this.attacks.get(player);
+				if (!player.eliminated && !curAttack) {
+					player.say("You didn't attack a player this round and were eliminated!");
+					player.eliminated = true;
+				}
 			}
+			this.saySpores();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.saySpores();
 	}
 
 	saySpores() {
-		if (this.spores.length === 0) {
-			this.handleAttacks();
-		} else {
-			let pair = this.spores.shift();
-			let attacker = pair[0], attacked = pair[1];
-			this.say("**" + attacker.name + "** spores **" + attacked.name + "**!");
-			this.isSpored.set(attacked, true);
-			this.timeout = setTimeout(() => this.saySpores(), 5 * 1000);
+		try {
+			if (this.spores.length === 0) {
+				this.handleAttacks();
+			} else {
+				let pair = this.spores.shift();
+				let attacker = pair[0], attacked = pair[1];
+				this.say("**" + attacker.name + "** spores **" + attacked.name + "**!");
+				this.isSpored.set(attacked, true);
+				this.timeout = setTimeout(() => this.saySpores(), 5 * 1000);
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
 	handleAttacks() {
-		this.expectingSpore = false;
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			this.curPlayer = this.order.shift();
-			this.oplayer = this.attacks.get(this.curPlayer);
-			if (this.curPlayer.eliminated || this.oplayer.eliminated || this.isSpored.has(this.curPlayer)) {
-				this.handleAttacks();
+		try {
+			this.expectingSpore = false;
+			if (this.order.length === 0) {
+				this.nextRound();
 			} else {
-				this.actions.clear();
-				this.expectingWow = true;
-				this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**! Please pm me your actions with ``" + Config.commandCharacter + "action [card], [user]``");
-				this.timeout = setTimeout(() => this.handleActions(), 30 * 1000); 
+				this.curPlayer = this.order.shift();
+				this.oplayer = this.attacks.get(this.curPlayer);
+				if (this.curPlayer.eliminated || this.oplayer.eliminated || this.isSpored.has(this.curPlayer)) {
+					this.handleAttacks();
+				} else {
+					this.actions.clear();
+					this.expectingWow = true;
+					this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**! Please pm me your actions with ``" + Config.commandCharacter + "action [card], [user]``");
+					this.timeout = setTimeout(() => this.handleActions(), 30 * 1000); 
+				}
 			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
 	handleActions() {
-		this.expectingWow = false;
-		this.attackWows = [];
-		this.defenseWows = [];
-		this.attackHelps = [];
-		this.defenseHelps = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.actions.has(player)) continue;
-			let actions = this.actions.get(player);
-			let card = actions[0];
-			let target = actions[1];
-			let name = "**" + player.name + "**";
-			if (target === this.curPlayer && card === "Helping Hand") {
-				this.attackHelps.push(name);
-			} else if (target === this.curPlayer && card === "Will-o-Wisp") {
-				this.attackWows.push(name);
-			} else if (card === "Helping Hand") {
-				this.defenseHelps.push(name);
-			} else {
-				this.defenseWows.push(name);
+		try {
+			this.expectingWow = false;
+			this.attackWows = [];
+			this.defenseWows = [];
+			this.attackHelps = [];
+			this.defenseHelps = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.actions.has(player)) continue;
+				let actions = this.actions.get(player);
+				let card = actions[0];
+				let target = actions[1];
+				let name = "**" + player.name + "**";
+				if (target === this.curPlayer && card === "Helping Hand") {
+					this.attackHelps.push(name);
+				} else if (target === this.curPlayer && card === "Will-o-Wisp") {
+					this.attackWows.push(name);
+				} else if (card === "Helping Hand") {
+					this.defenseHelps.push(name);
+				} else {
+					this.defenseWows.push(name);
+				}
 			}
-		}
-		if (this.attackWows.length > 0) {
-			if (this.attackWows.length === 1) {
-				this.say(this.attackWows.join(", ") + " Will-o-Wisps **" + this.curPlayer.name + "**");
-			} else {
-				this.say(this.attackWows.join(", ") + " all Will-o-Wisp **" + this.curPlayer.name + "**");
+			if (this.attackWows.length > 0) {
+				if (this.attackWows.length === 1) {
+					this.say(this.attackWows.join(", ") + " Will-o-Wisps **" + this.curPlayer.name + "**");
+				} else {
+					this.say(this.attackWows.join(", ") + " all Will-o-Wisp **" + this.curPlayer.name + "**");
+				}
 			}
-		}
-		if (this.defenseWows.length > 0) {
-			if (this.defenseWows.length === 1) {
-				this.say(this.defenseWows.join(", ") + " Will-o-Wisps **" + this.oplayer.name + "**");
-			} else {
-				this.say(this.defenseWows.join(", ") + " all Will-o-Wisp **" + this.oplayer.name + "**");
+			if (this.defenseWows.length > 0) {
+				if (this.defenseWows.length === 1) {
+					this.say(this.defenseWows.join(", ") + " Will-o-Wisps **" + this.oplayer.name + "**");
+				} else {
+					this.say(this.defenseWows.join(", ") + " all Will-o-Wisp **" + this.oplayer.name + "**");
+				}
 			}
-		}
-		if (this.attackHelps.length > 0) {
-			if (this.attackHelps.length === 1) {
-				this.say(this.attackHelps.join(", ") + " Helping Hands **" + this.curPlayer.name + "**");
-			} else {
-				this.say(this.attackHelps.join(", ") + " all Helping Hand **" + this.curPlayer.name + "**");
+			if (this.attackHelps.length > 0) {
+				if (this.attackHelps.length === 1) {
+					this.say(this.attackHelps.join(", ") + " Helping Hands **" + this.curPlayer.name + "**");
+				} else {
+					this.say(this.attackHelps.join(", ") + " all Helping Hand **" + this.curPlayer.name + "**");
+				}
 			}
-		}
-		if (this.defenseHelps.length > 0) {
-			if (this.defenseHelps.length === 1) {
-				this.say(this.defenseHelps.join(", ") + " Helping Hands **" + this.oplayer.name + "**");
-			} else {
-				this.say(this.defenseHelps.join(", ") + " all Helping Hand **" + this.oplayer.name + "**");
+			if (this.defenseHelps.length > 0) {
+				if (this.defenseHelps.length === 1) {
+					this.say(this.defenseHelps.join(", ") + " Helping Hands **" + this.oplayer.name + "**");
+				} else {
+					this.say(this.defenseHelps.join(", ") + " all Helping Hand **" + this.oplayer.name + "**");
+				}
 			}
+			if ((this.defenseHelps.length + this.attackHelps.length + this.defenseWows.length + this.attackWows.length) === 0) {
+				this.say("No actions were made!");
+			}
+			this.timeout = setTimeout(() => this.doAttack(), 10 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		if ((this.defenseHelps.length + this.attackHelps.length + this.defenseWows.length + this.attackWows.length) === 0) {
-			this.say("No actions were made!");
-		}
-		this.timeout = setTimeout(() => this.doAttack(), 10 * 1000);
 	}
 
 	doAttack() {
-		this.rolla = null;
-		this.rollb = null;
-		let adda = (this.attackHelps.length - this.attackWows.length) * 30;
-		let addb = (this.defenseHelps.length - this.defenseWows.length) * 30;
-		let rolla = 100 + adda, rollb = 100 + addb;
-		if (rolla < 0) rolla = 10;
-		if (rollb < 0) rollb = 10;
-		this.roll1 = rolla;
-		this.roll2 = rollb;
-		this.sayPlayerRolls();
+		try {
+			this.rolla = null;
+			this.rollb = null;
+			let adda = (this.attackHelps.length - this.attackWows.length) * 30;
+			let addb = (this.defenseHelps.length - this.defenseWows.length) * 30;
+			let rolla = 100 + adda, rollb = 100 + addb;
+			if (rolla < 0) rolla = 10;
+			if (rollb < 0) rollb = 10;
+			this.roll1 = rolla;
+			this.roll2 = rollb;
+			this.sayPlayerRolls();
+		} catch (e) {
+			this.mailbreak(e);
+		}
 	}
 
 	handleWinner(winPlayer, losePlayer) {
@@ -456,3 +492,13 @@ exports.description = description;
 exports.game = Poles;
 exports.aliases = [];
 exports.modes = ['Golf'];
+exports.commands = {
+	destroy: "destroy",
+	action: "action",
+	hand: "hand",
+}
+exports.pmCommands = {
+	destroy: true,
+	action: true,
+	hand: true,
+}

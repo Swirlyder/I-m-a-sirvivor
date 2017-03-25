@@ -96,25 +96,18 @@ class HGS extends Games.Game {
 	}
 
 	attack(target, user) {
-		try {
-			if (!this.curPlayer) return;
-			if (this.curPlayer.name !== user.name) return;
-			let oplayer = this.players[Tools.toId(target)];
-			if (!oplayer || oplayer.eliminated) return;
-			if (oplayer.name === this.curPlayer.name) {
-				this.say(">Attacking yourself.");
-				return;
-			}
-			this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
-			clearTimeout(this.timeout);
-			this.oplayer = oplayer;
-			this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
+		if (!this.curPlayer) return;
+		if (this.curPlayer.name !== user.name) return;
+		let oplayer = this.players[Tools.toId(target)];
+		if (!oplayer || oplayer.eliminated) return;
+		if (oplayer.name === this.curPlayer.name) {
+			this.say(">Attacking yourself.");
 			return;
 		}
+		this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
+		clearTimeout(this.timeout);
+		this.oplayer = oplayer;
+		this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
 	}
 }
 

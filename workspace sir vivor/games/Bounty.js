@@ -39,20 +39,24 @@ class Bounty extends Games.Game {
 	}
 
 	handoutRoles() {
-		if (this.playerOrder.length === 0) {
-			this.nextRound();
-		} else {
-			let player = this.playerOrder[0];
-			let role = Tools.sample(this.roles);
-			this.playerRoles.set(player, role);
-			player.say("Your role is the **" + role + "**!");
-			if (role === "Weapons Dealer") {
-				this.rolls.set(player, 115)
+		try {
+			if (this.playerOrder.length === 0) {
+				this.nextRound();
 			} else {
-				this.rolls.set(player, 100);
+				let player = this.playerOrder[0];
+				let role = Tools.sample(this.roles);
+				this.playerRoles.set(player, role);
+				player.say("Your role is the **" + role + "**!");
+				if (role === "Weapons Dealer") {
+					this.rolls.set(player, 115)
+				} else {
+					this.rolls.set(player, 100);
+				}
+				this.playerOrder.shift();
+				this.timeout = setTimeout(() => this.handoutRoles(), 2 * 1000);
 			}
-			this.playerOrder.shift();
-			this.timeout = setTimeout(() => this.handoutRoles(), 2 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -96,30 +100,39 @@ class Bounty extends Games.Game {
 		}
 		if (waitings.length > 0) this.say("Waiting on: " + waitings.join(", "));
 		this.timeout = setTimeout(() => this.reveal(), 15 * 1000);
+		
 	}
 
 	reveal() {
-		this.canAttack = false;
-		if (this.reveals.length === 0) {
-			this.handleAttacks();
-		} else {
-			let pair = this.reveals.shift();
-			this.say("**" + pair[0].name + "** was revealed to be the **" + pair[1] + "**!");
-			this.timeout = setTimeout(() => this.reveal(), 5 * 1000);
+		try {
+			this.canAttack = false;
+			if (this.reveals.length === 0) {
+				this.handleAttacks();
+			} else {
+				let pair = this.reveals.shift();
+				this.say("**" + pair[0].name + "** was revealed to be the **" + pair[1] + "**!");
+				this.timeout = setTimeout(() => this.reveal(), 5 * 1000);
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 	
 	doPlayerAttack() {
-		let role1 = this.playerRoles.get(this.curPlayer);
-		if (role1 === "Sleeping") {
-			this.roll1 = 125;
-		} else if (role1 === "Heavy") {
-			this.roll1 = 120;
-		} else {
-			this.roll1 = this.rolls.get(this.curPlayer);
+		try {
+			let role1 = this.playerRoles.get(this.curPlayer);
+			if (role1 === "Sleeping") {
+				this.roll1 = 125;
+			} else if (role1 === "Heavy") {
+				this.roll1 = 120;
+			} else {
+				this.roll1 = this.rolls.get(this.curPlayer);
+			}
+			this.roll2 = this.rolls.get(this.oplayer);
+			this.sayPlayerRolls();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.roll2 = this.rolls.get(this.oplayer);
-		this.sayPlayerRolls();
 	}
 	
 	handleWinner(winPlayer, losePlayer) {
@@ -173,38 +186,42 @@ class Bounty extends Games.Game {
 	}
 
 	handleAttacks() {
-		if (this.order.length === 0) {
-			this.nextRound();
-		} else {
-			this.curPlayer = this.order.shift();
-			this.oplayer = this.attacks.get(this.curPlayer);
-			let role1 = this.playerRoles.get(this.curPlayer);
-			if (role1 === 'Heavy' && this.order.length !== 0) {
-				this.order.push(this.curPlayer);
+		try {
+			if (this.order.length === 0) {
+				this.nextRound();
 			} else {
-				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
-					this.handleAttacks();
+				this.curPlayer = this.order.shift();
+				this.oplayer = this.attacks.get(this.curPlayer);
+				let role1 = this.playerRoles.get(this.curPlayer);
+				if (role1 === 'Heavy' && this.order.length !== 0) {
+					this.order.push(this.curPlayer);
 				} else {
-					if (role1 === 'Sleeping' && !this.hasBeenAttacked.get(this.curPlayer)) {
+					if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 						this.handleAttacks();
 					} else {
-						if (this.blocked.has(this.curPlayer)) {
-							this.say("**" + this.curPlayer.name + "'s** attack was blocked by the trapper!");
-							this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+						if (role1 === 'Sleeping' && !this.hasBeenAttacked.get(this.curPlayer)) {
+							this.handleAttacks();
 						} else {
-							this.hasBeenAttacked.set(this.oplayer, true);
-							if (role1 === "The Medium") {
-								if (this.playerActions.has(this.curPlayer)) {
-									let attackedPlayer = this.playerActions.get(this.curPlayer);
-									if (attackedPlayer.eliminated) this.rolls.set(this.curPlayer, 120);
+							if (this.blocked.has(this.curPlayer)) {
+								this.say("**" + this.curPlayer.name + "'s** attack was blocked by the trapper!");
+								this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+							} else {
+								this.hasBeenAttacked.set(this.oplayer, true);
+								if (role1 === "The Medium") {
+									if (this.playerActions.has(this.curPlayer)) {
+										let attackedPlayer = this.playerActions.get(this.curPlayer);
+										if (attackedPlayer.eliminated) this.rolls.set(this.curPlayer, 120);
+									}
 								}
+								this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
+								this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 							}
-							this.say("**" + this.curPlayer.name + "** is attacking **" + this.oplayer.name + "**!");
-							this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 						}
 					}
 				}
 			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 	
@@ -312,3 +329,13 @@ exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.game = Bounty;
+exports.commands = {
+	actions: "actions",
+	action: "action",
+	destroy: "destroy",
+}
+exports.pmCommands = {
+	actions: true,
+	action: true,
+	destroy: true,
+}

@@ -6,14 +6,14 @@ const id = Tools.toId(name);
 
 class HGA extends Games.Game {
     constructor(room) {
-	super(room);
-	this.name = name;
-	this.description = description;
-	this.id = id;
-	this.attacks = new Map();
-	this.numAttacks = 0;
-	this.nicks = [];
-	this.order = [];
+		super(room);
+		this.name = name;
+		this.description = description;
+		this.id = id;
+		this.attacks = new Map();
+		this.numAttacks = 0;
+		this.nicks = [];
+		this.order = [];
     }
 
     onStart() {
@@ -23,46 +23,33 @@ class HGA extends Games.Game {
     }
 
     listNicksLeft() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.nick) continue;
-			waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.nick) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimNicks(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimNicks(), 30 * 1000);
     }
 
     elimNicks() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!player.nick) {
-				player.say("You never chose a nickname!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!player.nick) {
+					player.say("You never chose a nickname!");
+					player.eliminated = true;
+				}
 			}
-		}
-		this.nextRound();
-    }
-
-    nick(target, user) {
-		if (!target) return;
-		let player = this.players[user.id];
-		if (!player) return;
-		if (player.nick) return user.say("You have already chosen a nickname!");
-		if (this.nicks.indexOf(Tools.toId(target)) !== -1) return user.say("Somebody has already chosen that nickname!");
-		if (Tools.toId(target).length !== target.length) {
-			return user.say("Your nickname can only contain alphanumeric characters.");
-		}
-		if (target.length > 15) {
-			return user.say("Your nickname can only be 15 characters long.");
-		}
-		player.nick = target;
-		this.nicks.push(Tools.toId(target));
-		user.say("You have chosen your nickname as **" + target + "**!");
-		if (this.nicks.length === this.playerCount) {
-			clearTimeout(this.timeout);
 			this.nextRound();
+		} catch (e) {
+			this.mailbreak(e);
 		}
     }
 
@@ -97,26 +84,34 @@ class HGA extends Games.Game {
 		}
     }
     listRemaining() {
-		let waitings = [];
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (this.attacks.has(player) || player.eliminated) continue;
-			waitings.push(player.name);
+		try {
+			let waitings = [];
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (this.attacks.has(player) || player.eliminated) continue;
+				waitings.push(player.name);
+			}
+			this.say("Waiting on: " + waitings.join(", "));
+			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
     }
 
     elimPlayers() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (player.eliminated) continue;
-			if (!this.attacks.has(player)) {
-				player.say("You didn't choose someone to attack this round and have been eliminated!");
-				player.eliminated = true;
+		try {
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (player.eliminated) continue;
+				if (!this.attacks.has(player)) {
+					player.say("You didn't choose someone to attack this round and have been eliminated!");
+					player.eliminated = true;
+				}
 			}
+			this.handleAttacks();
+		} catch (e) {
+			this.mailbreak(e);
 		}
-		this.handleAttacks();
     }
 
     handleAttacks() {
@@ -173,6 +168,27 @@ class HGA extends Games.Game {
 			this.handleAttacks();
 		}
     }
+
+	nick(target, user) {
+		if (!target) return;
+		let player = this.players[user.id];
+		if (!player) return;
+		if (player.nick) return user.say("You have already chosen a nickname!");
+		if (this.nicks.indexOf(Tools.toId(target)) !== -1) return user.say("Somebody has already chosen that nickname!");
+		if (Tools.toId(target).length !== target.length) {
+			return user.say("Your nickname can only contain alphanumeric characters.");
+		}
+		if (target.length > 15) {
+			return user.say("Your nickname can only be 15 characters long.");
+		}
+		player.nick = target;
+		this.nicks.push(Tools.toId(target));
+		user.say("You have chosen your nickname as **" + target + "**!");
+		if (this.nicks.length === this.playerCount) {
+			clearTimeout(this.timeout);
+			this.nextRound();
+		}
+    }
 }
 
 exports.name = name;
@@ -181,3 +197,11 @@ exports.aliases = ['hga'];
 exports.game = HGA;
 exports.description = description;
 exports.modes = ['Golf'];
+exports.commands = {
+	destroy: "destroy",
+	nick: "nick",
+}
+exports.pmCommands = {
+	destroy: true,
+	nick: true,
+}

@@ -84,7 +84,7 @@ class Game {
 			this.started = true;
 			if (typeof this.onStart === 'function') this.onStart();
 		} catch (e) {
-			this.mailbreak();
+			this.mailbreak(e);
 		}
 	}
 
@@ -141,7 +141,7 @@ class Game {
 			}
 			if (typeof this.onNextRound === 'function') this.onNextRound();
 		} catch (e) {
-			this.mailbreak();
+			this.mailbreak(e);
 		}
 	}
 
@@ -157,12 +157,16 @@ class Game {
 	}
 
 	removePlayer(user) {
-		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
-		if (this.started) {
-			this.players[user.id].eliminated = true;
-		} else {
-			delete this.players[user.id];
-			this.playerCount--;
+		try {
+			if (!(user.id in this.players) || this.players[user.id].eliminated) return;
+			if (this.started) {
+				this.players[user.id].eliminated = true;
+			} else {
+				delete this.players[user.id];
+				this.playerCount--;
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -255,11 +259,15 @@ class Game {
 	}
 
 	sayPlayerRolls() {
-		this.rolla = null;
-		this.rollb = null;
-		if (this.roll1 && this.roll2) {
-			this.say("!roll " + this.roll1);
-			this.say("!roll " + this.roll2);
+		try {
+			this.rolla = null;
+			this.rollb = null;
+			if (this.roll1 && this.roll2) {
+				this.say("!roll " + this.roll1);
+				this.say("!roll " + this.roll2);
+			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 
@@ -298,34 +306,38 @@ class Game {
 		if (typeof this.handleRoll === 'function') this.handleRoll(roll);
 	}
 	handlehtml(message) {
-		if (!this.started) return;
-		message = message.substr(21);
-		if (message.substr(0, 4) === "Roll") {
-			let colonIndex = message.indexOf(":");
-			message = message.substr(colonIndex + 2);
-			message = message.substr(0, message.length - 6);
-			if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
-		} else if (message.substr(4, 2) === "We") {
-			let colonIndex = message.indexOf(":");
-			message = message.substr(colonIndex + 7);
-			message = message.substr(0, message.length - 6);
-			while (message.indexOf('&') !== -1) {
-				message = message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';') + 1);
-			}
-			if (typeof this.handlePick === 'function') this.handlePick(message);
-		} else {
-			if (message.indexOf("rolls") !== -1) {
+		try {
+			if (!this.started) return;
+			message = message.substr(21);
+			if (message.substr(0, 4) === "Roll") {
 				let colonIndex = message.indexOf(":");
 				message = message.substr(colonIndex + 2);
-				let finalIndex = message.indexOf("<");
-				message = message.substr(0, finalIndex);
-				let rolls = [];
-				message = message.split(", ");
-				for (let i = 0; i < message.length; i++) {
-					rolls.push(Math.floor(message[i]));
+				message = message.substr(0, message.length - 6);
+				if (typeof this.handleRoll === 'function') this.handleRoll(Math.floor(message));
+			} else if (message.substr(4, 2) === "We") {
+				let colonIndex = message.indexOf(":");
+				message = message.substr(colonIndex + 7);
+				message = message.substr(0, message.length - 6);
+				while (message.indexOf('&') !== -1) {
+					message = message.substr(0, message.indexOf('&')) + message.substr(message.indexOf(';') + 1);
 				}
-				if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
+				if (typeof this.handlePick === 'function') this.handlePick(message);
+			} else {
+				if (message.indexOf("rolls") !== -1) {
+					let colonIndex = message.indexOf(":");
+					message = message.substr(colonIndex + 2);
+					let finalIndex = message.indexOf("<");
+					message = message.substr(0, finalIndex);
+					let rolls = [];
+					message = message.split(", ");
+					for (let i = 0; i < message.length; i++) {
+						rolls.push(Math.floor(message[i]));
+					}
+					if (typeof this.handleRolls === 'function') this.handleRolls(rolls);
+				}
 			}
+		} catch (e) {
+			this.mailbreak(e);
 		}
 	}
 }

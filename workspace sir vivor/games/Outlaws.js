@@ -61,10 +61,7 @@ class Outlaws extends Games.Game {
 			this.say("Waiting on: "  + waitings.join(", "));
 			this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -81,10 +78,7 @@ class Outlaws extends Games.Game {
 			}
 			this.handleAttacks();
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
@@ -129,39 +123,32 @@ class Outlaws extends Games.Game {
 	}
 
 	destroy(target, user) {
-		try {
-			if (!this.canAttack) return;
-			let curPlayer = this.players[user.id];
-			if (!curPlayer) return;
-			let realID = toId(target);
-			let oplayer = this.players[realID];
-			if (!oplayer) {
-				user.say("That player is not in the game!");
-				return;
-			}
-			if (oplayer.id === curPlayer.id) {
-				user.say("Are you sure you want to attack yourself?");
-				return;
-			}
-			if (oplayer.eliminated) return;
-			let curAtt = this.attacks.get(curPlayer);
-			if (curAtt) {
-				user.say("You have already attacked someone this round!");
-				return;
-			}
-			this.order.push(curPlayer);
-			user.say("You have chosen to attack **" + oplayer.name + "**!");
-			this.attacks.set(curPlayer, oplayer);
-			this.numAttacks++;
-			if (this.numAttacks === this.getRemainingPlayerCount()) {
-				clearTimeout(this.timeout);
-				this.handleAttacks();
-			}
-		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.mailbreak();
-			this.end();
+		if (!this.canAttack) return;
+		let curPlayer = this.players[user.id];
+		if (!curPlayer) return;
+		let realID = toId(target);
+		let oplayer = this.players[realID];
+		if (!oplayer) {
+			user.say("That player is not in the game!");
 			return;
+		}
+		if (oplayer.id === curPlayer.id) {
+			user.say("Are you sure you want to attack yourself?");
+			return;
+		}
+		if (oplayer.eliminated) return;
+		let curAtt = this.attacks.get(curPlayer);
+		if (curAtt) {
+			user.say("You have already attacked someone this round!");
+			return;
+		}
+		this.order.push(curPlayer);
+		user.say("You have chosen to attack **" + oplayer.name + "**!");
+		this.attacks.set(curPlayer, oplayer);
+		this.numAttacks++;
+		if (this.numAttacks === this.getRemainingPlayerCount()) {
+			clearTimeout(this.timeout);
+			this.handleAttacks();
 		}
 	}
 }
@@ -179,3 +166,11 @@ exports.variations = [
 		variationAliases: ['chaos'],
 	},
 ]
+
+exports.commands = {
+	destroy: "destroy",
+}
+
+exports.pmCommands = {
+	destroy: true,
+}

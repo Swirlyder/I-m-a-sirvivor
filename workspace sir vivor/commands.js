@@ -1800,34 +1800,6 @@ exports.commands = {
 		}
 	},
 
-	nick: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.nick === 'function') {
-				room.game.nick(target, user);      
-		    }
-		});
-    },
-
-	eevee: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.eevee === 'function') {
-				room.game.eevee(target, user);      
-		    }
-		});
-    },
-
-
-	type: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.type === 'function') {
-				room.game.type(target, user);      
-		    }
-		});
-    },
-
 	join: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);
@@ -1878,77 +1850,17 @@ exports.commands = {
 	    if (typeof room.game.start === 'function') room.game.start();
     },
 
-	destroy: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.destroy === 'function') {
-				room.game.destroy(target, user);      
-		    }
-		});
-    },
-
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
 		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as __OM Room__\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste. __You thought this was going to be a roast? Well nope, take this as a compliment :)__", "Your dad is so ugly, he can't even look at himself in the mirror as it breaks at his ugliness!", target + "'s personality is so flat, even flat tires want to run.", target + ", you remind me of gold. You weigh a fuck ton."];
 		this.say(room, Tools.sample(roasts));
 	},
-
-	action: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.action === 'function') {
-				room.game.action(target, user);      
-		    }
-		});
-    },
-
-	actions: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.actions === 'function') {
-				room.game.actions(target, user);      
-		    }
-		});
-    },
-
-	weapons: function (target, user, room) {
-		if (room.id !== user.id) return;
-	    Rooms.rooms.forEach(function(room) {
-		    if (room.game && typeof room.game.weapons === 'function') {
-				room.game.weapons(target, user);      
-		    }
-		});
-    },
 	
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);
     },
 
-	attack: function (target, user, room) {
-	    if (!room.game) return;
-	    if (typeof room.game.attack === 'function') room.game.attack(target, user);
-    },
-
-	choose: function (target, user, room) {
-	    if (!room.game) return;
-	    if (typeof room.game.choose === 'function') room.game.choose(target, user);
-    },
-
-	suspect: function (target, user, room) {
-	    if (!room.game) return;
-	    if (typeof room.game.suspect === 'function') room.game.suspect(target, user);
-    },
-
-	play: function (target, user, room) {
-	    if (!room.game) return;
-	    if (typeof room.game.play === 'function') room.game.play(target, user);
-    },
-	hand: 'mons',
-	mons: function (target, user, room) {
-	    if (!room.game) return;
-	    if (typeof room.game.hand === 'function') room.game.hand(target, user);
-    },
 	apts: 'addpoints',
 	apt: 'addpoints',
 	addpoints: function (target, user, room) {
