@@ -107,10 +107,12 @@ if (Config.watchconfig) {
 		} catch (e) {}
 	});
 }
-//process.on('uncaughtException', err => {
-//	Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Moo, An error occurred! ' + err);
-//	console.log(err);
-//});
+if (Config.commandCharacter === '.') {
+	process.on('uncaughtException', err => {
+		Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Moo, An error occurred! ' + err);
+		console.log(err);
+	});
+}
 
 // And now comes the real stuff...
 info('starting server');

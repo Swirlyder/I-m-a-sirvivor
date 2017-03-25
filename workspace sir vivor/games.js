@@ -383,6 +383,7 @@ class GamesManager {
 
 	importHost() {
 		let id = fs.readFileSync('./databases/host.json').toString();
+		console.log(id);
 		if (id) {
 			Games.host = Users.get(id);
 		}
@@ -392,7 +393,10 @@ class GamesManager {
 
 	exportHost() {
 		if (Games.host) {
-			fs.writeFileSync('./databases/host.json', this.host.id);
+			console.log(Games.host.id)
+		}
+		if (Games.host) {
+			fs.writeFileSync('./databases/host.json', Games.host.id);
 		} else {
 			fs.writeFileSync('./databases/host.json', '');
 		}
@@ -460,7 +464,7 @@ class GamesManager {
 		this.aliases[file.name] = file.aliases;
 	}
 
-loadGames() {
+	loadGames() {
 		let games;
 		try {
 			games = fs.readdirSync('./games');
@@ -620,7 +624,6 @@ loadGames() {
 				}
 			}
 		}
-		this.importHost();
 		this.importHosts();
 	}
 

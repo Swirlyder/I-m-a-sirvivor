@@ -66,6 +66,7 @@ exports.parse = {
 				room = Rooms.add(roomid, !Config.rooms.includes(roomid));
 				room.onUserlist(users);
 				if (room.id === 'survivor') {
+					Games.importHost();
 					Parse.say(room, '/roomauth survivor');
 				}
 				return ok('joined ' + room.id);					
