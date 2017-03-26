@@ -383,7 +383,6 @@ class GamesManager {
 
 	importHost() {
 		let id = fs.readFileSync('./databases/host.json').toString();
-		console.log(id);
 		if (id) {
 			Games.host = Users.get(id);
 		}
@@ -392,9 +391,6 @@ class GamesManager {
 	}
 
 	exportHost() {
-		if (Games.host) {
-			console.log(Games.host.id)
-		}
 		if (Games.host) {
 			fs.writeFileSync('./databases/host.json', Games.host.id);
 		} else {

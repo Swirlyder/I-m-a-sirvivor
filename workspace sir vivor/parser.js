@@ -66,7 +66,7 @@ exports.parse = {
 				room = Rooms.add(roomid, !Config.rooms.includes(roomid));
 				room.onUserlist(users);
 				if (room.id === 'survivor') {
-					Games.importHost();
+					Games.importHost();14.5
 					Parse.say(room, '/roomauth survivor');
 				}
 				return ok('joined ' + room.id);					
@@ -290,18 +290,6 @@ exports.parse = {
 			}
 			if (typeof Commands[cmd] === "function") {
 				cmdr(cmdrMessage);
-				/*try {
-			Commands[command].call(this, target, this.room, this.user, this.command, this.time);
-		} catch (e) {
-			let stack = e.stack;
-			stack += 'Additional information:\n';
-			stack += 'Command = ' + command + '\n';
-			stack += 'Target = ' + target + '\n';
-			stack += 'Time = ' + new Date(this.time).toLocaleString() + '\n';
-			stack += 'User = ' + this.user.name + '\n';
-			stack += 'Room = ' + (this.room === this.user ? 'in PM' : this.room.id);
-			console.log(stack);
-		}*/
 				try {
 					Commands[cmd].call(this, arg, user, room);
 				} catch (e) {

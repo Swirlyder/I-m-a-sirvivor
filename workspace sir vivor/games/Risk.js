@@ -267,3 +267,7 @@ exports.commands = {
 	destroy: "destroy",
 	attack: "attack",
 }
+
+exports.pmCommands = {
+	destroy: "destroy",
+}

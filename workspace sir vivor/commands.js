@@ -127,11 +127,11 @@ exports.commands = {
 	},
     reconnect: 'off',
     disconnect: 'off',
-        crash: 'off',
-        off: function(arg, user, room) {
-            if (!user.hasRank('survivor', '%')) return false;
-	    room.say("/logout");
-	    connect();
+    crash: 'off',
+    off: function(arg, user, room) {
+        if (!user.hasRank('survivor', '%')) return false;
+	    //room.say("/logout");
+	   // connect();
 	},
 	/**
 	 * Dev commands
