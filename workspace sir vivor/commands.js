@@ -1813,9 +1813,12 @@ exports.commands = {
 
 	randomgame: function (arg, user, room) {
 	    if (room.game || Games.host || room === user || !user.hasRank(room.id, '+')) return;
-		let id = Tools.sample(Object.keys(Games.games));
+		let goodids = Object.keys(Games.games).slice();
+		goodids = goodids.concat(Object.keys(Games.aliases));
+		let id = Tools.sample(goodids);
+		console.log(goodids);
 		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
-			id = Tools.sample(Object.keys(Games.games));
+			id = Tools.sample(goodids);
 		}
 		Games.createGame(id, room);
 		room.game.signups();
