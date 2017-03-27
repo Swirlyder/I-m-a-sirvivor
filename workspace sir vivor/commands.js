@@ -1853,12 +1853,17 @@ exports.commands = {
 	    if (typeof room.game.start === 'function') room.game.start();
     },
 
+	dq: function (target, user, room) {
+		if (!user.hasRank(room.id, '%') || !room.game) return;
+		room.game.dq(target);
+	},
+	
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
 		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as __OM Room__\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste. __You thought this was going to be a roast? Well nope, take this as a compliment :)__", "Your dad is so ugly, he can't even look at himself in the mirror as it breaks at his ugliness!", target + "'s personality is so flat, even flat tires want to run.", target + ", you remind me of gold. You weigh a fuck ton."];
 		this.say(room, Tools.sample(roasts));
 	},
-	
+
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);

@@ -196,12 +196,19 @@ class Game {
 			player.eliminated = false;
 			this.players[user.id] = player;
 		} else {
-			this.addPlayer(user);
+			this.addPlayer(user)
 			if (!this.started) user.say('You have joined the game of ' + this.name + '!');
 		}
 		if (typeof this.onJoin === 'function') this.onJoin(user);
 	}
 
+	dq(username) {
+		username = Tools.toId(username);
+		if (!(username in this.players) || this.players[username].eliminated) return;
+		this.removePlayer(this.players[username]);
+		this.say(this.players[username].name + " has been disqualified");
+	}
+	
 	leave(user) {
 		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
 		this.removePlayer(user);
@@ -544,8 +551,12 @@ class GamesManager {
 						Commands[i] = gameFunction;
 						continue;
 					}
-					Commands[i] = function (target, room, user, command, time) {
+					Commands[i] = function (target, user, room, command, time) {
+						console.log('sup');
+						console.log(room);
+						console.log(user);
 						if (room.game) {
+							console.log('ay lmao');
 							if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 						} else if (room === user) {
 							Rooms.rooms.forEach(function (room) {

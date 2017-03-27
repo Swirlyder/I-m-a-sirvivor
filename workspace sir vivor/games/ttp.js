@@ -26,7 +26,7 @@ class TTP extends Games.Game {
 		this.data = [];
 		for (let i = 0; i < data.length; i++) {
 			let mon = Tools.data.pokedex[data[i]];
-			if (mon.num > 0) this.data.push(data[i]);
+			if (mon.num > 0 && mon.species.length < 12) this.data.push(data[i]);
 		}
 		this.index = 0;
 		for (let userID in this.players) {
@@ -118,7 +118,7 @@ class TTP extends Games.Game {
 	sayHand(player) {
 		let cards = this.mons.get(player);
 		if (!cards) return;
-		let height = Math.floor((cards.length + 1) / 2) * 165;
+		let height = Math.floor((cards.length + 1) / 2) * 150;
 		let start = '<div class="infobox"><div style="height: ' + height + 'px">';
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
