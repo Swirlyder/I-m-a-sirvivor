@@ -19,6 +19,7 @@ class TTP extends Games.Game {
 		this.id = id;
 		this.mons = new Map();
 		this.attackMons = new Map();
+		this.indices = new Map();
 	}
 
 	onStart() {
@@ -74,18 +75,25 @@ class TTP extends Games.Game {
 			}
 			this.say(names.join(" and ") + (names.length > 1 ?  " were" : " was") + " mked for not playing a mon!");
 		} else if (this.statPlayer) {
-			this.say("**" + this.statPlayer.name + "** didn't choose a stat!");
+			this.say("**" + this.statPlayer.name + "** didn't choose a stat and is eliminated!");
 			this.statPlayer.eliminated = true;
 		} else if (this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** didn't choose anyone to attack and is eliminated!");
 			this.curPlayer.eliminated = true;
 		}
+		this.indices.clear();
 		this.attackMons.clear();
 		if (this.getRemainingPlayerCount() === 2) {
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+			if (this.variation) {
+				let curMons = this.mons.get(this.curPlayer);
+				let omons = this.mons.get(this.oplayer);
+				this.say("Only **" + this.curPlayer.name + "[" + curMons.length + "]** and **" + this.oplayer.name + "[" + omons.length + "]** are left! Moving directly to attacks.");
+			} else {
+				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+			}
 			this.statPlayer = null;
 			this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
 		} else {
@@ -97,7 +105,12 @@ class TTP extends Games.Game {
 			for (let userID in this.players) {
 				let player = this.players[userID];
 				if (player.eliminated) continue;
-				names.push(player.name);
+				if (this.variation) {
+					let mons = this.mons.get(player);
+					names.push(player.name + "[" + mons.length + "]");
+				} else {
+					names.push(player.name);
+				}
 			}
 			this.say("!pick " + names.join(", "));
 		}
@@ -105,11 +118,21 @@ class TTP extends Games.Game {
 
 	handlePick(message) {
 		if (!this.curPlayer) {
-			this.curPlayer = this.players[Tools.toId(message)];
+			if (this.variation) {
+				let index = message.lastIndexOf("[");
+				this.curPlayer = this.players[Tools.toId(message.substr(0, index))];
+			} else {
+				this.curPlayer = this.players[Tools.toId(message)];
+			}
 			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [user]``.");
 			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		} else {
-			this.statPlayer = this.players[Tools.toId(message)];
+			if (this.variation) {
+				let index = message.lastIndexOf("[");
+				this.statPlayer = this.players[Tools.toId(message.substr(0, index))];
+			} else {
+				this.statPlayer = this.players[Tools.toId(message)];
+			}
 			this.say("**" + this.statPlayer.name + "** please choose a stat with ``" + Config.commandCharacter + "choose [stat]``");
 			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		}
@@ -139,12 +162,17 @@ class TTP extends Games.Game {
 			strs.push(str + "</ul></div>");
 		}
 		player.say("Current hand: ");
-		//console.log(start + strs.join("") + "</div></div>");
 		Rooms.get('survivor').say("/pminfobox " + player.id + ", " + (start + strs.join("") + "</div></div>"));
 	}
 
 	handleAttack() {
-		this.say("!pick " + this.curPlayer.name + ", " + this.oplayer.name);
+		if (this.variation) {
+			let curMons = this.mons.get(this.curPlayer);
+			let omons = this.mons.get(this.oplayer);
+			this.say("!pick " + this.curPlayer.name + "[" + curMons.length + "], " + this.oplayer.name + "[" + omons.length + "]");
+		} else {
+			this.say("!pick " + this.curPlayer.name + ", " + this.oplayer.name);
+		}
 	}
 
 	doPlayerAttack() {
@@ -171,10 +199,26 @@ class TTP extends Games.Game {
 	}
 
 	handleWinner(winPlayer, losePlayer) {
-		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!")
-		losePlayer.eliminated = true;
+		if (!this.variation) {
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+			losePlayer.eliminated = true;
+			let mons = this.mons.get(winPlayer);
+			let index = this.indices.get(winPlayer);
+			mons.splice(index, 1);
+			this.mons.set(winPlayer, mons);
+		} else {
+			let mons = this.mons.get(losePlayer);
+			let index = this.indices.get(losePlayer);
+			
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "'s** " + mons[index].species + "!" + (mons.length === 1 ? " It was their last mon and they are eliminated!" : ""));
+			if (mons.length === 1) {
+				losePlayer.eliminated = true;
+			} else {
+				mons.splice(index, 1);
+			}
+		}
 		let mons = this.mons.get(winPlayer);
-		if (mons.length === 1) {
+		if (mons.length === 1 && !this.variation) {
 			let names = [];
 			for (let i = 0; i < 2; i++) {
 				mons.push(Tools.data.pokedex[this.data[this.index + i]]);
@@ -190,45 +234,6 @@ class TTP extends Games.Game {
 		this.oplayer = null;
 		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);		
 	}
-
-	/*handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
-		} else {
-			this.rollb = roll;
-			if (this.rolla !== this.rollb) {
-				let winPlayer, losePlayer;
-				if (this.rolla > this.rollb) {
-					winPlayer = this.curPlayer;
-					losePlayer = this.oplayer;
-				} else {
-					winPlayer = this.oplayer;
-					losePlayer = this.curPlayer;
-				}
-				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!")
-				losePlayer.eliminated = true;
-				let mons = this.mons.get(winPlayer);
-				if (mons.length === 1) {
-					let names = [];
-					for (let i = 0; i < 2; i++) {
-						mons.push(Tools.data.pokedex[this.data[this.index + i]]);
-						names.push("**" + mons[i + 1].species + "**");
-					}
-					this.mons.set(winPlayer, mons);
-					this.sayHand(winPlayer);
-					this.index += 2;
-				}
-				this.stat = null;
-				this.curPlayer = null;
-				this.statPlayer = null;
-				this.oplayer = null;
-				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
-			} else {
-				this.say("The rolls were the same! rerolling...");
-				this.timeout = setTimeout(() => this.doRolls(), 5 * 1000);
-			}
-		}
-	}*/
 
 	listWaiting() {
 		try {
@@ -295,7 +300,7 @@ class TTP extends Games.Game {
 		if (!index) return user.say("You don't have [" + mon.species + "].");
 		user.say("You have played **" + mon.species + "**!");
 		this.attackMons.set(player, mon);
-		mons.splice(index - 1, 1);
+		this.indices.set(player, index - 1);
 		this.mons.set(player, mons);
 		this.numPlayed++;
 		if (this.numPlayed === 2) {
@@ -317,6 +322,14 @@ exports.description = description;
 exports.aliases = ['ttp'];
 exports.game = TTP;
 exports.modes = ['Golf']
+exports.variations = [
+	{
+		name: "Long Top Trumps Pokebattle",
+		aliases: ["longttp, ttplong"],
+		variation: "Long",
+		variationAliases: ["long"],
+	}
+]
 exports.commands = {
 	hand: "hand",
 	mons: "hand",

@@ -45,7 +45,7 @@ class Game {
 	}
 
 	mailbreak(e) {
-		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress!' + (e ? e : ""));
+		Parse.say(this.room, '/w lady monita, .mail Moo, A game of ' + this.name + ' broke in progress! ' + (e ? e : ""));
 		this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as they can.");
 		this.end();
 	}
@@ -552,11 +552,7 @@ class GamesManager {
 						continue;
 					}
 					Commands[i] = function (target, user, room, command, time) {
-						console.log('sup');
-						console.log(room);
-						console.log(user);
 						if (room.game) {
-							console.log('ay lmao');
 							if (typeof room.game[gameFunction] === 'function') room.game[gameFunction](target, user, command, time);
 						} else if (room === user) {
 							Rooms.rooms.forEach(function (room) {
