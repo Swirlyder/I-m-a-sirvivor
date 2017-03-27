@@ -1852,7 +1852,8 @@ exports.commands = {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
     },
-
+	mk: 'dq',
+	modkill: 'dq',
 	dq: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') || !room.game) return;
 		room.game.dq(target);
