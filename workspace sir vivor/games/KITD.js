@@ -69,9 +69,10 @@ class KITD extends Games.Game {
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		}
 		else {
+			this.numAttacks = 0;
 			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()));
 			this.say("**Please pm me your attacks now with** ``" + Config.commandCharacter + "destroy [user]``");
-			this.timeout = setTimeout(() => this.listRemaining(), 45 * 1000);
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
 
@@ -83,45 +84,61 @@ class KITD extends Games.Game {
 			waitings.push(player.name);
 		}
 		if (waitings.length > 0) this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.handleAttacks(), 15 * 1000);
+		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+	}
+
+	elimPlayers() {
+		for (let userID in this.players) {
+			let player = this.players[userID];
+			if (player.eliminated || this.attacks.has(player)) continue;
+			player.eliminated = true;
+			player.say("You were eliminated for not attacking!");
+		}
+		this.setOrder();
+	}
+
+	setOrder() {
+		for (let userID in this.players) {
+			let player = this.players[userID];
+			let role = this.playerRoles.get(player);
+			if (role === 'Serial Killer') {
+				this.newOrder = [player];
+				for (let userID in this.players) {
+					if (this.players[userID] === player) {
+						continue;
+					}
+					else {
+						this.newOrder.push(this.players[userID]);
+					}
+				}
+				this.order = this.newOrder;
+				break;
+			}
+		}
+		this.handleAttacks();
 	}
 
 	handleAttacks() {
+		console.log(this.order);
 		if (this.order.length === 0) {
 			this.nextRound();
+			return;
 		}
-		if (this.order.length === this.getRemainingPlayerCount() - 1) {
-			for (let userID in this.players) {
-				let player = this.players[userID];
-				if (this.playerRoles.get(player) === 'Serial Killer') {
-					this.curPlayer = player;
-					this.newOrder = [];
-					for (let userID in this.players) {
-						if (this.players[userID] === player) {
-							continue;
-						}
-						else {
-							this.newOrder.push(this.players[userID]);
-						}
-					}
-					this.order = this.newOrder;
-				}
-				else if (this.playerRoles.get(player) === 'Cop' || 'Citizen') {
-					continue;
-				}
-			}
+		if (this.order.length === this.getRemainingPlayerCount()) {
+			
 		}
-		else {
-			this.curPlayer = this.order.shift();
-		}
+		this.curPlayer = this.order.shift();
 		this.oplayer = this.attacks.get(this.curPlayer);
 		let role1 = this.playerRoles.get(this.curPlayer);
 		let role2 = this.playerRoles.get(this.oplayer);
-		if (this.playerRoles.get(this.curPlayer) === 'Cop' && this.order !== 1) {
+		if (this.playerRoles.get(this.curPlayer) === 'Cop' && this.order.length !== 0) {
+			this.order.push(this.curPlayer);
 			this.handleAttacks();
+			return;
 		}
 		if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 			this.handleAttacks();
+			return;
 		}
 		if (this.playerRoles.get(this.curPlayer) === 'Serial Killer') {
 			this.say("The **Serial Killer** is attacking **" + this.oplayer.name + "**!");
@@ -135,21 +152,18 @@ class KITD extends Games.Game {
 		else {
 			this.say("**" + this.curPlayer.name + "** is attacking **???!**")
 		}
-
 		this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-
 	}
 
 	doPlayerAttack() {
 		this.roll1 = 100;
 		this.roll2 = 100;
 		this.sayPlayerRolls();
-
 	}
 
 	handleWinner(winPlayer, losePlayer) {
 		if (winPlayer === this.curPlayer) {
-			if (this.playerRoles.get(this.curPlayer === 'Serial Killer')) {
+			if (this.playerRoles.get(this.curPlayer) === 'Serial Killer') {
 				this.oplayer.eliminated = true;
 				if (this.playerRoles.get(this.oplayer) === 'Cop') {
 					this.say("The **Serial Killer** murders the cop who was **" + this.oplayer.name + "!**");
@@ -163,13 +177,14 @@ class KITD extends Games.Game {
 				this.hasKilled.set(this.curPlayer, true);
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
-			else if (this.playerRoles.get(this.curPlayer === 'Cop')) {
+			else if (this.playerRoles.get(this.curPlayer) === 'Cop') {
 				if (this.hasKilled.get(this.curPlayer) === true) {
 					this.oplayer.eliminated = true;
 					this.say("The **Cop** shoots **" + this.oplayer.name + "** for manslaughter!");
 					if (this.playerRoles.get(this.oplayer === 'Serial Killer')) {
 						this.say("**" + this.oplayer.name + "** was the Serial Killer! GG **" + this.curPlayer.name + "**!");
-						this.end;
+						this.elimAllExcept(this.curPlayer);
+						this.end();
 					}
 					else {
 						this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
@@ -178,7 +193,6 @@ class KITD extends Games.Game {
 				else {
 					this.say("!pick Success, Failure");
 				}
-
 			}
 			else {
 				this.say("!pick Success, Failure");
@@ -200,8 +214,8 @@ class KITD extends Games.Game {
 				if (this.playerRoles.get(this.oplayer) === 'Serial Killer') {
 					this.say("The **Cop** shoots **" + this.oplayer.name + "**!");
 					this.say("**" + this.oplayer.name + "** was the Serial Killer! GG **" + this.curPlayer.name + "**!");
-					this.end;
-
+					this.elimAllExcept(this.curPlayer);
+					this.end();
 				}
 				else {
 					this.say("The **Cop** shoots **" + this.oplayer.name + "**!");
@@ -211,7 +225,7 @@ class KITD extends Games.Game {
 			}
 		}
 		else {
-			if (message = "Failure") {
+			if (message === "Failure") {
 				if (this.skRevealed.get(this.oplayer) === true) {
 					this.say("**???** defended successfully!");
 				}
@@ -223,7 +237,8 @@ class KITD extends Games.Game {
 			else {
 				if (this.playerRoles.get(this.oplayer) === 'Serial Killer') {
 					this.say("**???** murders **" + this.oplayer.name + "** who was the Serial Killer! GG **" + this.curPlayer.name + "**!");
-					this.end;
+					this.elimAllExcept(this.curPlayer);
+					this.end();
 				}
 				else if (this.playerRoles.get(this.oplayer) === 'Cop') {
 					this.oplayer.eliminated = true;
@@ -250,15 +265,19 @@ class KITD extends Games.Game {
 		this.attacks.set(player, targetPlayer);
 		this.order.push(player);
 		player.say("You have attacked **" + targetPlayer.name + "**!");
+		this.numAttacks++;
+		if (this.numAttacks === this.getRemainingPlayerCount()) {
+			clearTimeout(this.timeout);
+			this.setOrder();
+		}
 	}
-
-
 }
 
 exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.game = KITD;
+exports.aliases = ['kitd'];
 exports.commands = {
 	destroy: "destroy",
 }
