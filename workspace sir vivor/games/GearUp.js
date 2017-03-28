@@ -209,7 +209,7 @@ class GearUp extends Games.Game {
 		} else {
 			this.say("**" + this.oplayer.name + "** defended successfully!");
 		}
-		this.timeout = setTimeout(() => this.nexthandleAttacks(), 5 * 1000);
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
 	destroy(target, user) {
