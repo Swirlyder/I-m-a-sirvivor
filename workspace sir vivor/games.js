@@ -202,6 +202,14 @@ class Game {
 		if (typeof this.onJoin === 'function') this.onJoin(user);
 	}
 
+	elimAllExcept(player) {
+		for (let userID in this.players) {
+			let curp = this.players[userID];
+			if (player === curp) continue;
+			curp.eliminated = true;
+		}
+	}
+
 	dq(username) {
 		username = Tools.toId(username);
 		if (!(username in this.players) || this.players[username].eliminated) return;

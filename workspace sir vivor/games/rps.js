@@ -85,6 +85,10 @@ class RPS extends Games.Game {
 		try {
 			this.canAttack = false;
 			if (this.straightRPS) {
+				if (this.getRemainingPlayerCount() < 2) {
+					this.end();
+					return;
+				}
 				let rpsA = this.rps.get(this.curPlayer);
 				let rpsB = this.rps.get(this.oplayer);
 				if (rpsA === rpsB) {
