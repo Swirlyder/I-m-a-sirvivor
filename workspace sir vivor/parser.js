@@ -232,7 +232,7 @@ exports.parse = {
 				//if (user === Users.self) return false;
 
 				spl = spl.slice(4).join('|');
-				if (spl.startsWith('/invite ') && user.hasRank(group, '%') &&
+				if (spl.startsWith('/invite ') &&
 						!(toId(spl.substr(8)) === 'lobby' && Config.serverid === 'showdown')) {
 					return send('|/join ' + spl.substr(8));
 				}
