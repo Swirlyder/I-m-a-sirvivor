@@ -4,7 +4,6 @@ npm-debug.log
 config.js
 settings.json
 /databases/hosts.json
-/databases/dd.json
 /databases/host.json
 .hg
 .bzr
