@@ -110,7 +110,7 @@ exports.id = id;
 exports.description = description;
 exports.game = TD;
 exports.aliases = ['td'];
-exports.modes = ['Golf'];
+exports.modes = ['Golf', 'Roll Switch'];
 exports.commands = {
 	attack: "attack",
 }
