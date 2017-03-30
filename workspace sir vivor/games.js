@@ -40,6 +40,7 @@ class Game {
 		this.parentGame = null;
 		this.childGame = null;
 		this.golf = false;
+		this.rollSwitch = false;
 		this.max = false;
 		this.sum = true;
 	}
@@ -295,6 +296,9 @@ class Game {
 				this.timeout = setTimeout(() => this.sayPlayerRolls(), 5 * 1000);
 			} else {
 				let winPlayer, losePlayer;
+				if(this.rollSwitch) {
+					this.golf = true;
+				}
 				if (this.rolla > this.rollb && (!this.golf) || (this.rolla < this.rollb && this.golf)) {
 					winPlayer = this.curPlayer;
 					losePlayer = this.oplayer;
