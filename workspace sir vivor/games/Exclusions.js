@@ -165,7 +165,7 @@ class EXC extends Games.Game {
 				if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 					this.handleAttacks();
 				} else {
-					this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.name + "**!");
+					this.say('**' + this.curPlayer.nick + "** is attacking **" + this.oplayer.nick + "**!");
 					this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 				}
 			}
