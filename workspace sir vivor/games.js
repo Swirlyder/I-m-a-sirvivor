@@ -287,7 +287,7 @@ class Game {
 				} else {
 					this.say("The roll mode is **Regular!**");
 				}
-				
+			}
 			if (this.roll1 && this.roll2) {
 				this.say("!roll " + this.roll1);
 				this.say("!roll " + this.roll2);
