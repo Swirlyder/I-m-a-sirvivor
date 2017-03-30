@@ -40,6 +40,7 @@ class Game {
 		this.parentGame = null;
 		this.childGame = null;
 		this.golf = false;
+		this.rollSwitch = false;
 		this.max = false;
 		this.sum = true;
 	}
@@ -277,6 +278,16 @@ class Game {
 		try {
 			this.rolla = null;
 			this.rollb = null;
+			if(this.rollSwitch) {
+				this.golf = false;
+				let choice = (Math.random() < 0.5 ? 0 : 1);
+				if(choice === 0) {
+					this.golf = true;
+					this.say("The roll mode is **Golf!**");
+				} else {
+					this.say("The roll mode is **Regular!**");
+				}
+				
 			if (this.roll1 && this.roll2) {
 				this.say("!roll " + this.roll1);
 				this.say("!roll " + this.roll2);
