@@ -29,8 +29,8 @@ class Game {
 		this.players = {};
 		this.playerCount = 0;
 		this.round = 0;
-		this.started = false;
 		this.ended = false;
+		this.started = false;
 		this.freeJoin = false;
 		this.playerCap = -1;
 		this.minigame = false;
@@ -59,7 +59,11 @@ class Game {
 	}
 
 	signups() {
-		this.say("survgame! If you would like to play, use the command ``/me in``");
+		if (this.room.id === 'trivia') {
+			this.say("triviasignups! If you would like to join the ~~gulag~~ game, do ``/me in``");
+		} else {
+			this.say("survgame! If you would like to play, use the command ``/me in``");
+		}
 		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + this.name + "**: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
@@ -383,7 +387,7 @@ class GamesManager {
 			"decimates",
 		];
 		this.lastGame = null;
-		
+		this.aprilFools = true;
 	}
 
 	importHosts() {

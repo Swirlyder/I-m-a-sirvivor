@@ -31,9 +31,16 @@ class TTP extends Games.Game {
 		}
 		this.index = 0;
 		for (let userID in this.players) {
-			let mon1 = Tools.data.pokedex[this.data[this.index]];
-			let mon2 = Tools.data.pokedex[this.data[this.index + 1]];
-			let mon3 = Tools.data.pokedex[this.data[this.index + 2]];
+			let mon1,mon2,mon3;
+			if (!Games.aprilFools) {
+				mon1 = Tools.data.pokedex[this.data[this.index]];
+				mon2 = Tools.data.pokedex[this.data[this.index + 1]];
+				mon3 = Tools.data.pokedex[this.data[this.index + 2]];
+			} else {
+				mon1 = Tools.data.pokedex['sunkern'];
+				mon2 = Tools.data.pokedex['sunkern'];
+				mon3 = Tools.data.pokedex['sunkern'];
+			}
 			let mons = [mon1, mon2, mon3];
 			this.index += 3;
 			this.mons.set(this.players[userID], mons);
@@ -73,13 +80,17 @@ class TTP extends Games.Game {
 				this.oplayer.eliminated = true;
 				names.push("**" + this.oplayer.name + "**");
 			}
-			this.say(names.join(" and ") + (names.length > 1 ?  " were" : " was") + " mked for not playing a mon!");
+			this.say(names.join(" and ") + (names.length > 1 ?  " were both" : " was") + " mked for not playing a mon!");
 		} else if (this.statPlayer) {
 			this.say("**" + this.statPlayer.name + "** didn't choose a stat and is eliminated!");
 			this.statPlayer.eliminated = true;
 		} else if (this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** didn't choose anyone to attack and is eliminated!");
 			this.curPlayer.eliminated = true;
+		}
+		if (this.getRemainingPlayerCount() < 2) {
+			this.end();
+			return;
 		}
 		this.indices.clear();
 		this.attackMons.clear();
@@ -209,7 +220,6 @@ class TTP extends Games.Game {
 		} else {
 			let mons = this.mons.get(losePlayer);
 			let index = this.indices.get(losePlayer);
-			
 			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "'s** " + mons[index].species + "!" + (mons.length === 1 ? " It was their last mon and they are eliminated!" : ""));
 			if (mons.length === 1) {
 				losePlayer.eliminated = true;
@@ -221,7 +231,11 @@ class TTP extends Games.Game {
 		if (mons.length === 1 && !this.variation) {
 			let names = [];
 			for (let i = 0; i < 2; i++) {
-				mons.push(Tools.data.pokedex[this.data[this.index + i]]);
+				if (Games.aprilFools) {
+					mons.push(Tools.data.pokedex['sunkern']);
+				} else {
+					mons.push(Tools.data.pokedex[this.data[this.index + i]]);
+				}
 				names.push("**" + mons[i + 1].species + "**");
 			}
 			this.mons.set(winPlayer, mons);

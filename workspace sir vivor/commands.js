@@ -1748,8 +1748,8 @@ exports.commands = {
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
 	},
-	dice: 'roll',
-	roll: function (target, user, room) {
+	
+	dice: function (target, user, room) {
 		let realtarget = target;
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
 			let index = Games.excepted.indexOf(user.id);
@@ -1794,6 +1794,59 @@ exports.commands = {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
 			if (room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
+			} else {
+				this.say(room, "!htmlbox " + str);
+			}
+		}
+	},
+
+	roll: function (target, user, room) {
+		let realtarget = target;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
+			let index = Games.excepted.indexOf(user.id);
+			if (index === -1) return;
+			Games.excepted.splice(index, 1);
+		}
+		let plusIndex = target.indexOf("+");
+		let adder = 0;
+		if (plusIndex !== -1) {
+			adder = parseInt(target.substr(plusIndex + 1));
+			let str = adder.toString();
+			if (str.length !== (target.substr(plusIndex + 1)).length) return;
+			if (!adder) return;
+			target = target.substr(0, plusIndex);
+		}
+		let dIndex = target.indexOf("d");
+		let numDice = 1;
+		let roll;
+		if (dIndex !== -1) {
+			numDice = parseInt(target.substr(0, dIndex));;
+			if (!numDice) return;
+			roll = parseInt(target.substr(dIndex + 1));
+			if (!roll) return;	
+		} else {
+			roll = parseInt(target);
+			if (!roll) return;
+		}
+		let rolls = [];
+		let sum = adder || 0;
+		for (let i = 0; i < numDice; i++) {
+			rolls.push(Tools.random(roll) + 1);
+			sum += rolls[i];
+		}
+		if (numDice === 1) {
+			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
+			if (room.id === 'survivor') {
+				//this.say(room, "/addhtmlbox " + str);
+				this.say(room, "/addhtmlbox 69");
+			} else {
+				this.say(room, "!htmlbox " + str);
+			}
+		} else {
+			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
+			if (room.id === 'survivor') {
+				//this.say(room, "/addhtmlbox " + str);
+				this.say(room, "/addhtmlbox 69");
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}
@@ -1861,7 +1914,7 @@ exports.commands = {
 	
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
-		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as __OM Room__\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as good as Sanjay's music taste. __You thought this was going to be a roast? Well nope, take this as a compliment :)__", "Your dad is so ugly, he can't even look at himself in the mirror as it breaks at his ugliness!", target + "'s personality is so flat, even flat tires want to run.", target + ", you remind me of gold. You weigh a fuck ton.", target + ",your body looks like a kindergartners attempt to make a person out of playdoh", target + "'s jokes are like Magcargo; horrible in competitions.", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those pants don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?"];
+		let roasts = [target + 's hair looks like spaghetti', target + '? more like bad', target + ', your presence here is as bad as __OM Room__\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as bad as Sanjay's music taste.", "Your dad is so ugly, he can't even look at himself in the mirror as it breaks at his ugliness!", target + "'s personality is so flat, even flat tires want to run.", target + ", you remind me of gold. You weigh a fuck ton.", target + ",your body looks like a kindergartners attempt to make a person out of playdoh", target + "'s jokes are like Magcargo; horrible in competitions.", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those pants don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?"];
 		this.say(room, Tools.sample(roasts));
 	},
 

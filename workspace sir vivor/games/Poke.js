@@ -58,6 +58,9 @@ class Poke extends Games.Game {
 				if (mon.baseSpecies) {
 					mon = Tools.data.pokedex[Tools.toId(mon.baseSpecies)];
 				}
+				if (Games.aprilFools) {
+					mons = Tools.data.pokedex['wobbuffet'];
+				}
 				player.say("Your pokemon is **" + mon.species + "**!");
 				this.mons.set(player, mon);
 				this.hasAdvanced.set(player, true);

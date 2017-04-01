@@ -5,6 +5,7 @@ config.js
 settings.json
 /databases/hosts.json
 /databases/host.json
+/databases/dd.json
 .hg
 .bzr
 .svn
