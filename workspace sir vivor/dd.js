@@ -130,7 +130,7 @@ class DD {
 	}
 
 	getPoints(item) {
-		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + this.realhostpoints * item[5];
+		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3];
 	}
 
 	getSorted() {
