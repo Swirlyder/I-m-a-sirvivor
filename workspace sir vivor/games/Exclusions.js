@@ -184,10 +184,10 @@ class EXC extends Games.Game {
 
 	handleWinner(winPlayer, losePlayer) {
 		if ((winPlayer === this.curPlayer) || this.finals) {
-			this.say("**" + winPlayer.nick + "** beats up **" + losePlayer.name + "**, whose nickname was **" + losePlayer.nick + "**!");
+			this.say("**" + winPlayer.nick + "** beats up **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
 			losePlayer.eliminated = true;
 		} else {
-			this.say("**" + winPlayer.name + "** defends successfully!");
+			this.say("**" + winPlayer.nick + "** defends successfully!");
 		}
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}

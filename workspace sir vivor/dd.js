@@ -6,10 +6,9 @@ const BACKUP_INTERVAL = 60 * 1000;
 class DD {
 	constructor() {
 		this.dd = {};
-		this.hostpoints = 4;
 		this.firstpoints = 10;
 		this.secondpoints = 5;
-		this.realhostpoints = 33;
+		this.realhostpoints = 3;
 		this.partpoints = 2;
 	}
 
@@ -30,7 +29,6 @@ class DD {
 		let id = Tools.toId(name);
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				hosts: 0,
 				firsts: 0,
 				seconds: 0,
 				parts: 0,
@@ -50,7 +48,6 @@ class DD {
 		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				hosts: 0,
 				firsts: 1,
 				seconds: 0,
 				parts: 0,
@@ -66,7 +63,6 @@ class DD {
 		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				hosts: 0,
 				firsts: 0,
 				seconds: 1,
 				parts: 0,
@@ -82,7 +78,6 @@ class DD {
 		let id = Tools.toId(user.trim());
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				hosts: 0,
 				firsts: 0,
 				seconds: 0,
 				parts: 1,
@@ -135,14 +130,14 @@ class DD {
 	}
 
 	getPoints(item) {
-		return this.hostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + this.realhostpoints * item[5];
+		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + this.realhostpoints * item[5];
 	}
 
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.hosts, item.firsts, item.seconds, item.parts, item.name, (item.realhosts ? item.realhosts : 0)]);
+			items.push([item.realhosts, item.firsts, item.seconds, item.parts, item.name]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
