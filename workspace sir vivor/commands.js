@@ -1748,7 +1748,7 @@ exports.commands = {
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
 	},
-	
+	roll: 'dice',
 	dice: function (target, user, room) {
 		let realtarget = target;
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
@@ -1794,59 +1794,6 @@ exports.commands = {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
 			if (room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
-			} else {
-				this.say(room, "!htmlbox " + str);
-			}
-		}
-	},
-
-	roll: function (target, user, room) {
-		let realtarget = target;
-		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
-			let index = Games.excepted.indexOf(user.id);
-			if (index === -1) return;
-			Games.excepted.splice(index, 1);
-		}
-		let plusIndex = target.indexOf("+");
-		let adder = 0;
-		if (plusIndex !== -1) {
-			adder = parseInt(target.substr(plusIndex + 1));
-			let str = adder.toString();
-			if (str.length !== (target.substr(plusIndex + 1)).length) return;
-			if (!adder) return;
-			target = target.substr(0, plusIndex);
-		}
-		let dIndex = target.indexOf("d");
-		let numDice = 1;
-		let roll;
-		if (dIndex !== -1) {
-			numDice = parseInt(target.substr(0, dIndex));;
-			if (!numDice) return;
-			roll = parseInt(target.substr(dIndex + 1));
-			if (!roll) return;	
-		} else {
-			roll = parseInt(target);
-			if (!roll) return;
-		}
-		let rolls = [];
-		let sum = adder || 0;
-		for (let i = 0; i < numDice; i++) {
-			rolls.push(Tools.random(roll) + 1);
-			sum += rolls[i];
-		}
-		if (numDice === 1) {
-			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
-			if (room.id === 'survivor') {
-				//this.say(room, "/addhtmlbox " + str);
-				this.say(room, "/addhtmlbox 69");
-			} else {
-				this.say(room, "!htmlbox " + str);
-			}
-		} else {
-			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
-			if (room.id === 'survivor') {
-				//this.say(room, "/addhtmlbox " + str);
-				this.say(room, "/addhtmlbox 69");
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}

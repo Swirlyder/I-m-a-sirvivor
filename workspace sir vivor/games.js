@@ -388,7 +388,7 @@ class GamesManager {
 			"decimates",
 		];
 		this.lastGame = null;
-		this.aprilFools = true;
+		this.aprilFools = false;
 	}
 
 	importHosts() {
