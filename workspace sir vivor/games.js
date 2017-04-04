@@ -82,7 +82,7 @@ class Game {
 	start() {
 		try {
 			if (this.started) return;
-			if (this.playerCount < 1) {
+			if (this.getRemainingPlayerCount() < 1) {
 				this.say("The game needs at least two players to start!");
 				return;
 			}
