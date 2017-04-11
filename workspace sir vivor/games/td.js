@@ -73,7 +73,7 @@ class TD extends Games.Game {
 			this.say("**" + losePlayer.name + "** lost all of their troops!");
 			losePlayer.eliminated = true;
 		} else {
-			this.say("**" + losePlayer.name + "** lost " + diff + " troop" + (diff > 1 ? "s" : "") + "!");
+			this.say("**" + losePlayer.name + "\'s** tower  lost " + diff + "HP!");
 			this.troops.set(losePlayer, loseTroops - diff);
 		}
 		this.curPlayer = null;
