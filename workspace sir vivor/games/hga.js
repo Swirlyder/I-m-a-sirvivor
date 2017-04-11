@@ -196,7 +196,7 @@ exports.id = id;
 exports.aliases = ['hga'];
 exports.game = HGA;
 exports.description = description;
-exports.modes = ['Golf'];
+exports.modes = ['Golf', 'Roll Switch'];
 exports.commands = {
 	destroy: "destroy",
 	nick: "nick",

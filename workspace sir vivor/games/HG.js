@@ -137,6 +137,7 @@ exports.game = HG;
 exports.name = name;
 exports.id = id;
 exports.aliases = ['hg'];
+exports.modes = ['Roll Switch'];
 exports.description = description;
 exports.commands = {
 	destroy: "destroy",
