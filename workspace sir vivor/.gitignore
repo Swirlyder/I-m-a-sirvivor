@@ -6,6 +6,8 @@ settings.json
 /databases/hosts.json
 /databases/host.json
 /databases/dd.json
+/databases/eggs.json
+/databases/*.json
 .hg
 .bzr
 .svn
