@@ -66,7 +66,7 @@ class Game {
 		} else {
 			this.say("survgame! If you would like to play, use the command ``/me in``");
 		}
-		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + this.name + "**: " + this.description);
+		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + (this.rollSwitch ? "Roll Switch " : "") + this.name + "**: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
 	}
@@ -83,7 +83,7 @@ class Game {
 	start() {
 		try {
 			if (this.started) return;
-			if (this.playerCount < 1) {
+			if (this.playerCount < 2) {
 				this.say("The game needs at least two players to start!");
 				return;
 			}
@@ -390,6 +390,7 @@ class GamesManager {
 		this.points = null;
 		this.excepted = [];
 		this.numHosts = {};
+		this.eggs = {};
 		this.destroyMsg = [
 			"annihilates",
 			"beats up",
@@ -406,6 +407,16 @@ class GamesManager {
 		try {
 			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json'));
 		} catch (e) {};
+	}
+
+	importEggs() {
+		try {
+			this.eggs = JSON.parse(fs.readFileSync('./databases/eggs.json'));
+		} catch (e) {};
+	}
+	
+	exportEggs() {
+		fs.writeFileSync('./databases/eggs.json', JSON.stringify(this.eggs));
 	}
 
 	exportHosts() {
@@ -652,6 +663,7 @@ class GamesManager {
 			}
 		}
 		this.importHosts();
+		this.importEggs();
 	}
 
 	getFormat(target) {
@@ -729,6 +741,7 @@ Games.Game = Game;
 Games.Player = Player;
 Games.backupInterval = setInterval(() => Games.exportHosts(), 60 * 1000);
 Games.backupHostInterval = setInterval(() => Games.exportHost(), 60 * 1000);
+Games.backupEggsInterval = setInterval(() => Games.exportEggs(), 60 * 1000);
 
 
 module.exports = Games;
