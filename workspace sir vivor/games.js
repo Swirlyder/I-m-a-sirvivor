@@ -118,6 +118,24 @@ class Game {
 	end() {
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
+			if (this.room.game.id === "hiddentype") {
+				if (this.types.get(winplayer) === 'ghost') {
+					this.say("/modnote EGG HUNT: " + winPlayer.id + " has fulfilled the game component for The Egg of Shadows! Please check whether they meet the other requirements and award the egg if so.");
+				}
+			}
+			if (this.room.game.id === "gearup") {
+				this.say("/modnote EGG HUNT: " + winPlayer.id + " has fulfilled the game component for The Egg of Vampirism! Please check whether they meet the other requirements and award the egg if so.");	
+			}
+			if (this.room.game.id === "eeveelutions") {
+				if (this.eevees.get(winplayer) === 'umbreon') {
+					this.say("/modnote EGG HUNT: " + winPlayer.id + " has fulfilled the game component for The WereEgg! Please check whether they meet the other requirements and award the egg if so.");
+				}
+			}
+			if (this.room.game.id === "killerinthedark") {
+				if (this.playerRoles.get(winplayer) === 'Serial Killer') {
+					this.say("/modnote EGG HUNT: " + winPlayer.id + " has fulfilled the game component for The Gunpowder Egg! Please check whether they meet the other requirements and award the egg if so.");
+				}
+			}
 			this.say("**Winner:** " + winPlayer.name);
 		}
 		if (this.ended) return;
