@@ -235,7 +235,6 @@ class Dexterity extends Games.Game {
 			start += "<b><u>" + weapon.name + "</u></b><ul><li>Damage: " + weapon.atk + " </li><li>Accuracy: " + weapon.acc + "</li></ul>";
 		}
 		start += "</html></div>";
-		console.log(start);
 		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
 	}
 }

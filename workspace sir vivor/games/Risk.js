@@ -60,7 +60,7 @@ class Risk extends Games.Game {
 				strs.push(player.name + "(" + this.troops.get(player) + ")");
 			}
 			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**:" + strs.join(", "));
-			this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandcharacter + "destroy [name]``");
+			this.say("PM me which country you would like to attack! **Command:** ``" + Config.commandcharacter + "destroy [name]`` You can also pm me ``" + Config.commandCharacter + "countries`` to see the countries.");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} else {
 			if (this.round === 4) {
@@ -256,6 +256,18 @@ class Risk extends Games.Game {
 			this.handleAttacks();
 		}
 	}
+
+	countries(target, user) {
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		let start = "<div class = \"infobox\"><html>";
+		for (let countryID in nations) {
+			let country = nations[countryID];
+			start += "<b><u>" + (country.name.startsWith("the") ? country.name.substr(4, country.name.length) : country.name) + "</u></b><ul><li>Country Army: " + country.armies + "</li><li>Troops gained: " + country.gain + "</li></ul>";
+		}
+		start += "</html></div>";
+		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
+	}
 }
 
 exports.game = Risk;
@@ -266,8 +278,10 @@ exports.aliases = [];
 exports.commands = {
 	destroy: "destroy",
 	attack: "attack",
+	countries: "countries",
 }
 
 exports.pmCommands = {
-	destroy: "destroy",
+	destroy: true,
+	countries: true
 }
