@@ -224,6 +224,7 @@ class EXC extends Games.Game {
 				currentGuesses += 1;
 				if(currentGuesses === 2) {
 					this.say("/modnote EGG HUNT: " + player.id + " has fulfilled the game component for The Deteggtive! Please check whether they meet the other requirements and award the egg if so.");
+					this.correctGuesses.set(player, currentGuesses);
 				}
 			} else { 
 			this.correctGuesses.set(player, 1);
