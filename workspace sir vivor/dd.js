@@ -6,6 +6,7 @@ const BACKUP_INTERVAL = 60 * 1000;
 class DD {
 	constructor() {
 		this.dd = {};
+		this.modlog = {};
 		this.firstpoints = 10;
 		this.secondpoints = 5;
 		this.realhostpoints = 3;
@@ -18,10 +19,16 @@ class DD {
 			file  = fs.readFileSync('./databases/dd.json').toString();
 		} catch (e) {}
 		this.dd = JSON.parse(file);
+		file = '[]';
+		try {
+			file = fs.readFileSync('/databases/ddmod.json').toString();
+		} catch (e) {}
+		this.modlog = JSON.parse(file);
 	}
 
 	exportData() {
 		fs.writeFileSync('./databases/dd.json', JSON.stringify(this.dd));
+		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
 	}
 
 	addHost(user) {
@@ -149,6 +156,10 @@ class DD {
 			return second[4] > first[4];
 		});
 		return items;
+	}
+	
+	updateModlog(message) {
+		this.modlog.push(message);
 	}
 }
 
