@@ -2088,7 +2088,7 @@ exports.commands = {
 		let times = ['6pm EST', '2am EST', '12pm EST']
 		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
 	},
-
+	kaz: 'azuuli',
 	azu: 'azuuli',
 	azuuli: function(arg, user, room)
 	{
