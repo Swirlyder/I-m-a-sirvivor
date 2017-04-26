@@ -278,7 +278,8 @@ exports.parse = {
 		}
 		let messageID = Tools.toId(message);
 		if (messageID.indexOf(Tools.toId(Config.nick)) !== -1) {
-			if (!Config.waiting) { 
+			console.log('yo');
+			if (!Config.waiting || user.hasRank(room.id, '%')) { 
 				let watchlist = Object.keys(Config.responses);
 				watchlist.sort(function (first, second) {
 					return first.length - second.length;
