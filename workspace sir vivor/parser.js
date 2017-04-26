@@ -27,7 +27,9 @@ try {
 	settings = JSON.parse(fs.readFileSync('settings.json'));
 } catch (e) {} // file doesn't exist [yet]
 if (!Object.isObject(settings)) settings = {};
-
+function setWaiting() {
+	Config.waiting = false;
+}
 exports.parse = {
 	actionUrl: url.parse('https://play.pokemonshowdown.com/~~' + Config.serverid + '/action.php'),
 	'settings': settings,
@@ -273,6 +275,31 @@ exports.parse = {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
+		}
+		let messageID = Tools.toId(message);
+		if (messageID.indexOf(Tools.toId(Config.nick)) !== -1) {
+			if (!Config.waiting) { 
+				let watchlist = Object.keys(Config.responses);
+				watchlist.sort(function (first, second) {
+					return first.length - second.length;
+				});
+				let i;
+				for (i = 0; i < watchlist.length; i++) {
+					if (messageID.indexOf(watchlist[i]) !== -1) break;
+				}
+				if (i !== watchlist.length) {
+					let response = Tools.sample(Config.responses[watchlist[i]].responses);
+					let respmessage;
+					if (response.usesname) {
+						respmessage = response.before + user.name + response.after;
+					} else {
+						respmessage = response.before;
+					}
+					Parse.say(room, respmessage);
+					Config.waiting = true;
+					Config.timeout = setTimeout(() =>  setWaiting(), 5 * 60 * 1000);
+				}
+			}
 		}
 		if (message.substr(0, Config.commandcharacter.length) !== Config.commandcharacter) return false;
 		message = message.substr(Config.commandcharacter.length);
