@@ -28,7 +28,7 @@ try {
 } catch (e) {} // file doesn't exist [yet]
 if (!Object.isObject(settings)) settings = {};
 function setWaiting(value) {
-	waitings[value] = false;
+	waiting[value] = false;
 }
 global.responses = {
 	why: {
@@ -109,6 +109,10 @@ global.responses = {
 		{
 			username: false,
 			before: "When anime is good (aka never)",
+		},
+		{
+			username: false,
+			before: "On April 31st",
 		},
 		],
 	},
