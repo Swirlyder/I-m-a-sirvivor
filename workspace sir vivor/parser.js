@@ -27,9 +27,234 @@ try {
 	settings = JSON.parse(fs.readFileSync('settings.json'));
 } catch (e) {} // file doesn't exist [yet]
 if (!Object.isObject(settings)) settings = {};
-function setWaiting() {
-	Config.waiting = false;
+function setWaiting(value) {
+	waitings[value] = false;
 }
+global.responses = {
+	why: {
+		priority: 3,
+		responses: [
+		{
+			usesname: false,
+			before: "Because PenQuin said so.",
+		},
+		{
+			username: false,
+			before: "Why don't you ask later?",
+		},
+		{
+			username: false,
+			before: "Why not?",
+		},
+		{
+			username: false,
+			before: "Blame kaz tbh",
+		},
+		],
+	},
+	
+	howmuch: {
+		priority: 4,
+		responses: [
+		{
+			username: false,
+			before: "10 gallons worth of water",
+		},
+		{
+			username: true,
+			before: "As many tribesman as ",
+			after: " has",
+		},
+		],
+	},
+	
+	howbad: {
+		priority: 4,
+		responses: [
+		{
+			username: false,
+			before: "As bad as anime",
+		},
+		{
+			username: true,
+			before: "As bad as ",
+			after: "",
+		},
+		],
+	},
+	when: {
+		priority: 3,
+		responses: [
+		{
+			username: true,
+			before: "On ",
+			after: "'s birthday!",
+		},
+		{
+			username: false,
+			before: "4/20/2020",
+		},
+		{
+			username: false,
+			before: "today",
+		},
+		{
+			username: false,
+			before: "Tomorrow",
+		},
+		{
+			username: false,
+			before: "This has already happened",
+		},
+		{
+			username: false,
+			before: "When anime is good (aka never)",
+		},
+		],
+	},
+	
+	can: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "No",
+		},
+		{
+			username: false,
+			before: "Yes",
+		},
+		{
+			username: false,
+			before: "Probably not tbh",
+		},
+		{
+			username: false,
+			before: "why would you even ask that",
+		},
+		],
+	},
+
+	am: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "No",
+		},
+		{
+			username: false,
+			before: "Yes",
+		},
+		{
+			username: false,
+			before: "why would you even ask that",
+		},
+		],
+	},
+	should: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "No",
+		},
+		{
+			username: false,
+			before: "Yes",
+		},
+		{
+			username: false,
+			before: "Probably not tbh",
+		},
+		{
+			username: false,
+			before: "obviously not lol",
+		},
+		],
+	},
+	
+	will: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "No",
+		},
+		{
+			username: false,
+			before: "Yes",
+		},
+		{
+			username: false,
+			before: "Probably not tbh",
+		},
+		{
+			username: false,
+			before: "why would you even ask that",
+		},
+		],
+	},
+	where: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "In survivor's plug.",
+		},
+		{
+			username: true,
+			before: "At ",
+			after: "'s house",
+		},
+		{
+			username: false,
+			before: "I'm stuck in botland D:",
+		}
+		],
+	},
+	
+	who: {
+		priority: 3,
+		responses: [
+		{
+			username: true,
+			before: "",
+			after: "",
+		},
+		
+		{
+			username: false,
+			before: "Sir Vivor",
+		},
+		{
+			username: false,
+			before: "Swirlyder",
+		},
+		],
+	},
+	hi: 'hello',
+	hello: {
+		priority: 2,
+		responses: [
+		{
+			username: false,
+			before: "Hey <3",
+		},
+		{
+			username: true,
+			before: "Go away ",
+			after: ".",
+		},
+		{
+			username: true,
+			before: "Sup ",
+			after: "",
+		}
+		],
+	},
+}
+global.waiting = {};
 exports.parse = {
 	actionUrl: url.parse('https://play.pokemonshowdown.com/~~' + Config.serverid + '/action.php'),
 	'settings': settings,
@@ -275,30 +500,42 @@ exports.parse = {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
+		} else if (message === '/me swirls' && user.id !== Tools.toId(Config.nick)) {
+			if (!waiting["swirl"]) {
+				Parse.say(room, "/me swirls");
+				waiting["swirl"] = true;
+				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
+			}
 		}
 		let messageID = Tools.toId(message);
-		if (messageID.indexOf(Tools.toId(Config.nick)) !== -1) {
-			console.log('yo');
-			if (!Config.waiting || user.hasRank(room.id, '%')) { 
-				let watchlist = Object.keys(Config.responses);
+		if (messageID.startsWith(Tools.toId(Config.nick))) {
+			if (!waiting["response"] || user.hasRank(room.id, '%')) { 
+				let watchlist = Object.keys(responses);
 				watchlist.sort(function (first, second) {
 					return first.length - second.length;
 				});
 				let i;
+				messageID = messageID.substr(Tools.toId(Config.nick).length);
 				for (i = 0; i < watchlist.length; i++) {
-					if (messageID.indexOf(watchlist[i]) !== -1) break;
+					if (messageID.startsWith(watchlist[i])) break;
 				}
 				if (i !== watchlist.length) {
-					let response = Tools.sample(Config.responses[watchlist[i]].responses);
+					let cur = watchlist[i]
+					while (typeof responses[cur] === 'string') {
+						cur = responses[cur];
+					}
+					let response = Tools.sample(responses[cur].responses);
 					let respmessage;
-					if (response.usesname) {
+					if (response.username) {
 						respmessage = response.before + user.name + response.after;
 					} else {
 						respmessage = response.before;
 					}
 					Parse.say(room, respmessage);
-					Config.waiting = true;
-					Config.timeout = setTimeout(() =>  setWaiting(), 5 * 60 * 1000);
+					if (!user.hasRank(room.id, '%')) {
+						waiting["response"] = true;
+						var timeout = setTimeout(() =>  setWaiting("response"), 5 * 60 * 1000);
+					}
 				}
 			}
 		}
