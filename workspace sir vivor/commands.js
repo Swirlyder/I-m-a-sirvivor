@@ -1843,7 +1843,7 @@ exports.commands = {
 
 	submit: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
-		this.say(room, 'Visit https://docs.google.com/forms/d/e/1FAIpQLSeY2Ndt-wC3iUXsY4yKVnGarHTBa1a4C75UYYLHpHH1qzsCrQ/viewform#responses to submit jokes and roasts!');
+		this.say(room, 'Visit https://docs.google.com/forms/d/e/1FAIpQLSeY2Ndt-wC3iUXsY4yKVnGarHTBa1a4C75UYYLHpHH1qzsCrQ/viewform#responses to submit roasts, jokes, and replies!');
 	},
 
 	moo: function (target, user, room) {
