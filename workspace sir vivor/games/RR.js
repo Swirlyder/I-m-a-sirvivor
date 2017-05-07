@@ -226,6 +226,7 @@ class RR extends Games.Game {
         this.roll1 = 100;
         this.roll2 = 100;
         this.rollBattle = true;
+        clearTimeout(this.timeout);
         this.sayPlayerRolls();
     }
 }
