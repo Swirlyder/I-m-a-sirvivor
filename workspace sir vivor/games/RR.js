@@ -63,7 +63,10 @@ class RR extends Games.Game {
             }
             PL.push(string);
         }
-        if (picks.length === 1) return this.handlePick(picks[0]);
+        if (picks.length === 1) {
+            this.handlePick(picks[0]);
+            this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+        }
         this.say("/wall Players(" + this.getRemainingPlayerCount() + "): " + PL.join(", "));
 
         this.say("!pick " + picks.join(", "));
