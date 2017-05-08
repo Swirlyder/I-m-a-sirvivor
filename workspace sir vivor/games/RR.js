@@ -100,7 +100,7 @@ class RR extends Games.Game {
         else {
             if (this.passed.has(this.curPlayer)) {
                 if(this.finals) {
-                    this.say("**" + this.curPlayer.name + " has used both their pass and the chamber is 1, therefore is eliminated. RIP!**")
+                    this.say("**" + this.curPlayer.name + " has used both their pass and the chamber is 1, therefore is eliminated. RIP!**");
                     this.end();
                     return;
                 }
