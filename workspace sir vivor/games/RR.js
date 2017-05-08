@@ -228,6 +228,7 @@ class RR extends Games.Game {
         let player = this.players[user.id];
         if (player !== this.curPlayer) return;
         if (this.moved.has(player)) return;
+        if (this.passed.has(player)) return;
         let opponent = this.players[Tools.toId(target)];
         if (!opponent || opponent.eliminated || this.passed.has(opponent)) return;
         this.oplayer = opponent;
