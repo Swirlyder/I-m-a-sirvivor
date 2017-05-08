@@ -104,7 +104,7 @@ class RR extends Games.Game {
                     this.end();
                     return;
                 }
-                if (this.stole.has(this.curPlayer) {
+                if (this.stole.has(this.curPlayer)) {
                     this.say("**" + this.curPlayer.name + " has used both their pass and their steal, therefore is eliminated. RIP!**");
                     this.curPlayer.eliminated = true;
                     if (this.finals) {
@@ -115,7 +115,7 @@ class RR extends Games.Game {
                     let stealAvailable = false;
                     for (let userID in this.players) {
                         let player = this.players[userID];
-                        if (this.passed.has(player) && player.eliminated)) continue;
+                        if (this.passed.has(player) && player.eliminated) continue;
                         stealAvailable = true;
                     }
                 if (stealAvailable) {
