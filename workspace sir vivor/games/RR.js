@@ -111,51 +111,31 @@ class RR extends Games.Game {
                     return;
                 }
             }
+            else {
+                let stealAvailable = false;
+                for (let userID in this.players) {
+                    let player = this.players[userID];
+                    if (this.passed.has(player) && player.eliminated) continue;
+                    stealAvailable = true;
+                }
+                if (stealAvailable) {
+                    this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
+                    return;
+                }
+                else {
+                    this.say("**There is no one to steal from!**");
+                    clearTimeout(this.timeout);
+                    this.say("!roll " + this.chamber);
+                    return;
+                }
+            }
         }
         else {
-            let stealAvailable = false;
-            for (let userID in this.players) {
-                let player = this.players[userID];
-                if (this.passed.has(player) && player.eliminated) continue;
-                stealAvailable = true;
-            }
-            if (stealAvailable) {
-                this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
-            }
-            else {
-                this.say("**There is no one to steal from!**");
-                clearTimeout(this.timeout);
-                this.say("!roll " + this.chamber);
-                return;
-            }
-            this.chamber = 6;
-            this.say("**The chamber has been reset!**");
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
-            return;
-        }
-        if (!this.passed.has(this.curPlayer)) {
             this.say("**" + this.curPlayer.name + " is forced to pass!**");
             this.passed.set(this.curPlayer, true);
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
             return;
-        }
-        else {
-            let stealAvailable = false;
-            for (let userID in this.players) {
-                let player = this.players[userID];
-                if (this.passed.has(player) && player.eliminated) continue;
-                stealAvailable = true;
-            }
-            if (stealAvailable) {
-                this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
-            }
-            else {
-                this.say("**There is no one to steal from!**");
-                clearTimeout(this.timeout);
-                this.say("!roll " + this.chamber);
-            }
         }
     }
 
