@@ -66,6 +66,7 @@ class RR extends Games.Game {
         if (picks.length === 1) {
             this.handlePick(picks[0]);
             this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+            return;
         }
         this.say("/wall Players(" + this.getRemainingPlayerCount() + "): " + PL.join(", "));
 
