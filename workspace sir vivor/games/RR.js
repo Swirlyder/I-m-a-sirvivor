@@ -119,7 +119,18 @@ class RR extends Games.Game {
                 return;
             }
             else {
-                this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
+                let stealAvailable = false;
+                for (let userID in this.players) {
+                let player = this.players[userID];
+                    if (this.passed.has(player) && player.eliminated)) continue;
+                    stealAvailable = true;
+                }
+                if (stealAvailable) {
+                    this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
+                } else {
+                    this.say("**There is no one to steal from!**");
+                    clearTimeout(this.timeout);
+                    this.say("!roll " + this.chamber);
             }
         }
     }
