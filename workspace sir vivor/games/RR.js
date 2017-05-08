@@ -32,6 +32,7 @@ class RR extends Games.Game {
                 this.curPlayer = this.oplayer;
                 this.oplayer = player;
                 this.handlePick(this.curPlayer.name);
+                this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
                 return;
             }
             else {
@@ -43,6 +44,7 @@ class RR extends Games.Game {
                 this.say("!pick " + lastPlayers[0].name + ", " + lastPlayers[1].name);
                 this.stole.set(lastPlayers[0], true);
                 this.stole.set(lastPlayers[1], true);
+                this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
                 return;
             }
         }
