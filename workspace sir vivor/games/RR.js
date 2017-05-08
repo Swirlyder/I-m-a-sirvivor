@@ -98,11 +98,32 @@ class RR extends Games.Game {
             }
         }
         else {
-            if (this.passed.has(this.curPlayer) && this.stole.has(this.curPlayer)) {
-                this.say("**" + this.curPlayer.name + " has used both their pass and their steal, therefore is eliminated. RIP!**");
-                this.curPlayer.eliminated = true;
-                if (this.finals) {
+            if (this.passed.has(this.curPlayer)) {
+                if(this.finals) {
+                    this.say("**" + this.curPlayer.name + " has used both their pass and the chamber is 1, therefore is eliminated. RIP!**")
                     this.end();
+                    return;
+                }
+                if (this.stole.has(this.curPlayer) {
+                    this.say("**" + this.curPlayer.name + " has used both their pass and their steal, therefore is eliminated. RIP!**");
+                    this.curPlayer.eliminated = true;
+                    if (this.finals) {
+                        this.end();
+                        return;
+                    }
+                } else {
+                    let stealAvailable = false;
+                    for (let userID in this.players) {
+                        let player = this.players[userID];
+                        if (this.passed.has(player) && player.eliminated)) continue;
+                        stealAvailable = true;
+                    }
+                if (stealAvailable) {
+                    this.say("**" + this.curPlayer.name + ", you're up! You must attempt to steal a pass from another player.**");
+                } else {
+                    this.say("**There is no one to steal from!**");
+                    clearTimeout(this.timeout);
+                    this.say("!roll " + this.chamber);
                     return;
                 }
                 this.chamber = 6;
