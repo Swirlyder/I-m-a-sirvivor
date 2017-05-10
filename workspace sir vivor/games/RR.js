@@ -97,6 +97,10 @@ class RR extends Games.Game {
         this.oplayer = opponent;
         if (this.chamber > 1) {
             if (this.finals) {
+                if (this.passed.has(this.curPlayer) {
+                    clearTimeout(this.timeout);
+                    return this.say("!roll " + this.chamber);
+                    }
                 this.say("**" + this.curPlayer.name + "**, you're up! **Chamber:** (" + this.chamber + ") || Please choose whether to pull or pass.");
             }
             else {
