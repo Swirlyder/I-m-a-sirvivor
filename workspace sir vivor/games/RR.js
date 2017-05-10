@@ -125,7 +125,7 @@ class RR extends Games.Game {
                 let stealAvailable = false;
                 for (let userID in this.players) {
                     let player = this.players[userID];
-                    if (this.passed.has(player) && player.eliminated) continue;
+                    if (this.passed.has(player) || player.eliminated) continue;
                     stealAvailable = true;
                 }
                 if (stealAvailable) {
