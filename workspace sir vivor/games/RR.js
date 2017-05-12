@@ -127,6 +127,9 @@ class RR extends Games.Game {
                     this.end();
                     return;
                 }
+                 clearTimeout(this.timeout);
+                 this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
+                 return;
             }
             else {
                 let stealAvailable = false;
