@@ -39,7 +39,7 @@ class KITD extends Games.Game {
 			let player = this.playerOrder[0];
 			let role = 'Citizen';
 			this.playerRoles.set(player, role);
-			player.say("Your are a **" + role + "**!");
+			player.say("You are a **" + role + "**!");
 			this.playerOrder.shift();
 			this.timeout = setTimeout(() => this.handoutRoles(), 2 * 1000);
 		}
