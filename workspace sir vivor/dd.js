@@ -19,11 +19,14 @@ class DD {
 			file  = fs.readFileSync('./databases/dd.json').toString();
 		} catch (e) {}
 		this.dd = JSON.parse(file);
-		file = '[]';
+		file = '{}';
 		try {
 			file = fs.readFileSync('/databases/ddmod.json').toString();
 		} catch (e) {}
 		this.modlog = JSON.parse(file);
+		if (!("data" in this.modlog)) {
+			this.modlog.data = [];
+		}
 	}
 
 	exportData() {
@@ -159,7 +162,7 @@ class DD {
 	}
 	
 	updateModlog(message) {
-		this.modlog.push(message);
+		this.modlog.data.push(message);
 	}
 }
 
