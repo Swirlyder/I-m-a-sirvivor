@@ -73,7 +73,7 @@ class RR extends Games.Game {
             return;
         }
         this.turner++;
-        if (this.turner === 3) {
+        if (this.turner === 3 || this.round === 1) {
             this.say("/wall Players(" + this.getRemainingPlayerCount() + "): " + PL.join(", "));
             this.turner = 0;
         }
