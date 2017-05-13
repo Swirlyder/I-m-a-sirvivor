@@ -14,6 +14,7 @@ class RR extends Games.Game {
         this.stole = new Map();
         this.moved = new Map();
         this.rollBattle = false;
+        this.turner = 0;
     }
     onStart() {
         this.say("**Signups are now closed.** The gun is loaded with a chamber of six, good luck! **Commands:** ``.pull``, ``.pass``, ``.steal [user]``");
@@ -71,8 +72,11 @@ class RR extends Games.Game {
             this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
             return;
         }
-        this.say("/wall Players(" + this.getRemainingPlayerCount() + "): " + PL.join(", "));
-
+        this.turner++;
+        if (this.turner === 3) {
+            this.say("/wall Players(" + this.getRemainingPlayerCount() + "): " + PL.join(", "));
+            this.turner = 0;
+        }
         this.say("!pick " + picks.join(", "));
         clearTimeout(this.timeout);
         this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
