@@ -147,6 +147,7 @@ class HGA extends Games.Game {
     destroy(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
+	    	if (Tools.toId(player.nick) === Tools.toId(target)) return;
 		if (this.attacks.has(player)) return user.say("You have already attacked someone this round!");
 		let attackedPlayer;
 		for (let userID in this.players) {
