@@ -34,7 +34,7 @@ class RR extends Games.Game {
                 this.oplayer = player;
                 this.handlePick(this.curPlayer.name);
                 clearTimeout(this.timeout);
-                this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+                this.timeout = setTimeout(() => this.eliminatePlayer(), 60 * 1000);
                 return;
             }
             else {
@@ -47,7 +47,7 @@ class RR extends Games.Game {
                 this.stole.set(lastPlayers[0], true);
                 this.stole.set(lastPlayers[1], true);
                 clearTimeout(this.timeout);
-                this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+                this.timeout = setTimeout(() => this.eliminatePlayer(), 60 * 1000);
                 return;
             }
         }
@@ -69,7 +69,7 @@ class RR extends Games.Game {
         if (picks.length === 1) {
             this.handlePick(picks[0]);
             clearTimeout(this.timeout);
-            this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+            this.timeout = setTimeout(() => this.eliminatePlayer(), 60 * 1000);
             return;
         }
         this.turner++;
@@ -79,7 +79,7 @@ class RR extends Games.Game {
         }
         this.say("!pick " + picks.join(", "));
         clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => this.eliminatePlayer(), 90 * 1000);
+        this.timeout = setTimeout(() => this.eliminatePlayer(), 60 * 1000);
     }
     eliminatePlayer() {
         let player = this.curPlayer;
