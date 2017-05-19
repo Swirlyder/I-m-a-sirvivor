@@ -23,8 +23,22 @@ class Poke extends Games.Game {
 		if (!player) return;
 		if (this.realAttacks.has(player)) {
 			let attacked = this.realAttacks.get(player);
-			if (this.hasAdvanced.has(attacked)) return;
+			if (this.hasAdvanced.has(attacked) || attacked.eliminated) return;
 			attacked.say("You're opponent left, so you're in to the next round!");
+			this.hasAdvanced.set(attacked, true);
+			this.numMatches++;
+			if (this.numMatches === this.numTotal) {
+				clearTimeout(this.timeout);
+				this.nextRound();
+			}
+		}
+	}
+
+	onDQ(player) {
+		if (this.realAttacks.has(player)) {
+			let attacked = this.realAttacks.get(player);
+			if (this.hasAdvanced.has(attacked) || attacked.eliminated) return;
+			attacked.say("You're opponent was DQed, so you're in the next round!");
 			this.hasAdvanced.set(attacked, true);
 			this.numMatches++;
 			if (this.numMatches === this.numTotal) {

@@ -104,6 +104,14 @@ class Game {
 		this.timeout = setTimeout(() => this.start(), x * 1000);
 	}
 
+	dq(target) {	
+		let player = this.players[Tools.toId(target)];
+		if (!player || player.eliminated) return;
+		player.eliminated = true;
+		this.say(player.name + " was DQed.");
+		if (typeof this.onDQ === 'function') this.onDQ(player);
+	}
+
 	cap(target) {
 		let x = Math.floor(target);
 		if (!x || x < 2) return;
@@ -214,13 +222,6 @@ class Game {
 			if (player === curp) continue;
 			curp.eliminated = true;
 		}
-	}
-
-	dq(username) {
-		username = Tools.toId(username);
-		if (!(username in this.players) || this.players[username].eliminated) return;
-		this.removePlayer(this.players[username]);
-		this.say(this.players[username].name + " has been disqualified");
 	}
 	
 	leave(user) {

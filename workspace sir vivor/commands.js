@@ -768,6 +768,11 @@ exports.commands = {
 		if (room.game && typeof room.game.autostart === 'function') room.game.autostart(target);
 	},
 
+	dq: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
+	},
+
 	pl: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
@@ -1858,8 +1863,16 @@ exports.commands = {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
     },
-	mk: 'dq',
-	modkill: 'dq',
+	mk: 'modkill',
+	modkill: function (target, user, room) {
+		let text = "A modkill (or mk) occurs when a player does not provide an action and so they are eliminated";
+		if (user.hasRank(room.id, '+')) {
+			room.say(text);
+		} else {
+			user.say(text);
+		}
+	}
+	,
 	dq: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') || !room.game) return;
 		room.game.dq(target);
