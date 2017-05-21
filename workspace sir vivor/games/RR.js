@@ -21,6 +21,7 @@ class RR extends Games.Game {
         this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
     }
     nextPick() {
+        clearTimeout(this.timeout);
         let picks = [];
         for (let userID in this.players) {
             let player = this.players[userID];
@@ -159,7 +160,6 @@ class RR extends Games.Game {
             this.passed.set(this.curPlayer, true);
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
-            return;
         }
     }
 
