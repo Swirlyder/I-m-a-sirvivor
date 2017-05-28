@@ -2140,6 +2140,13 @@ exports.commands = {
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
+		if (/^(\-|\+)?([0-9]+|Infinity)$/.test(target)) {
+			target = parseInt(target);
+			let sorted = dd.getSorted();
+			target++;
+			let result = sorted[target];
+			return user.say("**" + result[4] + "** is #" + target + " on the leaderboard with " + dd.getPoints(result) + " points, consisting of " + result[0] + " hosts, " + result[1] + " first places, " + result[2] + " second places, and " + result[3] + " participations.");
+		}
 		if (!target) target = user.id;
 		if (!(target in dd.dd)) {
 			return user.say("**" + target + "** does not have any points.");
