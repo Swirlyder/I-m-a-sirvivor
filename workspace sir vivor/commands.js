@@ -2145,6 +2145,7 @@ exports.commands = {
 			let sorted = dd.getSorted();
 			target++;
 			let result = sorted[target];
+			if (!result) return;
 			return user.say("**" + result[4] + "** is #" + target + " on the leaderboard with " + dd.getPoints(result) + " points, consisting of " + result[0] + " hosts, " + result[1] + " first places, " + result[2] + " second places, and " + result[3] + " participations.");
 		}
 		if (!target) target = user.id;
