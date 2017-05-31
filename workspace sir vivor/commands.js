@@ -2142,9 +2142,9 @@ exports.commands = {
 		target = Tools.toId(target);
 		if (/^(\-|\+)?([0-9]+|Infinity)$/.test(target)) {
 			target = parseInt(target);
-			let sorted = dd.getSorted();
+			let sortedDD = dd.getSorted();
 			target++;
-			let result = sorted[target];
+			let result = sortedDD[target];
 			if (!result) return;
 			return user.say("**" + result[4] + "** is #" + target + " on the leaderboard with " + dd.getPoints(result) + " points, consisting of " + result[0] + " hosts, " + result[1] + " first places, " + result[2] + " second places, and " + result[3] + " participations.");
 		}
