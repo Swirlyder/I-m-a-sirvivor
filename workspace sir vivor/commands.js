@@ -1278,7 +1278,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Famous for .woof and needs to update his number by 2 years';
+		text += 'Famous for .woof and needs to update his number by 3 years';
 		this.say(room, text);
 	},
 	random: 'hawkie',

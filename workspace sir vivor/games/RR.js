@@ -156,6 +156,7 @@ class RR extends Games.Game {
         }
         else {
             this.say("**" + this.curPlayer.name + " is forced to pass!**");
+			this.moved.set(player, true);
             this.passed.set(this.curPlayer, true);
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
