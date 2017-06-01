@@ -1462,6 +1462,21 @@ exports.commands = {
 		text += 'H E N K A B O Y S';
 		this.say(room, text);
 	},
+	zygten: 'zyg',
+	zyg: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '/me sighs... what is there to say?';
+		this.say(room, text);
+	},
 	omroom: 'om',
 	om: function(arg, user, room)
 	{
