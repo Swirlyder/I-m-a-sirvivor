@@ -1236,21 +1236,6 @@ exports.commands = {
 		text += 'A friendly reminder that Zeonth shamelessly advertises the <<cap>> metagame here';
 		this.say(room, text);
 	},
-	deets: 'deetah',
-	deetah: function(arg, user, room)
-	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '/addhtmlbox <center><img src="https://media.giphy.com/media/lXiRDbPcRYfUgxOak/giphy.gif" width=231 height=150/></center>';
-		this.say(room, text);
-	},
 	dontlose: 'dl',
 	dl: function(arg, user, room)
 	{
