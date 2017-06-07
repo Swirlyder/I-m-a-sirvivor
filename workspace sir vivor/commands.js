@@ -2047,7 +2047,7 @@ exports.commands = {
 		}
 		Tools.uploadToHastebin(buffer, (success, link) => {
 			if (success) user.say(link);
-			else user.say(this.room, 'Error connecting to hastebin.');
+			else user.say('Error connecting to hastebin.');
         	});
 	},
 	
