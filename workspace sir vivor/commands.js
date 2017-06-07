@@ -1533,6 +1533,21 @@ exports.commands = {
 		text += '**Golf:** __Lower rolls win. Opposite of normal survivor__';
 		this.say(room, text);
 	},
+	counterattack: 'ca',
+	ca: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id+ ', ';
+		}
+		text += '**Counter Attack:** __If an attacker fails to kill their defending target, then their defending target will attack them right back.__';
+		this.say(room, text);
+	},
 	rollswitch: 'rs',
 	rs: function(arg, user, room)
 	{
