@@ -157,6 +157,28 @@ class Tools {
 	turnFirstUpper(str) {
 		return str[0].toUpperCase() + str.substr(1).toLowerCase();
 	}
+	uploadToHastebin(toUpload, callback) {
+		let reqOpts = {
+			hostname: "hastebin.com",
+			method: "POST",
+			path: '/documents'
+		};
+		let req = require('https').request(reqOpts, function (res) {
+			res.on('data', function (chunk) {
+				try {
+					var linkStr = "hastebin.com/" + JSON.parse(chunk.toString())['key'];
+					if (typeof callback === "function") callback(true, linkStr);
+				} catch (e) {
+					if (typeof callback === "function") callback(false, e);
+				}
+			});
+		});
+		req.on('error', function (e) {
+			if (typeof callback === "function") callback(false, e);
+		});
+		req.write(toUpload);
+		req.end();
+	};
 }
 
 let tools = new Tools();
