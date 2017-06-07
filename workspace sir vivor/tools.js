@@ -166,7 +166,7 @@ class Tools {
 		let req = require('https').request(reqOpts, function (res) {
 			res.on('data', function (chunk) {
 				try {
-					var linkStr = "hastebin.com/" + JSON.parse(chunk.toString())['key'];
+					let linkStr = "hastebin.com/" + JSON.parse(chunk.toString())['key'];
 					if (typeof callback === "function") callback(true, linkStr);
 				} catch (e) {
 					if (typeof callback === "function") callback(false, e);
