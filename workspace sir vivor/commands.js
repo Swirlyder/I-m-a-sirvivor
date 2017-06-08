@@ -2037,6 +2037,20 @@ exports.commands = {
 		}
 		dd.updateModlog(user.name + " did .rmparts " + target);
 	},
+	
+	ddlog: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		if (!("data" in dd.modlog)) return;
+		let buffer = '';
+		for (let i = 0; i < dd.modlog.data.length; i++) {
+			buffer += dd.modlog.data[i] + '\n';
+		}
+		Tools.uploadToHastebin(buffer, (success, link) => {
+			if (success) user.say(link);
+			else user.say('Error connecting to hastebin.');
+        	});
+	},
+	
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '@')) return;
 		Rooms.get('survivor').say("/makegroupchat testing");
