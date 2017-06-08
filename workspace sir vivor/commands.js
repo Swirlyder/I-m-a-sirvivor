@@ -2063,13 +2063,14 @@ exports.commands = {
 		if (!user.hasRank('survivor', '%')) return;
 		let sorted = dd.getSorted();
 		let longestLength = 0;
+		let numTabsSpaces = 8.0;
 		for (let i = 0; i < sorted.length; i++) {
 			let length = sorted[i][4].length;
 			if (length > longestLength) longestLength = length;
 		}
-		let numTabs = Math.ceil(longestLength / 6.0);
+		let numTabs = Math.ceil(longestLength / numTabsSpaces);
 		let sep = "";
-		for (let i = 0; i < longestLength; i += 6) {
+		for (let i = 0; i < longestLength; i += numTabsSpaces) {
 			sep += "\t";
 		}
 		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tPoints\t\n";
@@ -2082,7 +2083,7 @@ exports.commands = {
 				else stuff = sorted[i][real[j - 1]];
 				buffer += stuff;
 				if (j === 1) {
-					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / 6.0);
+					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / numTabsSpaces);
 					for (let l = 0; l < numCursTabs + 1; l++) {
 						buffer += "\t";
 					}
