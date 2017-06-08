@@ -762,6 +762,26 @@ exports.commands = {
 		}
 		this.say(room, "No pokemon named " + target + " was found.");
 	},
+	
+	makeroom: function () {
+
+		if(this.isRanked('roomvoice')) {
+			var roomname = toId(arg);
+			if(roomname == '') {
+				this.restrictReply('Correct format ``.makeroom [name]``');
+			} else {
+				return this.restrictReply('/makegroupchat' +roomname);
+			    return this.restrictReply('/join groupchat-sirvivor-' +roomname);
+			    return this.restrictReply('/modjoin +');
+			    return this.pmReply(/roommod ' +tarUser');
+			    return this.pmReply(/invite ' +tarUser');
+			}
+			
+		} else {
+			return this.Reply('**An Error Occured While Making The Groupchat, Try Again Later**');
+		}
+		
+	},
 
 	autostart: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
