@@ -12,6 +12,7 @@ class EXC extends Games.Game {
 		this.id = id;
 		this.attacks = new Map();
 		this.nicks = [];
+		this.correctGuesses = new Map();
 	}
 
 	onStart() {
@@ -218,6 +219,16 @@ class EXC extends Games.Game {
 		if (!attackedPlayer) return user.say("That is not a valid player!");
 		if (attackedPlayer.nick === this.nick) {
 			this.say("Correct! RIP **" + attackedPlayer.name + "**.");
+			if(this.correctGuesses.has(player)) {
+				let currentGuesses = this.correctGuesses.get(player);
+				currentGuesses += 1;
+				if(currentGuesses === 2) {
+					this.say("/modnote EGG HUNT: " + player.id + " has fulfilled the game component for The Deteggtive! Please check whether they meet the other requirements and award the egg if so.");
+					this.correctGuesses.set(player, currentGuesses);
+				}
+			} else { 
+			this.correctGuesses.set(player, 1);
+			}
 			attackedPlayer.eliminated = true;
 		} else {
 			this.say("Incorrect.");
