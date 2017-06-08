@@ -2048,14 +2048,54 @@ exports.commands = {
 		Tools.uploadToHastebin(buffer, (success, link) => {
 			if (success) user.say(link);
 			else user.say('Error connecting to hastebin.');
-        	});
+        });
 	},
+
+	
 	
 	testroom: function (target, user, room) {
-		if (!user.hasRank('survivor', '@')) return;
+		if (!user.hasRank('survivor', '%')) return;
 		Rooms.get('survivor').say("/makegroupchat testing");
 		Rooms.get('survivor').say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
 		room.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+	},
+	ddoverall: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let sorted = dd.getSorted();
+		let longestLength = 0;
+		for (let i = 0; i < sorted.length; i++) {
+			let length = sorted[i][4].length;
+			if (length > longestLength) longestLength = length;
+		}
+		let numTabs = Math.ceil(longestLength / 6.0);
+		let sep = "";
+		for (let i = 0; i < longestLength; i += 6) {
+			sep += "\t";
+		}
+		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tPoints\t\n";
+		let real = [4,1,2,3,0];
+		for (let i = 0; i < sorted.length; i++) {
+			for (let j = 0; j < 7; j++) {
+				let stuff;
+				if (j === 0) stuff = i + 1;
+				else if (j === 6) stuff = dd.getPoints(sorted[i]);
+				else stuff = sorted[i][real[j - 1]];
+				buffer += stuff;
+				if (j === 1) {
+					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / 6.0);
+					for (let l = 0; l < numCursTabs + 1; l++) {
+						buffer += "\t";
+					}
+				} else {
+					buffer += "\t";
+				}
+			}
+			buffer += "\n";
+		}
+		Tools.uploadToHastebin(buffer, (success, link) => {
+			if (success) room.say(link);
+			else user.say('Error connecting to hastebin.');
+        });
 	},
 	toppoints: 'top',
 	top: function (target, user, room) {

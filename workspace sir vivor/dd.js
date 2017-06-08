@@ -21,7 +21,7 @@ class DD {
 		this.dd = JSON.parse(file);
 		file = '{}';
 		try {
-			file = fs.readFileSync('/databases/ddmod.json').toString();
+			file = fs.readFileSync('/databases/modlog.json').toString();
 		} catch (e) {}
 		this.modlog = JSON.parse(file);
 		if (!("data" in this.modlog)) {
