@@ -2084,7 +2084,7 @@ exports.commands = {
 				buffer += stuff;
 				if (j === 1) {
 					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / numTabsSpaces);
-					for (let l = 0; l < numCursTabs + 1; l++) {
+					for (let l = 0; l < numCursTabs + (sorted[i][4].length %8 === 0 ? 0 : 1) ; l++) {
 						buffer += "\t";
 					}
 				} else {
