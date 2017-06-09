@@ -1983,7 +1983,6 @@ exports.commands = {
 		} else {
 			user.say(msg);
 		}
-		user.say("Participation points awarded to: **" + split.join("**,**") + "**.");
 		dd.updateModlog(user.name + " did .parts " + target);
 	},
 
