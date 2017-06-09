@@ -1968,7 +1968,20 @@ exports.commands = {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		for (let i = 0; i < split.length; i++) {
+			split[i] = split[i].trim();
+		}
+		for (let i = 0; i < split.length; i++) {
 			dd.addPart(split[i]);
+		}
+		let msg = "Participation points awarded to: **" + split.join(", ") + "**.";
+		if (msg.length > 300) {
+			let len = split.length;
+			let firstHalf = split.slice(0, Math.floor(len / 2.0));
+			let secondHalf = split.slice(Math.floor(len / 2.0));
+			user.say("Participations points awarded to: **" + firstHalf.join(", ") + "**.");
+			user.say("and **" + secondHalf.join(", ") + "**.");
+		} else {
+			user.say(msg);
 		}
 		user.say("Participation points awarded to: **" + split.join("**,**") + "**.");
 		dd.updateModlog(user.name + " did .parts " + target);
@@ -2051,8 +2064,6 @@ exports.commands = {
         });
 	},
 
-	
-	
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		Rooms.get('survivor').say("/makegroupchat testing");
@@ -2220,64 +2231,6 @@ exports.commands = {
 			if (Tools.toId(stuff[4]) === target) {
 				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points, consisting of " + stuff[0] + " hosts, " + stuff[1] + " first places, " + stuff[2] + " second places, and " + stuff[3] + " participations.");
 			}
-		}
-	},
-
-	award: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
-		let split = target.split(",");
-		if (split.length < 2) return user.say("You must specify the user and the egg you are awarding them");
-		let targetuser = Users.get(Tools.toId(split[0]));
-		if (!targetuser) return user.say("That user is currently offline.");
-		let eggs = [
-			"Scrambled Egg",
-			"Emerald Faberge Egg",
-			"Gladiator's Combeggt",
-			"The WereEgg",
-			"Gunpowder Kegg",
-			"The Egg of Vampirism",
-			"Eggs-Fiance",
-			"Bulls-Egg",
-			"Eggscitement",
-			"Intense Eggerino",
-			"Refleggtion",
-			"Sir Eggbert of Vivoria",
-			"Hard Boiled Egg",
-			"The Egg of Shadows",
-			"The Deteggtive",
-			"Participeggtor"
-		];
-		let i;
-		for (i = 0; i < eggs.length; i++) {
-			if (Tools.toId(eggs[i]) === Tools.toId(split[1])) break;
-		}
-		if (i === eggs.length) return user.say("That is not a valid egg.");
-		let id = targetuser.id;
-		if (id in Games.eggs) {
-			let cureggs = Games.eggs[id].eggs;
-			if (cureggs.indexOf(eggs[i]) !== -1) {
-				return room.say("That user already has that egg.");
-			} else {
-				Games.eggs[id].eggs.push(eggs[i]);
-			}
-		} else {
-			Games.eggs[id] = {
-				name: targetuser.name,
-				eggs: [eggs[i]],
-			}
-		}
-		return room.say("Egg **" + eggs[i] + "** successfully awarded to **" + targetuser.name + "**.");
-	},
-	
-	eggs: function (target, user, room) {
-		if (room !== user) return;
-		let targetname = (target ? target : user.name);
-		let targetid = Tools.toId(targetname);
-		if (targetid in Games.eggs) {
-			let data = Games.eggs[targetid];
-			return user.say("**" + data.name + "** has the following eggs: **" + data.eggs.join(", ") + "**.");
-		} else {
-			return user.say("**" + targetname + "** does not have any eggs.");
 		}
 	},
 
