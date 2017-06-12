@@ -73,7 +73,6 @@ for (let i in Config.groups)
 }
 var host = '';
 var hostId = '';
-var roomVoiceList = ['deetah', 'Henka', 'Inactive', 'lilblueshuppet', 'pancake', 'cyclotic', 'spieky', 'vividsunset', 'wishes'];
 
 function isPM(roomid, userid)
 {
@@ -1158,7 +1157,20 @@ exports.commands = {
 		text += 'woof!';
 		this.say(room, text);
 	},
-
+	
+	deetah: function (arg, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '/me can confirm that deetah is a cheetah';
+		this.say(room, text);
+	}
 	swirl: 'swirlyder',
 	swirlyder: function(arg, user, room)
 	{
