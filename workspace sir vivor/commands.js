@@ -1170,7 +1170,7 @@ exports.commands = {
 		}
 		text += '/me can confirm that deetah is a cheetah';
 		this.say(room, text);
-	}
+	},
 	swirl: 'swirlyder',
 	swirlyder: function(arg, user, room)
 	{
