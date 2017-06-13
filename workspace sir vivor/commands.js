@@ -1369,6 +1369,21 @@ exports.commands = {
 		text += 'Survivor\'s most toxic presence';
 		this.say(room, text);
 	},
+	deathbywobbuffet: 'dbw',
+	dbw: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'Death by Deez nuts';
+		this.say(room, text);
+	},
 	electra: 'electrasheart',
 	electrasheart: 'summmer',
 	summer: 'moq',
