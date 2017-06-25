@@ -271,7 +271,7 @@ class HST extends Games.Game {
 		if (location === 'underthebed') location = 'bed';
 		for (let i = 0; i < locations.length; i++) {
 			if (locations[i] === location) {
-				if (this.set && location === 'basement) {
+				if (this.set && location === 'basement') {
 				    return user.say("You can't choose the basement!");
 				    }
 				this.actions.set(player, location);
