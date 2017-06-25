@@ -45,6 +45,10 @@ class HST extends Games.Game {
 			this.winners.set(this.getLastPlayer(), true);
 			return this.end();
 		}
+		if (this.seekerLives === 1 && !this.set) {
+			this.say("You can no longer hide in the basement!");
+			this.set = true;
+		}
 		this.say("/wall " + this.getRoundSummary());
 		this.acceptActions = true;
 		this.timeout = setTimeout(() => this.prod(), 45 * 1000);
@@ -116,6 +120,10 @@ class HST extends Games.Game {
 				text += 'No lives remaining, the **Seeker loses!**';
 				this.players[this.seekerID].eliminated = true;
 				this.say(text);
+				if (this.getRemainingPlayerCount() === 1) {
+					this.winners.set(this.getLastPlayer(), true);
+					return this.end();
+				}
 				return this.rollBattle(this.getRemainingPlayers);
 			}
 			this.say(text);
@@ -263,6 +271,9 @@ class HST extends Games.Game {
 		if (location === 'underthebed') location = 'bed';
 		for (let i = 0; i < locations.length; i++) {
 			if (locations[i] === location) {
+				if (this.set && location === 'basement) {
+				    return user.say("You can't choose the basement!");
+				    }
 				this.actions.set(player, location);
 				break;
 			}
@@ -311,6 +322,10 @@ class HST extends Games.Game {
 
 	getRoundSummary() {
 		let hiders = [];
+		let basement = 'Basement';
+		if (this.set) {
+			basement = '';
+		}
 		for (let userID in this.players) {
 			let player = this.players[userID];
 			if (this.roles.get(player) === 'seeker' || player.eliminated) continue;
@@ -322,7 +337,7 @@ class HST extends Games.Game {
 		else {
 			hiders = hiders.join(', ');
 		}
-		let summary = '``Hiders:`` ' + hiders + ' | ``Seeker:`` ' + this.players[this.seekerID].name + " [" + this.seekerLives + "]" + ' | ``Locations:`` Under the Bed, Closet, Attic, Basement';
+		let summary = '``Hiders:`` ' + hiders + ' | ``Seeker:`` ' + this.players[this.seekerID].name + " [" + this.seekerLives + "]" + ' | ``Locations:`` Under the Bed, Closet, Attic, ' + basement;
 		return summary;
 	}
 }
