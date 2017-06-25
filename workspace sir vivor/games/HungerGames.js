@@ -117,3 +117,6 @@ exports.description = description;
 exports.game = HGS;
 exports.aliases = ["hgs"];
 exports.modes = ['Golf'];
+exports.commands = {
+	attack: "attack"
+}

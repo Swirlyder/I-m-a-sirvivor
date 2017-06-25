@@ -351,5 +351,5 @@ exports.commands = {
 	choose: "choose"
 };
 exports.pmCommands = {
-	choose: "true"
+	choose: true
 };

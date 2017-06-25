@@ -98,7 +98,7 @@ class Game {
 
 	autostart(target) {
 		let x = Math.floor(target);
-		if (!x || x > 120 || (x < 10 && x > 2) || x <= 0) return;
+		if (!x || x > 300 || (x < 10 && x > 2) || x <= 0) return;
 		if (x < 10) x *= 60;
 		let minutes = Math.floor(x / 60);
 		let seconds = x % 60;

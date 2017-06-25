@@ -1717,7 +1717,7 @@ exports.commands = {
 			return;
 		}
 		let x = Math.floor(target);
-		if (!x || x > 120 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 2 minutes.");
+		if (!x || x > 300 || (x < 10 && x > 2) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 5 minutes.");
 		if (x < 10) x *= 60;
 		let minutes = Math.floor(x / 60);
 		let seconds = x % 60;
@@ -2165,38 +2165,8 @@ exports.commands = {
 			str += "</table></body></html></div>";	
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
-			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
-			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
-			for (let i = 0; i < 7; i++) {
-				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
-			}
-			str += "</tr>"
-			let real = [4,1,2,3,0];
-			let strs = [];
-			for (let i = Math.max(0, num - 5); i < num; i++) {
-				let strx = "<tr>";
-				for (let j = 0; j < 7; j++) {
-					let stuff;
-					if (j === 0) {
-						stuff = i+1;
-					} else if (j === 6) {
-						stuff = dd.getPoints(sorted[i]);
-					} else {
-						stuff = sorted[i][real[j - 1]];
-					}
-					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
-				}
-				strs.push(strx + "</tr>");
-			}
-			str += strs.join("");
-			str += "</table></body></html></div>";
-
-			if (room.id === 'survivor') {
-				Parse.say(room, "/addhtmlbox " + str);
-			} else {
-				console.log(str);
-				Parse.say(room, "!htmlbox " + str);
-			}
+			let str = lb.getStr();
+			
 		}
 		let numFirsts = 0;
 		for (let i = 0; i < sorted.length; i++) {
