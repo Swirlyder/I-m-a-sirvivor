@@ -1202,7 +1202,19 @@ exports.commands = {
 		text += 'S-S-Senpai!';
 		this.say(room, text);
 	},
-
+	cheese: function (arg, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'Muffinss';
+		this.say(room, text);
+	},
 	lunar: 'lunarixis',
 	lunarixis: function(arg, user, room)
 	{
