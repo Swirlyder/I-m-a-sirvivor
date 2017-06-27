@@ -127,10 +127,9 @@ class HST extends Games.Game {
 				if (this.getRemainingPlayerCount() === 1) {
 					return this.end();
 				}
-				text += 'Rolling for the winner out of **' + opponents.map(p => this.players[Tools.toId(p)].name) + "**";
-				this.say(text);
+				this.say('Rolling for the winner out of **' + Object.keys(this.getRemainingPlayers()).map(p => this.players[p].name).join(", ") + "**!");
 				this.hiderBattle = true;
-				return this.say('!roll ' + opponents.length + 'd100');
+				return this.say('!roll ' + this.getRemainingPlayerCount() + 'd100');
 			}
 			this.say(text);
 			return this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
@@ -168,7 +167,7 @@ class HST extends Games.Game {
 					player.eliminated = true;
 				}
 			}
-			this.say("**" + names.join(', ') + "** win " + (names.length === 1 ? "s" : "") + "!");
+			this.say("**" + names.join(', ') + "** win " + (names.length === 1 ? "s" : "") + " the roll battle!");
 			return this.end();
 		}
 		let tagged = [];
@@ -188,7 +187,20 @@ class HST extends Games.Game {
 		let text = '';
 		if (tagged.length) text += "**" + tagged.join(', ') + "** " + (tagged.length > 1 ? "are": "is") + " tagged! ";
 		if (escaped.length) text += "**" + escaped.join(', ') + "** escaped!";
-		if (!tagged.length) this.seekerLives--;
+		if (!tagged.length) {
+			this.seekerLives--;
+			if (this.seekerLives === 0) {
+				text += ' No lives remaining, the **Seeker loses!**';
+				this.players[this.seekerID].eliminated = true;
+				this.say(text);
+				if (this.getRemainingPlayerCount() === 1) {
+					return this.end();
+				}
+				this.say('Rolling for the winner out of **' + Object.keys(this.getRemainingPlayers()).map(p => this.players[p].name).join(", ") + "**!");
+				this.hiderBattle = true;
+				return this.say('!roll ' + this.getRemainingPlayerCount() + 'd100');
+			}
+		}
 		if (this.variation === "Juggernaut" && tagged.length) {
 			this.seekerRollVal += (tagged.length * 10);
 		}
