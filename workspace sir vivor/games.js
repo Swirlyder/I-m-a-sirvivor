@@ -403,6 +403,7 @@ class GamesManager {
 			"destroys",
 			"demolishes",
 			"decimates",
+			"obliterates",
 		];
 		this.lastGame = null;
 		this.aprilFools = false;
