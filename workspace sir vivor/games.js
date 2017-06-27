@@ -129,6 +129,8 @@ class Game {
 		if (this.getRemainingPlayerCount() === 1) {
 			let winPlayer = this.getLastPlayer();
 			this.say("**Winner:** " + winPlayer.name);
+		} else if (this.getRemainingPlayerCount() === 0) {
+			this.say("Everybody was modkilled!");
 		}
 		if (this.ended) return;
 		if (this.timeout) clearTimeout(this.timeout);
