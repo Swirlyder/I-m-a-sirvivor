@@ -73,7 +73,7 @@ class LegoTD extends Games.Game {
 			this.curPlayer = this.players[Tools.toId(message)];
 			if (this.getRemainingPlayerCount() === 2) {
 				let remaining = this.getRemainingPlayers();
-				for (let userID in this.players) {
+				for (let userID in remaining) {
 					let player = this.players[userID];
 					if (player !== this.curPlayer) this.oplayer = player;
 				}
