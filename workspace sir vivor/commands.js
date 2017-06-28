@@ -1339,17 +1339,15 @@ exports.commands = {
 	paradise: 'para',
 	para: function(arg, user, room)
 	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
+		let text1 = "I'm Paradise and this is my Anime club. I work here with my friends and fellow weebs: Bon Dance, Aknolan, PenQuin, Swirlyder, Aknolan, Cheese, Hawkie, Henka, OM room, phable";
+		let text2 = "Soccer, Zeonth, Azuuli, blink182, Deathbywobbuffet, Zyg-Ten%, and Zyx14; and in 23 years, I've learned one thing. You never know WHAT anime is going to be good.";
+		if (room !== user && !user.hasRank(room, '+')) {
+			user.say(text1);
+			user.say(text2);
+		} else {
+			room.say(text1);
+			room.say(text2);
 		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
-		text += 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Bon Dance, Aknolan, PenQuin and Swirlyder; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
-		this.say(room, text);
 	},
 	anime: 'weeb',
 	weeb: function(arg, user, room)
