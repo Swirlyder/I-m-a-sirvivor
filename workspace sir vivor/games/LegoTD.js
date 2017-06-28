@@ -43,7 +43,7 @@ class LegoTD extends Games.Game {
 	getPlayerNames(players) {
 		if (!players) players = this.players;
 		let names = [];
-		for (let userID in this.players) {
+		for (let userID in players) {
 			let player = this.players[userID];
 			let stats = this.stats.get(player);
 			if (stats) {
@@ -79,7 +79,7 @@ class LegoTD extends Games.Game {
 				}
 				this.handleAttacks();
 			} else {
-				this.say("**" + this.curPlayer + "**, who do you wish to attack?");
+				this.say("**" + this.curPlayer.name + "**, who do you wish to attack?");
 				this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 			}
 		}
