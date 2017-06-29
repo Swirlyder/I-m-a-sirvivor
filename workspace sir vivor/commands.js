@@ -1871,7 +1871,7 @@ exports.commands = {
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 	},
-
+	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
 	    if (!user.hasRank(room.id, '+')) return;
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");

@@ -143,6 +143,7 @@ class LegoTD extends Games.Game {
 		let attackedPlayer = this.players[Tools.toId(target)];
 		if (!attackedPlayer) return user.say("That player is not in the game!");
 		if (attackedPlayer.eliminated) return user.say("That player has already been eliminated!");
+		if (this.curPlayer.id === attackedPlayer.id) return this.say(">Attacking yourself.");
 		this.oplayer = attackedPlayer;
 		clearTimeout(this.timeout);
 		this.handleAttacks();
