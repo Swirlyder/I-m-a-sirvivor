@@ -2,7 +2,7 @@
 
 const name = "Lego Tower Defense";
 const id = Tools.toId(name);
-const description = "Lego tower defense woo.";
+const description = "https://docs.google.com/document/d/13MJ8zaUxrjDRNeYNbi7vGM3P7FOPYnrgT2uk5LLQzqw/edit";
 
 class LegoTD extends Games.Game {
 	constructor(room) {
@@ -99,19 +99,19 @@ class LegoTD extends Games.Game {
 			let stats = this.stats.get(losePlayer);
 			stats[1]--;
 			if (stats[1] === 0) {
-				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**, who is eliminated!");
+				this.say("**" + losePlayer.name + "** loses one defense block and is eliminated!");
 				losePlayer.eliminated = true;
 			} else {
-				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+				this.say("**" + losePlayer.name + "** loses one defense block!");
 			}
 		} else {
 			let stats = this.stats.get(losePlayer);
 			stats[0]--;
 			if (stats[0] === 0) {
-				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**, who is eliminated!");
+				this.say("**" + losePlayer.name + "** loses one attack block and is eliminated!");
 				losePlayer.eliminated = true;
 			} else {
-				this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
+				this.say("**" + losePlayer.name + "** loses on attack block!");
 			}
 		}
 		this.curPlayer = null;

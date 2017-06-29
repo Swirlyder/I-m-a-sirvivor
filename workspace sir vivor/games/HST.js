@@ -156,9 +156,9 @@ class HST extends Games.Game {
 
 	handleRolls(rolls) {
 		if (this.hiderBattle) {
-			let highRoll = Math.max(rolls);
+			let highRoll = Math.max(...rolls);
 			let names = [];
-			let playerids = Object.keys(this.players);
+			let playerids = Object.keys(this.getRemainingPlayers());
 			for (let i = 0; i < playerids.length; i++) {
 				let player = this.players[playerids[i]];
 				if (rolls[i] === highRoll) {
