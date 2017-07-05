@@ -226,12 +226,9 @@ class Poke extends Games.Game {
 						}
 				}
 			}
-			//console.log(p1.name + "," + p2.name + "," + winp.name);
 			if (!this.isValidMon(mon1,p1) || !this.isValidMon(mon2, p2)) {
-				//console.log('rip mons');
 				return;
 			}
-			//console.log("made it here!");
 			if (this.realAttacks.get(p1) !== p2) return;
 			if (p1used || p2used) {
 				if (p1used && p2used) {
@@ -256,13 +253,10 @@ class Poke extends Games.Game {
 					this.hasAdvanced.set(p1, true);
 				}
 			} else {
-				//console.log("made it here!1");
 				let losep;
 				if (winp === p1) losep = p2;
 				else losep = p1;
-				//console.log("made it here!2");
-				this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");
-				//console.log("Said first thing.");
+				this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");;
 				this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
 				this.say("RIP **" + losep.name + "** and their");
 				this.say("!dt " + this.mons.get(losep).species);
@@ -279,6 +273,11 @@ class Poke extends Games.Game {
 		}
 	}
 
+	onEnd() {
+		let lastPlayer = this.getLastPlayer();
+		this.say("!dt " + this.mons.get(lastPlayer).species);
+	}
+	
 	destroy(target, user) {
 		if (!this.canAttack) return;
 		let player = this.players[user.id];
