@@ -111,7 +111,7 @@ class LegoTD extends Games.Game {
 				this.say("**" + losePlayer.name + "** loses one attack block and is eliminated!");
 				losePlayer.eliminated = true;
 			} else {
-				this.say("**" + losePlayer.name + "** loses on attack block!");
+				this.say("**" + losePlayer.name + "** loses one attack block!");
 			}
 		}
 		this.curPlayer = null;
