@@ -738,13 +738,6 @@ exports.commands = {
 			user.say("That user hasn't hosted recently.");
 		}
 	},
-	/*roomdemote: 'reoomdevoice',
-	roomdevoice: function(arg, user, room)
-	{
-		if (!user.hasRank(room.id, '%') || !arg) return false;
-		var targetuser = toId(arg);
-		this.say(room, '/roomdevoice ' + targetuser);
-	},*/
 
 	dt: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
@@ -760,6 +753,12 @@ exports.commands = {
 			}
 		}
 		this.say(room, "No pokemon named " + target + " was found.");
+	},
+
+	randpoke: 'poke',
+	poke: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		room.say("!dt " + Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))].species);
 	},
 
 	autostart: function (target, user, room) {
