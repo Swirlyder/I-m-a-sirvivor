@@ -256,7 +256,8 @@ class DOTW extends Games.Game {
 					} else {
 						this.hasWon = true;
 						this.waitingAction = true;
-						this.say("**" + this.winPlayer.name + "** wins the first two matchups against **" + this.losePlayer.name + "**! **" + this.curPlayer.name + "**, would you like to go for a sweep? Use ``" + Config.commandCharacter + "continue yes/no`` to decide");
+						this.say("**" + this.winPlayer.name + "** wins the first two matchups against **" + this.losePlayer.name + "**! **" + this.winPlayer.name + "**, would you like to go for a sweep? Use ``" + Config.commandCharacter + "continue yes/no`` to decide");
+						this.currentWins.set(this.winPlayer, 2);
 						this.timeout = setTimeout(() => this.elimPlayer(this.winPlayer), 60 * 1000);
 					}
 				}  else {

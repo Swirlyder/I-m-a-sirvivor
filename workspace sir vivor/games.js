@@ -747,7 +747,4 @@ Games.Game = Game;
 Games.Player = Player;
 Games.backupInterval = setInterval(() => Games.exportHosts(), 60 * 1000);
 Games.backupHostInterval = setInterval(() => Games.exportHost(), 60 * 1000);
-Games.backupEggsInterval = setInterval(() => Games.exportEggs(), 60 * 1000);
-
-
 module.exports = Games;
