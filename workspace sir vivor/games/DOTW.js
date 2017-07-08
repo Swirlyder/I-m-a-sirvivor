@@ -2,7 +2,7 @@
 
 const name = "Days of the Week";
 const id = Tools.toId(name);
-const description = "Days of the week boiz";
+const description = "__When \"it's not my day\" becomes literal.__ Game rules: http://survivor-ps.weebly.com/day-of-the-week.html";
 
 class DOTW extends Games.Game {
 	constructor(room) {
