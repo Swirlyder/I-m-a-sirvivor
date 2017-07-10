@@ -44,16 +44,10 @@ class HGS extends Games.Game {
 				let playersLeft = this.getRemainingPlayers();
 				this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 				this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+				this.say("Only **" + this.getName(this.curPlayer) + "** and **" + this.getName(this.oplayer) + "** are left! Moving directly to attacks.");
 				this.timeout = setTimeout(() => this.handleAttack(), 5 * 1000);
 			} else {
-				let names = [];
-				for (let userID in this.players) {
-					if (this.players[userID].eliminated) continue;
-					names.push(this.players[userID].name);
-				}
-				this.say("!pick " + names.join(", "));
-				this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
+				this.say("!pick " + this.getPlayerNames(this.getRemainingPlayers()));
 			}
 		} catch (e) {
 			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
@@ -83,15 +77,16 @@ class HGS extends Games.Game {
 	}
 	handleWinner(winPlayer, losePlayer) {
 		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
-		losePlayer.eliminated = true;
+		this.elimPlayer(losePlayer);
 		this.curPlayer = null;
 		this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 	}
 
 	handlePick(message) {
 		if (!this.curPlayer) {
-			this.curPlayer = this.players[Tools.toId(message)];
+			this.curPlayer = this.getPlayer(message);
 			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
+			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		} 
 	}
 
@@ -116,7 +111,7 @@ exports.id = id;
 exports.description = description;
 exports.game = HGS;
 exports.aliases = ["hgs"];
-exports.modes = ['Golf'];
+exports.modes = ['Golf', 'Roll Switch', 'Second Wind'];
 exports.commands = {
 	attack: "attack"
 }

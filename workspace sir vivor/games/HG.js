@@ -11,6 +11,7 @@ class HG extends Games.Game {
 		this.description = description;
 		this.id = id;
 		this.attacks = new Map();
+		this.order = [];
 	}
 
 	onStart() {
@@ -25,7 +26,7 @@ class HG extends Games.Game {
 			let playersLeft = this.getRemainingPlayers();
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+			this.say("Only **" + this.getName(this.curPlayer) + "** and **" + this.getName(this.oplayer) + "** are left! Moving directly to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			return;
 		}
@@ -98,7 +99,7 @@ class HG extends Games.Game {
 
 	handleWinner(winPlayer, losePlayer) {
 		this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
-		losePlayer.eliminated = true;
+		this.elimPlayer(losePlayer);
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
@@ -137,7 +138,7 @@ exports.game = HG;
 exports.name = name;
 exports.id = id;
 exports.aliases = ['hg'];
-exports.modes = ['Roll Switch'];
+exports.modes = ['Roll Switch', 'Second Wind'];
 exports.description = description;
 exports.commands = {
 	destroy: "destroy",

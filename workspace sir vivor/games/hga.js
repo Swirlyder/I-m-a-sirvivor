@@ -78,7 +78,7 @@ class HGA extends Games.Game {
 			this.numAttacks = 0;
 			this.attacks.clear();
 			this.say("**Nicks**: " + Tools.shuffle(nicks).join(", "));
-			this.say("**Names**: " + names.join(", "));
+			this.say("**Names**: " + this.getPlayerNames(this.getRemainingPlayers()));
 			this.say("PM me your attacks with ``" + Config.commandCharacter + "destroy [nickname]``!");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
@@ -140,7 +140,7 @@ class HGA extends Games.Game {
 
 	handleWinner(winPlayer, losePlayer) {
 		this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
-		losePlayer.eliminated = true;
+		this.elimPlayer(losePlayer);
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
@@ -197,7 +197,7 @@ exports.id = id;
 exports.aliases = ['hga'];
 exports.game = HGA;
 exports.description = description;
-exports.modes = ['Golf', 'Roll Switch'];
+exports.modes = ['Golf', 'Roll Switch', 'Second Wind'];
 exports.commands = {
 	destroy: "destroy",
 	nick: "nick",

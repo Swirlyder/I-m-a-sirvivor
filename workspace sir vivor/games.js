@@ -73,6 +73,14 @@ class Game {
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
 	}
 
+	getName(player) {
+		return player.name;
+	}
+	
+	elimPlayer(player) {
+		player.eliminated = true;
+	}
+
 	getPlayerNames(players) {
 		if (!players) players = this.players;
 		let names = [];
@@ -275,13 +283,15 @@ class Game {
 		return Tools.shuffle(list);
 	}
 
+	getPlayer(message) {
+		let last = message.lastIndexOf("(");
+		if (last === -1) last = message.lastIndexOf("[");
+		if (last === -1) last = messsage.length;
+		return this.players[Tools.toId(message.substr(0, last))];
+	}
+
 	pl() {
-		let players = [];
-		for (let userID in this.players) {
-			if (this.players[userID].eliminated) continue;
-			players.push(this.players[userID].name);
-		}
-		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + players.join(", "));
+		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()));
 	}
 
 	sayPlayerRolls() {

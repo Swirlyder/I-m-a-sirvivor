@@ -76,7 +76,7 @@ class HT extends Games.Game {
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[this.cur]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1 - this.cur]];
 			let type1 = this.turnFirstUpper(this.types.get(this.curPlayer)), type2 = this.turnFirstUpper(this.types.get(this.oplayer));
-			this.say("Only **" + this.curPlayer.name + "**, who is a **" + type1 + "** type and **" + this.oplayer.name + "** the **" + type2 + "** type are left! Moving directly to attacks.");
+			this.say("Only **" + this.getName(this.curPlayer) + "**, who is a **" + type1 + "** type and **" + this.getName(this.oplayer) + "** the **" + type2 + "** type are left! Moving directly to attacks.");
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			this.canAttack = true;
@@ -163,6 +163,23 @@ class HT extends Games.Game {
 		this.sayPlayerRolls();
     }
 
+	handleWinner(winPlayer, losePlayer) {
+		if (winPlayer === this.curPlayer) {
+			this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
+			this.elimPlayer(this.oplayer);
+		} else {
+			this.say("**" + this.oplayer.name + "** defended successfully!");
+			if (this.cur) {
+				let player = this.curPlayer;
+				this.curPlayer = this.oplayer;
+				this.oplayer = player;
+				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
+				return;
+			}
+		}
+		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+	} 
+
     handleRoll(roll) {
 		if (!this.rolla) {
 			this.rolla = roll;
@@ -244,6 +261,7 @@ exports.id = id;
 exports.aliases = ['ht'];
 exports.game = HT;
 exports.description = description;
+exports.modes = ['Second Wind', 'Golf'];
 exports.commands = {
 	destroy: "destroy",
 	type: "type",

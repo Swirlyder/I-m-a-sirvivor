@@ -183,7 +183,7 @@ class Dexterity extends Games.Game {
 			let acc = item.acc;
 			if (actAcc <= acc) {
 				this.say("The attack hits! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
-				this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
+				this.elimPlayer(bothPlayers[1 - this.winIndex]);
 			} else {
 				this.say("Fortunately for **" + bothPlayers[1 - this.winIndex].name + "**, the attack missed!");
 			}
@@ -244,6 +244,7 @@ exports.id = id;
 exports.description = description;
 exports.game = Dexterity;
 exports.aliases = ["dext", "dex"];
+exports.modes = ['Second Wind'];
 exports.commands = {
 	destroy: "destroy", 
 	weapons: "weapons",

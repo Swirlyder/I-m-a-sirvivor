@@ -159,7 +159,7 @@ class RPS extends Games.Game {
 	handleWinner(winPlayer, losePlayer) {
 		if ((this.win && winPlayer === this.curPlayer) || (!this.win && winPlayer === this.oplayer)) {
 			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
-			losePlayer.eliminated = true;
+			this.elimPlayer(losePlayer);
 		} else {
 			this.say("**" + winPlayer.name + "** defended successfully!");
 		}
@@ -215,6 +215,7 @@ exports.description = description;
 exports.id = id;
 exports.game = RPS;
 exports.aliases = ['rockpaperscissors', 'rps'];
+exports.modes = ['Second Wind'];
 exports.commands = {
 	destroy: "destroy",
 }

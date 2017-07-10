@@ -80,7 +80,7 @@ class Risk extends Games.Game {
 				let playersLeft = this.getRemainingPlayers();
 				this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 				this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-				this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! Moving directly to attacks.");
+				this.say("Only **" + this.getName(this.curPlayer) + "** and **" + this.getName(this.oplayer) + "** are left! Moving directly to attacks.");
 				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 			} else {
 				this.curPlayer = null;
@@ -197,15 +197,14 @@ class Risk extends Games.Game {
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		} else {
 			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "**!");
-			losePlayer.eliminated = true;
+			this.elimPlayer(losePlayer);
 			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 		}
 	}
 
 	handlePick(message) {
 		if (!this.curPlayer) {
-			let parenIndex = message.lastIndexOf("(");
-			this.curPlayer = this.players[Tools.toId(message.substr(0, parenIndex))];
+			this.curPlayer = this.getPlayer(message);
 			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
 		}
 	}
@@ -275,6 +274,7 @@ exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.aliases = [];
+exports.modes = ['Second Wind'];
 exports.commands = {
 	destroy: "destroy",
 	attack: "attack",
