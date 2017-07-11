@@ -452,8 +452,8 @@ class GamesManager {
 	unHostBan(userName) {
 		let userID = Tools.toId(userName);
 		if (userID in this.hostbans) {
-			let name = this.hostbans[user.id].name;
-			delete this.hostbans[user.id];
+			let name = this.hostbans[userID].name;
+			delete this.hostbans[userID];
 			return "**" + name + "** has been unhostbanned.";
 		} else {
 			return "**" + userName+ "** is not currently hostbanned.";
