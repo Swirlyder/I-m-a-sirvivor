@@ -404,8 +404,8 @@ class GamesManager {
 		this.isTimer = false;
 		this.points = null;
 		this.excepted = [];
+		this.hostbans = {};
 		this.numHosts = {};
-		this.eggs = {};
 		this.destroyMsg = [
 			"annihilates",
 			"beats up",
@@ -419,42 +419,86 @@ class GamesManager {
 		this.aprilFools = false;
 	}
 
-	importHosts() {
+	importData() {
 		try {
 			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json'));
 		} catch (e) {};
-	}
-
-	importEggs() {
-		try {
-			this.eggs = JSON.parse(fs.readFileSync('./databases/eggs.json'));
-		} catch (e) {};
-	}
-	
-	exportEggs() {
-		fs.writeFileSync('./databases/eggs.json', JSON.stringify(this.eggs));
-	}
-
-	exportHosts() {
-		fs.writeFileSync('./databases/hosts.json', JSON.stringify(this.numHosts));
-	}
-
-	importHost() {
 		let id = fs.readFileSync('./databases/host.json').toString();
 		if (id) {
 			Games.host = Users.get(id);
 		}
 		else Games.host = null;
 		if (!Games.host) Games.host = null;
+		try {
+			this.hostbans = JSON.parse(fs.readFileSync('./databases/hostbans.json'));
+		}  catch (e) {};
+		for (let i in this.hostbans) {
+			let remainingTime = this.hostbans[i].endTime - new Date().getTime();
+			setTimeout(() => this.unHostBan(i), remainingTime);
+		}
 	}
 
-	exportHost() {
+	hostBan(user, days) {
+		if (user.id in this.hostbans) {
+			return "**" + user.name + "** is already hostbanned";
+		}
+		this.hostbans[user.id] = {
+			name: user.name,
+			endTime: new Date().getTime() + days * 24 * 60 * 60 * 1000,
+		}
+		return "**" + user.name + "** has been hostbanned for " + days + " day" + (days > 1 ? "s" : "");
+	}
+
+	unHostBan(userName) {
+		let userID = Tools.toId(userName);
+		if (userID in this.hostbans) {
+			let name = this.hostbans[user.id].name;
+			delete this.hostbans[user.id];
+			return "**" + name + "** has been unhostbanned.";
+		} else {
+			return "**" + userName+ "** is not currently hostbanned.";
+		}
+	}
+
+	banTime(userName) {
+		let userID = Tools.toId(userName);
+		if (userID in this.hostbans) {
+			let millis = this.hostbans[userID].endTime - new Date().getTime();
+			millis /= 1000;
+			millis = Math.floor(millis);
+			let numDays = Math.floor(millis / (24 * 60 * 60));
+			millis %= (24 * 60 * 60);
+			let numHours = Math.floor(millis / (60 * 60));
+			millis %= (60 * 60);
+			let numMinutes = Math.floor(millis / 60);
+			let str = "";
+			if (numDays > 0) {
+				str += numDays + " day" + (numDays > 1 ? "s" : "");
+			}
+			if (numHours > 0) {
+				if (str) str += ", ";
+				str += numHours + " hour" + (numHours > 0 ? "s" : "");
+			}
+			if (numMinutes > 0) {
+				if (str) str += ", ";
+				str += numMinutes + " minute" + (numMinutes > 0 ? "s" : "");
+			}
+			return "**" + this.hostbans[userID].name + "**'s hostban expires in " + str + ".";
+		} else {
+			return "**" + userName + "** is not currently hostbanned.";
+		}
+	}
+
+	exportData() {
+		fs.writeFileSync('./databases/hosts.json', JSON.stringify(this.numHosts));
 		if (Games.host) {
 			fs.writeFileSync('./databases/host.json', Games.host.id);
 		} else {
 			fs.writeFileSync('./databases/host.json', '');
 		}
+		fs.writeFileSync('./databases/hostbans.json', JSON.stringify(this.hostbans));
 	}
+
 	addHost(user) {
 		if (user.id) {
 			user = user.id;
@@ -503,7 +547,7 @@ class GamesManager {
 	}
 
 	timer(room) {
-	    Parse.say(room, "**Time's up!**");
+	    room.say("**Time's up!**");
 		this.isTimer = false;
 	}
 	onLoad() {
@@ -678,8 +722,7 @@ class GamesManager {
 				}
 			}
 		}
-		this.importHosts();
-		this.importEggs();
+		this.importData();
 	}
 
 	getFormat(target) {
@@ -755,6 +798,5 @@ class GamesManager {
 let Games = new GamesManager();
 Games.Game = Game;
 Games.Player = Player;
-Games.backupInterval = setInterval(() => Games.exportHosts(), 60 * 1000);
-Games.backupHostInterval = setInterval(() => Games.exportHost(), 60 * 1000);
+Games.backupInterval = setInterval(() => Games.exportData(), 60 * 1000);
 module.exports = Games;

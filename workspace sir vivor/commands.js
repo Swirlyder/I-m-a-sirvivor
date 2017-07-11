@@ -667,6 +667,7 @@ exports.commands = {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let realuser = Users.get(target);
 		if (!realuser) return this.say(room, "You can only host somebody currently in the room.");
+		if (realuser.id in Games.hostbans) return user.say("That user is currently hostbanned.");
 		if (Games.host || room.game) {
 			target = Tools.toId(realuser.name);
 			let i = 0, len = Games.hosts.length;
@@ -697,6 +698,36 @@ exports.commands = {
 			this.say(room, "/modnote " + realuser.name + " hosted");
 			Games.addHost(realuser);
 		}
+	},
+
+	hostban: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let split = target.split(",");
+		let targUser = Users.get(split[0]);
+		if (!targUser) {
+			targUser = {
+				id: Tools.toId(split[0]),
+				name: split[0],
+			}
+		}
+		let numDays = parseInt(split[1]);
+		if (!numDays) numDays = 7;
+		return room.say(Games.hostBan(targUser, numDays));
+	},
+
+	hostbanned: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
+	},
+
+	unhostban: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		return room.say(Games.unHostBan(target));
+	},
+
+	bantime: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		return room.say(Games.banTime(target));
 	},
 	subhost: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -1755,7 +1786,6 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000
-		console.log(n);
 		if (n < 6) {
 			millis += (5 - n) * 60 * 60 * 1000;
 		} else if (n < 16) {
