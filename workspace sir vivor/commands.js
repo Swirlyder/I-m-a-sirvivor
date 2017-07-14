@@ -2177,19 +2177,16 @@ exports.commands = {
 	toppoints: 'top',
 	top: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
-		let num = Math.floor(target);
-		if (!num) num = 5;
 		let sorted = dd.getSorted();
-		if (num > sorted.length) num = sorted.length;
 		if (room.id === user.id) {
-			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < 3; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
 			str += "</tr>"
 			let strs = [];
-			for (let i = Math.max(0, num - 5); i < num; i++) {
+			for (let i =0; i < sorted.length; i++) {
 				let strx = "<tr>";
 				for (let j = 0; j < 3; j++) {
 					let stuff;
@@ -2201,10 +2198,10 @@ exports.commands = {
 				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
-			str += "</table></body></html></div>";	
+			str += "</table></body></html></div></div>";	
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
-			let str = "<div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
 			for (let i = 0; i < 7; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
@@ -2212,7 +2209,7 @@ exports.commands = {
 			str += "</tr>"
 			let real = [4,1,2,3,0];
 			let strs = [];
-			for (let i = Math.max(0, num - 5); i < num; i++) {
+			for (let i = 0; i < sorted.length; i++) {
 				let strx = "<tr>";
 				for (let j = 0; j < 7; j++) {
 					let stuff;
@@ -2228,12 +2225,11 @@ exports.commands = {
 				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
-			str += "</table></body></html></div>";
+			str += "</table></body></html></div></div>";
 
 			if (room.id === 'survivor') {
 				Parse.say(room, "/addhtmlbox " + str);
 			} else {
-				console.log(str);
 				Parse.say(room, "!htmlbox " + str);
 			}
 		}

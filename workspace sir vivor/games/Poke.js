@@ -140,7 +140,7 @@ class Poke extends Games.Game {
 				this.matchups.push([player1, player2]);
 			}
 			this.say("/wall " + (this.finals ? "Final round " : "Round " + this.round) + " matchups! " + this.matchups.map(v => v[0].name + " vs. " + v[1].name).join(", ") + "." + (nomatchups.length > 0 ? (" Bye: " + nomatchups[0].name + ".") : ""))
-			this.say("/wall Use " + Config.commandCharacter + "check [link] during your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite Sir Vivor`` as well");
+			this.say("/wall Use ``" + Config.commandCharacter + "check [link]`` during your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite Sir Vivor`` as well");
 			this.say("/wall To prevent scouting, you can use ``/modjoin +`` followed by ``/roomvoice Sir Vivor`` (before inviting).");
 			this.numMatches = 0;
 			this.numTotal = this.matchups.length;
@@ -307,6 +307,12 @@ class Poke extends Games.Game {
 		if (split[1] !== "gen7anythinggoes") return user.say("The tier required is Gen 7 Anything Goes");
 		this.say("/join " + target);
 	}
+
+	hand(target, user) {
+		let player = this.players[user.id];
+		if (!player || player.eliminated) return;
+		return player.say("Your mon is **" + this.mons.get(player).species + "**!");
+	}
 }
 
 exports.name = name;
@@ -317,8 +323,10 @@ exports.aliases = ['poke'];
 exports.commands = {
 	"check": "check",
 	destroy: "destroy",
+	hand: "hand",
 };
 exports.pmCommands = {
 	"check": true,
 	destroy: true,
+	hand: true,
 };
