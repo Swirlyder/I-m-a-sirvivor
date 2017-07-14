@@ -561,6 +561,7 @@ exports.parse = {
 				cmdr(cmdrMessage);
 				try {
 					Commands[cmd].call(this, arg, user, room);
+					user.lastcmd = cmd;
 				} catch (e) {
 					let stack = e.stack;
 					stack += 'Additional information:\n';

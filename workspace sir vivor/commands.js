@@ -2267,18 +2267,31 @@ exports.commands = {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		if (split.length < 2) return user.say("You must specify an old and new username");
-		let realt = Tools.toId(target[0])
+		let realt = Tools.toId(split[0])
 		if (!(realt in dd.dd)) {
-			return user.say("**" + target[0] + "** is not on the dd leaderboard.");
+			return user.say("**" + split[0] + "** is not on the dd leaderboard.");
 		} else {
 			let newid = Tools.toId(split[1]);
+			let newdata = (newid in dd.dd ? dd.dd[newid] : {});
 			let oldname = dd.dd[realt].name;
-			dd[newid] = dd[realt];
-			dd[newid].name = split[1];
-			return user.say("**" + oldname + "** has been renamed to **" + split[1] + "**.");
+			dd.dd[newid] = dd.dd[realt];
+			if (realt !== newid) {
+				for (let i in newdata) {
+					dd.dd[newid][i] += newdata[i];
+				}
+			}
+			dd.dd[newid].name = split[1].trim();
+			if (realt !== newid) delete dd.dd[realt];
+			return user.say("**" + oldname + "** has been renamed to **" + split[1].trim() + "**.");
 		}
 	},
 
+	clearlb: function (target, user, room) {
+		if (!user.hasRank('survivor', '#')) return;
+		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
+		dd.dd = {};
+		return room.say("The dd leaderboard has been reset.");
+	},
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
@@ -2302,10 +2315,8 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
-		console.log(numFirsts);
 		let month = new Date().getMonth();
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		console.log(numFirsts);
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
