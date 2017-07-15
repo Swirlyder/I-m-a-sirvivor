@@ -85,6 +85,7 @@ class HGS extends Games.Game {
 	handlePick(message) {
 		if (!this.curPlayer) {
 			this.curPlayer = this.getPlayer(message);
+			console.log(this.curPlayer);
 			this.say("**" + this.curPlayer.name + "** you're up! Please choose another player to attack with ``" + Config.commandCharacter + "attack [player]``");
 			this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 		} 
