@@ -2243,7 +2243,7 @@ exports.commands = {
 			return room.say("No games have been updated yet this month!");
 		}
 		let times = ['6pm EST', '2am EST', '12pm EST']
-		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
+		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
 	},
 	kaz: 'azuuli',
 	azu: 'azuuli',
