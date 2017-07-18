@@ -2178,6 +2178,9 @@ exports.commands = {
 	top: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let sorted = dd.getSorted();
+		let num = parseInt(target);
+		if (!num || num < 1) num = 50;
+		if (num > sorted.length) num = sorted.length;
 		if (room.id === user.id) {
 			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Points"];
@@ -2186,7 +2189,7 @@ exports.commands = {
 			}
 			str += "</tr>"
 			let strs = [];
-			for (let i =0; i < sorted.length; i++) {
+			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
 				for (let j = 0; j < 3; j++) {
 					let stuff;
@@ -2209,7 +2212,7 @@ exports.commands = {
 			str += "</tr>"
 			let real = [4,1,2,3,0];
 			let strs = [];
-			for (let i = 0; i < sorted.length; i++) {
+			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
 				for (let j = 0; j < 7; j++) {
 					let stuff;
