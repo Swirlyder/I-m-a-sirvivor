@@ -496,14 +496,13 @@ exports.parse = {
 		}
 	},
 	chatMessage: function (message, user, room) {
-		
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
 		message = message.trim();
 		if (message.substr(0, 6) === '/me in' && room.game) {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
-		} else if (message === '/me swirls' && user.id !== Tools.toId(Config.nick)) {
+		} else if (message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
 			if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
 				waiting["swirl"] = true;

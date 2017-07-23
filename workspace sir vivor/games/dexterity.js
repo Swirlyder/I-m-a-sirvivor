@@ -167,7 +167,7 @@ class Dexterity extends Games.Game {
 				let acc = item.acc;
 				if (acc === 100) {
 					this.say("The item has 100% accuracy! RIP **" + bothPlayers[1 - this.winIndex].name + "**.");
-					this.players[bothPlayers[1 - this.winIndex].id].eliminated = true;
+					this.elimPlayer(bothPlayers[1 - this.winIndex]);
 					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 				} else {
 					this.say("Rolling for **" + bothPlayers[this.winIndex].name + "'s** accuracy!");

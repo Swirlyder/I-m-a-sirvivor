@@ -501,5 +501,6 @@ exports.pmCommands = {
 	predict: true,
 	continue: true,
 	cont: true,
+	selectday: true,
 }
 exports.aliases = ["dotw", "dayoftheweek"];

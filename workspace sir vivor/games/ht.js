@@ -180,34 +180,6 @@ class HT extends Games.Game {
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	} 
 
-    handleRoll(roll) {
-		if (!this.rolla) {
-			this.rolla = roll;
-		} else {
-			this.rollb = roll;
-			let winPlayer, losePlayer;
-			if (this.rolla === this.rollb) {
-				this.say("The rolls were the same! Rerolling...");
-				this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-			} else {
-				if (this.rolla > this.rollb) {
-					this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
-					this.oplayer.eliminated = true;
-				} else {
-					this.say("**" + this.oplayer.name + "** defended successfully!");
-					if (this.cur) {
-						let player = this.curPlayer;
-						this.curPlayer = this.oplayer;
-						this.oplayer = player;
-						this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
-						return;
-					}
-				}
-				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
-			}
-		}
-    }
-
     destroy(target, user) {
 		if (!this.canAttack) return;
 		let curPlayer = this.players[user.id];
@@ -215,14 +187,13 @@ class HT extends Games.Game {
 		let realID = toId(target);
 		let oplayer = this.players[realID];
 		if (!oplayer) {
-			user.say("That player is not in the game!");
-			return;
+			return user.say("That player is not in the game!");
 		}
 		if (oplayer.id === curPlayer.id) {
 			user.say("Are you sure you want to attack yourself?");
 			return;
 		}
-		if (oplayer.eliminated) return;
+		if (oplayer.eliminated) 
 		let curAtt = this.attacks.get(curPlayer);
 		if (curAtt) {
 			user.say("You have already attacked someone this round!");
