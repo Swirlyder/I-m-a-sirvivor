@@ -37,6 +37,7 @@ class HST extends Games.Game {
 		if (this.needSeeker) {
 			this.say("**" + seeker.name + "**, you are the new Seeker!");
 			this.seekerID = seeker.id;
+			this.needSeeker = false;
 			return this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 		}
 		this.say("**" + seeker.name + "**, you are the Seeker!");
