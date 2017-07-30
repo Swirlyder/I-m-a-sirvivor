@@ -1778,7 +1778,7 @@ exports.commands = {
 			}
 			return;
 		}
-		let x = Math.floor(target);
+		let x = parseFloat(target);
 		if (!x || x > 300 || (x < 10 && x > 5) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 5 minutes.");
 		if (x < 10) x *= 60;
 		let minutes = Math.floor(x / 60);
