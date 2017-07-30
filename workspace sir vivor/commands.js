@@ -1222,6 +1222,22 @@ exports.commands = {
 		text += 'I swear, he\'s not my real dad';
 		this.say(room, text);
 	},
+
+	snapeasy: 'snap',
+	snap: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '/me snaps fingers';
+		this.say(room, text);
+	},
+
 	pq: 'ppq',
 	ppq: 'penquin',
 	penquin: function(arg, user, room)
@@ -2253,22 +2269,6 @@ exports.commands = {
 		}
 		let times = ['6pm EST', '2am EST', '12pm EST']
 		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
-	},
-	kaz: 'azuuli',
-	azu: 'azuuli',
-	azuuli: function(arg, user, room)
-	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
-		text += '/me explodes';
-		this.say(room, text);
 	},
 
 	rename: function (target, user, room) {
