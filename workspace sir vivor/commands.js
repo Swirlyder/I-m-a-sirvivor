@@ -148,6 +148,11 @@ exports.commands = {
 		this.say(room, 'Commands reloaded.');
 	},
 	
+	reloadvoices: function (target, user, room) {
+		if (!user.hasRank('survivor', '+')) return;
+		Rooms.get('survivor').say("/roomauth surv");
+	},
+
 	reloadgames: function (arg,user,room) {
 		if (!user.isExcepted()) return false;
 		delete require.cache[require.resolve('./games.js')];
