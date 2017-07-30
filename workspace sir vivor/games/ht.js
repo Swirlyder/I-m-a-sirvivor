@@ -193,7 +193,10 @@ class HT extends Games.Game {
 			user.say("Are you sure you want to attack yourself?");
 			return;
 		}
-		if (oplayer.eliminated) 
+		if (oplayer.eliminated) {
+			user.say("You cannot attack somebody that is already eliminated!");
+			return;
+		}
 		let curAtt = this.attacks.get(curPlayer);
 		if (curAtt) {
 			user.say("You have already attacked someone this round!");

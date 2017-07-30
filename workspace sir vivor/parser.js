@@ -463,7 +463,7 @@ exports.parse = {
 
 				spl = spl.slice(4).join('|');
 				if (spl.startsWith('/invite ') && !(toId(spl.substr(8)) === 'lobby' && Config.serverid === 'showdown')) {
-					if (!toId(spl.substr(9)) === 'groupchat') {
+					if (!toId(spl.substr(9)) === 'groupchat' || user.isExcepted()) {
 						return send('|/join ' + spl.substr(8));
 					}
 				}
