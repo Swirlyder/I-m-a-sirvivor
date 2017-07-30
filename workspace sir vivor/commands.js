@@ -147,10 +147,11 @@ exports.commands = {
 		global.Commands = require('./commands.js').commands;
 		this.say(room, 'Commands reloaded.');
 	},
-	
+	reloadvoice: 'reloadvoices',
 	reloadvoices: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		Rooms.get('survivor').say("/roomauth surv");
+		user.say("Voices have been reloaded.");
 	},
 
 	reloadgames: function (arg,user,room) {
