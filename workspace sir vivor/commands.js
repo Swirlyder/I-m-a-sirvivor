@@ -1237,6 +1237,35 @@ exports.commands = {
 		text += '/me snaps fingers';
 		this.say(room, text);
 	},
+	kaz: 'azuuli',
+	azu: 'azuuli',
+	azuuli: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '/me explodes';
+		this.say(room, text);
+	},
+
+	baloor: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '__You must be...DELETED!__';
+		this.say(room, text);
+	},
 
 	pq: 'ppq',
 	ppq: 'penquin',
