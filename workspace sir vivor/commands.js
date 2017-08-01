@@ -706,6 +706,15 @@ exports.commands = {
 		}
 	},
 
+	sethost: function (target, user, room) {
+		if (!user.hasRank(room, '%') && Config.canHost.indexOf(user.id) === -1) return;
+		if (Games.host) return room.say("__" + Games.host.name + "__ is currently hosting");
+		let targUser = Users.get(Tools.toId(target));
+		if (!targUser) return room.say("**" + target + "** is not currently in the room");
+		Games.host = targUser;
+		room.say("**" + targUser.name + "** has been as set as the host.");
+	},
+
 	hostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		let split = target.split(",");
