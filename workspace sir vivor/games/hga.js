@@ -139,8 +139,8 @@ class HGA extends Games.Game {
     }
 
 	handleWinner(winPlayer, losePlayer) {
-		this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**, who was actually **" + losePlayer.name + "**!");
 		this.elimPlayer(losePlayer);
+		this.say("**" + winPlayer.nick + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.nick + "**" + (losePlayer.eliminated ? ", who was actually **" + losePlayer.name + "**" : "") + "!");
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
 
