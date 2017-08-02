@@ -93,7 +93,7 @@ class Bounty extends Games.Game {
 		let waitings = [];
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			if (player.eliminated || this.attacks.has(player)) continue;
+			if (player.eliminated || this.attacks.has(player) || (this.roles.get(player) === "The Medium" && this.round === 1)) continue;
 			let role = this.playerRoles.get(player);
 			if (role === "The Medium" && this.round === 1) continue;
 			waitings.push(player.name);
@@ -105,7 +105,7 @@ class Bounty extends Games.Game {
 	elimPlayers() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			if (player.eliminated || this.attacks.has(player)) continue;
+			if (player.eliminated || this.attacks.has(player) || (this.roles.get(player) === "The Medium" && this.round === 1)) continue;
 			player.eliminated = true;
 			player.say("You were eliminated for not providing an action this round!");
 		}

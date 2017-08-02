@@ -664,6 +664,11 @@ exports.commands = {
 		this.say(room, text);
 	},
 
+	leave: function (target, user, room) {
+		if (!user.isExcepted()) return;
+		room.say("/part");
+	},
+
 	// Survivor Commands:
 	// Host commands:
 	roompromote: 'roomvoice',
