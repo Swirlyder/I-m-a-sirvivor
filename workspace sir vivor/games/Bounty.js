@@ -105,7 +105,7 @@ class Bounty extends Games.Game {
 	elimPlayers() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			if (!player.eliminated && !this.attacks.has(player)) continue;
+			if (player.eliminated || this.attacks.has(player)) continue;
 			player.eliminated = true;
 			player.say("You were eliminated for not providing an action this round!");
 		}
