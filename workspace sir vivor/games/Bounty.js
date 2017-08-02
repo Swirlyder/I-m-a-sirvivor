@@ -183,7 +183,7 @@ class Bounty extends Games.Game {
 				this.end();
 				return;
 			} else if (role2 === "Goo") {
-				this.say(start, ", who was goo! **" + this.curPlayer.name + "** turns into the goo!");
+				this.say(start + ", who was goo! **" + this.curPlayer.name + "** turns into the goo!");
 				if (role1 !== "Bounty") this.playerRoles.set(this.curPlayer, "Goo");
 			} else {
 				this.say(start + " who was the **" + role2 + "**!");
