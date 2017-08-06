@@ -128,6 +128,14 @@ global.Rooms = require('./rooms.js');
 global.Parse = require('./parser.js').parse;
 global.Games = require('./games.js');
 Games.loadGames();
+try {
+	global.chatmes = JSON.parse(fs.readFileSync('./databases/chat.json').toString());
+} catch (e) {}
+if (!global.chatmes) global.chatmes = {};
+function saveChatMes() {
+	fs.writeFileSync('./databases/chat.json', JSON.stringify(chatmes));
+}
+setInterval(() => saveChatMes(), 10 * 60 * 1000);
 global.Connection = null;
 fs.watchFile('./commands.js', function (curr, prev) {
 	if (curr.mtime <= prev.mtime) return;

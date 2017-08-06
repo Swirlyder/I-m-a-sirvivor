@@ -30,6 +30,21 @@ if (!Object.isObject(settings)) settings = {};
 function setWaiting(value) {
 	waiting[value] = false;
 }
+function addChatMessage(message, user) {
+	if (!(user.id in chatmes)) chatmes[user.id] = {
+		name: user.name,
+		messages: [],
+	};
+	let today = new Date();
+	let messageAppend = {
+		message: message,
+		month: today.getMonth(),
+		day: today.getDay(), 
+		year: today.getFullYear(),
+	};
+	chatmes[user.id].messages.push(messageAppend);
+}
+
 global.responses = {
 	why: {
 		priority: 3,
@@ -48,7 +63,7 @@ global.responses = {
 		},
 		{
 			username: false,
-			before: "Blame kaz tbh",
+			before: "Blame snap tbh",
 		},
 		],
 	},
@@ -497,12 +512,14 @@ exports.parse = {
 	},
 	chatMessage: function (message, user, room) {
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
-		message = message.trim();
+		if (room.id === 'survivor') {
+			addChatMessage(message, user);
+		}
 		if (message.substr(0, 6) === '/me in' && room.game) {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
-		} else if (message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
+		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
 			if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
 				waiting["swirl"] = true;
@@ -510,7 +527,7 @@ exports.parse = {
 			}
 		}
 		let messageID = Tools.toId(message);
-		if (messageID.startsWith(Tools.toId(Config.nick))) {
+		if (Config.commandCharacter === '.' && messageID.startsWith(Tools.toId(Config.nick))) {
 			if (!waiting["response"] || user.hasRank(room.id, '%')) { 
 				let watchlist = Object.keys(responses);
 				watchlist.sort(function (first, second) {

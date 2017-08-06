@@ -162,7 +162,6 @@ exports.commands = {
 		this.say(room, 'Games reloaded.');
 	},
 	join: function (arg, user, room) {
-		console.log('hi');
 		this.say(room, '/join ' + arg);
 	},
 	custom: function(arg, user, room)
@@ -2237,6 +2236,54 @@ exports.commands = {
 		Tools.uploadToHastebin(buffer, (success, link) => {
 			if (success) room.say(link);
 			else user.say('Error connecting to hastebin.');
+        });
+	},
+
+	chatlines: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let split = target.split(',');
+		let numDays = parseInt(split[1]);
+		if (!numDays) numDays = 7;
+		let targetID = Tools.toId(split[0]);
+		if (!(targetID in chatmes)) return user.say("**" + split[0] + "** has never said anything in chat.");
+		let messages = chatmes[targetID].messages;
+		let targetName = chatmes[targetID].name;
+		let lines = {};
+		function getDayInfo(daysPrevious) {
+			let today = new Date();
+			let curDay = today.getDay();
+			let curYear = today.getFullYear();
+			let curMonth = today.getMonth();
+			let isLeapYear = (curYear % 4 === 0 && (curYear % 100 !== 0 || curYear % 400 === 0));
+			let numMonthsDays = [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+			for (let i = 0; i < daysPrevious; i++) {
+				curDay--;
+				if (curDay === 0) {
+					curMonth--;
+					if (curMonth < 0) {
+						curMonth = 11;
+						curYear--;
+					}
+					curDay = numMonthsDays[curMonth];
+				}
+			}
+			return [curDay, curMonth, curYear];
+		}
+		let overallstr = targetName + " Chat Lines:\n";
+		for (let i = numDays; i >= 0; i--) {
+			console.log("hi");
+			let dayInfo = getDayInfo(i);
+			let str = (dayInfo[1] >= 9 ? "" : "0") + (dayInfo[1] + 1) + "-" + dayInfo[0] + "-" + dayInfo[2];
+			lines[str] = 0;
+			for (let i = 0; i < messages.length; i++) {
+				let message = messages[i];
+				if (message.day === dayInfo[0] && message.month === dayInfo[1] && message.year === dayInfo[2]) lines[str]++;
+			}
+			overallstr += str + ": " + lines[str] + "\n";
+		}
+		Tools.uploadToHastebin(overallstr, (success, link) => {
+			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
+			else user.say('Error connecting to pastebin.');
         });
 	},
 	toppoints: 'top',

@@ -8,7 +8,6 @@
  */
 
 'use strict';
-
 class Tools {
 	constructor() {
 		this.data = {};
@@ -178,7 +177,7 @@ class Tools {
 		});
 		req.write(toUpload);
 		req.end();
-	};
+	}
 }
 
 let tools = new Tools();
