@@ -39,7 +39,7 @@ function addChatMessage(message, user) {
 	let messageAppend = {
 		message: message,
 		month: today.getMonth(),
-		day: today.getDay(), 
+		day: today.getDate(), 
 		year: today.getFullYear(),
 	};
 	chatmes[user.id].messages.push(messageAppend);

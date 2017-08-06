@@ -1972,7 +1972,6 @@ exports.commands = {
 		let goodids = Object.keys(Games.games).slice();
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
-		console.log(goodids);
 		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(goodids);
 		}
@@ -2251,7 +2250,7 @@ exports.commands = {
 		let lines = {};
 		function getDayInfo(daysPrevious) {
 			let today = new Date();
-			let curDay = today.getDay();
+			let curDay = today.getDate();
 			let curYear = today.getFullYear();
 			let curMonth = today.getMonth();
 			let isLeapYear = (curYear % 4 === 0 && (curYear % 100 !== 0 || curYear % 400 === 0));
@@ -2271,9 +2270,8 @@ exports.commands = {
 		}
 		let overallstr = targetName + " Chat Lines:\n";
 		for (let i = numDays; i >= 0; i--) {
-			console.log("hi");
 			let dayInfo = getDayInfo(i);
-			let str = (dayInfo[1] >= 9 ? "" : "0") + (dayInfo[1] + 1) + "-" + dayInfo[0] + "-" + dayInfo[2];
+			let str = (dayInfo[1] >= 9 ? "" : "0") + (dayInfo[1] + 1) + "-" + (dayInfo[0] > 9 ? "" : "0") + (dayInfo[0]) + "-" + dayInfo[2];
 			lines[str] = 0;
 			for (let i = 0; i < messages.length; i++) {
 				let message = messages[i];
