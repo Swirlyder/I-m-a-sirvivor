@@ -107,6 +107,9 @@ class FTL extends Games.Game {
 	}
 
 	onNextRound() {
+		this.rolls.clear();
+		this.actions.clear();
+		this.numActions = 0;
 		if (this.getRemainingPlayerCount() === 2) {
 			this.finals = true;
 			this.say("/wall Finals! " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name).join(" vs. ") + "!");
