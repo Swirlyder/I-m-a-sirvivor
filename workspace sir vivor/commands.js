@@ -1446,7 +1446,7 @@ exports.commands = {
 	para: function(arg, user, room)
 	{
 		let text1 = "I'm Paradise and this is my Anime club. I work here with my friends and fellow weebs: Bon Dance, Aknolan, PenQuin, Swirlyder, Aknolan, Cheese, Hawkie, Henka, OM room, phable";
-		let text2 = "Soccer, Zeonth, Azuuli, blink182, Deathbywobbuffet, Zyg-Ten%, and Zyx14; and in 23 years, I've learned one thing. You never know WHAT anime is going to be good.";
+		let text2 = "Soccer, Zeonth, SnapEasy, blink182, Deathbywobbuffet, Cyclotic, Zyg-Ten%, and Zyx14; and in 23 years, I've learned one thing. You never know WHAT anime is going to be good.";
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
