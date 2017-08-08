@@ -969,10 +969,11 @@ exports.commands = {
 
 	game: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && room !== user) return;
+		let survRoom = Rooms.get('survivor');
 		if (Games.host) {
 			return room.say("__" + Games.host.name + "__ is currently hosting.");
-		} else if (room.game) {
-			return room.say("A game of **" + room.game.name + "** is in progress.");
+		} else if (survRoom.game) {
+			return room.say("A game of **" + survRoom.game.name + "** is in progress.");
 		} else {
 			return room.say("No game is in progress.");
 		}
@@ -1973,6 +1974,8 @@ exports.commands = {
 		if (!user.hasRank(room.id, '+')) return;
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
+		let id = Tools.toId(target);
+		if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 	},
@@ -1984,7 +1987,7 @@ exports.commands = {
 		let goodids = Object.keys(Games.games).slice();
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
-		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
+		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame || id === 'ftl' || id === 'followtheleader') {
 			id = Tools.sample(goodids);
 		}
 		Games.createGame(id, room);
