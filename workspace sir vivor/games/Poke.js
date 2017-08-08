@@ -319,7 +319,7 @@ exports.name = name;
 exports.id = id;
 exports.description = description;
 exports.game = Poke;
-exports.aliases = ['poke'];
+exports.aliases = ['poke', 'pokesurv'];
 exports.commands = {
 	"check": "check",
 	destroy: "destroy",
