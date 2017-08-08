@@ -968,7 +968,7 @@ exports.commands = {
 	},
 
 	game: function (target, user, room) {
-		if (!user.hasRank(room, '+') && room !== user) return;
+		if (!user.hasRank(room.id, '+') && room !== user) return;
 		if (Games.host) {
 			return room.say("__" + Games.host.name + "__ is currently hosting.");
 		} else if (room.game) {
