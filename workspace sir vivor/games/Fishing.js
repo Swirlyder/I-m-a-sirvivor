@@ -109,7 +109,7 @@ class Fishing extends Games.Game {
 				this.say("**" + this.curPlayer.name + "** did not choose anybody to attack!");
 				this.curPlayer = null;
 			}
-			this.say("!pick " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name).join(", "));
+			this.say("!pick " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "[" + this.rolls.get(pl) + "]").join(", "));
 		}
 	}
 
@@ -123,7 +123,7 @@ class Fishing extends Games.Game {
 			this.say("Rolling for **" + this.curPlayer.name + "**'s next catch!");
 			this.say("!roll 100");
 		} else {
-			this.say("!pick " + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join(", "));
+			this.say("!pick __" + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join(", ") + "__");
 		}
 	}
 
