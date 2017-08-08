@@ -937,6 +937,7 @@ exports.commands = {
 			hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
 			hst: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
 			hs: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
+			fishing: ['Fishing', 'https://docs.google.com/document/d/1Uv8fQhwFIRsqqZ_QAE1ZXh3fgDXYZ4Y4ncMyA9RGdUI/edit', ''],
 		};
 
 		arg = toId(arg);
@@ -964,6 +965,17 @@ exports.commands = {
 		var t = setTimeout(function () {
 			Games.canTheme = true;
 		}, 5 * 1000);
+	},
+
+	game: function (target, user, room) {
+		if (!user.hasRank(room, '+') && room !== user) return;
+		if (Games.host) {
+			return room.say("__" + Games.host.name + "__ is currently hosting.");
+		} else if (Rooms.get('survivor').game) {
+			return room.say("A game of **" + Rooms.get('survivor').game.name + "** is in progress.");
+		} else {
+			return room.say("No game is in progress.");
+		}
 	},
 	tester: function(arg, user, room)
 	{
