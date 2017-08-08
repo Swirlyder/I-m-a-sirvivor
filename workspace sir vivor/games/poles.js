@@ -68,6 +68,7 @@ class Poles extends Games.Game {
 				this.spores = [];
 				this.order = [];
 				this.isSpored.clear();
+				this.actions.clear();
 				this.say("Please pm me your attacks and spores with ``" + Config.commandCharacter + "destroy [user]``, ``" + Config.commandCharacter + "action spore, [user]``");
 				this.timeout = setTimeout(() => this.listRemainingPlayers(), 60 * 1000);
 			}

@@ -971,8 +971,8 @@ exports.commands = {
 		if (!user.hasRank(room, '+') && room !== user) return;
 		if (Games.host) {
 			return room.say("__" + Games.host.name + "__ is currently hosting.");
-		} else if (Rooms.get('survivor').game) {
-			return room.say("A game of **" + Rooms.get('survivor').game.name + "** is in progress.");
+		} else if (room.game) {
+			return room.say("A game of **" + room.game.name + "** is in progress.");
 		} else {
 			return room.say("No game is in progress.");
 		}
