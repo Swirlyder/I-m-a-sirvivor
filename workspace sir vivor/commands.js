@@ -711,7 +711,7 @@ exports.commands = {
 	},
 
 	sethost: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && Config.canHost.indexOf(user.id) === -1) return;
+		if (!user.hasRank('survivor', '%') && Config.canHost.indexOf(user.id) === -1) return;
 		if (Games.host) return room.say("__" + Games.host.name + "__ is currently hosting");
 		let targUser = Users.get(Tools.toId(target));
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
