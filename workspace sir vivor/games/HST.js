@@ -220,7 +220,7 @@ class HST extends Games.Game {
 				break;
 			}
 		}
-		if (!this.actions.has(player)) return user.say("Invalid location! ``Locations:`` Bed, Closet, Attic, Basement.");
+		if (!this.actions.has(player)) return user.say("Invalid location! ``Locations:`` " + Object.keys(this.locations).map(loc => this.locations[loc].roundname).join(", "));
 		user.say("You have chosen to " + (this.roles.get(player) === "seeker" ? "seek" : "hide") + " " + this.locations[this.actions.get(player)].name + "!");
 		this.numActions++;
 		if (this.numActions === this.getRemainingPlayerCount()) {
