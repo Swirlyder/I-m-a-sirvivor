@@ -123,7 +123,7 @@ class Fishing extends Games.Game {
 			this.say("Rolling for **" + this.curPlayer.name + "**'s next catch!");
 			this.say("!roll 100");
 		} else {
-			this.say("!pick __" + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join(", ") + "__");
+			this.say("!pick __" + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join("__, __") + "__");
 		}
 	}
 
