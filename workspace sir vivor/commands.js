@@ -1876,7 +1876,7 @@ exports.commands = {
 	},
 	
 	allowroll: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id)) return;
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1) (!Games.host || Games.host.id !== user.id)) return;
 		if (!target) return;
 		let split = target.split(",");
 		let goodnames = [], badnames = [], alreadynames = [];
