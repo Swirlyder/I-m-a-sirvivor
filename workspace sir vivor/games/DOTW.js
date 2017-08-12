@@ -294,6 +294,7 @@ class DOTW extends Games.Game {
 					this.say("**" + this.winPlayer.name + "** defeats **" + this.losePlayer.name + "**!**" + this.losePlayer.name + "** has already lost and is eliminated!");
 				} else {
 					this.say("**" + this.winPlayer.name + "** defeats **" + this.losePlayer.name + "**! It is **" + this.losePlayer.name + "**'s first time losing so they ain't dead yet");
+					this.hasBeenKilled.set(this.losePlayer, true);
 				}
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else if (this.day === 3) {
