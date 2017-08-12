@@ -2030,8 +2030,16 @@ exports.commands = {
 		} else {
 			user.say(text);
 		}
-	}
-	,
+	},
+
+	bomb: function (target, user, room) {
+		let text = "A bomb is a player that, when eliminated, \"explodes\" and eliminates the player that eliminated them.";
+		if (user.hasRank(room.id, '+')) {
+			room.say(text);
+		} else {
+			user.say(text);
+		}
+	},
 	dq: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') || !room.game) return;
 		room.game.dq(target);
