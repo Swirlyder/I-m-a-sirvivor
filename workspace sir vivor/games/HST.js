@@ -168,7 +168,7 @@ class HST extends Games.Game {
 					player.eliminated = true;
 				}
 			}
-			this.say("**" + names.join(', ') + "** win " + (names.length === 1 ? "s" : "") + " the roll battle!");
+			this.say("**" + names.join(', ') + "** win" + (names.length === 1 ? "s" : "") + " the roll battle!");
 			return this.end();
 		}
 		let tagged = [];
