@@ -98,53 +98,57 @@ class KITD extends Games.Game {
 	}
 
 	setOrder() {
-		let hasStuff = {
-			killer: false,
-			cop: false,
-		};
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (!player.eliminated) {
+		try {
+			let hasStuff = {
+				killer: false,
+				cop: false,
+			};
+			for (let userID in this.players) {
+				let player = this.players[userID];
+				if (!player.eliminated) {
+					let role = this.playerRoles.get(player);
+					if (role === 'Serial Killer') {
+						hasStuff.killer = true;
+					} else if (role === 'Cop') {
+						hasStuff.cop = true;
+					}
+				}
+			}
+			for (let i in hasStuff) {
+				let citizens = Object.values(this.players).filter(!pl.eliminated && this.playerRoles.get(player) === 'Citizen');
+				if (!hasStuff[i]) {
+					let randCitizen = Tools.sample(citizens);
+					let targetRole;
+					if (i === 'killer') {
+						targetRole = "Serial Killer";
+					} else {
+						targetRole = "Cop";
+					}
+					randCitizen.say("Your role was changed to the **" + targetRole + "**!");
+					this.playerRoles.set(randCitizen, targetRole);
+				}
+			}
+			for (let userID in this.players) {
+				let player = this.players[userID];
 				let role = this.playerRoles.get(player);
 				if (role === 'Serial Killer') {
-					hasStuff.killer = true;
-				} else if (role === 'Cop') {
-					hasStuff.cop = true;
-				}
-			}
-		}
-		for (let i in hasStuff) {
-			let citizens = Object.values(this.players).filter(!pl.eliminated && this.playerRoles.get(player) === 'Citizen');
-			if (!hasStuff[i]) {
-				let randCitizen = Tools.sample(citizens);
-				let targetRole;
-				if (i === 'killer') {
-					targetRole = "Serial Killer";
-				} else {
-					targetRole = "Cop";
-				}
-				randCitizen.say("Your role was changed to the **" + targetRole + "**!");
-				this.playerRoles.set(randCitizen, targetRole);
-			}
-		}
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			let role = this.playerRoles.get(player);
-			if (role === 'Serial Killer') {
-				this.newOrder = [player];
-				for (let userID in this.players) {
-					if (this.players[userID] === player) {
-						continue;
+					this.newOrder = [player];
+					for (let userID in this.players) {
+						if (this.players[userID] === player) {
+							continue;
+						}
+						else {
+							this.newOrder.push(this.players[userID]);
+						}
 					}
-					else {
-						this.newOrder.push(this.players[userID]);
-					}
+					this.order = this.newOrder;
+					break;
 				}
-				this.order = this.newOrder;
-				break;
 			}
-		}
 		this.handleAttacks();
+		} catch (e) {
+			this.mailbreak(e);
+		}
 	}
 
 	handleAttacks() {
