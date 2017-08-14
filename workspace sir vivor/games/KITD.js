@@ -98,6 +98,35 @@ class KITD extends Games.Game {
 	}
 
 	setOrder() {
+		let hasStuff = {
+			killer: false,
+			cop: false,
+		};
+		for (let userID in this.players) {
+			let player = this.players[userID];
+			if (!player.eliminated) {
+				let role = this.playerRoles.get(player);
+				if (role === 'Serial Killer') {
+					hasStuff.killer = true;
+				} else if (role === 'Cop') {
+					hasStuff.cop = true;
+				}
+			}
+		}
+		for (let i in hasStuff) {
+			let citizens = Object.values(this.players).filter(!pl.eliminated && this.playerRoles.get(player) === 'Citizen');
+			if (!hasStuff[i]) {
+				let randCitizen = Tools.sample(citizens);
+				let targetRole;
+				if (i === 'killer') {
+					targetRole = "Serial Killer";
+				} else {
+					targetRole = "Cop";
+				}
+				randCitizen.say("Your role was changed to the **" + targetRole + "**!");
+				this.playerRoles.set(randCitizen, targetRole);
+			}
+		}
 		for (let userID in this.players) {
 			let player = this.players[userID];
 			let role = this.playerRoles.get(player);
@@ -119,13 +148,9 @@ class KITD extends Games.Game {
 	}
 
 	handleAttacks() {
-		console.log(this.order);
 		if (this.order.length === 0) {
 			this.nextRound();
 			return;
-		}
-		if (this.order.length === this.getRemainingPlayerCount()) {
-			
 		}
 		this.curPlayer = this.order.shift();
 		this.oplayer = this.attacks.get(this.curPlayer);
