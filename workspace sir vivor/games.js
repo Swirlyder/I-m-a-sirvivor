@@ -66,7 +66,7 @@ class Game {
 		if (this.room.id === 'trivia') {
 			this.say("triviasignups! If you would like to join the ~~gulag~~ game, do ``/me in``");
 		} else {
-			this.say("survgame! If you would like to play, use the command ``/me in``");
+			this.say("survgame! If you would like to play the game of **" + this.name + "**, use the command ``/me in``");
 		}
 		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + (this.rollSwitch ? "Roll Switch " : "") + this.name + "**: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
