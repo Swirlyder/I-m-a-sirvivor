@@ -72,7 +72,7 @@ class KITD extends Games.Game {
 			this.numAttacks = 0;
 			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()));
 			this.say("**Please pm me your attacks now with** ``" + Config.commandCharacter + "destroy [user]``");
-			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+			this.timeout = setTimeout(() => this.listRemaining(), 10 * 1000);
 		}
 	}
 
@@ -84,7 +84,7 @@ class KITD extends Games.Game {
 			waitings.push(player.name);
 		}
 		if (waitings.length > 0) this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
+		this.timeout = setTimeout(() => this.elimPlayers(), 10 * 1000);
 	}
 
 	elimPlayers() {
@@ -115,7 +115,7 @@ class KITD extends Games.Game {
 				}
 			}
 			for (let i in hasStuff) {
-				let citizens = Object.values(this.players).filter(!pl.eliminated && this.playerRoles.get(player) === 'Citizen');
+				let citizens = Object.values(this.players).filter(pl => !pl.eliminated && this.playerRoles.get(pl) === 'Citizen');
 				if (!hasStuff[i]) {
 					let randCitizen = Tools.sample(citizens);
 					let targetRole;
@@ -128,24 +128,25 @@ class KITD extends Games.Game {
 					this.playerRoles.set(randCitizen, targetRole);
 				}
 			}
+			let serKiller, cop;
 			for (let userID in this.players) {
 				let player = this.players[userID];
 				let role = this.playerRoles.get(player);
 				if (role === 'Serial Killer') {
-					this.newOrder = [player];
-					for (let userID in this.players) {
-						if (this.players[userID] === player) {
-							continue;
-						}
-						else {
-							this.newOrder.push(this.players[userID]);
-						}
-					}
-					this.order = this.newOrder;
-					break;
+					serKiller = player;
+				} else if (role === 'Cop') {
+					cop = player;
 				}
 			}
-		this.handleAttacks();
+			this.order = [serKiller];
+			for (let i = 0; i < this.order.length; i++) {
+				let player = this.order[i];
+				if (player !== serKiller && player !== cop) {
+					this.order.push(player);
+				}
+			}
+			if (!cop.eliminated) this.order.push(cop);
+			this.handleAttacks();
 		} catch (e) {
 			this.mailbreak(e);
 		}
@@ -160,11 +161,6 @@ class KITD extends Games.Game {
 		this.oplayer = this.attacks.get(this.curPlayer);
 		let role1 = this.playerRoles.get(this.curPlayer);
 		let role2 = this.playerRoles.get(this.oplayer);
-		if (this.playerRoles.get(this.curPlayer) === 'Cop' && this.order.length !== 0) {
-			this.order.push(this.curPlayer);
-			this.handleAttacks();
-			return;
-		}
 		if (this.curPlayer.eliminated || this.oplayer.eliminated) {
 			this.handleAttacks();
 			return;

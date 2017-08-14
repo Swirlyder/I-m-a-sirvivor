@@ -272,6 +272,24 @@ global.responses = {
 		}
 		],
 	},
+	areyou: {
+		priority: 3,
+		responses: [
+		{
+			username: false,
+			before: "duh",
+		},
+		{
+			username: false,
+			before: "I hope not",
+		},
+		{
+			username: true,
+			before: "No, but I heard that ",
+			after: " is.",
+		},
+		]
+	}
 }
 global.waiting = {};
 exports.parse = {
