@@ -259,6 +259,7 @@ class EXC extends Games.Game {
 
 	nick(target, user) {
 		if (!target) return;
+		if (Tools.toId(target) === "survgame") return;
 		let player = this.players[user.id];
 		if (!player) return;
 		if (player.nick) return user.say("You have already chosen a nickname!");
