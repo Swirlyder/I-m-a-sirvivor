@@ -775,11 +775,13 @@ exports.commands = {
 			this.say(room, "/modnote " + name + " hosted");
 			Games.host = Users.get(name);
 			Games.addHost(Games.host);
+			Games.exportData();
 		} else {
 			Games.host = realuser;
 			this.say(room, "survgame! " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "")+ "! Do ``/me in`` to join!");
 			this.say(room, "/modnote " + realuser.name + " hosted");
 			Games.addHost(realuser);
+			Games.exportData();
 		}
 	},
 
@@ -1137,6 +1139,7 @@ exports.commands = {
 		Games.host = Users.get(name);
 		Games.addHost(name);
 		Games.points = null;
+		Games.exportData();
 	},
 
 

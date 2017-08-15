@@ -292,6 +292,11 @@ global.responses = {
 	}
 }
 global.waiting = {};
+function checkHost() {
+	if (Games.hostid) {
+		Games.host = Users.get(Games.hostid);
+	}
+}
 exports.parse = {
 	actionUrl: url.parse('https://play.pokemonshowdown.com/~~' + Config.serverid + '/action.php'),
 	'settings': settings,
@@ -331,6 +336,7 @@ exports.parse = {
 				room.onUserlist(users);
 				if (room.id === 'survivor') {
 					Parse.say(room, '/roomauth survivor');
+					setTimeout(() => checkHost(), 5 * 1000);
 				}
 				return ok('joined ' + room.id);					
 			}

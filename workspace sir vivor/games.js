@@ -425,9 +425,9 @@ class GamesManager {
 		} catch (e) {};
 		let id = fs.readFileSync('./databases/host.json').toString();
 		if (id) {
-			Games.host = Users.get(id);
+			Games.hostid = id;
 		}
-		else Games.host = null;
+		else Games.hostid = null;
 		if (!Games.host) Games.host = null;
 		try {
 			this.hostbans = JSON.parse(fs.readFileSync('./databases/hostbans.json'));
