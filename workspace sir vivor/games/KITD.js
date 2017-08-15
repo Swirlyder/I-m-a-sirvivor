@@ -72,7 +72,7 @@ class KITD extends Games.Game {
 			this.numAttacks = 0;
 			this.say("**Players: (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()));
 			this.say("**Please pm me your attacks now with** ``" + Config.commandCharacter + "destroy [user]``");
-			this.timeout = setTimeout(() => this.listRemaining(), 10 * 1000);
+			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
 
@@ -84,7 +84,7 @@ class KITD extends Games.Game {
 			waitings.push(player.name);
 		}
 		if (waitings.length > 0) this.say("Waiting on: " + waitings.join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 10 * 1000);
+		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 	}
 
 	elimPlayers() {
