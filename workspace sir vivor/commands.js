@@ -1136,8 +1136,8 @@ exports.commands = {
 		let info = Games.hosts.shift();
 		this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
 		this.say(room, "/modnote " + name + " hosted");
-		Games.host = Users.get(name);
-		Games.addHost(name);
+		Games.host = Users.get(info[0]);
+		Games.addHost(info[0]);
 		Games.points = null;
 		Games.exportData();
 	},
