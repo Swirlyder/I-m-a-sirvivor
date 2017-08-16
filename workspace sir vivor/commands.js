@@ -757,7 +757,7 @@ exports.commands = {
 					break;
 				}
 			}
-			if (Games.host.id === realuser.id) {
+			if (Games.host && Games.host.id === realuser.id) {
 				return room.say(realuser.name + " is already hosting somebody probably sniped you haha");
 			} else if (i !== len) {
 				this.say(room, realuser.name + " is already on the hostqueue.");
