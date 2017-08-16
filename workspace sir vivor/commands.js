@@ -1133,13 +1133,26 @@ exports.commands = {
 		if (Games.hosts.length === 0) {
 			return this.say(room, "The hostqueue is empty.");
 		}
-		let info = Games.hosts.shift();
-		this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-		this.say(room, "/modnote " + name + " hosted");
-		Games.host = Users.get(info[0]);
-		Games.addHost(info[0]);
-		Games.points = null;
-		Games.exportData();
+		let info = ["", ""];
+		while (Games.hosts.length > 0) {
+			info = Games.hosts.shift();
+			if (Users.get(info[0])) {
+				break;
+			} else {
+				this.say(room, "**" + info[0] + "** is not online and could not be hosted!");
+			}
+		}
+		console.log(info);
+		if (Users.get(info[0])) {
+			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
+			this.say(room, "/modnote " + info[0] + " hosted");
+			Games.host = Users.get(info[0]);
+			Games.addHost(info[0]);
+			Games.points = null;
+			Games.exportData();
+		} else {
+			this.say(room, "Nobody in the hostqueue could be hosted!");
+		}
 	},
 
 
