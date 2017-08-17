@@ -217,6 +217,7 @@ class DOTW extends Games.Game {
 					this.say("**" + this.winPlayer.name + "** dodges Pikachu's Thunder!");
 				}
 			}
+			this.pikachuWaiting = false;
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		} else if (!this.rolla) {
 			this.rolla = roll;
