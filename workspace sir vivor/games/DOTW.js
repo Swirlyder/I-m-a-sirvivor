@@ -101,7 +101,7 @@ class DOTW extends Games.Game {
 	elimPlayers() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			if (!player.elimianted && !this.attacks.has(player)) {
+			if (!player.eliminated && !this.attacks.has(player)) {
 				player.eliminated = true;
 				player.say("You didn't attack someone this round and are eliminated!");
 			}
