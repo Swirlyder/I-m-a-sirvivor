@@ -195,7 +195,7 @@ class DOTW extends Games.Game {
 						this.end();
 						return;
 					} else {
-						this.say("Since both players " + (this.curPlayer.eliminated ? "were hit by" : "dodged") + " Pikachu's thunder, we will do regular hunger games battle");
+						this.say("Since both players " + (this.curPlayer.eliminated ? "were hit by" : "dodged") + " Pikachu's Thunder, we will do regular hunger games battle");
 						this.curPlayer.eliminated = false;
 						this.oplayer.eliminated = false;
 						this.finalsPikachu = true;
@@ -286,7 +286,7 @@ class DOTW extends Games.Game {
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else if (this.day === 4) {
 				this.losePlayer.eliminated = true;
-				this.say("**" + this.winPlayer.name + "** defeats **" + this.losePlayer.name + "**! Rolling for pikachu's thunder: ");
+				this.say("**" + this.winPlayer.name + "** defeats **" + this.losePlayer.name + "**! Rolling for Pikachu's Thunder: ");
 				this.pikachuWaiting = true;
 				this.say("!roll 100");
 			} else if (this.day === 6) {
