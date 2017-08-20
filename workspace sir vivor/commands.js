@@ -772,8 +772,8 @@ exports.commands = {
 			Games.hosts.push([realuser.name, targTheme]);
 			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
 			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + name + " hosted");
-			Games.host = Users.get(name);
+			this.say(room, "/modnote " + info[0] + " hosted");
+			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
 		} else {
