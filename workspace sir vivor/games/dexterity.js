@@ -212,8 +212,7 @@ class Dexterity extends Games.Game {
 		if (!weapon) return user.say("That is not a valid weapon!");
 		let prevAttacks = this.prevAttacks.get(player);
 		if (prevAttacks.indexOf(weapon.name) !== -1 && prevAttacks.indexOf(weapon.name) < weapon.cd) return user.say("Your cooldown is not over for that weapon!");
-		let curAtt = this.attacks.get(this.curPlayer);
-		if (curAtt) return user.say("You have already attacked someone this round.");
+		if (this.attacks.has(player)) return user.say("You have already attacked somebody this round!");
 		if (attackedPlayer.id === player.id) return user.say("You can't attack yourself.");
 		this.attacks.set(player, attackedPlayer);
 		this.items.set(player, weapon);
