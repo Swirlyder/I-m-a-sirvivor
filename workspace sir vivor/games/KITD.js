@@ -138,9 +138,10 @@ class KITD extends Games.Game {
 					cop = player;
 				}
 			}
+			let oldorder = this.order;
 			this.order = [serKiller];
-			for (let i = 0; i < this.order.length; i++) {
-				let player = this.order[i];
+			for (let i = 0; i < oldorder.length; i++) {
+				let player = oldorder[i];
 				if (player !== serKiller && player !== cop) {
 					this.order.push(player);
 				}
