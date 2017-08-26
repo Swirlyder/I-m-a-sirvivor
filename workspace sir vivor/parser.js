@@ -48,6 +48,7 @@ function addChatMessage(message, user) {
 global.responses = {
 	why: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			usesname: false,
@@ -70,6 +71,7 @@ global.responses = {
 	
 	howmuch: {
 		priority: 4,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -85,6 +87,7 @@ global.responses = {
 	
 	howbad: {
 		priority: 4,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -99,6 +102,7 @@ global.responses = {
 	},
 	when: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: true,
@@ -134,6 +138,7 @@ global.responses = {
 	
 	can: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -156,6 +161,7 @@ global.responses = {
 
 	am: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -173,6 +179,7 @@ global.responses = {
 	},
 	should: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -195,6 +202,7 @@ global.responses = {
 	
 	will: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -216,6 +224,7 @@ global.responses = {
 	},
 	where: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -235,6 +244,7 @@ global.responses = {
 	
 	who: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: true,
@@ -255,6 +265,7 @@ global.responses = {
 	hi: 'hello',
 	hello: {
 		priority: 2,
+		placement: "prefix",
 		responses: [
 		{
 			username: false,
@@ -274,6 +285,7 @@ global.responses = {
 	},
 	areyou: {
 		priority: 3,
+		placement: "suffix",
 		responses: [
 		{
 			username: false,
@@ -289,7 +301,17 @@ global.responses = {
 			after: " is.",
 		},
 		]
-	}
+	},
+	fuckyou: {
+		placement: "prefix",
+		responses: [
+		{ 
+			username: true,
+			before: "fuck you ",
+			after: "",
+		},
+		],
+	},
 }
 global.waiting = {};
 function checkHost() {
@@ -551,34 +573,37 @@ exports.parse = {
 			}
 		}
 		let messageID = Tools.toId(message);
-		if (Config.commandCharacter === '.' && messageID.startsWith(Tools.toId(Config.nick))) {
-			if (!waiting["response"] || user.hasRank(room.id, '%')) { 
-				let watchlist = Object.keys(responses);
-				watchlist.sort(function (first, second) {
-					return first.length - second.length;
-				});
-				let i;
-				messageID = messageID.substr(Tools.toId(Config.nick).length);
-				for (i = 0; i < watchlist.length; i++) {
-					if (messageID.startsWith(watchlist[i])) break;
+		if (Config.commandCharacter === '.') {
+			let actResponse;
+			for (let responseID in responses) {
+				let response = responses[responseID];
+				while (typeof response === 'string') {
+					response = responses[response];
 				}
-				if (i !== watchlist.length) {
-					let cur = watchlist[i]
-					while (typeof responses[cur] === 'string') {
-						cur = responses[cur];
-					}
-					let response = Tools.sample(responses[cur].responses);
-					let respmessage;
-					if (response.username) {
-						respmessage = response.before + user.name + response.after;
-					} else {
-						respmessage = response.before;
-					}
-					Parse.say(room, respmessage);
-					if (!user.hasRank(room.id, '%')) {
-						waiting["response"] = true;
-						var timeout = setTimeout(() =>  setWaiting("response"), 5 * 60 * 1000);
-					}
+				let startstr;
+				if (response.placement === "suffix") {
+					startstr = Tools.toId(Config.nick) + responseID;
+				} else {
+					startstr = responseID + Tools.toId(Config.nick);
+				}
+				if (messageID.startsWith(startstr)) {
+					
+					actResponse = response;
+					break;
+				}
+			}
+			if (actResponse) {
+				let response = Tools.sample(actResponse.responses);
+				let respmessage
+				if (response.username) {
+					respmessage = response.before + user.name + response.after;
+				} else {
+					respmessage = response.before;
+				}
+				Parse.say(room, respmessage);
+				if (!user.hasRank(room.id, '%')) {
+					waiting["response"] = true;
+					var timeout = setTimeout(() =>  setWaiting("response"), 5 * 60 * 1000);
 				}
 			}
 		}
