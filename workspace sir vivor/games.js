@@ -284,6 +284,9 @@ class Game {
 	}
 
 	getPlayer(message) {
+		for (let userID in this.players) {
+			if (userID === Tools.toId(message)) return this.players[userID];
+		}
 		let last = message.lastIndexOf("(");
 		if (last === -1) last = message.lastIndexOf("[");
 		if (last === -1) last = message.length;
