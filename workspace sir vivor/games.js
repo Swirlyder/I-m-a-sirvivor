@@ -287,8 +287,8 @@ class Game {
 		for (let userID in this.players) {
 			if (userID === Tools.toId(message)) return this.players[userID];
 		}
-		let last = message.lastIndexOf("(");
-		if (last === -1) last = message.lastIndexOf("[");
+		let last = message.lastIndexOf("[");
+		if (last === -1) last = message.lastIndexOf("(");
 		if (last === -1) last = message.length;
 		return this.players[Tools.toId(message.substr(0, last))];
 	}
