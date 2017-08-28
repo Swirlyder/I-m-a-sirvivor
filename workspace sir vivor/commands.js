@@ -230,7 +230,7 @@ exports.commands = {
     off: function(arg, user, room) {
         if (!user.hasRank('survivor', '%')) return false;
 	    //room.say("/logout");
-	   // connect();
+	    //connect();
 	},
 	/**
 	 * Dev commands
@@ -260,6 +260,11 @@ exports.commands = {
 		global.Games = require('./games.js');
 		Games.loadGames();
 		this.say(room, 'Games reloaded.');
+	},
+	shutdownmode: function (arg, user, room) {
+		if (!user.isExcepted()) return false;
+		Config.allowGames = false;
+		room.say("Shutdown mode enabled");
 	},
 	join: function (arg, user, room) {
 		this.say(room, '/join ' + arg);
@@ -775,6 +780,7 @@ exports.commands = {
 	host: function(target, user, room)
 	{
 		if ((!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
+		if (!Config.allowGames) return room.say("**" + Config.nick + "** will be restarting soon, please refrain from beginning any games.");
 		let split = target.split(",");
 		let realuser = Users.get(split[0]);
 		if (!realuser) return this.say(room, "You can only host somebody currently in the room.");
@@ -1165,7 +1171,8 @@ exports.commands = {
 	},
 
 	nexthost: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return
+		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!Config.allowGames) return room.say("**" + Config.nick + "** will be restarting soon, please refrain from beginning any games.");
 		if (Games.host) {
 			return this.say(room, "A game is currently in progress!");
 		}
@@ -2053,6 +2060,7 @@ exports.commands = {
 
     signups: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
+		if (!Config.allowGames) return room.say("**" + Config.nick + "** will be restarting soon, please refrain from beginning any games.");
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let id = Tools.toId(target);
@@ -2063,6 +2071,7 @@ exports.commands = {
 	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
 	    if (!user.hasRank(room.id, '+')) return;
+		if (!Config.allowGames) return room.say("**" + Config.nick + "** will be restarting soon, please refrain from beginning any games.");
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let goodids = Object.keys(Games.games).slice();
