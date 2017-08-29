@@ -65,8 +65,8 @@ class TD extends Games.Game {
 	doPlayerAttack() {
 		this.rolla = null;
 		this.rollb = null;
-		this.roll1 = 100;
-		this.roll2 = 100;
+		this.roll1 = 200 - this.troops.get(this.curPlayer);
+		this.roll2 = 200 - this.troops.get(this.oplayer);
 		this.sayPlayerRolls();
 	}
 	
