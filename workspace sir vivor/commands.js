@@ -2163,6 +2163,8 @@ exports.commands = {
 		room.say("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
 		room.say("Participation points awarded to: **" + names.join(", ") + "**.");
 		dd.updateModlog(user.name + " did .addpoints " + target);
+		dd.updateModlog("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
+		dd.updateModlog("Participation points awarded to: **" + names.join(", ") + "**.");
 	},
 	dd: function(arg, user, room)
 	{
@@ -2186,6 +2188,7 @@ exports.commands = {
 		dd.addFirst(target);
 		user.say("First place points awarded to: **" + target + "**.");
 		dd.updateModlog(user.name + " did .first " + target);
+		dd.updateModlog("First place points awarded to: **" + target + "**.");
 	},
 	seconds: 'second',
 	second: function (target, user, room) {
@@ -2194,6 +2197,7 @@ exports.commands = {
 		dd.addSecond(target);
 		user.say("Second place points awarded to: **" + target + "**.");	
 		dd.updateModlog(user.name + " did .second " + target);
+		dd.updateModlog("Second place points awarded to: **" + target + "**.");
 	},
 	hp: 'hostpoints',
 	hostpoints: function (target, user, room) {
@@ -2202,6 +2206,7 @@ exports.commands = {
 		dd.addHost(target);
 		user.say("Host points awarded to: **" + target + "**.");
 		dd.updateModlog(user.name + " did .hostpoints " + target);
+		dd.updateModlog("Host points awarded to: **" + target + "**.");
 	},
 	part: 'participation',
 	parts: 'participation',
@@ -2226,30 +2231,37 @@ exports.commands = {
 			user.say(msg);
 		}
 		dd.updateModlog(user.name + " did .parts " + target);
+		dd.updateModlog(msg);
 	},
 
 	rmfirst: 'removefirst',
 	removefirst: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let msg;
 		if (dd.removeFirst(target)) {
-			user.say("First place removed from: **" + target + "**.");
-			dd.updateModlog(user.name + " did .rmfirst " + target);
+			msg = "First place removed from: **" + target + "**."
 		} else {
-			return user.say("**" + target + "** has never won a game!");
+			msg = "**" + target + "** has never won a game!";
 		}
+		user.say(msg);
+		dd.updateModlog(user.name + " did .rmfirst " + target);
+		dd.updateModlog(msg);
 	},
 	
 	rmsecond: 'removesecond',
 	removesecond: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let msg;
 		if (dd.removeSecond(target)) {
-			user.say("Second place removed from: **" + target + "**.");
-			dd.updateModlog(user.name + " did .rmsecond " + target);
+			msg = "Second place removed from: **" + target + "**.";
 		} else {
-			return user.say("**" + target + "** has never placed second!");
+			msg = "**" + target + "** has never placed second!";
 		}
+		user.say(msg);
+		dd.updateModlog(user.name + " did .rmsecond " + target);
+		dd.updateModlog(msg);
 	},
 
 	rmhost: 'removehost',
@@ -2257,12 +2269,15 @@ exports.commands = {
 	removehost: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let msg = "";
 		if (dd.removeHost(target)) {
-			user.say("Host removed from: **" + target + "**.");
-			dd.updateModlog(user.name + " did .rmhost " + target);
+			msg = "Host removed from: **" + target + "**."
 		} else {
-			return user.say("**" + target + "** has never hosted dd!");
+			msg = "**" + target + "** has never hosted dd!";
 		}
+		user.say(msg);
+		dd.updateModlog(user.name + " did .rmhost " + target);
+		dd.updateModlog(msg);
 	},
 	removeparts: 'removepart',
 	removeparticipation: 'removepart',
@@ -2282,18 +2297,21 @@ exports.commands = {
 				bad.push(name);
 			}
 		}
+		let msg = "";
 		if (good.length > 0 && bad.length > 0) {
-			user.say("Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.");
+			msg = "Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.";
 		} else if (good.length > 0) {
-			user.say("Participations removed from: **" + good.join(", ") + "**.");
+			msg = "Participations removed from: **" + good.join(", ") + "**.";
 		} else {
-			user.say("I was unable to remove participations from **" + bad.join(", ") + "**.");
+			msg = "I was unable to remove participations from **" + bad.join(", ") + "**.";
 		}
+		user.say(msg);
 		dd.updateModlog(user.name + " did .rmparts " + target);
+		dd.updateModlog(msg);
 	},
 	
 	ddlog: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
+		if (!user.hasRank('survivor', '+')) return;
 		if (!("data" in dd.modlog)) return;
 		let buffer = '';
 		for (let i = 0; i < dd.modlog.data.length; i++) {
