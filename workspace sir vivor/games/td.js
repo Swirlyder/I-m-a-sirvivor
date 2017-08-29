@@ -20,7 +20,11 @@ class TD extends Games.Game {
 	onStart() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			this.troops.set(player, 50);
+			if (this.variation) {
+				this.troops.set(player, 100);
+			} else {
+				this.troops.set(player, 50);
+			}
 		}
 		this.nextRound();
 	}
@@ -114,3 +118,11 @@ exports.modes = ['Golf', 'Roll Switch'];
 exports.commands = {
 	attack: "attack",
 }
+exports.variations = [
+	{
+		name: "Berserk Tower Defense",
+		aliases: ["btd"],
+		variation: "Berserk",
+		variationAliases: [""],
+	}
+]

@@ -524,8 +524,7 @@ exports.parse = {
 
 				spl = spl.slice(4).join('|');
 				if (spl.startsWith('/invite ') && !(toId(spl.substr(8)) === 'lobby')) {
-					console.log(spl);
-					if (!toId(spl.substr(8)).startsWith('groupchat') || user.isExcepted()) {
+					if (toId(spl.substr(8)).startsWith('battlegen7anythinggoes') || user.isExcepted()) {
 						return send('|/join ' + spl.substr(8));
 					}
 				}
