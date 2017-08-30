@@ -182,6 +182,8 @@ let gameTypes = {
 			welcometoourchatjpg: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?'],
 			wtoc: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?'],
 			winterwonderland: ['Winter Wonderland', 'https://pastebin.com/VzMKLCUy', 'Trapped in a snowstorm only the strong can survive, let\'s hope it\'s you'],
+			followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?'],
+			ftl: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?'],
 };
 exports.commands = {
 	/**
