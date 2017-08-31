@@ -302,16 +302,6 @@ global.responses = {
 		},
 		]
 	},
-	fuckyou: {
-		placement: "prefix",
-		responses: [
-		{ 
-			username: true,
-			before: "fuck you ",
-			after: "",
-		},
-		],
-	},
 }
 global.waiting = {};
 function checkHost() {
@@ -573,7 +563,7 @@ exports.parse = {
 			}
 		}
 		let messageID = Tools.toId(message);
-		if (Config.commandCharacter === '.') {
+		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick)) {
 			let actResponse;
 			for (let responseID in responses) {
 				let response = responses[responseID];

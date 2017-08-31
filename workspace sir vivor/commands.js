@@ -738,13 +738,6 @@ exports.commands = {
 	 * Add custom commands here.
 	 */
 
-	tell: 'say',
-	say: function(arg, user, room)
-	{
-		if (room === user || !user.canUse('say', room.id)) return false;
-		this.say(room, stripCommands(arg) + ' (' + user.name + ' said this)');
-	},
-
 	seen: function(arg, user, room)
 	{ // this command is still a bit buggy
 		var text = (room === user ? '' : '/pm ' + user.id + ', ');
