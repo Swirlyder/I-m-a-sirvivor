@@ -236,7 +236,7 @@ exports.commands = {
 	    connect();
 	},
     kill: function (arg, user, room) {
-        if (!user.hasRank('survivor', '@')) return false;
+        if (!user.hasRank('survivor', '%')) return false;
 	    room.say("/logout");
         process.exit();
     },
