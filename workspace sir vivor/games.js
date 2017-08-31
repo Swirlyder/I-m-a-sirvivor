@@ -424,7 +424,7 @@ class GamesManager {
 
 	importData() {
 		try {
-			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json'));
+			this.numHosts = JSON.parse(fs.readFileSync('./databases/hosts.json').toString());
 		} catch (e) {};
 		let id = fs.readFileSync('./databases/host.json').toString();
 		if (id) {
@@ -433,7 +433,7 @@ class GamesManager {
 		else Games.hostid = null;
 		if (!Games.host) Games.host = null;
 		try {
-			this.hostbans = JSON.parse(fs.readFileSync('./databases/hostbans.json'));
+			this.hostbans = JSON.parse(fs.readFileSync('./databases/hostbans.json').toString());
 		}  catch (e) {};
 		for (let i in this.hostbans) {
 			let remainingTime = this.hostbans[i].endTime - new Date().getTime();
