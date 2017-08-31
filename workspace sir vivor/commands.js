@@ -235,6 +235,11 @@ exports.commands = {
 	    room.say("/logout");
 	    connect();
 	},
+    kill: function (arg, user, room) {
+        if (!user.hasRank('survivor', '@')) return false;
+	    room.say("/logout");
+        process.exit();
+    },
 	/**
 	 * Dev commands
 	 *
@@ -890,6 +895,8 @@ exports.commands = {
 		return room.say(Games.hostBan(targUser, numDays));
 	},
 
+   
+  
 	hostbanned: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
