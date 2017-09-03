@@ -563,7 +563,7 @@ exports.parse = {
 			}
 		}
 		let messageID = Tools.toId(message);
-		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick)) {
+		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"]) {
 			let actResponse;
 			for (let responseID in responses) {
 				let response = responses[responseID];
