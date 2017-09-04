@@ -237,7 +237,7 @@ exports.commands = {
 	},
     kill: function (arg, user, room) {
         if (!user.hasRank('survivor', '%') || room !== user) return false;
-        if (user.lastcmd !== 'kill') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
+        if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
 	    room.say("/logout");
         process.exit();
     },

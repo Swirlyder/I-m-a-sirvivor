@@ -593,7 +593,7 @@ exports.parse = {
 				Parse.say(room, respmessage);
 				if (!user.hasRank(room.id, '%')) {
 					waiting["response"] = true;
-					var timeout = setTimeout(() =>  setWaiting("response"), 5 * 60 * 1000);
+					var timeout = setTimeout(() => setWaiting("response"), 5 * 60 * 1000);
 				}
 			}
 		}
