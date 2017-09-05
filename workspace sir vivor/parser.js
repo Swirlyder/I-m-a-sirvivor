@@ -604,6 +604,7 @@ exports.parse = {
 			cmd = cmd.substr(0, index);
 			arg = message.substr(index + 1).trim();
 		}
+		if (arg == 'constructor') arg = '';
 		cmd = Tools.toId(cmd);
 		if (!!Commands[cmd]) {
 			let failsafe = 0;
