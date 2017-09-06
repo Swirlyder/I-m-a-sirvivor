@@ -920,10 +920,10 @@ exports.commands = {
 		Games.host = user;
 		room.say("**" + Games.host.name + "** has subbed in as the host!");
 	},
-	cyclotic: function (target, user, room) {
+	pants: function (target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
-		text += '/me runs in circles endlessly';
+		text += '.done with life';
 		this.say(room, text);
 	},
 
