@@ -124,7 +124,7 @@ class DD {
 		if (!(id in this.dd) || this.dd[id].seconds === 0) {
 			return false
 		} else {
-			this.dd[id].hosts--;
+			this.dd[id].seconds--;
 			return true;
 		}
 	}
