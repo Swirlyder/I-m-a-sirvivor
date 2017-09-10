@@ -109,6 +109,7 @@ class FTL extends Games.Game {
 	onNextRound() {
 		this.rolls.clear();
 		this.actions.clear();
+        this.suspected.clear();
 		this.numActions = 0;
 		if (this.getRemainingPlayerCount() === 2) {
 			this.finals = true;

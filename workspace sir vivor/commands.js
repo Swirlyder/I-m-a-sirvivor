@@ -2068,7 +2068,7 @@ exports.commands = {
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let id = Tools.toId(target);
-		if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
+		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 	},
