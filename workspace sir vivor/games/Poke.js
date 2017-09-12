@@ -274,8 +274,10 @@ class Poke extends Games.Game {
 	}
 
 	onEnd() {
-		let lastPlayer = this.getLastPlayer();
-		this.say("!dt " + this.mons.get(lastPlayer).species);
+		if (this.getRemainingPlayerCount() === 1) {
+			let lastPlayer = this.getLastPlayer();
+			this.say("!dt " + this.mons.get(lastPlayer).species);
+		}
 	}
 	
 	destroy(target, user) {

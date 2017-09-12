@@ -183,6 +183,11 @@ class HGA extends Games.Game {
 		if (target.length > 15) {
 			return user.say("Your nickname can only be 15 characters long.");
 		}
+		let msgID = Tools.toId(target);
+		let stretchMatch = /(.)\1{7,}/gi.test(msgID) || /(..+)\1{4,}/gi.test(msgID);
+		if (stretchMatch) {
+			return user.say("Your nickname has too much stretching.");
+		}
 		player.nick = target;
 		this.nicks.push(Tools.toId(target));
 		user.say("You have chosen your nickname as **" + target + "**!");
