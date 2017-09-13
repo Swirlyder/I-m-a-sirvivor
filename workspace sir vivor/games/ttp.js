@@ -264,6 +264,7 @@ class TTP extends Games.Game {
 	attack(target, user) {
 		if (!this.curPlayer || this.oplayer) return;
 		if (this.curPlayer.name !== user.name) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let oplayer = this.players[Tools.toId(target)];
 		if (!oplayer || oplayer.eliminated) return;
 		if (oplayer.name === this.curPlayer.name) {
@@ -287,6 +288,7 @@ class TTP extends Games.Game {
 		if (stat === 'defense') stat = 'def';
 		if (stat === 'health') stat = 'hp';
 		if (stat === 'speed') stat = 'spe';
+		if (Tools.toId(target) === "constructor") return user.say("You cannot choose 'constructor' as your stat.");
 		if (posStats.indexOf(stat) === -1) return this.say("That is not a valid stat!");
 		this.stat = stat;
 		clearTimeout(this.timeout);
@@ -300,6 +302,7 @@ class TTP extends Games.Game {
 		if (this.curPlayer.id !== user.id && this.oplayer.id !== user.id);
 		let player = this.players[user.id];
 		if (this.attackMons.get(player)) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot play 'constructor'");
 		let mon = Tools.data.pokedex[Tools.toId(target)];
 		if (!mon) return user.say("[" + target + "] is not a valid mon.");
 		let index;

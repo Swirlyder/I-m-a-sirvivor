@@ -126,6 +126,7 @@ class Outlaws extends Games.Game {
 		if (!this.canAttack) return;
 		let curPlayer = this.players[user.id];
 		if (!curPlayer) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let realID = toId(target);
 		let oplayer = this.players[realID];
 		if (!oplayer) {

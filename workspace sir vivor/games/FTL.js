@@ -340,6 +340,7 @@ class FTL extends Games.Game {
 	scapegoat(target, user) {
 		if (!this.canScapegoat || this.curPlayer.id !== user.id) return;
 		let targPlayer = this.players[Tools.toId(target)];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot select 'constructor' as the scapegoat");
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
 		if (targPlayer.id === this.leaderid) return user.say("You cannot try to use the leader as the scapegoat.");
@@ -353,6 +354,7 @@ class FTL extends Games.Game {
 	vote(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated || !this.voting) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let targPlayer = this.players[Tools.toId(target)];
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
@@ -370,6 +372,7 @@ class FTL extends Games.Game {
 	suspect(target, user) {
 		if (!this.canSuspect || user.id !== this.leaderid) return;
 		let suspected = this.players[Tools.toId(target)];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot suspect 'constructor'");
 		if (!suspected) return user.say("That player is not in the game!");
 		if (suspected.eliminated) return user.say("That player has already been eliminated!");
 		this.suspected.set(suspected, true);

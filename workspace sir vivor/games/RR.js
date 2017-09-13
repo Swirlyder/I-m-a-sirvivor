@@ -255,6 +255,7 @@ class RR extends Games.Game {
         if (this.moved.has(player)) return;
         if (!this.passed.has(player)) return;
         let opponent = this.players[Tools.toId(target)];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot steal from 'constructor'");
         if (!opponent || opponent.eliminated || this.passed.has(opponent)) return;
         this.oplayer = opponent;
         this.say("**" + this.curPlayer.name + " attempts to steal from " + this.oplayer.name + "!**");

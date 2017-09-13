@@ -430,6 +430,7 @@ class DOTW extends Games.Game {
 		if (["die", "survive", "attack"].indexOf(split[0]) === -1) {
 			return user.say("You must specify either ``die``, ``survive``, or ``attack`` as your first parameter");
 		}
+		if (Tools.toId(split[0]) === "constructor") return user.say("You cannot attack 'constructor'");
 		let targPlayer = this.players[split[1]];
 		if (!targPlayer) {
 			return user.say("The player you specified is not in the game!");

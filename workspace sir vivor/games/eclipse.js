@@ -106,6 +106,7 @@ class Eclipse extends Games.Game {
 		if (this.attacks.has(player)) {
 			return user.say("You have already attacked someone this round!");
 		}
+		if (Tools.toId(target) === "constructor") return;
 		let targPlayer = this.players[Tools.toId(target)];
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
@@ -134,6 +135,7 @@ class Eclipse extends Games.Game {
 		if (!this.canAttack) return;
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
+		if (Tools.toId(target) === "constructor") return;
 		let targPlayer = this.players[Tools.toId(target)];
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");

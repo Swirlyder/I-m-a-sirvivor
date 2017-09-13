@@ -279,6 +279,7 @@ class Eevee extends Games.Game {
 		if (!curPlayer || curPlayer.eliminated) return;
 		let realID = toId(target);
 		let oplayer = this.players[realID];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		if (!oplayer) {
 			user.say("That player is not in the game!");
 			return;

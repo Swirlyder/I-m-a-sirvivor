@@ -272,6 +272,7 @@ class Bounty extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
 		let role = this.playerRoles.get(player);
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		if (role === "Trapper") {
 			if (this.trappersUsed.has(player)) {
 				return user.say("You've already used your action this turn.");

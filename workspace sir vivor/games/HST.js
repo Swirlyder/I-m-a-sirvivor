@@ -213,6 +213,7 @@ class HST extends Games.Game {
 		let player = this.players[user.id];
 		if (player.eliminated || !this.acceptActions || this.actions.has(player)) return false;
 		if (!target) return user.say("Please provide a location. ``" + Config.commandCharacter + " hide [location]``");
+		if (Tools.toId(target) === "constructor") return user.say("You cannot hide in 'constructor'");
 		let playerloc = Tools.toId(target);
 		for (let i in this.locations) {
 			if (this.locations[i].aliases.indexOf(playerloc) !== -1) {

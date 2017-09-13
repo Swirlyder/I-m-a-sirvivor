@@ -435,6 +435,7 @@ class Poles extends Games.Game {
 				return user.say("You cannot use Spore at this time.");
 			}
 			let attacked = this.players[Tools.toId(target[1])];
+			if (Tools.toId(target[1]) === "constructor") return user.say("You cannot attack 'constructor'");
 			if (!attacked) {
 				return user.say("Invalid player.");
 			}
@@ -461,6 +462,7 @@ class Poles extends Games.Game {
 				return player.say("You have already used " + this.actions.get(player)[0]);
 			}
 			let attacked = this.players[Tools.toId(target[1])];
+			if (Tools.toId(target[1]) === "constructor") return user.say("You cannot attack 'constructor'");
 			if (!attacked) {
 				return user.say("Invalid player.");
 			}

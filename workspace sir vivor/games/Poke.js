@@ -283,8 +283,8 @@ class Poke extends Games.Game {
 	destroy(target, user) {
 		if (!this.canAttack) return;
 		let player = this.players[user.id];
-		console.log(player);
 		if (!player || player.eliminated) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let targetPlayer = this.players[Tools.toId(target)];
 		if (!targetPlayer) return user.say("That player is not in the game!");
 		if (targetPlayer.eliminated) return user.say("That player has already been eliminated!");

@@ -230,6 +230,7 @@ class Risk extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
 		let curAttack = this.attacks.get(player);
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		if (curAttack) return;
 		let country = null;
 		target = Tools.toId(target);

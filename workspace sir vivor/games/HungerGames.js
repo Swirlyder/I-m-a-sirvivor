@@ -93,11 +93,11 @@ class HGS extends Games.Game {
 	attack(target, user) {
 		if (!this.curPlayer) return;
 		if (this.curPlayer.name !== user.name) return;
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let oplayer = this.players[Tools.toId(target)];
 		if (!oplayer || oplayer.eliminated) return;
 		if (oplayer.name === this.curPlayer.name) {
-			this.say(">Attacking yourself.");
-			return;
+			return this.say(">Attacking yourself.");
 		}
 		this.say("**" + this.curPlayer.name + "** has chosen to attack **" + oplayer.name + "**!");
 		clearTimeout(this.timeout);

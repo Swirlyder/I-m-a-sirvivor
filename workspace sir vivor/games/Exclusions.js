@@ -215,6 +215,7 @@ class EXC extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.id !== this.nickPlayer.id) return;
 		let attackedPlayer = this.players[Tools.toId(target)];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot suspect 'constructor'");
 		if (!attackedPlayer) return user.say("That is not a valid player!");
 		if (attackedPlayer.nick === this.nick) {
 			this.say("Correct! RIP **" + attackedPlayer.name + "**.");
@@ -233,6 +234,7 @@ class EXC extends Games.Game {
 		if (!curPlayer) return;
 		let realID = toId(target);
 		let oplayer = this.players[realID];
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		if (!oplayer) {
 			user.say("That player is not in the game!");
 			return;

@@ -217,6 +217,7 @@ class GearUp extends Games.Game {
 		let curPlayer = this.players[user.id];
 		if (!curPlayer) return;
 		let realID = toId(target);
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let oplayer = this.players[realID];
 		if (!oplayer) {
 			user.say("That player is not in the game!");
