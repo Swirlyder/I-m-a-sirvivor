@@ -377,6 +377,7 @@ exports.parse = {
 				};
 
 				var data;
+				Config.pass = Tools.decrypt(Config.pass);
 				if (!Config.pass) {
 					requestOptions.method = 'GET';
 					requestOptions.path += '?act=getassertion&userid=' + toId(Config.nick) + '&challengekeyid=' + id + '&challenge=' + str;

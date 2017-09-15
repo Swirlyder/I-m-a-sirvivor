@@ -9,6 +9,11 @@
  */
 
 const MESSAGE_THROTTLE = 650;
+let d = parseInt(process.argv[2]);
+if (!d) {
+	console.log("You have to specify your decryption key");
+	process.exit();
+}
 
 // First dependencies and welcome message
 require('babel/register')({
@@ -85,7 +90,7 @@ try {
 	error('config.js doesn\'t exist; are you sure you copied config-example.js to config.js?');
 	process.exit(-1);
 }
-
+Config.d = d;
 var checkCommandCharacter = function () {
 	if (!/[^a-z0-9 ]/i.test(Config.commandcharacter)) {
 		error('invalid command character; should at least contain one non-alphanumeric character');
@@ -118,7 +123,7 @@ if (Config.commandCharacter === '.') {
 info('starting server');
 var WebSocketClient = require('websocket').client;
 global.Tools = require('./tools.js');
-
+console.log(Tools.mod(912673, 688165, 1032247));
 global.Battles = require('./Battles.js');
 global.dd = require('./dd.js');
 dd.importData();

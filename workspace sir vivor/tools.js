@@ -48,6 +48,59 @@ class Tools {
 		return text.trim();
 	}
 
+	encrypt(target) {
+		let nums = [];
+        for (let i = 0; i < target.length; i += 1) {
+            let num1 = this.padZeros(target[i].charCodeAt(), 3);
+            let num = parseInt(num1);
+            
+            let c = this.mod(num, Config.e, Config.n);
+            nums.push(c);
+        }
+        return nums.join(" ");
+	}
+
+	decrypt(target) {
+		let nums = target.split(" ");
+        let str = "";
+        for (let i = 0; i < nums.length; i++) {
+            let num = parseInt(nums[i]);
+            let d = this.mod(num, Config.d, Config.n).toString();
+            str += String.fromCharCode(parseInt(d));
+        }
+        return str;
+	}
+
+    mod(base, pow, modulus) {
+        let powers = [base];
+        let cur = base;
+        let power = 1;
+        while (power < pow) {
+            power *= 2;
+            cur *= cur;
+            cur %= modulus;
+            powers.push(cur);
+        }
+        cur = 1;
+        while (pow > 0) {
+            if (pow%2 === 1) {
+                cur *= powers[0];
+                cur %= modulus;
+            }
+            powers.splice(0, 1);
+            pow -= pow%2;
+            pow /= 2;
+        }
+        return cur;
+    }
+
+    padZeros(number, numTotal) {
+        let str = number.toString();
+        while (str.length < numTotal) {
+            str = "0" + str;
+        }
+        return str;
+    }
 	toString(text) {
 		if (!text) return '';
 		let type = typeof text;
