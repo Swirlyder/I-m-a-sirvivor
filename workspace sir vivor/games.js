@@ -482,11 +482,7 @@ class GamesManager {
 				if (str) str += ", ";
 				str += numHours + " hour" + (numHours > 0 ? "s" : "");
 			}
-			if (numMinutes > 0) {
-				if (str) str += ", ";
-				str += numMinutes + " minute" + (numMinutes > 0 ? "s" : "");
-			}
-			return "**" + this.hostbans[userID].name + "**'s hostban expires in " + str + ".";
+			return str;
 		} else {
 			return "**" + userName + "** is not currently hostbanned.";
 		}

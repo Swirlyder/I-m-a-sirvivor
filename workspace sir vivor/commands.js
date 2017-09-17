@@ -907,7 +907,17 @@ exports.commands = {
   
 	hostbanned: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
-		return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
+        if (Object.keys(Games.hostbans).length === 0) {
+            return user.say("No users are currently hostbanned");
+        } else {
+            let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
+            msg += Object.keys(Games.hostbans).map(key => {
+               return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>"; 
+            }).join("");
+            return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></body></html></div></div>");
+        }
+        
+		//return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
 	},
 
 	unhostban: function (target, user, room) {
