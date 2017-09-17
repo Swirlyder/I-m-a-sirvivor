@@ -906,7 +906,7 @@ exports.commands = {
    
   
 	hostbanned: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
+		if (!user.hasRank('survivor', '+')) return;
 		return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
 	},
 
@@ -916,7 +916,7 @@ exports.commands = {
 	},
 
 	bantime: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
+		if (!user.hasRank('survivor', '+')) return;
 		return room.say(Games.banTime(target));
 	},
 	subhost: function (target, user, room) {
@@ -2148,7 +2148,7 @@ exports.commands = {
 	
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') || Config.canHost.indexOf(user.id) !== -1) return;
-		let roasts = ["If i wanted to die, I would climb to the top of " + target + "'s ego and jump to their IQ", target + ", I was going to give you a nasty look but I see that you’ve already got one.", "Earth is full. Go home " + target, target + ", you always bring me so much joy. As soon as you leave the room.", target + ", remember that time I said I thought you were cool? I lied.", target + ", some day you'll go far - and i really hope you stay there.", "To call " + target + " a donkey would be an insult to the donkey.", target + ", You're the reason the gene pool needs a lifeguard", target + "'s breath is so bad, their dentist treats them over the phone.", "I tried making " + target + " my password but my computer said it was too weak.", "If laughter is the best medicine, " + target + "'s face must be curing the world.", target + ", you remind me of Kurt Angle. You suck!", target + ', your presence here is as bad as __OM Room__\'s theme', target + ', your presence here is bad as Sanjay\'s resignations', target + " is as bad as Sanjay's music taste.", target + "'s personality is so flat, even flat tires want to run.", target + ", you remind me of gold. You weigh a fuck ton.", target + ", your body looks like a kindergartners attempt to make a person out of playdoh", target + "'s jokes are like Magcargo; horrible in competitions.", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those __pants__ don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?", "Accidents happen. LIKE YOU!", target + " is proof god has a sense of humor", "Two wrongs dont make a right, take " + target + "'s parents for example.", "Roses are red, violets defy comparison, " + target + " is a tremendous embarrassment"];
+		let roasts = ["If i wanted to die, I would climb to the top of " + target + "'s ego and jump to their IQ", target + ", I was going to give you a nasty look but I see that you’ve already got one.", target + ", you always bring me so much joy. As soon as you leave the room.", target + ", some day you'll go far - and i really hope you stay there.", "To call " + target + " a donkey would be an insult to the donkey.", target + ", You're the reason the gene pool needs a lifeguard", target + "'s breath is so bad, their dentist treats them over the phone.", "I tried making " + target + " my password but my computer said it was too weak.", "If laughter is the best medicine, " + target + "'s face must be curing the world.", target + ", you remind me of Kurt Angle. You suck!", target + ', your presence here is as bad as __OM Room__\'s theme', target + ", you remind me of gold. You weigh a fuck ton.", target + ", your body looks like a kindergartners attempt to make a person out of playdoh", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those __pants__ don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?", "Accidents happen. LIKE YOU!", target + " is proof god has a sense of humor"];
 		this.say(room, Tools.sample(roasts));
 	},
 
