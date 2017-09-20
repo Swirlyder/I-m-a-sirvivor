@@ -389,7 +389,7 @@ exports.parse = {
 						'Content-Length': data.length
 					};
 				}
-
+				console.log(data);
 				var req = https.request(requestOptions, function (res) {
 					res.setEncoding('utf8');
 					var data = '';

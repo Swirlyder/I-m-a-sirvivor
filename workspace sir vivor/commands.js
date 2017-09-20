@@ -1771,6 +1771,22 @@ exports.commands = {
 		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
 	},
+    
+    secondwind: 'sw',
+    sw: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'In the **Second Wind** game mode, every player has 2 lives';
+		this.say(room, text);
+	},
 
 	golf: function(arg, user, room)
 	{
