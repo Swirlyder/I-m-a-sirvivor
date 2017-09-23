@@ -201,7 +201,7 @@ class Poles extends Games.Game {
 			for (let userID in this.getRemainingPlayers()) {
 				let player = this.players[userID];
 				let curAttack = this.attacks.get(player);
-				if (!player.eliminated && !curAttack) {
+				if (!player.eliminated && !curAttack && !this.spores.some(i => i[0] == player && i[1] == player)) {
 					player.say("You didn't attack a player this round and were eliminated!");
 					player.eliminated = true;
 				}

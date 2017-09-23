@@ -165,8 +165,8 @@ class HT extends Games.Game {
 
 	handleWinner(winPlayer, losePlayer) {
 		if (winPlayer === this.curPlayer) {
-			this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**, who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!");
 			this.elimPlayer(this.oplayer);
+			this.say("**" + this.curPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + this.oplayer.name + "**" + (this.oplayer.eliminated ? ", who was a **" + this.turnFirstUpper(this.types.get(this.oplayer)) + "** type!" : "!"));
 		} else {
 			this.say("**" + this.oplayer.name + "** defended successfully!");
 			if (this.cur) {
