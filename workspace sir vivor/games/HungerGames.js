@@ -21,9 +21,7 @@ class HGS extends Games.Game {
 		try {
 			this.nextRound();
 		} catch (e) {
-			this.say("I'm sorry, the game broke. Moo has been notified and will fix it as soon as he can.");
-			this.end();
-			return;
+			this.mailbreak(e);
 		}
 	}
 
