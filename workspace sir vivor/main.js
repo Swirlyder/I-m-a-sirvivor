@@ -7,7 +7,8 @@
  *
  * @license MIT license
  */
-
+'use strict';
+ 
 const MESSAGE_THROTTLE = 650;
 let d = parseInt(process.argv[2]);
 if (!d) {
