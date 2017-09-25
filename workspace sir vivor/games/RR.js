@@ -122,6 +122,7 @@ class RR extends Games.Game {
                 if (this.finals) {
                     return this.end();
                 }
+				this.chamber = 6;
                 this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
                 return;
             }
