@@ -117,7 +117,7 @@ class FTL extends Games.Game {
 			this.say("!pick " + this.getPlayerNames(this.getRemainingPlayers()));
 		} else {
 			this.say("/wall Players: " + Object.values(this.players).filter(pl => !pl.eliminated && pl.id !== this.leaderid).map(pl => pl.name).join(", ") + " | Leader: " + this.players[this.leaderid].name + ".");
-			this.say("/wall If you are not the leader, pm me whether you would like to revolt or follow the leader with ``" + Config.commandCharacter + "revolt`` and ``" + Config.commandCharacter + "follow``, respectively.");
+			this.say("/wall If you are not the leader, pm me whether you would like to revolt or follow the leader with ``" + Config.commandCharacter + "revolt`` or ``" + Config.commandCharacter + "follow``, respectively.");
 			this.actions.clear();
 			this.canAction = true;
 			this.numActions = 0;
@@ -345,6 +345,7 @@ class FTL extends Games.Game {
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
 		if (targPlayer.id === this.leaderid) return user.say("You cannot try to use the leader as the scapegoat.");
 		if (this.immunities.has(targPlayer)) return user.say("That player is currently immune.");
+		clearTimeout(this.timeout);
 		this.oplayer = targPlayer;
 		this.canScapegoat = false;
 		this.say("**" + this.curPlayer.name + "** has attempted to use **" + this.oplayer.name + "** as their scapegoat!");
@@ -354,7 +355,7 @@ class FTL extends Games.Game {
 	vote(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated || !this.voting) return;
-		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
+		if (Tools.toId(target) === "constructor") return user.say("You cannot vote for 'constructor'");
 		let targPlayer = this.players[Tools.toId(target)];
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
