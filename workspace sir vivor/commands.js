@@ -2114,7 +2114,7 @@ exports.commands = {
 		let goodids = Object.keys(Games.games).slice();
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
-		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame || id === 'ftl' || id === 'followtheleader') {
+		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(goodids);
 		}
 		Games.createGame(id, room);
