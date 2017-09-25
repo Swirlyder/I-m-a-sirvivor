@@ -3,6 +3,7 @@
 const name = 'Golf';
 const id = Tools.toId(name);
 let golfMode = function() {
+	this.name = name + " " + this.name;
 	this.golf = true;
 }
 

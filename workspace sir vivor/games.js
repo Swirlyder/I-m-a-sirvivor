@@ -50,7 +50,6 @@ class Game {
 			Parse.say(this.room, '/w lady monita, .mail ' + Config.developers[i] + ', A game of ' + this.name + ' broke in progress! ' + (e ? e : ""));
 		}
 		this.say("I'm sorry, the game broke. Cheese has been notified and will fix it as soon as they can.");
-		console.log(e);
 		this.end();
 	}
 
@@ -68,7 +67,7 @@ class Game {
 		} else {
 			this.say("survgame! If you would like to play the game of **" + this.name + "**, use the command ``/me in``");
 		}
-		if (this.description) this.say("**" + (this.golf ? "Golf " : "") + (this.rollSwitch ? "Roll Switch " : "") + this.name + "**: " + this.description);
+		if (this.description) this.say("**" + this.name + "**: " + this.description);
 		if (typeof this.onSignups === 'function') this.onSignups();
 		this.timeout = setTimeout(() => this.start(), 5 * 60 * 1000);
 	}

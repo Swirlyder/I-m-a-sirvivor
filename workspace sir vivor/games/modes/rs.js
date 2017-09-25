@@ -3,6 +3,7 @@
 const name = 'Roll Switch';
 const id = Tools.toId(name);
 let rollSwitchMode = function() {
+	this.name = name + " " + this.name;
 	this.rollSwitch = true;
 }
 
