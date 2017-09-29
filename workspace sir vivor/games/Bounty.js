@@ -10,6 +10,7 @@ class Bounty extends Games.Game {
 		this.id = id;
 		this.description = description;
 		this.roles = ['Private Eye', 'Bomb', 'LoudMouth', 'Weapons Dealer', 'Trapper', 'The Medium', 'Heavy', 'Goo', 'Misinformer', 'Sleeping'];
+		this.gainFromWeapon = new Map();
 		this.rolls = new Map();
 		this.playerRoles = new Map();
 		this.attacks = new Map();
@@ -48,6 +49,7 @@ class Bounty extends Games.Game {
 				this.playerRoles.set(player, role);
 				player.say("Your role is the **" + role + "**!");
 				if (role === "Weapons Dealer") {
+					this.gainFromWeapon.set(player, true);
 					this.rolls.set(player, 115)
 				} else {
 					this.rolls.set(player, 100);
@@ -137,7 +139,11 @@ class Bounty extends Games.Game {
 			} else {
 				this.roll1 = this.rolls.get(this.curPlayer);
 			}
-			this.roll2 = this.rolls.get(this.oplayer);
+			if (this.gainFromWeapon.has(this.oplayer)) {
+				this.roll2 = 100;
+			} else {
+				this.roll2 = this.rolls.get(this.oplayer);
+			}
 			this.sayPlayerRolls();
 		} catch (e) {
 			this.mailbreak(e);

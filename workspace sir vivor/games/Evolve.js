@@ -115,8 +115,6 @@ class Evolve extends Games.Game {
 			this.roll1 = Tools.data.pokedex[this.mons.get(this.curPlayer)].baseStats.spa;
 			this.roll2 = Tools.data.pokedex[this.mons.get(this.oplayer)].baseStats.spd;
 		}
-		console.log(this.roll1);
-		console.log(this.roll2);
 		this.sayPlayerRolls();
 	}
 
@@ -132,6 +130,13 @@ class Evolve extends Games.Game {
 			this.hp.set(losePlayer, losehp - diff);
 		}
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+	}
+
+	onEnd() {
+		if (this.getRemainingPlayerCount() === 1) {
+			let lastPlayer = this.getLastPlayer();
+			this.say("!dt " + this.mons.get(lastPlayer));
+		}
 	}
 
 	destroy(target, user) {
