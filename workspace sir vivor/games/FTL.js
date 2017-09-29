@@ -2,7 +2,7 @@
 
 const name = "Follow the Leader";
 const id = Tools.toId(name);
-const description = "https://docs.google.com/document/d/1qxWxauszszocyGgncJx2CghnI6ydnXz0SyJZfZ-OexQ/edit";
+const description = "__A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?__ Game rules: http://survivor-ps.weebly.com/follow-the-leader.html";
 
 class FTL extends Games.Game {
 	constructor(room) {
