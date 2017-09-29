@@ -2117,6 +2117,7 @@ exports.commands = {
 		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
 			id = Tools.sample(goodids);
 		}
+		console.log(id);
 		Games.createGame(id, room);
 		room.game.signups();
 	},
