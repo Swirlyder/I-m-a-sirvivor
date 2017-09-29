@@ -196,7 +196,7 @@ class FTL extends Games.Game {
 			}
 			if (leaderElimmed) {
 				this.players[this.leaderid].eliminated = true;
-				this.say("The revolters were successfully in killing the leader!");
+				this.say("The revolters were successful in killing the leader!");
 			}
 			let rolls = Object.values(this.players).filter(pl => !pl.eliminated && this.rolls.has(pl)).map(pl => this.rolls.get(pl));
 			let maxroll = Math.max(...rolls);
