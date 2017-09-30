@@ -55,7 +55,7 @@ class Evolve extends Games.Game {
 	}
 
 	onNextRound() {
-		this.say("**Remaining Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => pl.name).map(pl => pl.name + "(" + this.hp.get(player) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
+		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
 		this.order = [];
 		this.attacks.clear();
 		this.numAttacks = 0;
