@@ -748,6 +748,7 @@ class GamesManager {
 		}
 		if (variation) Object.assign(format, variation);
 		if (mode) format.modeId = mode;
+		format.baseId = id.split(",")[0];
 		return format;
 	}
 
@@ -757,6 +758,7 @@ class GamesManager {
 			return false;
 		}
 		let format = this.getFormat(target);
+		Game.lastGame = format.baseId;
 		let baseClass;
 		if (format.inherits) {
 			let parentFormat = format;

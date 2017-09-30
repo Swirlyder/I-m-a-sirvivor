@@ -2103,6 +2103,7 @@ exports.commands = {
 		let id = Tools.toId(target);
 		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
+		console.log(room.game);
 		room.game.signups();
 	},
 	randgame: "randomgame",
@@ -2114,11 +2115,11 @@ exports.commands = {
 		let goodids = Object.keys(Games.games).slice();
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
-		while (id === 'eclipse' || id === 'eclipsesurvivor' || id === Games.lastGame) {
-			id = Tools.sample(goodids);
-		}
-		console.log(id);
 		Games.createGame(id, room);
+		while (room.game.baseId === Games.lastGame) {
+			id = Tools.sample(goodids);
+			Games.createGame(id, room);
+		}
 		room.game.signups();
 	},
 

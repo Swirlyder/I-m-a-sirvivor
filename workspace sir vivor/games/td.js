@@ -129,6 +129,6 @@ exports.variations = [
 		name: "Berserk Tower Defense",
 		aliases: ["btd"],
 		variation: "Berserk",
-		variationAliases: ["btd"],
+		variationAliases: ["b"],
 	}
 ]
