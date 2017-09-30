@@ -66,19 +66,11 @@ class HGA extends Games.Game {
 			this.timeout = setTimeout(() => this.doPlayerAttack(), 5 * 1000);
 		} else {
 			this.canAttack = true;
-			let nicks = [];
-			let names = [];
-			for (let userID in this.players) {
-				let player = this.players[userID];
-				if (player.eliminated) continue;
-				nicks.push(player.nick);
-				names.push(player.name);
-			}
 			this.order = [];
 			this.numAttacks = 0;
 			this.attacks.clear();
-			this.say("**Nicks**: " + Tools.shuffle(nicks).join(", "));
-			this.say("**Names**: " + this.getPlayerNames(this.getRemainingPlayers()));
+			this.say("**Nicks**: " + Tools.shuffle(Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.nick + this.getSuffix(pl))).join(", "));
+			this.say("**Names**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name).join(", "));
 			this.say("PM me your attacks with ``" + Config.commandCharacter + "destroy [nickname]``!");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}

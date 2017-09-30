@@ -5,6 +5,10 @@ const id = Tools.toId(name);
 let rollSwitchMode = function() {
 	this.name = name + " " + this.name;
 	this.rollSwitch = true;
+	let index = this.description.lastIndexOf("__");
+	let start = this.description.substr(0, index);
+	let end = this.description.substr(index + 2);
+	this.description = start + "(Roll Switch Mode)__" + end;
 }
 
 exports.name = name;

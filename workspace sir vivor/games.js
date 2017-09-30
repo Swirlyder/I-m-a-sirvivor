@@ -207,6 +207,10 @@ class Game {
 		if (this.onRename) this.onRename(user);
 	}
 
+	getSuffix(player) {
+		return "";
+	}
+
 	join(user) {
 		if (this.started && !this.canLateJoin) return;
 		if (user.id in this.players && !this.canRejoin) return;

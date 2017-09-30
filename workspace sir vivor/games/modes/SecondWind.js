@@ -6,7 +6,10 @@ let secondWindMode = function() {
 	this.name = name + " " + this.name;
 	this.id = id + this.id;
 	this.lives = new Map();
-	
+	let index = this.description.lastIndexOf("__");
+	let start = this.description.substr(0, index);
+	let end = this.description.substr(index + 2);
+	this.description = start + "(Second Wind Mode)__" + end;
 	this.start = () => {
 		if (this.started) return;
 		if (this.playerCount < 2) {
@@ -43,7 +46,11 @@ let secondWindMode = function() {
 	}
 
 	this.getName = (player) => {
-		return player.name + "(" + this.lives.get(player) + "♥)";
+		return player.name + this.getSuffix(player);
+	}
+
+	this.getSuffix = (player) => {
+		return "(" + this.lives.get(player) + "♥)";
 	}
 }
 
