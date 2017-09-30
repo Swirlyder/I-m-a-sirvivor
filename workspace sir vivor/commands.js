@@ -885,7 +885,7 @@ exports.commands = {
 		let targUser = Users.get(Tools.toId(target));
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
 		Games.host = targUser;
-		room.say("**" + targUser.name + "** has been as set as the host.");
+		room.say("**" + targUser.name + "** has been set as the host.");
 	},
 
 	hostban: function (target, user, room) {
