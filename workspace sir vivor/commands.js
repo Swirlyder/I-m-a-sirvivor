@@ -1175,6 +1175,23 @@ exports.commands = {
 		text += 'Hello, welcome to Survivor. Here we play a series of Survivor games. Survivor is a game based on dice rolls,  some games require less luck than others. Example attack: http://i.imgur.com/lKDjvWi.png';
 		this.say(room, text);
 	},
+
+	day: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		let day = new Date().getDay();
+		let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		text += 'Today is currently **' + days[day] + "**!";
+		this.say(room, text);
+	},
 	htp: 'howtoplay',
 	howtoplay: function(arg, user, room)
 	{
