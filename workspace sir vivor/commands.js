@@ -1403,6 +1403,36 @@ exports.commands = {
 		text += '__You must be...DELETED!__';
 		this.say(room, text);
 	},
+	cet: 'pak',
+	ceterisparibus: 'pak',
+	pak: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'CHOO CHOO ALL ABOARD THE PARTYBUS TRAIN';
+		this.say(room, text);
+	},
+
+	shadecession: 'shade',
+	shade: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'Better put on my Shadecessions ⌐■_■';
+		this.say(room, text);
+	},
 
 	pq: 'ppq',
 	ppq: 'penquin',
