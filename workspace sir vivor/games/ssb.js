@@ -809,8 +809,9 @@ class SSB extends Games.Game {
 				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 				return;
 			}
-            if (this.rollVal = 3) {
+            if (this.rollVal == 3) {
                 this.doRoll(100 + (roll - 1) * 15);
+                return;
             } else if (this.rollVal === 300) {
 				this.firstRoll = roll;
 				this.doRoll(200);
@@ -892,7 +893,7 @@ class SSB extends Games.Game {
             this.action = null;
 			this.handleRoll(rolls[1]);
 		} else {
-            this.handleRoll(Math.sum(...rolls))
+            this.handleRoll(rolls.reduce((a, b) => a+b, 0))
         }
 	}
 
