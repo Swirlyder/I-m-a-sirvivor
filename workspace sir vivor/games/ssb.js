@@ -507,6 +507,8 @@ const ssbchars = {
 			},
 			onEndGame: function() {
 				ssbchars.jh3828teal.special.isImmune = false;
+                ssbchars.jh3828teal.special.atkroll = 100;
+                ssbchars.jh3828teal.special.defroll = 100;
 			},
 		},
 	},
@@ -728,7 +730,11 @@ class SSB extends Games.Game {
 		} else if (this.auth1.special.isBaloor) {
 			this.doRoll(3);
 		} else {
-			this.doRolls(this.roll1, this.roll2);
+            if (this.auth2.special.isBaloor) {
+                this.doRolls(this.roll1, 3);
+            } else {
+                this.doRolls(this.roll1, this.roll2);
+            }
 		}
 	}
 
@@ -803,7 +809,9 @@ class SSB extends Games.Game {
 				this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 				return;
 			}
-			if (this.rollVal === 300) {
+            if (this.rollVal = 3) {
+                this.doRoll(100 + (roll - 1) * 15);
+            } else if (this.rollVal === 300) {
 				this.firstRoll = roll;
 				this.doRoll(200);
 				return;
@@ -877,10 +885,15 @@ class SSB extends Games.Game {
 
 	handleRolls(rolls) {
 		if (this.action === "left") {
+            this.action = null;
 			this.handleRoll(rolls[0]);
+            this.action = null;
 		} else if (this.action === "right") {
-			 this.handleRoll(rolls[1]);
-		}
+            this.action = null;
+			this.handleRoll(rolls[1]);
+		} else {
+            this.handleRoll(Math.sum(...rolls))
+        }
 	}
 
 	handlePick(message) {
@@ -919,6 +932,10 @@ class SSB extends Games.Game {
 		} else {
 			player.eliminated = true;
 			this.say("__" + this.auth.get(player).name + "__ was actually **" + player.name + "**!");
+            if (ssbchars.jh3828teal.owner && !ssbchars.jh3828teal.owner.eliminated) {
+                ssbchars.jh3828teal.special.atkroll += 5;
+                ssbchars.jh3828teal.special.defroll += 5;
+            }
 		}
 	}
 
