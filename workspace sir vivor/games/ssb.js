@@ -927,11 +927,14 @@ class SSB extends Games.Game {
 			this.auth1.special.atkroll = 100;
 		}
 		for (let userID in this.players) {
-			let auth = this.auth.get(this.players[userID]);
-			if (auth.realspecial) {
-				auth.special = auth.realspecial;
-				auth.realspecial = null;
-			}
+            let player = this.players[userID];
+            if (!player.eliminated) {
+                let auth = this.auth.get(this.players[userID]);
+                if (auth && auth.realspecial) {
+                    auth.special = auth.realspecial;
+                    auth.realspecial = null;
+                }
+            }
 		}
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
