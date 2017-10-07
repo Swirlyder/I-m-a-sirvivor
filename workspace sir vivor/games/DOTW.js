@@ -156,7 +156,7 @@ class DOTW extends Games.Game {
 		} else if (prediction[1] === "survive") {
 			return !(prediction[1].eliminated);
 		} else {
-			return this.attacks.get(predictions[1]) === player;
+			return this.attacks.get(prediction[1]) === player;
 		}
 	}
 	doRolls() {
