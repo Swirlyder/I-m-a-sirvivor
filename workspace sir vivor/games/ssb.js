@@ -928,7 +928,7 @@ class SSB extends Games.Game {
 
 	elimPlayer(player) {
 		let auth = this.auth.get(player);
-		if (auth.special.lives && auth.special.lives > 1) {
+		if (auth && auth.special && auth.special.lives && auth.special.lives > 1) {
 			auth.special.lives--;
 		} else {
 			player.eliminated = true;
@@ -969,7 +969,7 @@ class SSB extends Games.Game {
 		if (targAuth.owner.eliminated) return player.say("**" + targAuth.name + "** has already been eliminated");
         if (targAuth.owner === player) return player.say("Are you sure you want to attack yourself...");
 		let ownAuth = this.auth.get(player);
-		if (ownAuth.special.cantAttack) return player.say("You cannot attack this round!");
+		if (ownAuth && ownAuth.special && ownAuth.special.cantAttack) return player.say("You cannot attack this round!");
 		this.attacks.set(player, targAuth.owner);
 		player.say("You have attacked **" + targAuth.name + "**!");
 		this.numAttacks++;
@@ -985,7 +985,7 @@ class SSB extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
 		let auth = this.auth.get(player);
-		if (!auth.special.onAction) {
+		if (auth && auth.special && !auth.special.onAction) {
 			return player.say("Your auth does not have a per-round action.");
 		}
 		auth.special.onAction(target, player, this);
@@ -1057,7 +1057,7 @@ class SSB extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
 		let auth = this.auth.get(player);
-		if (auth.special.myAction) {
+		if (auth && auth.special && auth.special.myAction) {
 			return user.say("``" + auth.special.myAction + "``");
 		} else {
 			return user.say("Your character does not have an action to be used at this time.");
