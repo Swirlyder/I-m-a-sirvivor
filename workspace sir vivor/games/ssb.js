@@ -279,7 +279,7 @@ const ssbchars = {
 			onAttack: function () {
 				ssbchars.mmm.special.numAttacks++;
 				if (ssbchars.mmm.special.numAttacks > 2) {
-					ssbchars.numAttacks.special.isImmune = true;
+					ssbchars.mmm.special.isImmune = true;
 				}
 			},
 			onEndRound: function() {
