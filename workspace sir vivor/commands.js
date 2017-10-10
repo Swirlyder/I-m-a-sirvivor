@@ -2163,7 +2163,8 @@ exports.commands = {
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
 		Games.createGame(id, room);
-		while (room.game.baseId === Games.lastGame) {
+		console.log(goodids);
+		while (room.game.baseId === Games.lastGame || id === 'ssb' || id === 'supersurvivorbros') {
 			id = Tools.sample(goodids);
 			Games.createGame(id, room);
 		}
