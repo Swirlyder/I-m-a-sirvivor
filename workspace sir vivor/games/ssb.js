@@ -620,7 +620,7 @@ class SSB extends Games.Game {
 	beforeNextRound() {
 		for (let userID in this.players) {
 			let auth = this.auth.get(this.players[userID]);
-			if (typeof auth.special.onEndRound === 'function') {
+			if (auth && auth.special && typeof auth.special.onEndRound === 'function') {
 				auth.special.onEndRound();
 			}
 		}
