@@ -2164,7 +2164,7 @@ exports.commands = {
 		let id = Tools.sample(goodids);
 		Games.createGame(id, room);
 		console.log(goodids);
-		while (room.game.baseId === Games.lastGame) {// || id === 'ssb' || id === 'supersurvivorbros') {
+		while (room.game.baseId === Games.lastGame || id === 'ssb' || id === 'supersurvivorbros') {
 			id = Tools.sample(goodids);
 			Games.createGame(id, room);
 		}

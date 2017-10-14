@@ -1005,7 +1005,7 @@ class SSB extends Games.Game {
 		if (ssbchars[targetID].owner) return player.say("**" + ssbchars[targetID].name + "** has already been picked.");
 		this.auth.set(player, ssbchars[targetID]);
 		ssbchars[targetID].owner = player;
-        let msg = "You have selected your auth as **" + ssbchars[targetID].name + "**, who's ability is **" + ssbchars[targetID].desc + "**!";
+        let msg = "You have selected your auth as **" + ssbchars[targetID].name + "**, whose ability is: **" + ssbchars[targetID].desc + "**";
         if (msg.length > 300) {
             msg = "You have selected your auth as **" + ssbchars[targetID].name + "**!";
         }
