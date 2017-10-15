@@ -585,7 +585,7 @@ class SSB extends Games.Game {
 		this.numAttacks = 0;
 		this.attacks.clear();
 		this.skipAttacks.clear();
-		if (this.getRemainingPlayerCount() > 1) {
+		if (this.getRemainingPlayerCount() > 2) {
 			this.say("Auth list: __" + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => this.auth.get(pl).name).join("__, __") + "__");
 			this.say("Players: **" + Tools.shuffle(Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name)).join(", ") + "**");
 			this.say("PM me your attacks now with ``" + Config.commandCharacter + "destroy [auth-name]``! You can also pm me ``" + Config.commandCharacter + "myaction`` to see how to use your characters action!");
