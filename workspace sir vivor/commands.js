@@ -890,6 +890,7 @@ exports.commands = {
 
 	hostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
+		if (!target) return room.say("Please provide a username.");
 		let split = target.split(",");
 		let targUser = Users.get(split[0]);
 		if (!targUser) {
@@ -2182,6 +2183,7 @@ exports.commands = {
 			return;
 		}
 		room.game.forceEnd();
+		clearTimeout(room.game.timeout);
 	},
 
 	submit: function (target, user, room) {
