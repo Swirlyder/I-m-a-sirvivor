@@ -2577,6 +2577,7 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
+		numFirsts += 4;
 		let month = new Date().getMonth();
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		if (numFirsts === 0) {
