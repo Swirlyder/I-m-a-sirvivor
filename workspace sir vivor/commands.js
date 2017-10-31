@@ -1227,7 +1227,6 @@ exports.commands = {
 				this.say(room, "**" + info[0] + "** is not online and could not be hosted!");
 			}
 		}
-		console.log(info);
 		if (Users.get(info[0])) {
 			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
 			this.say(room, "/modnote " + info[0] + " hosted");
@@ -2151,7 +2150,6 @@ exports.commands = {
 		let id = Tools.toId(target);
 		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
-		console.log(room.game);
 		room.game.signups();
 	},
 	randgame: "randomgame",
@@ -2164,7 +2162,6 @@ exports.commands = {
 		goodids = goodids.concat(Object.keys(Games.aliases));
 		let id = Tools.sample(goodids);
 		Games.createGame(id, room);
-		console.log(goodids);
 		while (room.game.baseId === Games.lastGame || id === 'ssb' || id === 'supersurvivorbros') {
 			id = Tools.sample(goodids);
 			Games.createGame(id, room);
@@ -2296,6 +2293,17 @@ exports.commands = {
 		user.say("Host points awarded to: **" + target + "**.");
 		dd.updateModlog(user.name + " did .hostpoints " + target);
 		dd.updateModlog("Host points awarded to: **" + target + "**.");
+	},
+	addspecial: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
+		let username = split[0];
+		let numPoints = parseInt(split[1]);
+		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
+		dd.addSpecial(username, numPoints);
+		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
 	},
 	part: 'participation',
 	parts: 'participation',
@@ -2535,20 +2543,20 @@ exports.commands = {
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
 			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
-			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Points"];
-			for (let i = 0; i < 7; i++) {
+			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Special", "Points"];
+			for (let i = 0; i < indices.length; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
 			str += "</tr>"
-			let real = [4,1,2,3,0];
+			let real = [5, 1, 2, 3, 0, 4];
 			let strs = [];
 			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
-				for (let j = 0; j < 7; j++) {
+				for (let j = 0; j < indices.length; j++) {
 					let stuff;
 					if (j === 0) {
 						stuff = i+1;
-					} else if (j === 6) {
+					} else if (j === (indices.length - 1)) {
 						stuff = dd.getPoints(sorted[i]);
 					} else {
 						stuff = sorted[i][real[j - 1]];
@@ -2559,7 +2567,6 @@ exports.commands = {
 			}
 			str += strs.join("");
 			str += "</table></body></html></div></div>";
-
 			if (room.id === 'survivor') {
 				Parse.say(room, "/addhtmlbox " + str);
 			} else {

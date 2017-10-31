@@ -34,6 +34,27 @@ class DD {
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
 	}
 
+	addSpecial(user, numPoints) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				firsts: 0,
+				seconds: 0,
+				parts: 0,
+				realhosts: 0,
+				special: numPoints,
+				name: user,
+			}
+		} else {
+			if (this.dd[id].special) {
+				this.dd[id].special += numPoints;
+			} else {
+				this.dd[id].special = numPoints;
+			}
+		}
+	}
+
 	addHost(user) {
 		let name = user.trim();
 		let id = Tools.toId(name);
@@ -43,6 +64,7 @@ class DD {
 				seconds: 0,
 				parts: 0,
 				realhosts: 1,
+				special: 0,
 				name: user,
 			}
 		} else {
@@ -62,6 +84,7 @@ class DD {
 				seconds: 0,
 				parts: 0,
 				realhosts: 0,
+				special: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -77,6 +100,7 @@ class DD {
 				seconds: 1,
 				parts: 0,
 				realhosts: 0,
+				special: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -92,6 +116,7 @@ class DD {
 				seconds: 0,
 				parts: 1,
 				realhosts: 0,
+				special: 0,
 				name: user.trim(),
 			}
 		} else {
@@ -140,14 +165,15 @@ class DD {
 	}
 
 	getPoints(item) {
-		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3];
+		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + item[4];
 	}
 
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.realhosts, item.firsts, item.seconds, item.parts, item.name]);
+			console.log(item.special);
+			items.push([item.realhosts, item.firsts, item.seconds, item.parts, item.special || 0, item.name]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
