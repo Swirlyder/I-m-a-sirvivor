@@ -172,7 +172,6 @@ class DD {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			console.log(item.special);
 			items.push([item.realhosts, item.firsts, item.seconds, item.parts, item.special || 0, item.name]);
 		}
 		items.sort(function(first, second) {

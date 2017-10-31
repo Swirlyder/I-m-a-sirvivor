@@ -2627,8 +2627,8 @@ exports.commands = {
 		let sorted = dd.getSorted();
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
-			if (Tools.toId(stuff[4]) === target) {
-				return user.say("**" + stuff[4] + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points, consisting of " + stuff[0] + " hosts, " + stuff[1] + " first places, " + stuff[2] + " second places, and " + stuff[3] + " participations.");
+			if (Tools.toId(stuff[5]) === target) {
+				return user.say("**" + stuff[5] + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points, consisting of " + stuff[0] + " hosts, " + stuff[1] + " first places, " + stuff[2] + " second places, and " + stuff[3] + " participations.");
 			}
 		}
 	},
