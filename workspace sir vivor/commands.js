@@ -2432,7 +2432,7 @@ exports.commands = {
 		let longestLength = 0;
 		let numTabsSpaces = 8.0;
 		for (let i = 0; i < sorted.length; i++) {
-			let length = sorted[i][4].length;
+			let length = sorted[i][5].length;
 			if (length > longestLength) longestLength = length;
 		}
 		let numTabs = Math.ceil(longestLength / numTabsSpaces);
@@ -2440,18 +2440,18 @@ exports.commands = {
 		for (let i = 0; i < longestLength; i += numTabsSpaces) {
 			sep += "\t";
 		}
-		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tPoints\t\n";
-		let real = [4,1,2,3,0];
+		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tSpecial\tPoints\t\n";
+		let real = [5,1,2,3,0,4];
 		for (let i = 0; i < sorted.length; i++) {
-			for (let j = 0; j < 7; j++) {
+			for (let j = 0; j < 8; j++) {
 				let stuff;
 				if (j === 0) stuff = i + 1;
-				else if (j === 6) stuff = dd.getPoints(sorted[i]);
+				else if (j === 7) stuff = dd.getPoints(sorted[i]);
 				else stuff = sorted[i][real[j - 1]];
 				buffer += stuff;
 				if (j === 1) {
 					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / numTabsSpaces);
-					for (let l = 0; l < numCursTabs + (sorted[i][4].length %8 === 0 ? 0 : 1) ; l++) {
+					for (let l = 0; l < numCursTabs + (sorted[i][5].length %8 === 0 ? 0 : 1) ; l++) {
 						buffer += "\t";
 					}
 				} else {
@@ -2465,6 +2465,7 @@ exports.commands = {
 			else user.say('Error connecting to hastebin.');
         });
 	},
+	
 
 	chatlines: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
