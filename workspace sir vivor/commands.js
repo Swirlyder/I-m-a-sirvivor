@@ -2035,12 +2035,12 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000
-		if (n < 6) {
-			millis += (5 - n) * 60 * 60 * 1000;
+		if (n < 7) {
+			millis += (6 - n) * 60 * 60 * 1000;
 		} else if (n < 17) {
 			millis += (16 - n) * 60 * 60 * 1000;
-		} else if (n < 23) {
-			millis += (22 - n) * 60 * 60 * 1000;
+		} else if (n < 24) {
+			millis += (23 - n) * 60 * 60 * 1000;
 		} else {
 			millis += (30 - n) * 60 * 60 * 1000;
 		}
