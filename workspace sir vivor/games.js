@@ -204,7 +204,7 @@ class Game {
 		player.id = user.id;
 		this.players[user.id] = player;
 		delete this.players[oldId];
-		if (this.onRename) this.onRename(user);
+		if (this.onRename) this.onRename(user, oldName);
 	}
 
 	getSuffix(player) {

@@ -356,17 +356,24 @@ const ssbchars = {
 			myAction: Config.commandcharacter + "action",
 			onAction: function (target, player, room) {
 				if (ssbchars.bondance.special.actionTurns !== 0) return player.say("You have already used your action!");
+				if (room.game.attacks.has(player)) return player.say("You cannot use quiver dance after attacking.");
 				ssbchars.bondance.special.actionTurns = 2;
 				ssbchars.bondance.atkroll += 10;
 				ssbchars.bondance.defroll += 10;
+				ssbchars.bondance.special.cantAttack = true;
+				player.say("You have used **Quiver Dance** to boost your attacks for the round!");
 			},
 			onEndRound: function() {
 				if (ssbchars.bondance.special.actionTurns > 0) {
 					ssbchars.bondance.special.actionTurns--;
 				}
+				ssbchars.bondance.special.cantAttack = false;
 			},
 			onEndGame: function() {
 				ssbchars.bondance.special.actionTurns = 0;
+				ssbchars.bondance.special.atkroll = 100;
+				ssbchars.defroll.special.atkroll = 100;
+				ssbchars.bondance.special.cantAttack = false;
 			}
 		},
 	},
@@ -507,6 +514,7 @@ const ssbchars = {
 			},
 			onEndGame: function() {
 				ssbchars.jh3828teal.special.isImmune = false;
+				ssbchars.jh3828teal.special.hasActioned = false;
                 ssbchars.jh3828teal.special.atkroll = 100;
                 ssbchars.jh3828teal.special.defroll = 100;
 			},
@@ -595,7 +603,7 @@ class SSB extends Games.Game {
 			let lastPlayers = Tools.shuffle(Object.values(this.getRemainingPlayers()));
 			this.curPlayer = lastPlayers[0];
 			this.oplayer = lastPlayers[1];
-			this.say("**" + this.curPlayer.name + "** (aka __" + this.auth.get(this.curPlayer).name + "__) is attacking **" + this.oplayer.name + "** (aka __" + this.auth.get(this.oplayer).name + "__)");
+			this.say("**" + this.curPlayer.name + "** (aka __" + this.auth.get(this.curPlayer).name + "__) is attacking **" + this.oplayer.name + "** (aka __" + this.auth.get(this.oplayer).name + "__)!");
 			this.timeout = setTimeout(() => this.doRolls(100, 100), 5 * 1000);
 		}
 	}
@@ -611,7 +619,7 @@ class SSB extends Games.Game {
 			let auth = this.auth.get(player);
 			if (!player.eliminated && !this.attacks.has(player) && !auth.special.cantAttack) {
 				player.eliminated = true;
-				player.say("You didn't select an auth and are eliminated!");
+				player.say("You didn't attack and are eliminated!");
 			}
 		}
 		this.beforeAttacks();

@@ -52,6 +52,12 @@ class FTL extends Games.Game {
 		}
 		this.selectLeader();
 	}
+
+	onRename(user, oldName) {
+		if (Tools.toId(oldname) === this.leaderid) {
+			this.leaderid = user.id;
+		}
+	}
 	
 	selectLeader() {
 		this.voting = false;
