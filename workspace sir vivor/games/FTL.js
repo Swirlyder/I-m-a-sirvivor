@@ -221,7 +221,7 @@ class FTL extends Games.Game {
 			let minroll = Math.min(...rolls);
 			let minPlayers = Object.values(this.players).filter(pl => this.rolls.get(pl) === minroll);
 			if (minPlayers.length > 1) {
-				this.say("The rolls results in a tie between **" + maxPlayers.map(pl => pl.name).join(", ") + "**!");
+				this.say("The rolls results in a tie between **" + minPlayers.map(pl => pl.name).join(", ") + "**!");
 				this.chooseNewLeader = true;
 				this.say("!pick " + minPlayers.map(pl => pl.name).join(", "));
 			} else {
