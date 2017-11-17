@@ -2037,8 +2037,8 @@ exports.commands = {
 		let millis = (60 - m) * 60 * 1000
 		if (n < 7) {
 			millis += (6 - n) * 60 * 60 * 1000;
-		} else if (n < 16) {
-			millis += (15 - n) * 60 * 60 * 1000;
+		} else if (n < 17{
+			millis += (16 - n) * 60 * 60 * 1000;
 		} else if (n < 23) {
 			millis += (22 - n) * 60 * 60 * 1000;
 		} else {
