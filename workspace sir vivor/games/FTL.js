@@ -210,7 +210,7 @@ class FTL extends Games.Game {
 			if (maxPlayers.length > 1) {
 				this.say("The rolls results in a tie between **" + maxPlayers.map(pl => pl.name).join(", ") + "**!");
 				this.chooseNewLeader = true;
-				this.say("!pick " + maxPlayer.map(pl => pl.name).join(", "));
+				this.say("!pick " + maxPlayers.map(pl => pl.name).join(", "));
 			} else {
 				this.leaderid = maxPlayers[0].id;
 				this.say("The new Leader is **" + maxPlayers[0].name + "**!");
