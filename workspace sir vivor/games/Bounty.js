@@ -21,6 +21,7 @@ class Bounty extends Games.Game {
 		this.blocked = new Map();
 		this.trappersUsed = new Map();
 		this.reveals = [];
+		this.playerOrder = [];
 	}
 
 	onStart() {

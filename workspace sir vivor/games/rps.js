@@ -2,7 +2,6 @@
 const name = "Rock, Paper, Scissors";
 const description = "__Winner of NBT #2!__ Game rules: http://survivor-ps.weebly.com/rock-paper-scissors.html";
 const id = Tools.toId(name);
-let stuff = ["Rock", "Paper", "Scissors"];
 class RPS extends Games.Game {
 	constructor(room) {
 		super(room);
@@ -12,11 +11,17 @@ class RPS extends Games.Game {
 		this.order = [];
 		this.attacks = new Map();
 		this.rps = new Map();
-		this.poss = ['rock', 'paper', 'scissors', 'r', 'p', 's'];
 		this.straightRPS = false;
 	}
 
 	onStart() {
+		if (this.variation) {
+			this.poss = ['rock', 'lizard', 'spock', 'scissors', 'paper', 'r', 'l', 'sp', 's', 'p'];
+			this.rpsname = "rpslsp";
+		} else {
+			this.rpsname = "rps";
+			this.poss = ['rock', 'scissors', 'paper', 'r', 's', 'p'];
+		}
 		this.nextRound();
 	}
 
@@ -33,7 +38,7 @@ class RPS extends Games.Game {
 			this.numAttacks = 0;
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your rps choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
+			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your " + this.rpsname + "choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} else {
 			this.numAttacks = 0;
@@ -42,7 +47,7 @@ class RPS extends Games.Game {
 			this.attacks.clear();
 			this.rps.clear();
 			this.pl();
-			this.say("Everyone please pm me your attacks! **Command:** ``" + Config.commandCharacter + "destroy [user], [rps]``")
+			this.say("Everyone please pm me your attacks! **Command:** ``" + Config.commandCharacter + "destroy [user], [" + this.rpsname + "]``")
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		}
 	}
@@ -81,6 +86,13 @@ class RPS extends Games.Game {
 		}
 	}
 
+	getWinner(index1, index2) {
+		let diff = Math.max(index1, index2) - Math.min(index1, index2);
+		if (diff === 0) return "tie";
+		if (diff%2 === 1) return "first";
+		return "second";
+	}
+
 	handleAttacks() {
 		try {
 			this.canAttack = false;
@@ -91,23 +103,21 @@ class RPS extends Games.Game {
 				}
 				let rpsA = this.rps.get(this.curPlayer);
 				let rpsB = this.rps.get(this.oplayer);
-				if (rpsA === rpsB) {
-					this.say("Both **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** chose " + stuff[rpsA] + "... Please repm me your next attacks!");
+				let winner = this.getWinner(rpsA, rpsB);
+				if (winner === "tie") {
+					this.say("Both **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** chose " + Tools.turnFirstUpper(this.poss[rpsA]) + "... Please repm me your next attacks!");
 					this.numAttacks = 0;
 					this.rps.clear();
 					this.canAttack = true;
 					this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
+				} else if (winner === "second") {
+					this.say("**" + this.oplayer.name + "** used " + Tools.turnFirstUpper(this.poss[rpsB]) + " and defeats **" + this.curPlayer.name + "**, who used " + Tools.turnFirstUpper(this.poss[rpsA]));
+					this.curPlayer.eliminated = true;
+					this.nextRound();
 				} else {
-					let diff = ((rpsA - rpsB) + 3) % 3;
-					if (diff === 2) {
-						this.say("**" + this.oplayer.name + "** used " + stuff[rpsB] + " and defeats **" + this.curPlayer.name + "**, who used " + stuff[rpsA]);
-						this.curPlayer.eliminated = true;
-						this.nextRound();
-					} else {
-						this.say("**" + this.curPlayer.name + "** used " + stuff[rpsA] + " and defeats **" + this.oplayer.name + "**, who used " + stuff[rpsB]);
-						this.oplayer.eliminated = true;
-						this.nextRound();
-					}
+					this.say("**" + this.curPlayer.name + "** used " + Tools.turnFirstUpper(this.poss[rpsA]) + " and defeats **" + this.oplayer.name + "**, who used " + Tools.turnFirstUpper(this.poss[rpsB]));
+					this.oplayer.eliminated = true;
+					this.nextRound();
 				}
 			} else {
 				if (this.order.length === 0) {
@@ -133,18 +143,16 @@ class RPS extends Games.Game {
 			this.rollb = null;
 			let rpsA = this.rps.get(this.curPlayer);
 			let rpsB = this.rps.get(this.oplayer);
-			if (rpsA === rpsB) {
-				this.say("**" + this.curPlayer.name + "** attacked **" + this.oplayer.name + "**, but they both used " + stuff[rpsA] + '.');
+			let winner = this.getWinner(rpsA, rpsB);
+			if (winner === "tie") {
+				this.say("**" + this.curPlayer.name + "** attacked **" + this.oplayer.name + "**, but they both used " + Tools.turnFirstUpper(this.poss[rpsA]) + '.');
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			} else {
-				this.win = true;
-				let diff = ((rpsA - rpsB) + 3) % 3;
-				if (num === 0) {
-					this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "** with **" + stuff[rpsA] + "**, who defends with **" + stuff[rpsB] + "**.");
-				}
-				if (diff === 1) {
+				this.say("**" + this.curPlayer.name + "** attacks **" + this.oplayer.name + "** with **" + Tools.turnFirstUpper(this.poss[rpsA]) + "**, who defends with **" + Tools.turnFirstUpper(this.poss[rpsB]) + "**.");
+				if (winner === "first") {
 					this.roll1 = 125;
 					this.roll2 = 100;
+					this.win = true;
 				} else {
 					this.roll1 = 100;
 					this.roll2 = 125;
@@ -178,9 +186,10 @@ class RPS extends Games.Game {
 			if (this.rps.has(player)) {
 				return user.say("You have already chosen this round!");
 			}
-			user.say("You have chosen " + stuff[index%3]);
+			let realindex = index % (this.poss.length / 2);
+			user.say("You have chosen **" + Tools.turnFirstUpper(this.poss[realindex]) + "**!");
 			this.order.push(player);
-			this.rps.set(player, index%3);
+			this.rps.set(player, realindex);
 		} else {
 			let split = target.split(",");
 			if (split.length !== 2) {
@@ -199,9 +208,10 @@ class RPS extends Games.Game {
 				return user.say("You have already attacked someone this round.");
 			}
 			this.attacks.set(player, attackedPlayer);
-			user.say("You have chosen to attack **" + attackedPlayer.name + "** with " + stuff[index%3] + "!");
+			let realindex = index % (this.poss.length / 2);
+			user.say("You have chosen to attack **" + attackedPlayer.name + "** with **" + Tools.turnFirstUpper(this.poss[realindex]) + "**!");
 			this.order.push(player);
-			this.rps.set(player, index%3);
+			this.rps.set(player, realindex);
 		}
 		this.numAttacks++;
 		if (this.numAttacks === this.getRemainingPlayerCount()) {
@@ -223,3 +233,11 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true,
 }
+exports.variations = [
+	{
+		name: "Rock, Paper, Scissors, Lizard, Spock",
+		aliases: ["rpsls", "rpslsp"],
+		variation: "spock",
+		variationAliases: ["ls"],
+	}
+]

@@ -46,8 +46,10 @@ class Game {
 	}
 
 	mailbreak(e) {
-		for (let i = 0; i < Config.developers.length; i++) {
-			Parse.say(this.room, '/w lady monita, .mail ' + Config.developers[i] + ', A game of ' + this.name + ' broke in progress! ' + (e ? e : ""));
+		if (Config.developers) {
+			for (let i = 0; i < Config.developers.length; i++) {
+				Parse.say(this.room, '/w lady monita, .mail ' + Config.developers[i] + ', A game of ' + this.name + ' 		broke in progress! ' + (e ? e : ""));
+			}
 		}
 		this.say("I'm sorry, the game broke. Cheese has been notified and will fix it as soon as they can.");
 		this.end();
@@ -255,13 +257,7 @@ class Game {
 	}
 
 	getRandomOrdering() {
-		let remainPlayers = this.getRemainingPlayers();
-		let order = Tools.shuffle(Object.keys(remainPlayers));
-		let realOrder = [];
-		for (let i = 0; i < order.length; i++) {
-			realOrder.push(remainPlayers[order[i]]);
-		}
-		return realOrder;
+		return this.shufflePlayers(this.getRemainingPlayers());
 	}
 
 	getLastPlayer() {
@@ -279,11 +275,7 @@ class Game {
 
 	shufflePlayers(players) {
 		if (!players) players = this.players;
-		let list = [];
-		for (let i in players) {
-			list.push(players[i]);
-		}
-		return Tools.shuffle(list);
+		return Tools.shuffle(Object.values(players));
 	}
 
 	getPlayer(message) {
@@ -346,6 +338,9 @@ class Game {
 
 	handleRolls(rolls) {
 		let roll = 0;
+		if (!roll) {
+			Parse.say("/w Lady Monita, .mail Cheese, rolls is undefined in a game of " + this.name + "!");
+		}
 		if (this.max) {
 			for (let i = 0; i < rolls.length; i++) {
 				roll = Math.max(roll, rolls[i]);
