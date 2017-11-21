@@ -33,6 +33,7 @@ class DOTW extends Games.Game {
 		this.attacks.clear();
 		this.predictions.clear();
 		this.hasBeenKilled.clear();
+		this.playerDays.clear();
 		this.win3 = new Map();
 		if (this.getRemainingPlayerCount() !== 2) {
 			this.say("Today is currently **" + Tools.turnFirstUpper(this.days[this.day]) + "**!");
@@ -486,6 +487,7 @@ class DOTW extends Games.Game {
 		player.say("You have chosen **" + Tools.turnFirstUpper(target) + "**!");
 		if (this.playerDays.has(this.curPlayer) && this.playerDays.has(this.oplayer)) {
 			clearTimeout(this.timeout);
+			this.dayWaiting = false;
 			this.say("!pick " + this.playerDays.get(this.curPlayer) + ", " + this.playerDays.get(this.oplayer));
 		}
 	}

@@ -87,9 +87,10 @@ class RPS extends Games.Game {
 	}
 
 	getWinner(index1, index2) {
-		let diff = Math.max(index1, index2) - Math.min(index1, index2);
+		let diff = index1 - index2;
+		if (diff < 0) diff += 5;
 		if (diff === 0) return "tie";
-		if (diff%2 === 1) return "first";
+		if (diff%2 === 0) return "first";
 		return "second";
 	}
 

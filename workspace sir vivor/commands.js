@@ -2180,7 +2180,6 @@ exports.commands = {
 			return;
 		}
 		room.game.forceEnd();
-		clearTimeout(room.game.timeout);
 	},
 
 	submit: function (target, user, room) {
