@@ -24,6 +24,7 @@ class FTL extends Games.Game {
 		this.canScapegoat = false;
 		this.scapeBattle = false;
 		this.chooseNewLeader = false;
+		this.3pl = false;
 		this.leaderid = "";
 		this.leaderroll = 0;
 		this.rolla = null;
@@ -124,6 +125,10 @@ class FTL extends Games.Game {
 		} else {
 			this.say("/wall Players: " + Object.values(this.players).filter(pl => !pl.eliminated && pl.id !== this.leaderid).map(pl => pl.name).join(", ") + " | Leader: " + this.players[this.leaderid].name + ".");
 			this.say("/wall If you are not the leader, pm me whether you would like to revolt or follow the leader with ``" + Config.commandCharacter + "revolt`` or ``" + Config.commandCharacter + "follow``, respectively.");
+			this.3pl = false;
+			if (this.getRemainingPlayerCount() === 3) {
+				this.3pl = true;
+			}
 			this.actions.clear();
 			this.canAction = true;
 			this.numActions = 0;
@@ -251,6 +256,7 @@ class FTL extends Games.Game {
 		} else if (this.chooseNewLeader) {
 			this.say("The new leader is **" + this.curPlayer.name + "**!");
 			this.leaderid = this.curPlayer.id;
+			this.chooseNewLeader = false;
 			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
 		} else {
 			this.nextRoll();
@@ -295,7 +301,7 @@ class FTL extends Games.Game {
 				this.immunities.set(this.curPlayer, 2);
 				this.say("**" + this.curPlayer.name + "** rolled the same as the leader, and is immune for the current and next rounds.");
 			} else {
-				if (this.suspected.has(this.curPlayer) && this.getRemainingPlayerCount() > 2) {
+				if (this.suspected.has(this.curPlayer) && this.getRemainingPlayerCount() > 2 && !this.3pl) {
 					this.canScapegoat = true;
 					this.say("**" + this.curPlayer.name + "** failed to " + action + (action === "revolt" ? " against": "") + " the leader! As they were suspected this round, they can attempt to have another player take their place with ``" + Config.commandCharacter + "scapegoat [user]``");
 					this.timeout = setTimeout(() => this.elimScape(), 90 * 1000);
