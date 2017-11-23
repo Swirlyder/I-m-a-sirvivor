@@ -34,7 +34,7 @@ class LegoTD extends Games.Game {
 			let player = this.players[userID];
 			if (!this.stats.has(player) && !player.eliminated) {
 				player.eliminated = true;
-				player.say("You were eliminated for providing your distribution!");
+				player.say("You were eliminated for not providing your distribution!");
 			}
 		}
 		this.nextRound();

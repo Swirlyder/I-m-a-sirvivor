@@ -1390,6 +1390,16 @@ exports.commands = {
 		this.say(room, text);
 	},
 
+	guishark: 'gui',
+	gui: function (target, user, room) {
+		var text = '';
+		if (user === room) {
+			text += '/pm ' + user.id + ', ';
+		}
+		text += "Hi " + target + ",  I'm Gui♥Shark!";
+		room.say(text);
+	}
+
 	baloor: function (target, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+'))
