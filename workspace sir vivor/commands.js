@@ -1398,7 +1398,7 @@ exports.commands = {
 		}
 		text += "Hi " + target + ",  I'm Gui♥Shark!";
 		room.say(text);
-	}
+	},
 
 	baloor: function (target, user, room) {
 		var text = '';
