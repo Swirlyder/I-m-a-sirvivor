@@ -1393,7 +1393,7 @@ exports.commands = {
 	guishark: 'gui',
 	gui: function (target, user, room) {
 		var text = '';
-		if (user === room) {
+		if (user !== room && !user.hasRank(room.id, '+')) {
 			text += '/pm ' + user.id + ', ';
 		}
 		text += "Hi " + target + ",  I'm Gui♥Shark!";
