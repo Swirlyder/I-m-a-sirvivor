@@ -2176,6 +2176,7 @@ exports.commands = {
 			id = Tools.sample(goodids);
 			Games.createGame(id, room);
 		}
+		console.log(id);
 		room.game.signups();
 	},
 
