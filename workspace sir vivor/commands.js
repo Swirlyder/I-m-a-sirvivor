@@ -1082,7 +1082,7 @@ exports.commands = {
 
 	win: function (target, user, room) {
 		if (!Games.host || Games.host.id !== user.id || room === user) return;
-		let split = target.split(",");
+		/*let split = target.split(",");
 		if (split.length !== 2) {
 			return room.say("You must specify the playercount and the username that won, in the format: ``.win playercount, winner``");
 		}
@@ -1101,7 +1101,8 @@ exports.commands = {
 			let types = ["easy", "medium", "hard"];
 			room.say("." + types[Games.hosttype] + "host " + numPlayers + ", " + Games.host.name);
 			room.say("The winner is **" + split[1].trim() + "**! Thanks for playing.");
-		}
+		}*/
+		this.say("The winner is **" + target.trim() + "**! Thanks for playing.");
 		Games.hosttype = null;
 		Games.host = null;
 	},
