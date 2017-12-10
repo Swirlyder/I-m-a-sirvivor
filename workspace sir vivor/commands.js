@@ -83,107 +83,107 @@ function isPM(roomid, userid)
 function lbuild()
 {}
 let gameTypes = {
-			trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 9],
-			trumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 9],
-			toptrumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 9],
-			ttp: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 9],
-			toptrumpspokebattle: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 9],
-			dualtype: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 9],
-			dual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 9],
-			htdt: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 9],
-			htdual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 9],
-			ht: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 9],
-			hidden: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 9],
-			risk: ['Risk', 'http://survivor-ps.weebly.com/risk.html', 'Pssh, who needs an army when you have a hulk?', 12],
-			classic: ['Classic', 'http://survivor-ps.weebly.com/classic.html', 'Classic Survivor. This is the main game.', 9],
-			hg: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 6],
-			hungergames: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 6],
-			hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 6],
-			hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 6],
-			hiddentype: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 9],
-			hungergamesanonymous: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 6],
-			towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 9],
-			tower: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 9],
-			td: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 9],
-			gearup: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 9],
-			gear: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 9],
-			gu: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 9],
-			pokemonsurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 6],
-			pokemon: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 6],
-			pokesurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 6],
-			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 6],
-			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 6],
-			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 9],
-			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 9],
-			bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 12],
-			bountie: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 12],
-			pole: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 12],
-			poles: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 12],
-			pol: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 12],
-			killerinthedark: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 12],
-			kitd: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 12],
-			kill: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 12],
-			killer: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 12],
-			rockpaperscissors: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 9],
-			rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 9],
-			eclipse: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 9],
-			es: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 9],
-			eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 9],
-			eevee: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 9],
-			exclusions: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 12],
-			ex: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 12],
-			ssb: ['Super Survivor Bros', 'http://survivor-ps.weebly.com/super-survivor-bros.html', 'Destroy your hated roomauth with your favourite roomauth!', 12],
-			dotw: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.'],
-			dayoftheweek: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.'],
-			outlaws: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]'],
-			outlaw: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]'],
-			russianroulette: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.'],
-			rr: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.'],
-			hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
-			hst: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
-			hs: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.'],
-			fishing: ['Fishing', 'https://docs.google.com/document/d/1Uv8fQhwFIRsqqZ_QAE1ZXh3fgDXYZ4Y4ncMyA9RGdUI/edit', 'Regardless what the score system says, magikarp is still special in our hearts'],
-			cakeboss: ['Cake Boss', 'https://docs.google.com/document/d/1UyftfOUi9y09lR7M3MPWfadYa4ZT_qoi4oGacWVd_00/edit', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake!'],
-			dragonorbs: ['Dragon Orbs', 'https://docs.google.com/document/d/1-uS0usAS8KMqL8HIFQMG873aqhoeEM0O2r2jUrbNFNQ/edit', 'Summon Shenron with the incredibly powerful Dragon Orbs!'],
-			evolve: ['Evolve', 'https://docs.google.com/document/d/1CRDCidN_Y7TJl3pUuuQ2mRZBBWIyTOT4LU4QFCXnBiU/edit', 'Take your fully evolved Pokemon and prove why you\'re the best of the final evolutions!'],
-			freeze: ['Freeze', 'https://docs.google.com/document/d/1APlwueeUBT39zlK1jyyq_YE02SgFqb3_v8ntpw4OWy8/edit', 'Freeze... and find out who you can trust in this winter wonderland'],
-			ichooseyou: ['I Choose you', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'In the words of Ash, I choose you, pik- what do you mean I chose HP and got shedinja?!'],
-			icy: ['I Choose you', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'In the words of Ash, I choose you, pik- what do you mean I chose HP and got shedinja?!'],
-			jenga: ['Jenga', 'https://docs.google.com/document/d/1D1XX8KVKH0Za0xWjN7oasLdRiBqTPYmDTRjuyuNwvJw/edit', 'No you can\'t steady the rest of the tower with your other hand.'],
-			menorahsurvivor: ['Menorah Survivor', 'https://docs.google.com/document/d/1Qdt9Xzkgm_FYiZQikPkNyfrpueq176tV0gvS7w4Bww0/edit', 'Just because the number of candles increases every night, doesn\'t mean your roll will'],
-			ms: ['Menorah Survivor', 'https://docs.google.com/document/d/1Qdt9Xzkgm_FYiZQikPkNyfrpueq176tV0gvS7w4Bww0/edit', 'Just because the number of candles increases every night, doesn\'t mean your roll will'],
-			naughtyornice: ['Naughty or Nice', 'https://docs.google.com/document/d/1MyvJzYmD5X569MD5XWc3VHaBdc2qFH9K17GXebsl3g4/edit', 'We\'re gonna .pick out who\'s naughty or nice!'],
-			non: ['Naughty or Nice', 'https://docs.google.com/document/d/1MyvJzYmD5X569MD5XWc3VHaBdc2qFH9K17GXebsl3g4/edit', 'We\'re gonna .pick out who\'s naughty or nice!'],
-			pickoffortune: ['Pick Of Fortune', 'https://pastebin.com/AhPvGE5Y', 'It\'s time for... PICK! OF! FORTUNE!!'],
-			pof: ['Pick Of Fortune', 'https://pastebin.com/AhPvGE5Y', 'It\'s time for... PICK! OF! FORTUNE!!'],
-			risk20: ['Risk 2.0', 'https://docs.google.com/document/d/1zXo4plg_ZEW3otsyWHa98BzyveCozTZViUsWr0i6D2w/edit', 'Pssh, who needs Russia when you have an Atomic Wasteland?'],
-			rollboost: ['Roll Boost', 'https://docs.google.com/document/d/1YtaXzy8PtPG-vPmwNAtLBq10qcm1pBt8YVMoiZA3A_U/edit', 'Use your power boosts and planning to outwit and roll your opponents in Roll Boosts!'],
-			santasautomatedworkshop: ['Santa\'s Automated Workshop', 'https://docs.google.com/document/d/1e-nO4aLdlSP5lCq-FfReTlkzDIOjrKhiaN5-rTtr3dI/edit', 'Try to be Santa\'s perfect little helper in this fun game!'],
-			saw: ['Santa\'s Automated Workshop', 'https://docs.google.com/document/d/1e-nO4aLdlSP5lCq-FfReTlkzDIOjrKhiaN5-rTtr3dI/edit', 'Try to be Santa\'s perfect little helper in this fun game!'],
-			santassurvivor: ['Santa\'s Survivor', 'https://docs.google.com/document/d/1pZng8tS2r4Vp2V--rDhXeCnxtkmfbYF_6VmWgoH8YX8/edit', 'Help Santa save Christmas from the Grinch in this fun Christmas themed game!'],
-			secretsanta: ['Secret Santa', 'https://docs.google.com/document/d/1MXEH5x3sjyKtLOp0ivX_Cx6OKUrXKQGjrUnJyLsPqFY/edit?usp=sharing', 'Show your Christmas spirit or lack of, in this fun Christmas themed game!'],
-			sherlock: ['Sherlock', 'https://docs.google.com/document/d/1t0iPscipIepYi5IMoV9iJW3ED0W6ZatnQz62tvEZkOw/edit', 'You haven\'t got a Clue what\'s in store in this mystery filled game!'],
-			snowballfight: ['Snowball Fight', 'https://docs.google.com/document/d/1sYmUUR7vWAtKaW4UyHMCsLcyFvftDUFKO7d1Z4fgnQg/edit', 'For when you really just want to hurl balls at each other.'],
-			staringcontest: ['Staring Contest', 'https://docs.google.com/document/d/1SVy4h9UgD003iQbw00OeWPPyvEdapFNuISL9DIE9MRg/edit', 'Did you know when googling the longest time withot blinking it says that Michael Thomas kept his eyes open without blinking for one hour, 5.61 seconds'],
-			statusconditionsurvivor: ['Status Condition Survivor', 'https://pastebin.com/e66b12Jp', 'Try to take on some major status conditions without a full heal!'],
-			scs: ['Status Condition Survivor', 'https://pastebin.com/e66b12Jp', 'Try to take on some major status conditions without a full heal!'],
-			streetrace: ['Street Race', 'https://docs.google.com/document/d/1pLDCjXXPLH3Gem1Udqo_qWkbPKyl4XW6wXNlXCqOPLE/edit?usp=sharing', 'Because honestly, who didn\'t want to drive the Mach 5 as a kid?'],
-			sunandmoonsurvivor: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.'],
-			smsurv: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.'],
-			survivethelabyrinth: ['Survive the Labyrinth', 'https://docs.google.com/document/d/1DLZzpZXbThHZg4wHWZk70SMcaNy5fpMSJFkm4-30H24/edit?usp=sharing', 'Beware of the minotaur... or just other players, your choice..'],
-			stl: ['Survive the Labyrinth', 'https://docs.google.com/document/d/1DLZzpZXbThHZg4wHWZk70SMcaNy5fpMSJFkm4-30H24/edit?usp=sharing', 'Beware of the minotaur... or just other players, your choice..'],
-			survivorparty: ['Survivor Party', 'https://docs.google.com/document/d/1PmcCQUxo_3x9s8S9AOLP-kYiiQguCVXkdAHjHWoR8Xw/edit?usp=sharing', 'Remember playing Mario Party and getting mad with friends? Well feel free to play Survivor Party and just get mad at baloor.'],
-			swords: ['Swords', 'https://docs.google.com/document/d/17p0KJEQhr8h13MYfp8bQoNcpQDe7Gh9i6MVvKzU7ut8/edit', 'A game of strategy and finding out who the best swordsman of all is!'],
-			tagteamsurvivor: ['Tag Team Survivor', 'https://docs.google.com/document/d/1vSviKmHege4ltPlGJCRHI0OKS-kdB3S3XB13es9fP_c/edit', 'For when you\'re alone enough that you make a theme to be with someone else'],
-			tts: ['Tag Team Survivor', 'https://docs.google.com/document/d/1vSviKmHege4ltPlGJCRHI0OKS-kdB3S3XB13es9fP_c/edit', 'For when you\'re alone enough that you make a theme to be with someone else'],
-			thegreatescape: ['The Great Escape', 'https://docs.google.com/document/d/1Sr7KPpr9dxRMjQ7-eYAs8OXKX2XO4UCFHfc9DP7v1gQ/edit', 'In a game of wits, and jail, who can you really trust?'],
-			tge: ['The Great Escape', 'https://docs.google.com/document/d/1Sr7KPpr9dxRMjQ7-eYAs8OXKX2XO4UCFHfc9DP7v1gQ/edit', 'In a game of wits, and jail, who can you really trust?'],
-			vivorsfeast: ['Vivor\'s Feast', 'https://docs.google.com/document/d/1CRKg7wF8ZqmLtzOSXl47_1U_i1Ka0n42D4P_EKWnHJw/edit?ts=5933515a', 'Sir Vivor\'s hungry and looking for a snack... and you look mighty appetizing today!'],
-			welcometoourchatjpg: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?'],
-			wtoc: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?'],
-			winterwonderland: ['Winter Wonderland', 'https://pastebin.com/VzMKLCUy', 'Trapped in a snowstorm only the strong can survive, let\'s hope it\'s you'],
-			followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?'],
-			ftl: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?'],
+			trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+			trumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+			toptrumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+			ttp: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+			toptrumpspokebattle: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+			dualtype: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
+			dual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
+			htdt: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
+			htdual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
+			ht: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
+			hidden: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
+			risk: ['Risk', 'http://survivor-ps.weebly.com/risk.html', 'Pssh, who needs an army when you have a hulk?', 2],
+			classic: ['Classic', 'http://survivor-ps.weebly.com/classic.html', 'Classic Survivor. This is the main game.', 1],
+			hg: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
+			hungergames: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
+			hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
+			hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
+			hiddentype: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
+			hungergamesanonymous: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
+			towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
+			tower: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
+			td: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
+			gearup: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 1],
+			gear: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 1],
+			gu: ['Gear Up', 'http://survivor-ps.weebly.com/gear-up.html', 'So you have items? You think you\'re cool? Pffft! You totally shouldn\'t click this link and learn about Gear Up (Long Games)', 1],
+			pokemonsurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+			pokemon: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+			pokesurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
+			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
+			bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
+			bountie: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
+			pole: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
+			poles: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
+			pol: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
+			killerinthedark: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+			kitd: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+			kill: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+			killer: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+			rockpaperscissors: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 1],
+			rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 1],
+			eclipse: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 1],
+			es: ['Eclipse Survivor', 'http://survivor-ps.weebly.com/eclipse-survivor.html', 'Winner of NBT #5!', 1],
+			eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
+			eevee: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
+			exclusions: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 1],
+			ex: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 1],
+			ssb: ['Super Survivor Bros', 'http://survivor-ps.weebly.com/super-survivor-bros.html', 'Destroy your hated roomauth with your favourite roomauth!', 2],
+			dotw: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.', 2],
+			dayoftheweek: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.', 2],
+			outlaws: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]', 0],
+			outlaw: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]', 0],
+			russianroulette: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.', 1],
+			rr: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.', 1],
+			hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+			hst: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+			hs: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+			fishing: ['Fishing', 'https://docs.google.com/document/d/1Uv8fQhwFIRsqqZ_QAE1ZXh3fgDXYZ4Y4ncMyA9RGdUI/edit', 'Regardless what the score system says, magikarp is still special in our hearts', 1],
+			cakeboss: ['Cake Boss', 'https://docs.google.com/document/d/1UyftfOUi9y09lR7M3MPWfadYa4ZT_qoi4oGacWVd_00/edit', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake!', 1],
+			dragonorbs: ['Dragon Orbs', 'https://docs.google.com/document/d/1-uS0usAS8KMqL8HIFQMG873aqhoeEM0O2r2jUrbNFNQ/edit', 'Summon Shenron with the incredibly powerful Dragon Orbs!', 1],
+			evolve: ['Evolve', 'https://docs.google.com/document/d/1CRDCidN_Y7TJl3pUuuQ2mRZBBWIyTOT4LU4QFCXnBiU/edit', 'Take your fully evolved Pokemon and prove why you\'re the best of the final evolutions!', 1],
+			freeze: ['Freeze', 'https://docs.google.com/document/d/1APlwueeUBT39zlK1jyyq_YE02SgFqb3_v8ntpw4OWy8/edit', 'Freeze... and find out who you can trust in this winter wonderland', 1],
+			ichooseyou: ['I Choose you', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'In the words of Ash, I choose you, pik- what do you mean I chose HP and got shedinja?!', 1],
+			icy: ['I Choose you', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'In the words of Ash, I choose you, pik- what do you mean I chose HP and got shedinja?!', 1],
+			jenga: ['Jenga', 'https://docs.google.com/document/d/1D1XX8KVKH0Za0xWjN7oasLdRiBqTPYmDTRjuyuNwvJw/edit', 'No you can\'t steady the rest of the tower with your other hand.', 1],
+			menorahsurvivor: ['Menorah Survivor', 'https://docs.google.com/document/d/1Qdt9Xzkgm_FYiZQikPkNyfrpueq176tV0gvS7w4Bww0/edit', 'Just because the number of candles increases every night, doesn\'t mean your roll will', 1],
+			ms: ['Menorah Survivor', 'https://docs.google.com/document/d/1Qdt9Xzkgm_FYiZQikPkNyfrpueq176tV0gvS7w4Bww0/edit', 'Just because the number of candles increases every night, doesn\'t mean your roll will', 1],
+			naughtyornice: ['Naughty or Nice', 'https://docs.google.com/document/d/1MyvJzYmD5X569MD5XWc3VHaBdc2qFH9K17GXebsl3g4/edit', 'We\'re gonna .pick out who\'s naughty or nice!', 1],
+			non: ['Naughty or Nice', 'https://docs.google.com/document/d/1MyvJzYmD5X569MD5XWc3VHaBdc2qFH9K17GXebsl3g4/edit', 'We\'re gonna .pick out who\'s naughty or nice!', 1],
+			pickoffortune: ['Pick Of Fortune', 'https://pastebin.com/AhPvGE5Y', 'It\'s time for... PICK! OF! FORTUNE!!', 1],
+			pof: ['Pick Of Fortune', 'https://pastebin.com/AhPvGE5Y', 'It\'s time for... PICK! OF! FORTUNE!!', 1],
+			risk20: ['Risk 2.0', 'https://docs.google.com/document/d/1zXo4plg_ZEW3otsyWHa98BzyveCozTZViUsWr0i6D2w/edit', 'Pssh, who needs Russia when you have an Atomic Wasteland?', 1],
+			rollboost: ['Roll Boost', 'https://docs.google.com/document/d/1YtaXzy8PtPG-vPmwNAtLBq10qcm1pBt8YVMoiZA3A_U/edit', 'Use your power boosts and planning to outwit and roll your opponents in Roll Boosts!', 1],
+			santasautomatedworkshop: ['Santa\'s Automated Workshop', 'https://docs.google.com/document/d/1e-nO4aLdlSP5lCq-FfReTlkzDIOjrKhiaN5-rTtr3dI/edit', 'Try to be Santa\'s perfect little helper in this fun game!', 1],
+			saw: ['Santa\'s Automated Workshop', 'https://docs.google.com/document/d/1e-nO4aLdlSP5lCq-FfReTlkzDIOjrKhiaN5-rTtr3dI/edit', 'Try to be Santa\'s perfect little helper in this fun game!', 1],
+			santassurvivor: ['Santa\'s Survivor', 'https://docs.google.com/document/d/1pZng8tS2r4Vp2V--rDhXeCnxtkmfbYF_6VmWgoH8YX8/edit', 'Help Santa save Christmas from the Grinch in this fun Christmas themed game!', 1],
+			secretsanta: ['Secret Santa', 'https://docs.google.com/document/d/1MXEH5x3sjyKtLOp0ivX_Cx6OKUrXKQGjrUnJyLsPqFY/edit?usp=sharing', 'Show your Christmas spirit or lack of, in this fun Christmas themed game!', 1],
+			sherlock: ['Sherlock', 'https://docs.google.com/document/d/1t0iPscipIepYi5IMoV9iJW3ED0W6ZatnQz62tvEZkOw/edit', 'You haven\'t got a Clue what\'s in store in this mystery filled game!', 1],
+			snowballfight: ['Snowball Fight', 'https://docs.google.com/document/d/1sYmUUR7vWAtKaW4UyHMCsLcyFvftDUFKO7d1Z4fgnQg/edit', 'For when you really just want to hurl balls at each other.', 1],
+			staringcontest: ['Staring Contest', 'https://docs.google.com/document/d/1SVy4h9UgD003iQbw00OeWPPyvEdapFNuISL9DIE9MRg/edit', 'Did you know when googling the longest time withot blinking it says that Michael Thomas kept his eyes open without blinking for one hour, 5.61 seconds', 1],
+			statusconditionsurvivor: ['Status Condition Survivor', 'https://pastebin.com/e66b12Jp', 'Try to take on some major status conditions without a full heal!', 1],
+			scs: ['Status Condition Survivor', 'https://pastebin.com/e66b12Jp', 'Try to take on some major status conditions without a full heal!', 1],
+			streetrace: ['Street Race', 'https://docs.google.com/document/d/1pLDCjXXPLH3Gem1Udqo_qWkbPKyl4XW6wXNlXCqOPLE/edit?usp=sharing', 'Because honestly, who didn\'t want to drive the Mach 5 as a kid?', 1],
+			sunandmoonsurvivor: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.', 1],
+			smsurv: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.', 1],
+			survivethelabyrinth: ['Survive the Labyrinth', 'https://docs.google.com/document/d/1DLZzpZXbThHZg4wHWZk70SMcaNy5fpMSJFkm4-30H24/edit?usp=sharing', 'Beware of the minotaur... or just other players, your choice..', 1],
+			stl: ['Survive the Labyrinth', 'https://docs.google.com/document/d/1DLZzpZXbThHZg4wHWZk70SMcaNy5fpMSJFkm4-30H24/edit?usp=sharing', 'Beware of the minotaur... or just other players, your choice..', 1],
+			survivorparty: ['Survivor Party', 'https://docs.google.com/document/d/1PmcCQUxo_3x9s8S9AOLP-kYiiQguCVXkdAHjHWoR8Xw/edit?usp=sharing', 'Remember playing Mario Party and getting mad with friends? Well feel free to play Survivor Party and just get mad at baloor.', 1],
+			swords: ['Swords', 'https://docs.google.com/document/d/17p0KJEQhr8h13MYfp8bQoNcpQDe7Gh9i6MVvKzU7ut8/edit', 'A game of strategy and finding out who the best swordsman of all is!', 1],
+			tagteamsurvivor: ['Tag Team Survivor', 'https://docs.google.com/document/d/1vSviKmHege4ltPlGJCRHI0OKS-kdB3S3XB13es9fP_c/edit', 'For when you\'re alone enough that you make a theme to be with someone else', 1],
+			tts: ['Tag Team Survivor', 'https://docs.google.com/document/d/1vSviKmHege4ltPlGJCRHI0OKS-kdB3S3XB13es9fP_c/edit', 'For when you\'re alone enough that you make a theme to be with someone else', 1],
+			thegreatescape: ['The Great Escape', 'https://docs.google.com/document/d/1Sr7KPpr9dxRMjQ7-eYAs8OXKX2XO4UCFHfc9DP7v1gQ/edit', 'In a game of wits, and jail, who can you really trust?', 1],
+			tge: ['The Great Escape', 'https://docs.google.com/document/d/1Sr7KPpr9dxRMjQ7-eYAs8OXKX2XO4UCFHfc9DP7v1gQ/edit', 'In a game of wits, and jail, who can you really trust?', 1],
+			vivorsfeast: ['Vivor\'s Feast', 'https://docs.google.com/document/d/1CRKg7wF8ZqmLtzOSXl47_1U_i1Ka0n42D4P_EKWnHJw/edit?ts=5933515a', 'Sir Vivor\'s hungry and looking for a snack... and you look mighty appetizing today!', 1],
+			welcometoourchatjpg: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?', 1],
+			wtoc: ['Welcome to Our Chat.jpg', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit#heading=h.ki085dc7yzxn', 'Are you ever curious what it\'s like to just be yourself, or even one of those around you?', 1],
+			winterwonderland: ['Winter Wonderland', 'https://pastebin.com/VzMKLCUy', 'Trapped in a snowstorm only the strong can survive, let\'s hope it\'s you', 1],
+			followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
+			ftl: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
 };
 exports.commands = {
 	/**
@@ -864,7 +864,7 @@ exports.commands = {
 				var data = gameTypes[arg];
 				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
 				if (Games.host) {
-					Games.points = data[3];
+					Games.hosttype = data[3];
 				}
 			}
 		}
@@ -1008,12 +1008,12 @@ exports.commands = {
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
 	},
 
-	done: function(arg, user, room)
+	/*done: function(arg, user, room)
 	{
 	    if (!Games.host || Games.host.id !== user.id) return;
 		Games.host = null;
 		this.say(room, "Thanks for playing!");
-	},
+	},*/
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
@@ -1080,9 +1080,29 @@ exports.commands = {
 		this.say(room, text);
 	},
 
-	win: function (arg, user, room) {
-		if (!Games.host || Games.host.id !== user.id) return;
-		this.say(room, 'The winner is ' + arg + '! Thanks for playing!');
+	win: function (target, user, room) {
+		if (!Games.host || Games.host.id !== user.id || room === user) return;
+		let split = target.split(",");
+		if (split.length !== 2) {
+			return room.say("You must specify the playercount and the username that won, in the format: ``.win playercount, winner``");
+		}
+		let numPlayers = parseInt(split[0]);
+		if (!numPlayers || numPlayers < 1) return room.say("The number of players must be a number greater than 0.");
+		if (!Games.hosttype) {
+			if (user.hasRank(room.id, '+')) {
+				room.say("The winner is **" + split[1].trim() + "**, but I could not award host points since you never selected a theme!");
+			} else {
+				return room.say("Please select a theme before winning the player!");
+			}
+		} else {
+			if (!user.hasRank(room.id, '+')) {
+				room.say(".win " + target);
+			}
+			let types = ["easy", "medium", "hard"];
+			room.say("." + types[Games.hosttype] + "host " + numPlayers + ", " + Games.host.name);
+			room.say("The winner is **" + split[1].trim() + "**! Thanks for playing.");
+		}
+		Games.hosttype = null;
 		Games.host = null;
 	},
 
