@@ -1088,7 +1088,7 @@ exports.commands = {
 		}
 		let numPlayers = parseInt(split[0]);
 		if (!numPlayers || numPlayers < 1) return room.say("The number of players must be a number greater than 0.");
-		if (!Games.hosttype) {
+		if (!Games.hosttype && Games.hosttype !== 0) {
 			if (user.hasRank(room.id, '+')) {
 				room.say("The winner is **" + split[1].trim() + "**, but I could not award host points since you never selected a theme!");
 			} else {
