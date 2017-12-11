@@ -1102,6 +1102,8 @@ exports.commands = {
 			room.say("." + types[Games.hosttype] + "host " + numPlayers + ", " + Games.host.name);
 			room.say("The winner is **" + split[1].trim() + "**! Thanks for playing.");
 		}
+		Games.hosttype = null;
+		Games.host = null;
 	},
 
 	intro: function(arg, user, room)
