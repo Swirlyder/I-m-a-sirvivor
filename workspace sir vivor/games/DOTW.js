@@ -239,12 +239,13 @@ class DOTW extends Games.Game {
 				if (this.hasWon) {
 					let numWins = this.currentWins.get(this.winPlayer) || 0;
 					if (numWins === 2) {
-						this.say("**" + this.winPlayer.name + "** sweeps and gains 20 to their roll on Wednesday!");
+						this.say("**" + this.winPlayer.name + "** sweeps and gains 20 to their roll on Saturday!");
 						this.win3.set(this.winPlayer, true);
 					} else {
-						this.say("**" + this.losePlayer.name + "** loses the third matchup and loses 20 to their roll on Wednesday!");
+						this.say("**" + this.losePlayer.name + "** loses the third matchup and loses 20 to their roll on Saturday!");
 						this.win3.set(this.losePlayer, true);
 					}
+					this.hasWon = false;
 					this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 					return;
 				}

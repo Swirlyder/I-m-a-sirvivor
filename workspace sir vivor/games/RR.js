@@ -75,6 +75,7 @@ class RR extends Games.Game {
         }
         this.say("!pick " + picks.join(", "));
     }
+
     eliminatePlayer() {
         let player = this.curPlayer;
         player.eliminated = true;
@@ -86,6 +87,7 @@ class RR extends Games.Game {
         }
         this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
     }
+
     handlePick(message) {
         this.curPlayer = this.players[Tools.toId(message)];
         let opponent;
@@ -114,6 +116,7 @@ class RR extends Games.Game {
         else if (this.passed.has(this.curPlayer)) {
             if (this.finals) {
                 this.say("**" + this.curPlayer.name + " has used both their pass and the chamber is 1, therefore is eliminated. RIP!**");
+                this.curPlayer.eliminated = true;
                 return this.end();
             }
             else if (this.stole.has(this.curPlayer)) {
@@ -205,31 +208,30 @@ class RR extends Games.Game {
             }
         }
     }
+
     handleWinner(winPlayer, losePlayer) {
+        this.rollBattle = false;
         if (winPlayer === this.curPlayer) {
             this.oplayer.eliminated = true;
             this.say("**RIP " + this.oplayer.name + "!** Their pass is used by " + this.curPlayer.name + " who is safe until the next round!");
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
-            this.rollBattle = false;
-            return;
         }
         else {
             this.curPlayer.eliminated = true;
             this.say("**" + this.curPlayer.name + " fails to steal from " + this.oplayer.name + ". RIP!**");
             clearTimeout(this.timeout);
             this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
-            this.rollBattle = false;
-            return;
         }
     }
+
     onNextRound() {
         this.moved.clear();
         this.say("**Round " + this.round + "!**");
         clearTimeout(this.timeout);
-        //this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
         this.nextPick();
     }
+
     pull(target, user) {
         let player = this.players[user.id];
         if (player !== this.curPlayer) return;
@@ -239,6 +241,7 @@ class RR extends Games.Game {
         clearTimeout(this.timeout);
         this.say("!roll " + this.chamber);
     }
+
     pass(target, user) {
         let player = this.players[user.id];
         if (player !== this.curPlayer) return;
@@ -250,6 +253,7 @@ class RR extends Games.Game {
         this.say("**" + this.curPlayer.name + " has chosen to pass and is safe until the next round!**");
         this.timeout = setTimeout(() => this.nextPick(), 5 * 1000);
     }
+
     steal(target, user) {
         let player = this.players[user.id];
         if (player !== this.curPlayer) return;

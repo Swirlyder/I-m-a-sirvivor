@@ -80,6 +80,7 @@ class HotPotato extends Games.Game {
 		let oplayer = this.players[Tools.toId(target)];
 		if (!oplayer) return user.say("That player is not in the game!");
 		if (oplayer.eliminated) return user.say("That player has already been eliminated!");
+		if (oplayer === this.curPlayer) return this.say(">passing to yourself.");
 		clearTimeout(this.timeout);
 		this.canPotato = false;
 		this.oplayer = oplayer;

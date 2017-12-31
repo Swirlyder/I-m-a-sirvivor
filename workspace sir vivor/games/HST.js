@@ -171,24 +171,32 @@ class HST extends Games.Game {
 			this.say("**" + names.join(', ') + "** win" + (names.length === 1 ? "s" : "") + " the roll battle!");
 			return this.end();
 		}
+
 		let tagged = [];
 		let escaped = [];
+		let ties = [];
 		for (let i = 0; i < this.opponents.length; i++) {
 			let userID = Tools.toId(this.opponents[i]);
 			let player = this.players[userID];
 			player.roll = rolls[i];
-			if (player.roll >= this.seekerRoll) {
+			if (player.roll > this.seekerRoll) {
 				escaped.push(player.name);
 			}
-			else {
+			else if (player.roll < this.seekerRoll) {
 				tagged.push(player.name);
 				player.eliminated = true;
+			} else {
+				ties.push(player);
 			}
 		}
+
 		let text = '';
 		if (tagged.length) text += "**" + tagged.join(', ') + "** " + (tagged.length > 1 ? "are": "is") + " tagged! ";
 		if (escaped.length) text += "**" + escaped.join(', ') + "** escaped!";
-		if (!tagged.length) {
+		if (ties.length) {
+			this.opponents = ties;
+			text += "**" + ties.map(pl => pl.name).join(", ") + " has a tie with the seeker, and they will both reroll!";
+		} else if (!tagged.length) {
 			this.seekerLives--;
 			if (this.seekerLives === 0) {
 				text += ' No lives remaining, the **Seeker loses!**';
@@ -202,11 +210,17 @@ class HST extends Games.Game {
 				return this.say('!roll ' + this.getRemainingPlayerCount() + 'd100');
 			}
 		}
+
 		if (this.variation === "Juggernaut" && tagged.length) {
 			this.seekerRollVal += (tagged.length * 10);
 		}
+
 		this.say(text);
-		return this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
+		if (ties.length) {
+			this.say("!roll " + this.seekerRollVal);
+		} else {
+			return this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);
+		}
 	}
 
 	choose(target, user) {

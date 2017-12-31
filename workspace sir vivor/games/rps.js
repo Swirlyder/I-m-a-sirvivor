@@ -38,7 +38,7 @@ class RPS extends Games.Game {
 			this.numAttacks = 0;
 			this.curPlayer = playersLeft[Object.keys(playersLeft)[0]];
 			this.oplayer = playersLeft[Object.keys(playersLeft)[1]];
-			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your " + this.rpsname + "choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
+			this.say("Only **" + this.curPlayer.name + "** and **" + this.oplayer.name + "** are left! PM me your " + this.rpsname + " choice! **Command:** ``" + Config.commandCharacter + "destroy [rps]``");
 			this.timeout = setTimeout(() => this.listRemaining(), 60 * 1000);
 		} else {
 			this.numAttacks = 0;

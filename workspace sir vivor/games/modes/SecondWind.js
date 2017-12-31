@@ -52,6 +52,10 @@ let secondWindMode = function() {
 	this.getSuffix = (player) => {
 		return "(" + this.lives.get(player) + "♥)";
 	}
+
+	this.onLateJoin = (player) => {
+		this.lives.set(player, 2);
+	}
 }
 
 exports.name = name;

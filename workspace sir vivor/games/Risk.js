@@ -39,6 +39,7 @@ class Risk extends Games.Game {
 		} else if (this.started) {
 			user.say("You have latejoined the game of risk!");
 			this.troops.set(this.players[user.id], 100);
+			if (typeof this.onLateJoin === 'function') this.onLateJoin(this.players[user.id]);
 		}
 	}
 
