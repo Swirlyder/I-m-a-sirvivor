@@ -393,7 +393,6 @@ global.parse = exports.parse = {
 						'Content-Length': data.length
 					};
 				}
-				console.log(data);
 				var req = https.request(requestOptions, function (res) {
 					res.setEncoding('utf8');
 					var data = '';
@@ -552,6 +551,7 @@ global.parse = exports.parse = {
 		}
 	},
 	chatMessage: function (message, user, room) {
+		if (!room) return;
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
 		if (room.id === 'survivor') {
 			addChatMessage(message, user);

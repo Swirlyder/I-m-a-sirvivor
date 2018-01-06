@@ -2099,9 +2099,9 @@ exports.commands = {
 			badnames.push(user.name);
 		}
 		if (goodnames.length > 0 && badnames.length > 0) {
-			this.say(room, goodnames.join(", ") + " were allowed a roll! Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
+			this.say(room, goodnames.join(", ") + " " + (goodnames.length > 1 ? 'were' : 'was') + " allowed a roll! Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
 		} else if (goodnames.length > 0) {
-			this.say(room, goodnames.join(", ") + " were allowed a roll!");
+			this.say(room, goodnames.join(", ") + " " + (goodnames.length > 1 ? 'were' : 'was') + " allowed a roll!");
 		} else if (badnames.length > 0) {
 			this.say(room, "Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
 		}
