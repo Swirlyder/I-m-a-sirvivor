@@ -83,7 +83,7 @@ class Evolve extends Games.Game {
 	beforeNextRound() {
 		if (this.getRemainingPlayerCount() < 2) return this.nextRound();
 		if (this.round%3 === 2) {
-			this.say("**You can now choose to evolve with** ``**" + Config.commandCharacter + "evolve**``!");
+			this.say("**You can now choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
 			this.hasEvolved.clear();
 			this.canEvolve = true;
 			this.timeout = setTimeout(() => this.nextRound(), 60 * 1000);
