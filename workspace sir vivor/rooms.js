@@ -27,6 +27,9 @@ class Room {
 		this.id = roomid;
 		this.isPrivate = type;
 		this.users = new Map();
+		this.repeatMessage = "";
+		this.numTimesLeft = 0;
+		this.repeatTimeMinutes = 0;
 	}
 
 	say(message) {
@@ -90,6 +93,67 @@ class Room {
 			if (!user.rooms.size) user.destroy();
 		});
 		rooms.delete(this.id);
+	}
+
+	sayRepeatMessage() {
+		this.say(this.repeatMessage);
+		this.numTimesLeft--;
+		if (this.numTimesLeft > 0) {
+			this.repeatTimeout = setTimeout(() => this.sayRepeatMessage(), this.repeatTimeMinutes * 60 * 1000);
+		}
+	}
+
+	tryClearRepeat() {
+		if (!this.hasRepeatMessage()) {
+			this.say("There is no repeat running!");
+		}
+		if (this.repeatTimeout) clearTimeout(this.repeatTimeout);
+		this.numTimesLeft = 0;
+		this.repeatMessage = "";
+	}
+
+	hasRepeatMessage() {
+		return this.numTimesLeft > 0;
+	}
+
+	trySetRepeat(message, user) {
+		let targetID = Tools.toId(message);
+		if (targetID === 'stop' || targetID === 'end') {
+			return this.tryClearRepeat();
+		}
+
+		if (this.hasRepeatMessage()) {
+			return this.say("There is already a repeat message running! If you would like to clear it, please do ``" + Config.commandCharacter + "repeat end`` first");
+		}
+
+		let split = message.split(",");
+		if (split.length < 3) {
+			return this.say("You must specify the message, duration, and number of times for the repeat to run, in the form ``" + Config.commandCharacter + "repeat [message], [frequency], [amount]``");
+		}
+
+		let repeatmessage = split.slice(0, -2).join(",");
+		let frequency = parseInt(split[1]);
+		let amount = parseInt(split[2]);
+
+		if (!repeatmessage) {
+			return this.say("You must specify a message to repeat!");
+		}
+
+		if (!frequency || frequency < 1) {
+			return this.say("Invalid amount of time between repeated messages.");
+		}
+
+		if (!amount || amount < 1) {
+			return this.say("Invalid amount of times to repeat the message.");
+		}
+
+		this.repeatMessage = repeatmessage;
+		this.numTimesLeft = amount;
+		this.repeatTimeMinutes = frequency;
+
+		this.say("Your message will be repeated " + amount + " times at " + frequency + " minute intervals.");
+		this.say("/modnote " + user.name + " added a repeat for " + message + " to be repeated " + amount + " times at " + frequency + " minute intervals.");
+		this.repeatTimeout = setTimeout(() => this.sayRepeatMessage(), this.repeatTimeMinutes * 60 * 1000);
 	}
 }
 
