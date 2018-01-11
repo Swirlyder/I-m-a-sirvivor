@@ -1104,7 +1104,7 @@ exports.commands = {
 		}
 		Games.hosttype = null;
 		Games.host = null;*/
-		this.say("The winner is **" + target + "**! Thanks for playing.");
+		room.say("The winner is **" + target + "**! Thanks for playing.");
 		Games.host = null;
 		Games.hosttype = null;
 	},
