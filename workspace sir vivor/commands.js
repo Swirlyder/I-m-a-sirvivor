@@ -1154,7 +1154,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/13jmZ3cTs6ekiyAk89GRT__OMQduj4cmUhGnRw0aZKFw/edit';
+		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1GU-Zmil6oGBUSlpYqhHaNpNeLjO4RraxnlS3TaEL3pE/edit';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
