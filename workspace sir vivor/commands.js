@@ -1008,12 +1008,12 @@ exports.commands = {
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
 	},
 
-	/*done: function(arg, user, room)
+	done: function(arg, user, room)
 	{
 	    if (!Games.host || Games.host.id !== user.id) return;
 		Games.host = null;
 		this.say(room, "Thanks for playing!");
-	},*/
+	},
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
