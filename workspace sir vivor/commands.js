@@ -101,7 +101,7 @@ let gameTypes = {
 			hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
 			hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
 			hiddentype: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
-			hotpotato: ['Hot Potato', 'https://survivor-ps.weebly.com/hot-potato.html', 'This be a real hot potato', 0],
+			hotpotato: ['Hot Potato', 'https://survivor-ps.weebly.com/hot-potato.html', 'This be a real hot potato.', 0],
 			hungergamesanonymous: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
 			towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
 			tower: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
