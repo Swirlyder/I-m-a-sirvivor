@@ -120,7 +120,7 @@ class Game {
 		if (!player || player.eliminated) return;
 		player.eliminated = true;
 		this.say(player.name + " was DQed.");
-		if (typeof this.onDQ === 'function') this.onDQ(player);
+		if (typeof this.onLeave === 'function') this.onLeave(player);
 	}
 
 	cap(target) {
