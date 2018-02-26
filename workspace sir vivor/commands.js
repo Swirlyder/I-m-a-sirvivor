@@ -1079,7 +1079,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user + ', ';
 		}
-		text += 'Be sure to check out our **Rolls of Fame** page here!: http://survivor-ps.weebly.com/rolls-of-fame.html And don\'t forget to submit your own here!: https://docs.google.com/forms/d/1n_C8wctsFXDQLkPXPqCj4UfBjxh6d7CPvSfTBw59tuw/viewform?c=0&w=1';
+		text += 'rof was deleted because of losers like you who think statistically average things are cool';
 		this.say(room, text);
 	},
 
