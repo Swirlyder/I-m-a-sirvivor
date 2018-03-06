@@ -1384,8 +1384,23 @@ exports.commands = {
 		}
 		text += 'I swear, he\'s not my real dad';
 		this.say(room, text);
-	},
+	}, 
 	
+	mitsuki: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'isso significa algo em português';
+		this.say(room, text);
+	}, 
+		
 	hirl123: 'hurl',
 	hurl: function(arg, user, room)
 	{
