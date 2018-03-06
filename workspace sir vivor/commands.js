@@ -1385,6 +1385,22 @@ exports.commands = {
 		text += 'I swear, he\'s not my real dad';
 		this.say(room, text);
 	},
+	
+	hirl123: 'hurl',
+	hurl: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'received their first promotion in 2016 when a dyslexic staff member misread their name as Girl123';
+		this.say(room, text);
+	},
 
 	snapeasy: 'snap',
 	snap: function (target, user, room) {
