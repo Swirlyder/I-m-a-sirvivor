@@ -1400,6 +1400,20 @@ exports.commands = {
 		text += '/me snaps fingers';
 		this.say(room, text);
 	},
+	shadecession: 'shade',
+	shade: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'Let me just put on my Shadecessions ⌐■_■';
+		this.say(room, text);
+	},
 	kaz: 'azuuli',
 	azu: 'azuuli',
 	azuuli: function (target, user, room) {
