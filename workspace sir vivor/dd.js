@@ -11,6 +11,7 @@ class DD {
 		this.secondpoints = 5;
 		this.realhostpoints = 3;
 		this.partpoints = 2;
+		this.numSkips = 0;
 	}
 
 	importData() {

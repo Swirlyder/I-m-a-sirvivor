@@ -114,7 +114,7 @@ let gameTypes = {
 			pokesurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			prisonersdilemma: ['Prisoner\' Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
+			prisonersdilemma: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
 			pd: ['Prisoner\' Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
 			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
@@ -1710,6 +1710,7 @@ exports.commands = {
 		this.say(room, text);
 	},
 	deathbywobbuffet: 'dbw',
+	wob: 'dbw',
 	dbw: function(arg, user, room)
 	{
 		var text = '';
@@ -1721,7 +1722,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Death by Deez nuts';
+		text += '/me wobs';
 		this.say(room, text);
 	},
 	electra: 'electrasheart',
@@ -2344,6 +2345,18 @@ exports.commands = {
 		dd.updateModlog(user.name + " did .first " + target);
 		dd.updateModlog("First place points awarded to: **" + target + "**.");
 	},
+	skipdd: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		dd.numSkips++;
+		user.say("1 dd skip added, there are " + dd.numSkips + " remaining.");
+	},
+	removeskipdd: 'rmskipdd',
+	rmskipdd: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		if (dd.numSkips === 0) return user.say("No dds have been skipped this month.");
+		dd.numSkips--;
+		user.say("1 dd skip removed, there are " + dd.numSkips + " remaining.");
+	},
 	seconds: 'second',
 	second: function (target, user, room) {
 		if (!target) return;
@@ -2533,7 +2546,6 @@ exports.commands = {
 			else user.say('Error connecting to hastebin.');
         });
 	},
-	
 
 	chatlines: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
@@ -2578,7 +2590,7 @@ exports.commands = {
 		}
 		Tools.uploadToHastebin(overallstr, (success, link) => {
 			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
-			else user.say('Error connecting to pastebin.');
+			else user.say('Error connecting to hastebin.');
         });
 	},
 	toppoints: 'top',
@@ -2646,6 +2658,7 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
+		numFirsts += dd.numSkips;
 		let month = new Date().getMonth();
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		if (numFirsts === 0) {
