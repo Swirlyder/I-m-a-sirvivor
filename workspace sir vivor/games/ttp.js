@@ -22,6 +22,15 @@ class TTP extends Games.Game {
 		this.indices = new Map();
 	}
 
+	onLeave(player) {
+		if (player == this.curPlayer || player == this.oplayer) {
+			clearTimeout(this.timeout);
+			let winPlayer = (player == this.curPlayer ? this.oplayer : this.curPlayer);
+			this.say("**" + player.name + "** was dqed, so **" + winPlayer.name + "** wins!");
+			this.timeout = setTimeout(() => this.nextRound(), 5 * 1000);	
+		}
+	}
+
 	onStart() {
 		let data = Tools.shuffle(Object.keys(Tools.data.pokedex));
 		this.data = [];
