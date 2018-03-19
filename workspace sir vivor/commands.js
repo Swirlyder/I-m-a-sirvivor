@@ -115,7 +115,7 @@ let gameTypes = {
 			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			prisonersdilemma: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
-			pd: ['Prisoner\' Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
+			pd: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
 			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 			bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
