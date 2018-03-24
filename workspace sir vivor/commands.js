@@ -197,20 +197,6 @@ exports.commands = {
 	 * These commands are here to provide information about the bot.
 	 */
 
-
-	eval: function(arg, user, room)
-	{
-		if (user !== 'Hawkie') return false;
-		try
-		{
-			var result = eval(arg.trim());
-			this.say(room, JSON.stringify(result));
-		}
-		catch (e)
-		{
-			this.say(room, e.name + ": " + e.message);
-		}
-	},
 	git: function(arg, user, room)
 	{
 		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
@@ -288,6 +274,7 @@ exports.commands = {
 		room.say("Shutdown mode enabled");
 	},
 	join: function (arg, user, room) {
+		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);
 	},
 	custom: function(arg, user, room)
@@ -789,8 +776,6 @@ exports.commands = {
 
 	// Survivor Commands:
 	// Host commands:
-	roompromote: 'roomvoice',
-	roomvoice: 'host',
 	host: function(target, user, room)
 	{
 		if ((!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
@@ -1007,8 +992,8 @@ exports.commands = {
 		if (!user.hasRank(room.id, '+')) return;
 		if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
 	},
-
-	pl: function (target, user, room) {
+	pl: 'players',
+	players: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
 	},
@@ -1065,6 +1050,7 @@ exports.commands = {
 	},
 	tester: function(arg, user, room)
 	{
+		if (!user.isExcepted()) return false;
 		this.say(room, room.id)
 		this.say(room, user.id)
 	},
@@ -2285,11 +2271,6 @@ exports.commands = {
 		} else {
 			user.say(text);
 		}
-	},
-
-	dq: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') || !room.game) return;
-		room.game.dq(target);
 	},
 	
 	roast: function (target, user, room) {
