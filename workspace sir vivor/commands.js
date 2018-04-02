@@ -2105,14 +2105,12 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000;
-		if (n < 4) {
-			millis += (3 - n) * 60 * 60 * 1000;
-		} else if (n < 16) {
+		if (n < 15) {
 			millis += (15 - n) * 60 * 60 * 1000;
 		} else if (n < 22) {
 			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
-			millis += (27 - n) * 60 * 60 * 1000;
+			millis += (39 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
@@ -2666,8 +2664,8 @@ exports.commands = {
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
-		let times = ['6pm EST', '2am EST', '12pm EST']
-		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
+		let times = ['6pm EST', '11am EST']
+		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
 	},
 
 	rename: function (target, user, room) {
