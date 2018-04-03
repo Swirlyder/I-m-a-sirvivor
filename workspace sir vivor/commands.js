@@ -200,7 +200,7 @@ exports.commands = {
 
 	eval: function(arg, user, room)
 	{
-		if (user !== 'Hawkie') return false;
+		if (user.id !== 'hawkie' || user.id !== 'moo') return false;
 		try
 		{
 			var result = eval(arg.trim());
