@@ -2665,7 +2665,7 @@ exports.commands = {
 			return room.say("No games have been updated yet this month!");
 		}
 		let times = ['6pm EST', '11am EST']
-		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 2)/3)) + ".");	
+		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");	
 	},
 
 	rename: function (target, user, room) {
