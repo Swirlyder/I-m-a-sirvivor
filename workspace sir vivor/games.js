@@ -296,7 +296,7 @@ class Game {
 		try {
 			this.rolla = null;
 			this.rollb = null;
-			if(this.rollSwitch) {
+			if (this.rollSwitch) {
 				this.golf = false;
 				let choice = (Math.random() < 0.5 ? 0 : 1);
 				if(choice === 0) {
@@ -308,7 +308,7 @@ class Game {
 			}
 			if (this.roll1 && this.roll2) {
 				this.say("!roll " + this.roll1);
-				this.say("!roll " + this.roll2);
+				this.say("!dice " + this.roll2);
 			}
 		} catch (e) {
 			this.mailbreak(e);
@@ -338,7 +338,7 @@ class Game {
 
 	handleRolls(rolls) {
 		let roll = 0;
-		if (!roll) {
+		if (!rolls) {
 			Parse.say("/w Lady Monita, .mail Cheese, rolls is undefined in a game of " + this.name + "!");
 		}
 		if (this.max) {
@@ -352,6 +352,7 @@ class Game {
 		}
 		if (typeof this.handleRoll === 'function') this.handleRoll(roll);
 	}
+
 	handlehtml(message) {
 		try {
 			if (!this.started) return;
