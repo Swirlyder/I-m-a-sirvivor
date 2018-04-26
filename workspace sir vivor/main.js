@@ -110,7 +110,9 @@ if (Config.watchconfig) {
 }
 if (Config.commandCharacter === '.') {
 	process.on('uncaughtException', err => {
-		Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Cheese, An error occurred! ' + err);
+		if (global.Parse) {
+			global.Parse.say(Rooms.get('survivor'), '/w lady monita, .mail Cheese, An error occurred! ' + err);
+		}
 		console.log(err);
 	});
 }

@@ -524,7 +524,7 @@ global.parse = exports.parse = {
 				}
 				this.chatMessage(spl, user, user);
 				break;
-			case 'N': case: 'n':
+			case 'N': case 'n':
 				var username = spl[2];
 				var oldid = spl[3];
 				var user = room.onRename(username, oldid);
