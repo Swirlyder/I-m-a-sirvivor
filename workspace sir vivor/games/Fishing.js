@@ -86,6 +86,7 @@ class Fishing extends Games.Game {
 		this.description = description;
 		this.hasRolled = new Set();
 		this.rolls = new Map();
+		this.fishNum = 0;
 	}
 
 	onStart() {
@@ -121,7 +122,9 @@ class Fishing extends Games.Game {
 		} else if (availPlayers.length === 1) {
 			this.curPlayer = availPlayers[0];
 			this.say("Rolling for **" + this.curPlayer.name + "**'s next catch!");
-			this.say("!roll 100");
+			fishNum++;
+			let cmd = fishNum % 2 === 0 ? "!roll" : "dice";
+			this.say(cmd + " 100");
 		} else {
 			this.say("!pick __" + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join("__, __") + "__");
 		}
@@ -136,7 +139,7 @@ class Fishing extends Games.Game {
 		this.rolla = null;
 		this.rollb = null;
 		this.say("!roll " + this.rolls.get(this.curPlayer));
-		this.say("!roll " + this.rolls.get(this.oplayer));	
+		this.say("!dice " + this.rolls.get(this.oplayer));	
 	}
 
 	handlePick(message) {

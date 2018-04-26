@@ -120,7 +120,7 @@ class Dexterity extends Games.Game {
 			this.roll2 = null;
 			this.winIndex = null;
 			this.say("!roll " + item.atk);
-			this.say("!roll " + item2.atk);
+			this.say("!dice " + item2.atk);
 		} catch (e) {
 			this.mailbreak(e);
 		}
