@@ -115,7 +115,7 @@ let gameTypes = {
 			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			prisonersdilemma: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
-			pd: ['Prisoner\' Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
+			pd: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
 			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 			bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
@@ -197,20 +197,6 @@ exports.commands = {
 	 * These commands are here to provide information about the bot.
 	 */
 
-
-	eval: function(arg, user, room)
-	{
-		if (user !== 'Hawkie') return false;
-		try
-		{
-			var result = eval(arg.trim());
-			this.say(room, JSON.stringify(result));
-		}
-		catch (e)
-		{
-			this.say(room, e.name + ": " + e.message);
-		}
-	},
 	git: function(arg, user, room)
 	{
 		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
@@ -288,6 +274,7 @@ exports.commands = {
 		room.say("Shutdown mode enabled");
 	},
 	join: function (arg, user, room) {
+		if (!user.isExcepted()) return false;
 		this.say(room, '/join ' + arg);
 	},
 	custom: function(arg, user, room)
@@ -789,8 +776,6 @@ exports.commands = {
 
 	// Survivor Commands:
 	// Host commands:
-	roompromote: 'roomvoice',
-	roomvoice: 'host',
 	host: function(target, user, room)
 	{
 		if ((!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
@@ -1007,8 +992,8 @@ exports.commands = {
 		if (!user.hasRank(room.id, '+')) return;
 		if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
 	},
-
-	pl: function (target, user, room) {
+	pl: 'players',
+	players: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (room.game && typeof room.game.pl === 'function') room.game.pl();
 	},
@@ -1065,6 +1050,7 @@ exports.commands = {
 	},
 	tester: function(arg, user, room)
 	{
+		if (!user.isExcepted()) return false;
 		this.say(room, room.id)
 		this.say(room, user.id)
 	},
@@ -2285,11 +2271,6 @@ exports.commands = {
 		} else {
 			user.say(text);
 		}
-	},
-
-	dq: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') || !room.game) return;
-		room.game.dq(target);
 	},
 	
 	roast: function (target, user, room) {
