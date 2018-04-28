@@ -308,7 +308,7 @@ class Game {
 			}
 			if (this.roll1 && this.roll2) {
 				this.say("!roll " + this.roll1);
-				this.say("!roll " + this.roll2);
+				this.say("!dice " + this.roll2);
 			}
 		} catch (e) {
 			this.mailbreak(e);
