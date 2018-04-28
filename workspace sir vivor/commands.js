@@ -171,7 +171,7 @@ let gameTypes = {
 			snowballfight: ['Snowball Fight', 'https://docs.google.com/document/d/1sYmUUR7vWAtKaW4UyHMCsLcyFvftDUFKO7d1Z4fgnQg/edit', 'For when you really just want to hurl balls at each other.', 1],
 			staringcontest: ['Staring Contest', 'https://docs.google.com/document/d/1SVy4h9UgD003iQbw00OeWPPyvEdapFNuISL9DIE9MRg/edit', 'Did you know when googling the longest time withot blinking it says that Michael Thomas kept his eyes open without blinking for one hour, 5.61 seconds', 1],
 			statusconditionsurvivor: ['Status Condition Survivor', 'https://docs.google.com/document/d/1LeSBo7SSkRJG8PqUKk8MflKSdTuF2nl-rkFstjQJ9iQ/edit?usp=sharing', 'Try to take on some major status conditions without a full heal!', 1],
-			scs: ['Status Condition Survivor', 'https://pastebin.com/e66b12Jp', 'Try to take on some major status conditions without a full heal!', 1],
+			scs: ['Status Condition Survivor', 'https://docs.google.com/document/d/1LeSBo7SSkRJG8PqUKk8MflKSdTuF2nl-rkFstjQJ9iQ/edit?usp=sharing', 'Try to take on some major status conditions without a full heal!', 1],
 			streetrace: ['Street Race', 'https://docs.google.com/document/d/1pLDCjXXPLH3Gem1Udqo_qWkbPKyl4XW6wXNlXCqOPLE/edit?usp=sharing', 'Because honestly, who didn\'t want to drive the Mach 5 as a kid?', 1],
 			sunandmoonsurvivor: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.', 1],
 			smsurv: ['Sun and Moon Survivor', 'https://docs.google.com/document/d/13_EYkAcli9Q9Ph2DThtE4lIEcEMscSwWh52kNCJmg5E/mobilebasic', 'They say that Light and Dark will always be too opposing forces, yet the two forces can’t survive without each other. One will always vie for power from the other.', 1],
@@ -2091,8 +2091,8 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000;
-		if (n < 16) {
-			millis += (15 - n) * 60 * 60 * 1000;
+		if (n < 15) {
+			millis += (14 - n) * 60 * 60 * 1000;
 		} else if (n < 22) {
 			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
