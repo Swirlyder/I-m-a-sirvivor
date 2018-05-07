@@ -1831,6 +1831,23 @@ exports.commands = {
 		text += '"OM Goodness! Leave OM Room alone..." ;~;';
 		this.say(room, text);
 	},
+	
+	tush: 'tushavi',
+	tushavi: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '>noob luck';
+		this.say(room, text);
+	},
+	
 	meow: function(arg, user, room)
 	{
 		var text = '';
