@@ -144,7 +144,7 @@ class Bounty extends Games.Game {
 				this.roll2 = 100;
 			} else {
 				this.roll2 = this.rolls.get(this.oplayer);
-				if (this.roll2 = 115) this.roll2 = 100;
+				if (this.roll2 == 115) this.roll2 = 100;
 			}
 			this.sayPlayerRolls();
 		} catch (e) {
