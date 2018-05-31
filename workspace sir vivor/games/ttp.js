@@ -182,7 +182,7 @@ class TTP extends Games.Game {
 			strs.push(str + "</ul></div>");
 		}
 		player.say("Current hand: ");
-		Rooms.get('survivor').say("/pminfobox " + player.id + ", " + (start + strs.join("") + "</div></div>"));
+		Rooms.get('survivor').say("/pmuhtml " + player.id + ", " + (start + strs.join("") + "</div></div>"));
 	}
 
 	handleAttack() {
