@@ -162,7 +162,7 @@ class TTP extends Games.Game {
 		let cards = this.mons.get(player);
 		if (!cards) return;
 		let height = Math.floor((cards.length + 1) / 2) * 150;
-		let start = '<div class="infobox"><div style="height: ' + height + 'px">';
+		let start = '<div class="infobox"><strong><center>Current hand:</center></strong><div style="height: ' + height + 'px">';
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
@@ -181,8 +181,9 @@ class TTP extends Games.Game {
 			}
 			strs.push(str + "</ul></div>");
 		}
-		player.say("Current hand: ");
-		Rooms.get('survivor').say("/pmuhtml " + player.id + ", " + (start + strs.join("") + "</div></div>"));
+		if (!player.hasHand) return Rooms.get('survivor').say("/pmuhtml " + player.id + ", ttp, <strong><center>Current hand:</center></strong><br>" + (start + strs.join("") + "</div></div>"));
+		Rooms.get('survivor').say("/pmuhtmlchange " + player.id + ", ttp, " + (start + strs.join("") + "</div></div>"));
+		player.hasHand = true;
 	}
 
 	handleAttack() {
