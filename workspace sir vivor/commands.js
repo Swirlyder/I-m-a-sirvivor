@@ -1749,11 +1749,6 @@ exports.commands = {
 		}
 	},
 
-	join: function (arg, user, room) {
-		if (!user.isExcepted()) return false;
-		this.say(room, '/join ' + arg);
-	},
-
 	signups: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
@@ -2028,9 +2023,9 @@ exports.commands = {
 
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		this.say('survivor', "/subroomgroupchat testing");
-		this.say('survivor', "/join groupchat-" + Tools.toId(Config.nick) + "-testing");
-		this.say(room.id, "<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+		Rooms.get('survivor').say("/subroomgroupchat testing");
+		Rooms.get('survivor').say("/join groupchat-survivor-testing");
+		this.say(room.id, "<<groupchat-survivor-testing>> to test stuff!");
 	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
