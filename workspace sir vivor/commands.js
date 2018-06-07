@@ -1408,14 +1408,7 @@ exports.commands = {
 	snapeasy: 'snap',
 	snap: function (target, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/me snaps fingers';
 		this.say(room, text);
 	},
@@ -1423,14 +1416,7 @@ exports.commands = {
 	azu: 'azuuli',
 	azuuli: function (target, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/me explodes';
 		this.say(room, text);
 	},
@@ -1438,23 +1424,14 @@ exports.commands = {
 	guishark: 'gui',
 	gui: function (target, user, room) {
 		var text = '';
-		if (user !== room && !user.hasRank(room.id, '+')) {
-			text += '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += "Hi " + target + ",  I'm Gui♥Shark!";
 		room.say(text);
 	},
 
 	baloor: function (target, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '__You must be...DELETED!__';
 		this.say(room, text);
 	},
@@ -1462,14 +1439,7 @@ exports.commands = {
 	ceterisparibus: 'pak',
 	pak: function (target, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'CHOO CHOO ALL ABOARD THE PARTYBUS TRAIN';
 		this.say(room, text);
 	},
@@ -1477,14 +1447,7 @@ exports.commands = {
 	shadecession: 'shade',
 	shade: function (target, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Better put on my Shadecessions ⌐■_■';
 		this.say(room, text);
 	},
@@ -1494,27 +1457,13 @@ exports.commands = {
 	penquin: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'S-S-Senpai!';
 		this.say(room, text);
 	},
 	cheese: function (arg, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Muffinss';
 		this.say(room, text);
 	},
@@ -1522,14 +1471,7 @@ exports.commands = {
 	seal: 'teal',
 	teal: function (arg, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'teal teal teaal! >~<';
 		this.say(room, text);
 	},
@@ -1537,28 +1479,14 @@ exports.commands = {
 	lunarixis: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/me sips tea';
 		this.say(room, text);
 	},
 	spieky: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Global Roomowner, Administrator and all around Good Guy!';
 		this.say(room, text);
 		
@@ -1567,14 +1495,7 @@ exports.commands = {
 	zeonth: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'A friendly reminder that Zeonth shamelessly advertises the <<cap>> metagame here';
 		this.say(room, text);
 	},
@@ -1582,14 +1503,7 @@ exports.commands = {
 	dl: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'dont lose? HA! More like dont win :^)';
 		this.say(room, text);
 	},
@@ -1597,14 +1511,7 @@ exports.commands = {
 	zyx: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Famous for .woof and needs to update his number by 3 years';
 		this.say(room, text);
 	},
@@ -1612,14 +1519,7 @@ exports.commands = {
 	hawkie: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Which random username will he switch to now?';
 		this.say(room, text);
 	},
@@ -1627,14 +1527,7 @@ exports.commands = {
 	tiki: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Survivor\'s Resident Russian Spy';
 		this.say(room, text);
 	},
@@ -1642,14 +1535,7 @@ exports.commands = {
 	soccerz12: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Hey, what\'s up guys it\'s Soccer here';
 		this.say(room, text);
 	},
@@ -1671,14 +1557,7 @@ exports.commands = {
 	weeb: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Anime was a mistake';
 		this.say(room, text);
 	},
@@ -1686,14 +1565,7 @@ exports.commands = {
 	c7: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Survivor\'s most toxic presence';
 		this.say(room, text);
 	},
@@ -1702,14 +1574,7 @@ exports.commands = {
 	dbw: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/me wobs';
 		this.say(room, text);
 	},
@@ -1719,56 +1584,29 @@ exports.commands = {
 	moq: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Don\'t moq me for all my name changes ;_;';
 		this.say(room, text);
 	},
+	emmafemcario: 'morgantactician',
 	morgantactician: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'Emma☯Femcario: Wind Waker, Amiibo Hunter, and  the 5 time Survivor Champion!';
 		this.say(room, text);
 	},
 	pipeitup: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/ME dabs';
 		this.say(room, text);
 	},
 	sanjay: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/ME resigns';
 		this.say(room, text);
 	},
@@ -1776,28 +1614,14 @@ exports.commands = {
 	microwavable: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '*GGGHHHH*....beep beep bepp....beep beep beep...beep bee-';
 		this.say(room, text);
 	},
 	henka: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'H E N K A B O Y S';
 		this.say(room, text);
 	},
@@ -1805,14 +1629,7 @@ exports.commands = {
 	zyg: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '/me sighs... what is there to say?';
 		this.say(room, text);
 	},
@@ -1820,14 +1637,7 @@ exports.commands = {
 	om: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '"OM Goodness! Leave OM Room alone..." ;~;';
 		this.say(room, text);
 	},
@@ -1836,14 +1646,7 @@ exports.commands = {
 	tushavi: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += '>noob luck';
 		this.say(room, text);
 	},
@@ -1851,14 +1654,7 @@ exports.commands = {
 	meow: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
 		text += 'meow!';
 		this.say(room, text);
 	},
@@ -1866,59 +1662,29 @@ exports.commands = {
 	ai: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += '**Attacker Immunity:** __The attacker doesnt die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
 		this.say(room, text);
 	},
 	spotlight: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
 	},
-    
-    secondwind: 'sw',
-    sw: function(arg, user, room)
+	secondwind: 'sw',
+	sw: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += 'In the **Second Wind** game mode, every player has 2 lives';
 		this.say(room, text);
 	},
-
 	golf: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id+ ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += '**Golf:** __Lower rolls win. Opposite of normal survivor__';
 		this.say(room, text);
 	},
@@ -1926,14 +1692,7 @@ exports.commands = {
 	ca: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id+ ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += '**Counter Attack:** __If an attacker fails to kill their defending target, then their defending target will attack them right back.__';
 		this.say(room, text);
 	},
@@ -1941,118 +1700,78 @@ exports.commands = {
 	rs: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (user !== room && !(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text += '/pm ' + user.id + ', ';
 		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack__';
 		this.say(room, text);
 	},
-
 
 	joke: function(arg, user, room)
 	{
 		var text = '';
 		var jokes = ['What does a nosey pepper do? Get jalapeño business.', 'What is Bruce Lee’s favorite drink? Wataaaaah!', 'How does NASA organize their company parties? They planet.', 'Why does Snoop Dogg carry an umbrella? Fo’ drizzle.', 'What time is it when you have to go to the dentist? Tooth-hurtie.', 'There’s two fish in a tank. One turns to the other and says "You man the guns, I’ll drive"', 'Why can’t a bike stand on its own? It’s two tired.', 'How do you make Holy water? Boil the hell out of it.', 'What did one ocean say to the other ocean? Nothing, they just waved.', 'A bear walks into a bar and he asks the bartender "I\'d like some peanuts............. and a glass of milk. The bartender says "Why the big pause?"', 'Why did the scientist install a knocker on his door? He wanted to win the No-bell prize!', 'What did the traffic light say when it stayed on red? ”You would be red too if you had to change in front of everyone!”', 'Two hats are on a hat rack. Hat #1 to hat #2 “you stay here. I’ll go on a head.”', 'Why did the tomato blush? ... it saw the salad dressing.', 'What did the football coach say to the broken vending machine? “Give me my quarterback!”', 'What did the digital clock say to the grandfather clock? Look grandpa, no hands!', 'What happens to a frog\'s car when it breaks down? It gets toad away.', 'What did the blanket say when it fell of the bed? "Oh sheet!"', 'What lights up a soccer stadium? A soccer match', 'Why shouldn\'t you write with a broken pencil? Because it\'s pointless.', 'What do you call a fake noodle? An impasta', 'Why is Peter Pan always flying? He neverlands!', 'How many tickles does it take to make an octopus laugh? Ten-Tickles', 'Why did the stadium get hot after the game? All of the fans left.', 'What did Barack Obama say to Michelle when he proposed? Obama: I don\'t wanna be obama self.', 'Why did the picture go to jail? Because it was framed!', 'What if soy milk is just regular milk introducing itself in Spanish?', 'Why couldn\'t the sesame seed leave the gambling casino? Because he was on a roll.', 'Why did the chicken cross the playground? To get to the other slide.', 'What does a cell phone give his girlfriend? A RING!', 'How did the italian chef die? He pasta away.', 'Why didn\'t the skeleton go to the party? He had no-body to dance with!', 'How does Moses make his tea? Hebrews it.', 'What do you call a sleeping bull? A bull-dozer.', 'Why didn\'t the koala get the job? He didn\'t have the koalafictions', 'What do you call a fairy that hasn\'t bathed in a year? Stinkerbell', 'What do you call two Mexicans playing basketball? Juan on Juan.', 'What do you call a guy who never farts in public? A private tutor', 'Why did the can crusher quit hit job? It was soda pressing!', 'A blonde went into a doctors office and said "doctor help I\'m terribly sick" doc replies "flu?" "no, I drove here."', 'What do you comb a rabbit with? A hare brush!', 'Why did the deer need braces? Because he had buck teeth!', 'What did the blanket say when it fell off the bed? Oh sheet!', 'Why shouldn\'t you write with an unsharpened pencil? It\'s pointless', 'What did one plate say to the other? Dinner\'s on me!', 'How do you make a tissue dance? You put a little boogey in it!', 'Want to hear a joke about paper? Never mind it\'s tearable.', 'What\'s the difference between a guitar and a fish? You can tune a guitar but you can\'t tuna fish!', 'What kind of key opens a banana? A mon-key!', 'What do you call a line of rabbits walking backwards? A receding hare line.', 'Why did the Fungi leave the party? There wasn\'t mushroom.', 'Why did the algae and the fungus get married? They took a lichen to each other.', 'Why do Toadstools grow so close together? They don\'t need Mushroom. ', 'What would a mushroom car say? Shroom shroom!', 'What room has no doors, no walls, no floor and no ceiling? A mushroom.', 'What do you get if you cross a toadstool and a full suitcase? Not mushroom for your holiday clothes!', 'Did you hear the joke about the fungus? I could tell it to you, but it might need time to grow on you.', 'What do mushrooms eat when they sit around the campfire? S\'pores.', 'What did the mushroom say when it was locked out of the house? E no ki.', 'Why wouldn\'t the teenage mushroom skip school? He didn\'t want to get in truffle', 'Why did the mushroom go to the party? It didn\'t. Mushrooms are non-sentient organic matter, so they generally don\'t get invited to parties.', 'Why did the Mushroom get invited to all the RAVE parties? \'Cuz he\'s a fungi!', 'Yo mama so poor your family ate cereal with a fork to save milk', 'Yo mama so fat, I took a picture of her last Christmas and it\'s still printing', 'What did the first cannibal say to the other while they were eating a clown? Does this taste funny to you?', 'One night Chuck Norris had a pissing contest outside of a bar. He won when his opponents drowned', 'My Dad used to say always fight fire with fire, which is probably why he got kicked out of the fire brigade', 'I like to stop the microwave at 1 second just to feel like a bomb defuser', 'I should change my facebook username to NOBODY so that way when people post crappy posts, and i press the like button it will say NOBODY likes this', 'It\'s so cold outside, I actually saw a gangster pull his pants up.', 'A gift card is a great way to say, Go buy your own fucking present', 'Life is all about perspective. The sinking of the Titanic was a miracle to the lobsters in the ships kitchen', 'Lazy People Fact #5812672793, You were too lazy to read that number', 'My favourite exercise is a cross between a lunge and a crunch. Its called Lunch.', 'I have the heart of a lion. And a lifetime ban from the zoo.', 'Old ladies in wheelchairs with blankets over their legs? I don’t think so… retired mermaids.', 'Years ago I used to supply filing cabinets for the mafia. Yes, I was involved in very organised crime', 'If you are being chased by a police dog, try not to go through a tunnel, then on to a little see-saw, then jump through a hoop of fire. They are trained for that', 'I named my hard drive "dat ass" so once a month my computer asks if I want to back dat ass up', 'Relationships are a lot like algebra. Have you ever looked at your X and wondered Y?', 'I swear to drunk Im not God, but seriously, stay in drugs, eat school, and dont do vegetables.', 'You haven\'t experienced awkward until you try to tickle someone who isn\'t ticklish', '"No, thanks. I\'m a vegetarian." Is a fun thing to say when someone hands you their baby', 'Maybe if we all emailed the constitution to each other, the NSA will finally read it', 'If a quiz is quizzical, then what does that make a test?', 'Whatever you do in life, always give 100%. Unless you are donating blood...', 'It is all shits and giggles until someone giggles and shits!', 'I wonder if anyone has watched Storage Wars and said "hey thats my shit!"', 'I am naming my TV remote Waldo for obvious reasons', 'I hate when I am about to hug someone really sexy and my face hits the mirror', 'Telling a girl to calm down works about as well as trying to baptize a cat', 'Dating a single mother is like continuing from somebody else\'s saved game', 'If only God can judge us than Santa has some explaining to do', 'My vacuum cleaner broke. I put a Dallas Cowboys sticker on it, and now it sucks again', 'When the zombie apocalypse finally happens, I\'m moving to Washington D.C. I figure the lack of brains there will keep the undead masses away', 'Everyone\'s middle name should be "Goddamn". Try it. Doesnt it sound so great?', 'Before Instagram, I used to waste so much time sitting around having to imagine what my friends food looked like', 'The sad moment when you return to your shitty life after watching an awesome movie', 'A big shout out to sidewalks... Thanks for keeping me off the streets', 'Buying an electric car seems like a good idea until you hit a squirrel and flip over a few times', 'I named my dog "5 miles" so I can tell people I walk 5 miles every day', 'Your future depends on your dreams, so go to sleep', 'Yawning is your bodies way of saying 20% battery remaining', 'Dont you hate it when someone answers their own questions? I do', 'Paradise.'];
 		text += jokes[Math.floor(Math.random() * jokes.length)];
-		if (user.hasRank(room.id, '+') || room.id === user.id)
-		{
-			this.say(room, text);
-			return;
-		}
-
-		if (!user.hasRank(room.id, '+'))
-		{
-			this.say(room, '/w ' + user.id + ', ' + text);
-		}
+		if (user.hasRank(room.id, '+') || room.id === user.id) return this.say(room, text);
+		user.say(text);
 	},
 
 	gif: function(arg, user, room)
 	{
+		if (!user.hasRank(room.id, '#')) return;
 		var text = '';
 		var gifs = ['/addhtmlbox <center><img src="http://media2.giphy.com/media/u7hjTwuewz3Gw/giphy.gif" width=225 height=175/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/31c91db0b76d312b966c6adfe1c3940a/tumblr_nz57a2TvRC1u17v9ro1_540.gif" width=270 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/1gyIAEh.gif" width=380 height=203/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/RDtW8Gr.gif" width=222 height=200/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/qR77BXg.gif" width=250 height=225/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/2PZ8XUR.gif" width=385 height=216/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/451d21ddbde24e207a6f7ddd92206445/tumblr_inline_nt0ujvAJ8P1qjzu7m_500.gif" width=238 height=223/></center>', '/addhtmlbox <center><img src="http://www.keysmashblog.com/wp-content/uploads/2013/02/wig-snatching.gif" width=333 height=217/></center>', '/addhtmlbox <center><img src="http://66.media.tumblr.com/5f2015d7ba3f93f6c258e039d377287d/tumblr_inline_nn2r5c94m11qbxex9_500.gif" width=382 height=215/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/IFOqV6m.gif" width=387 height=218/></center>', '/addhtmlbox <center><img src="http://i.imgur.com/hSv7KYd.gif" width=267 height=219/></center>'];
 		text += gifs[Math.floor(Math.random() * gifs.length)];
-		if (user.hasRank(room.id, '#'))
-		{
-			this.say(room, text);
-		}
+		this.say(room, text);
 	},
 
 	agif: 'animegif',
 	animegif: function(arg, user, room)
 	{
-		{
-			var text = '';
-			var gifs = ['/addhtmlbox <center><img src="http://i.imgur.com/BzaMLzD.gif" width=345 height=194/> <br> Source: Fairy Tail</center>', '/addhtmlbox <center><img src="http://i.imgur.com/2qzxwG4.gif" width=345 height=195/> <br> Source: Toradora</center>', '/addhtmlbox <center><img src="http://i.imgur.com/BjAbTzB.gif" width=222 height=192/> <br> Source: Daily Lives of High School Boys</center>', '/addhtmlbox <center><img src="http://i.imgur.com/ys6IrQs.gif" width=267 height=191/> <br> Source:The World God Only Knows</center>', '/addhtmlbox <center><img src="http://i.imgur.com/IK4fVLX.gif" width=345 height=190/> <br> Source: Soul Eater</center>', '/addhtmlbox <center><img src="http://i.imgur.com/UE6AEZs.gif" width=353 height=196/> <br> Source: Gintama</center>', '/addhtmlbox <center><img src="http://i.imgur.com/sy6202O.gif" width=286 height=194/> <br> Source: YuriYuri</center>', '/addhtmlbox <center><img src="http://i.imgur.com/Bo1SjJX.gif" width=296 height=194/> <br> Source: Deadman Wonderland</center>', '/addhtmlbox <center><img src="http://i.imgur.com/KjTewQ7.gif" width=341 height=192/> <br> Source: Carnival Phantasm</center>', '/addhtmlbox <center><img src="http://i.imgur.com/RYaPwBT.gif" width=345 height=192/> <br> Source: Space Brothers</center>', '/addhtmlbox <center><img src="http://i.imgur.com/82lBuUf.gif" width=345 height=194/> <br> Source: Full Metal Alchemist: Brotherhood</center>', '/addhtmlbox <center><img src="http://media3.giphy.com/media/12dO0uYqeMVOy4/giphy.gif" width=260 height=195/> <br> Source: FLCL</center>', '/addhtmlbox <center><img src="https://66.media.tumblr.com/9f5d4e129f998f0c4358bf26a6d12a13/tumblr_nf0jxhnU9p1tyak95o1_500.gif" width=357 height=192/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://i.imgur.com/bYYRBiu.gif" width=286 height=194/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://pa1.narvii.com/5649/565e7d8046bd4b6223d153ce308086c42d06b773_hq.gif" width=385 height=190/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/14jigRRwHoGSo8/giphy.gif" width=342 height=192/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/LbvSbAz7CMmg8/giphy.gif" width=325 height=195/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="http://67.media.tumblr.com/ad16541d6ef3ee701c3308204574e0af/tumblr_nmd1mskOr91qam6y9o9_500.gif" width=450 height=195/> <br> Source: Kekkai Sensen</center>'];
+		if (user.hasRank(room.id, '#')) return;
+		var text = '';
+		var gifs = ['/addhtmlbox <center><img src="http://i.imgur.com/BzaMLzD.gif" width=345 height=194/> <br> Source: Fairy Tail</center>', '/addhtmlbox <center><img src="http://i.imgur.com/2qzxwG4.gif" width=345 height=195/> <br> Source: Toradora</center>', '/addhtmlbox <center><img src="http://i.imgur.com/BjAbTzB.gif" width=222 height=192/> <br> Source: Daily Lives of High School Boys</center>', '/addhtmlbox <center><img src="http://i.imgur.com/ys6IrQs.gif" width=267 height=191/> <br> Source:The World God Only Knows</center>', '/addhtmlbox <center><img src="http://i.imgur.com/IK4fVLX.gif" width=345 height=190/> <br> Source: Soul Eater</center>', '/addhtmlbox <center><img src="http://i.imgur.com/UE6AEZs.gif" width=353 height=196/> <br> Source: Gintama</center>', '/addhtmlbox <center><img src="http://i.imgur.com/sy6202O.gif" width=286 height=194/> <br> Source: YuriYuri</center>', '/addhtmlbox <center><img src="http://i.imgur.com/Bo1SjJX.gif" width=296 height=194/> <br> Source: Deadman Wonderland</center>', '/addhtmlbox <center><img src="http://i.imgur.com/KjTewQ7.gif" width=341 height=192/> <br> Source: Carnival Phantasm</center>', '/addhtmlbox <center><img src="http://i.imgur.com/RYaPwBT.gif" width=345 height=192/> <br> Source: Space Brothers</center>', '/addhtmlbox <center><img src="http://i.imgur.com/82lBuUf.gif" width=345 height=194/> <br> Source: Full Metal Alchemist: Brotherhood</center>', '/addhtmlbox <center><img src="http://media3.giphy.com/media/12dO0uYqeMVOy4/giphy.gif" width=260 height=195/> <br> Source: FLCL</center>', '/addhtmlbox <center><img src="https://66.media.tumblr.com/9f5d4e129f998f0c4358bf26a6d12a13/tumblr_nf0jxhnU9p1tyak95o1_500.gif" width=357 height=192/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://i.imgur.com/bYYRBiu.gif" width=286 height=194/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="http://pa1.narvii.com/5649/565e7d8046bd4b6223d153ce308086c42d06b773_hq.gif" width=385 height=190/> <br> Source: Cowboy Bebop</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/14jigRRwHoGSo8/giphy.gif" width=342 height=192/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="https://media.giphy.com/media/LbvSbAz7CMmg8/giphy.gif" width=325 height=195/> <br> Source: Durarara!!</center>', '/addhtmlbox <center><img src="http://67.media.tumblr.com/ad16541d6ef3ee701c3308204574e0af/tumblr_nmd1mskOr91qam6y9o9_500.gif" width=450 height=195/> <br> Source: Kekkai Sensen</center>'];
 
-			text += gifs[Math.floor(Math.random() * gifs.length)];
-			if (user.hasRank(room.id, '#'))
-			{
-				this.say(room, text);
-			}
-		}
+		text += gifs[Math.floor(Math.random() * gifs.length)];
+		this.say(room, text);
 	},
-    gift: 'present',
-    present: function(arg, user, room)
+	gift: 'present',
+	present: function(arg, user, room)
 	{
 		var text = '';
-        var presents = [' A nice rubber red ball', ' 5 dolla, now beat it kid', ' a carton of eggnog!', '**Error 404:** You\'ve been vewy naughty :c', ' a Stonehenge! WHAT DOES IT MEAN?!', ' is another present!', ' not even a kiss', ' You thought I was going to get you something? LMAO', ' 1 trillion billion kazillion dollars! :o', ' my heart c: ', ' coal', ' The Sheep Lord\'s life supply of wool :0', ' *dies', ' Transmuter\'s beard!', ' lifetime supply of hoopla', ' a hug c:', ' Jingle Bjorn\'s password :OOOO', ' Randy ( ͡° ͜ʖ ͡°)', ' some waffles (>\'.\')>#', ' a box of CHOCOLATES!', ' the key to the underworld that gives you the chance to rule the world! muahahaha', ' a brand spanking new girlfriend... for 5 easy payments of $59.99 plusshippingandhandling', '. https://www.youtube.com/watch?v=lrAkb9AZ8Xg&feature=youtu.be', ' juan penny. :J', ' JOHN CENA *horns sound*', ' Lunarixis\' bottomless teapot', ' The magical mario mushroom!', ' The hammer of Tho', ' A bag full of sweg that belongs to... PPQ?', ' A banana (for scale)', ' A subsription to WWE SUUUPEEER SLAAAAM', ' a giant SHAD!', ' Phable\'s mixtape (Caution. May be hot.)', ' a [[jar of hearts]]', '  a terrifying creature appearing to be a blend of a cockroach and a mouse was found by a nuclear testing site. Have fun! :D', '  Shame That\'s secret manga collection', ' Imagi\'s mmm... mmm.. good Tiramisu', ' a fistbump from Saitama! (Caution: You\'ll prolly die)', ' Spieky\'s homemade razor candy', ' a Lunarixis x Don\'t Lose fanfic', ' a copy of The Rick Ross **Certified Boss** Crossfit program', ' a Sir Vivor Fedora and fake moustache!', ' a copy of the Bon Dance audition tape for High School Musical', ' __urkerab__ serenading you with a lullaby u_u', ' DEEZ NUTCRACKERS', ' a picture of Oprah Winfrey', ' is... a paper hat', ' a signed copy of __Muting Zarzel__', ' some rubbing bacon', ' a rotten pancake... it looks... pink?', ' a CAP flyer from Zeonth', ' a single M&M', ' a Nintendo SIXTY FOOOUR', ' a Hawkie egg', ' an onion', ' a bowl of soup', ' two tickets to the Nuclear War Crazed Autocracy', ' a motivational poster featuring rssp1', ' a cheetah', ' a badly photoshopped picture of PPQ with huge muscles', ' a rigged dice', ' a breadstick', ' a pina colada caught in the rain, I hope you like it', ' a scooby snack', ' a WiiStation one', ' a Swirlyder action figure', ' a Gatorade', ' Don\'t Lose\'s Rae Sremmurd Christmas & Holiday Playlist', ' a Ditto that can only transform into a Castform', ' a life', ' the copy of Pokemon Sun and Pokemon Moon that you wish you had', ' an invitation to join Paradise\'s anime club. Sugio Kawaii Desu Desu!! (◕‿◕✿)', ' Sanjay\'s resignation letter', ' a half-eaten microwavable dinner', ' The self-destroying feeling of loneliness on christmas'];
-        text += 'Inside ' + arg + '\'s present is...' + presents[Math.floor(Math.random() * presents.length)];
-		if (user.hasRank(room.id, '+') || room.id === user.id)
-		{
-			this.say(room, text);
-			return;
-		}
-		if (!user.hasRank(room.id, '+'))
-		{
-			this.say(room, '/w ' + user.id + ', ' + text);
-		}
-    },
+        	var presents = [' A nice rubber red ball', ' 5 dolla, now beat it kid', ' a carton of eggnog!', '**Error 404:** You\'ve been vewy naughty :c', ' a Stonehenge! WHAT DOES IT MEAN?!', ' is another present!', ' not even a kiss', ' You thought I was going to get you something? LMAO', ' 1 trillion billion kazillion dollars! :o', ' my heart c: ', ' coal', ' The Sheep Lord\'s life supply of wool :0', ' *dies', ' Transmuter\'s beard!', ' lifetime supply of hoopla', ' a hug c:', ' Jingle Bjorn\'s password :OOOO', ' Randy ( ͡° ͜ʖ ͡°)', ' some waffles (>\'.\')>#', ' a box of CHOCOLATES!', ' the key to the underworld that gives you the chance to rule the world! muahahaha', ' a brand spanking new girlfriend... for 5 easy payments of $59.99 plusshippingandhandling', '. https://www.youtube.com/watch?v=lrAkb9AZ8Xg&feature=youtu.be', ' juan penny. :J', ' JOHN CENA *horns sound*', ' Lunarixis\' bottomless teapot', ' The magical mario mushroom!', ' The hammer of Tho', ' A bag full of sweg that belongs to... PPQ?', ' A banana (for scale)', ' A subsription to WWE SUUUPEEER SLAAAAM', ' a giant SHAD!', ' Phable\'s mixtape (Caution. May be hot.)', ' a [[jar of hearts]]', '  a terrifying creature appearing to be a blend of a cockroach and a mouse was found by a nuclear testing site. Have fun! :D', '  Shame That\'s secret manga collection', ' Imagi\'s mmm... mmm.. good Tiramisu', ' a fistbump from Saitama! (Caution: You\'ll prolly die)', ' Spieky\'s homemade razor candy', ' a Lunarixis x Don\'t Lose fanfic', ' a copy of The Rick Ross **Certified Boss** Crossfit program', ' a Sir Vivor Fedora and fake moustache!', ' a copy of the Bon Dance audition tape for High School Musical', ' __urkerab__ serenading you with a lullaby u_u', ' DEEZ NUTCRACKERS', ' a picture of Oprah Winfrey', ' is... a paper hat', ' a signed copy of __Muting Zarzel__', ' some rubbing bacon', ' a rotten pancake... it looks... pink?', ' a CAP flyer from Zeonth', ' a single M&M', ' a Nintendo SIXTY FOOOUR', ' a Hawkie egg', ' an onion', ' a bowl of soup', ' two tickets to the Nuclear War Crazed Autocracy', ' a motivational poster featuring rssp1', ' a cheetah', ' a badly photoshopped picture of PPQ with huge muscles', ' a rigged dice', ' a breadstick', ' a pina colada caught in the rain, I hope you like it', ' a scooby snack', ' a WiiStation one', ' a Swirlyder action figure', ' a Gatorade', ' Don\'t Lose\'s Rae Sremmurd Christmas & Holiday Playlist', ' a Ditto that can only transform into a Castform', ' a life', ' the copy of Pokemon Sun and Pokemon Moon that you wish you had', ' an invitation to join Paradise\'s anime club. Sugio Kawaii Desu Desu!! (◕‿◕✿)', ' Sanjay\'s resignation letter', ' a half-eaten microwavable dinner', ' The self-destroying feeling of loneliness on christmas'];
+        	text += 'Inside ' + arg + '\'s present is...' + presents[Math.floor(Math.random() * presents.length)];
+		if (user.hasRank(room.id, '+') || room.id === user.id) return this.say(room, text);
+		user.say(text);
+	},
 
 	mods: function (arg,user, room) {
 		var text = 'Host it your way, with these custom mods: http://survivor-ps.weebly.com/custommodifications.html';
-		if (user.hasRank(room.id, '+')) {
-			this.say(room, text);
-		} else {
-			user.say(text);
-		}
+		if (user.hasRank(room.id, '+')) return this.say(room, text);
+		user.say(text);
 	},
 
 	hostqueue: 'queue',
 	que: 'queue',
 	q: 'queue',
-    queue: function(arg, user, room) {
+	queue: function(arg, user, room) {
 		if (!Games.canQueue) return;
-        if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
-            if (Games.hosts.length === 0) {
-				this.say(room, 'There are no users in the queue.');
-			} else {
-				var queueText = '';
-				for (var i = 0; i < Games.hosts.length; i++) {
-					queueText += '**' + (i + 1) + '.** __' + Games.hosts[i][0] + '__' + (Games.hosts[i][1].length ? ", " + Games.hosts[i][1] : "") + " "; //add formatting here, down there just adds on to the end whoops
-				}
-				this.say(room, '/announce **Queue:** ' + queueText);
+        	if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
+            		if (Games.hosts.length === 0) return this.say(room, 'There are no users in the queue.');
+			var queueText = '';
+			for (var i = 0; i < Games.hosts.length; i++) {
+				queueText += '**' + (i + 1) + '.** __' + Games.hosts[i][0] + '__' + (Games.hosts[i][1].length ? ", " + Games.hosts[i][1] : "") + " "; //add formatting here, down there just adds on to the end whoops
 			}
-        } else {
-            if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') {
-				this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
-			} else {
-				var queueText = '';
-				for (var i = 0; i < Games.hosts.length; i++) {
-					queueText += '**' + (i + 1) + '.** __' + Games.hosts[i] + '__ ';
-				}
-				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
-				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+			return this.say(room, '/announce **Queue:** ' + queueText);
+        	} else {
+			if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') return user.say('There are currently no users in the queue.');
+			var queueText = '';
+			for (var i = 0; i < Games.hosts.length; i++) {
+				queueText += '**' + (i + 1) + '.** __' + Games.hosts[i] + '__ ';
 			}
-        }
+			if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
+			if (room.id.charAt(0) !== ',') user.say('/announce **Queue:** ' + queueText);
+        	}
 		Games.canQueue = false;
-		var t = setTimeout(function () {
-			Games.canQueue = true;
-		}, 5 * 1000);
+		setTimeout(() => Games.canQueue = true, 5000);
 	},
 
 	pick: function (target, user, room) {
@@ -2061,15 +1780,17 @@ exports.commands = {
 		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
 		if (room.id === 'survivor') {
 			this.say(room, "/addhtmlbox " + str);
+		} else if (user.id === room.id) {
+			this.say('survivor', "/pminfobox " + user.id + ", " + str);
 		} else {
-			this.say(room, "!htmlbox " + str);
+			this.say("!htmlbox " + str);
 		}
 	},
 
 	timer: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
-		if (target === "end") {
-			if (Games.isTimer ) {
+		if (Tools.toId(target) === "end") {
+			if (Games.isTimer) {
 				clearTimeout(Games.timeout);
 				this.say(room, "The timer has been ended.");
 				Games.isTimer = false;
@@ -2092,9 +1813,7 @@ exports.commands = {
 	weak: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let types = ["normal", "fire", "water", "grass", "steel", "psychic", "ghost", "dark", "bug", "poison", "ground", "rock", "dragon", "ice", "fairy", "fighting", "flying", "electric"];
-		if (target.endsWith('type')) {
-			target = target.substr(0, target.length - 4);
-		}
+		if (target.endsWith('type')) target = target.substr(0, target.length - 4);
 		if (types.indexOf(target) !== -1) {
 			this.say(room, "!weak " + target);
 		} else {
@@ -2123,8 +1842,7 @@ exports.commands = {
 		if (!target) return;
 		let split = target.split(",");
 		let goodnames = [], badnames = [], alreadynames = [];
-		let i;
-		for (i = 0; i < split.length && Games.excepted.length < 2; i++) {
+		for (let i = 0; i < split.length && Games.excepted.length < 2; i++) {
 			let user = Users.get(Tools.toId(split[i]));
 			if (!user) continue;
 			if (user.hasRank(room.id, '+')) {
@@ -2134,7 +1852,7 @@ exports.commands = {
 			goodnames.push(user.name);
 			Games.excepted.push(user.id);
 		}
-		for (; i < split.length; i++) {
+		for (let i = 0; i < split.length; i++) {
 			let user = Users.get(Tools.toId(split[i]));
 			if (!user) ;
 			badnames.push(user.name);
@@ -2202,6 +1920,8 @@ exports.commands = {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
 			if (room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
+			} else if (user.id === room.id) {
+				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}
@@ -2213,13 +1933,11 @@ exports.commands = {
 		this.say(room, '/join ' + arg);
 	},
 
-    signups: function (target, user, room) {
+	signups: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
-		let id = Tools.toId(target);
-		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 	},
@@ -2244,14 +1962,13 @@ exports.commands = {
 	endgame: 'end',
 	end: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		if (!room.game) {
-			if (Games.host) {
-				Games.host = null;
-				this.say(room, 'The game was forcibly ended.');
-			}
+		if (!room.game && Games.host) {
+			Games.host = null;
+			this.say(room, 'The game was forcibly ended.');
 			return;
 		}
 		room.game.forceEnd();
+		this.say(room, 'The game was forcibly ended.');
 	},
 
 	submit: function (target, user, room) {
@@ -2260,32 +1977,28 @@ exports.commands = {
 	},
 
 	moo: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		this.say(room, '/me MOOs');
+		let text = '';
+		if (!user.hasRank(room.id, '+')) text += '/pm ' + user.id + ', ';
+		text += '/me MOOs';
+		this.say(room, text);
 	},
 
 	startgame: 'start',
-    start: function (target, user, room) {
+	start: function (target, user, room) {
 	    if (!user.hasRank(room.id, '+') || !room.game) return;
 	    if (typeof room.game.start === 'function') room.game.start();
-    },
+	},
 	mk: 'modkill',
 	modkill: function (target, user, room) {
 		let text = "A modkill (or mk) occurs when a player does not provide an action and so they are eliminated";
-		if (user.hasRank(room.id, '+')) {
-			room.say(text);
-		} else {
-			user.say(text);
-		}
+		if (user.hasRank(room.id, '+')) return room.say(text);
+		user.say(text);
 	},
 
 	bomb: function (target, user, room) {
 		let text = "A bomb is a player that, when eliminated, \"explodes\" and eliminates the player that eliminated them.";
-		if (user.hasRank(room.id, '+')) {
-			room.say(text);
-		} else {
-			user.say(text);
-		}
+		if (user.hasRank(room.id, '+')) return room.say(text);
+		user.say(text);
 	},
 	
 	roast: function (target, user, room) {
@@ -2297,7 +2010,7 @@ exports.commands = {
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);
-    },
+	},
 
 	apts: 'addpoints',
 	apt: 'addpoints',
@@ -2322,14 +2035,7 @@ exports.commands = {
 	dd: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) return text += '/pm ' + user.id + ', ';
 		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 11AM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
 		this.say(room, text);
 	},
@@ -2501,9 +2207,9 @@ exports.commands = {
 
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		Rooms.get('survivor').say("/makegroupchat testing");
-		Rooms.get('survivor').say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
-		room.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+		this.say('survivor', "/subroomgroupchat testing");
+		this.say('survivor', "/join groupchat-" + Tools.toId(Config.nick) + "-testing");
+		this.say(room.id, "<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
 	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
@@ -2589,7 +2295,7 @@ exports.commands = {
 		Tools.uploadToHastebin(overallstr, (success, link) => {
 			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
 			else user.say('Error connecting to hastebin.');
-        });
+        	});
 	},
 	toppoints: 'top',
 	top: function (target, user, room) {
