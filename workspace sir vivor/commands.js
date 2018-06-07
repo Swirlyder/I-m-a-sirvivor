@@ -830,43 +830,26 @@ exports.commands = {
 	},
 
 	theme: 'themes',
-	themes: function(arg, user, room)
+	themes: function(target, user, room)
 	{
 		if (!Games.canTheme) return;
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			var text = '';
-		}
-		else
-		{
-			var text = '/pm ' + user.id + ', ';
-		}
-
-		arg = toId(arg);
-		if (arg)
-		{
-			if (!(arg in gameTypes))
-			{
+		let text = '';
+		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text = '/pm ' + user.id + ', ';
+		let arg = toId(target);
+		if (arg) {
+			if (!(arg in gameTypes)) {
 				text += "Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
-			}
-			else
-			{
+			} else {
 				var data = gameTypes[arg];
 				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
-				if (Games.host) {
-					Games.hosttype = data[3];
-				}
+				if (Games.host) Games.hosttype = data[3];
 			}
-		}
-		else
-		{
+		} else {
 			text += "The list of game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
 		}
 		this.say(room, text);
 		Games.canTheme = false;
-		var t = setTimeout(function () {
-			Games.canTheme = true;
-		}, 5 * 1000);
+		setTimeout(() => Games.canTheme = true, 5 * 1000);
 	},
 
 	sethost: function (target, user, room) {
@@ -886,7 +869,7 @@ exports.commands = {
 		if (!targUser) {
 			targUser = {
 				id: Tools.toId(split[0]),
-				name: split[0],
+				name: split[0]
 			}
 		}
 		let numDays = parseInt(split[1]);
@@ -894,20 +877,17 @@ exports.commands = {
 		return room.say(Games.hostBan(targUser, numDays));
 	},
 
-   
-  
 	hostbanned: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
-        if (Object.keys(Games.hostbans).length === 0) {
-            return user.say("No users are currently hostbanned");
-        } else {
-            let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
-            msg += Object.keys(Games.hostbans).map(key => {
-               return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>"; 
-            }).join("");
-            return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></body></html></div></div>");
-        }
-        
+        	if (Object.keys(Games.hostbans).length === 0) {
+            		return user.say("No users are currently hostbanned");
+        	} else {
+            		let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
+           		msg += Object.keys(Games.hostbans).map(key => {
+               			return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>"; 
+            		}).join("");
+            		return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></body></html></div></div>");
+		}
 		//return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
 	},
 
@@ -941,12 +921,8 @@ exports.commands = {
 		let split = target.split(",");
 		let realuser = split[0];
 		let numDays = 7;
-		if (split.length > 1) {
-			numDays = Math.floor(Tools.toId(split[1]));
-		} 
-		if (!numDays) {
-			numDays = 7;
-		}
+		if (split.length > 1) numDays = Math.floor(Tools.toId(split[1]));
+		if (!numDays) numDays = 7;
 		user.say(Games.getHosts(realuser, numDays));
 	},
 
@@ -970,9 +946,7 @@ exports.commands = {
 		}
 		target = toId(target);
 		for (let i = 0; i < data.length; i++) {
-			if (target === toId(data[i])) {
-				return this.say(room, "!dt " + data[i]);
-			}
+			if (target === toId(data[i])) return this.say(room, "!dt " + data[i]);
 		}
 		this.say(room, "No pokemon named " + target + " was found.");
 	},
@@ -1009,10 +983,8 @@ exports.commands = {
 	dehost: function (target, user, room) {
 	    if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		target = Tools.toId(target);
-		if (target === "") {
-			if (Games.host) {
-				this.say(room, "The game was forcibly ended.");
-			}
+		if (!target) {
+			if (Games.host) this.say(room, "The game was forcibly ended.");
 			Games.host = null;
 			return;
 		}
@@ -1023,18 +995,13 @@ exports.commands = {
 		}
 		let i = 0, len = Games.hosts.length;
 		for (; i < len; i++) {
-			if (target === Tools.toId(Games.hosts[i][0])) {
-				break;
-			}
+			if (target === Tools.toId(Games.hosts[i][0])) break;
 		}
 		if (i !== len) {
 			Games.hosts.splice(i, 1);
-			return this.say(room, target + " was removed from the hosting queue.");
+			return this.say(room, Users.add(target).name + " was removed from the hosting queue.");
 		}
-		if (room.game) {
-			room.game.forceEnd();
-			return;
-		}
+		if (room.game) return room.game.forceEnd();
 	},
 
 	game: function (target, user, room) {
@@ -1059,14 +1026,7 @@ exports.commands = {
 	rollsoffame: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id) && room.id !== user.id) text += '/pm ' user.id + ', ';
 		text += 'rof was deleted because of losers like you who think statistically average things are cool';
 		this.say(room, text);
 	},
@@ -1095,7 +1055,7 @@ exports.commands = {
 		}
 		Games.hosttype = null;
 		Games.host = null;*/
-		room.say("The winner is **" + target + "**! Thanks for playing.");
+		room.say("The winner is **" + Users.add(target).name + "**! Thanks for playing.");
 		Games.host = null;
 		Games.hosttype = null;
 	},
@@ -1104,31 +1064,16 @@ exports.commands = {
 	{
 		if (!Games.canIntro) return;
 		var text = '';
-		if (user.hasRank(room.id, '+')) {
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Hello, welcome to Survivor! I\'m the room bot. "Survivor" is a luck-based game that uses Pokémon Showdown\'s /roll feature. For more info, go to: http://survivor-ps.weebly.com/';
 		this.say(room, text);
 		Games.canIntro = false;
-		var t = setTimeout(function () {
-			Games.canIntro = true;
-		}, 5 * 1000);
+		setTimeout(() => Games.canIntro = true, 5000);
 	},
 	plug: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
 	},
@@ -1136,57 +1081,28 @@ exports.commands = {
 	nbt: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
-
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1GU-Zmil6oGBUSlpYqhHaNpNeLjO4RraxnlS3TaEL3pE/edit';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'This has been discontinued but what\'s left of the **Survivor Rankings** can be found here: http://goo.gl/jAucyT';
 		this.say(room, text);
 	},
 	howtohost: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'How To Host: http://survivor-ps.weebly.com/how-to-host.html';
 		this.say(room, text);
 	},
 	summary: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '%'))
-		  		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Hello, welcome to Survivor. Here we play a series of Survivor games. Survivor is a game based on dice rolls,  some games require less luck than others. Example attack: http://i.imgur.com/lKDjvWi.png';
 		this.say(room, text);
 	},
@@ -1194,14 +1110,7 @@ exports.commands = {
 	day: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		let day = new Date().getDay();
 		let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 		text += 'Today is currently **' + days[day] + "**!";
@@ -1211,14 +1120,7 @@ exports.commands = {
 	howtoplay: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Survivor Themes and How to Play Them: http://survivor-ps.weebly.com/themes-and-more.html';
 		this.say(room, text);
 	},
@@ -1226,20 +1128,13 @@ exports.commands = {
 	nexthost: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
-		if (Games.host) {
-			return this.say(room, "A game is currently in progress!");
-		}
-		if (Games.hosts.length === 0) {
-			return this.say(room, "The hostqueue is empty.");
-		}
+		if (Games.host) return this.say(room, "A game is currently in progress!");
+		if (Games.hosts.length === 0) return this.say(room, "The hostqueue is empty.");
 		let info = ["", ""];
 		while (Games.hosts.length > 0) {
 			info = Games.hosts.shift();
-			if (Users.get(info[0])) {
-				break;
-			} else {
-				this.say(room, "**" + info[0] + "** is not online and could not be hosted!");
-			}
+			if (Users.get(info[0])) break;
+			this.say(room, "**" + info[0] + "** is not online and could not be hosted!");
 		}
 		if (Users.get(info[0])) {
 			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
@@ -1258,14 +1153,7 @@ exports.commands = {
 	shamethat: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Aussie man of mystery who always beats Beo at RNG';
 		this.say(room, text);
 	},
@@ -1273,14 +1161,7 @@ exports.commands = {
 	unfixable: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'The best eyebrows on PS! and Smogon bar none~';
 		this.say(room, text);
 	},
@@ -1288,14 +1169,7 @@ exports.commands = {
 	usainbot: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Inferior consumer model';
 		this.say(room, text);
 	},
@@ -1304,14 +1178,7 @@ exports.commands = {
 	bondance: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'Lol, more like can\'t dance';
 		this.say(room, text);
 	},
@@ -1319,42 +1186,21 @@ exports.commands = {
 	aknolan: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += ' "I have to go, night!"';
 		this.say(room, text);
 	},
 	woof: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'woof!';
 		this.say(room, text);
 	},
 	
 	deetah: function (arg, user, room) {
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += '/me can confirm that deetah is a cheetah';
 		this.say(room, text);
 	},
@@ -1362,14 +1208,7 @@ exports.commands = {
 	swirlyder: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'I swear, he\'s not my real dad';
 		this.say(room, text);
 	}, 
@@ -1377,14 +1216,7 @@ exports.commands = {
 	mitsuki: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'isso significa algo em português';
 		this.say(room, text);
 	}, 
@@ -1393,14 +1225,7 @@ exports.commands = {
 	hurl: function(arg, user, room)
 	{
 		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'received their first promotion in 2016 when a dyslexic staff member misread their name as Girl123';
 		this.say(room, text);
 	},
@@ -1775,15 +1600,14 @@ exports.commands = {
 	},
 
 	pick: function (target, user, room) {
-		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let stuff = target.split(",");
 		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
-		if (room.id === 'survivor') {
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
 			this.say(room, "/addhtmlbox " + str);
 		} else if (user.id === room.id) {
 			this.say('survivor', "/pminfobox " + user.id + ", " + str);
 		} else {
-			this.say("!htmlbox " + str);
+			this.say("!htmlbox " + str); // assuming it is a groupchat for testing
 		}
 	},
 
