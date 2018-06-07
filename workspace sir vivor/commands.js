@@ -1701,11 +1701,6 @@ exports.commands = {
 	roll: 'dice',
 	dice: function (target, user, room) {
 		let realtarget = target;
-		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
-			let index = Games.excepted.indexOf(user.id);
-			if (index === -1) return;
-			Games.excepted.splice(index, 1);
-		}
 		let plusIndex = target.indexOf("+");
 		let adder = 0;
 		if (plusIndex !== -1) {
@@ -1735,14 +1730,16 @@ exports.commands = {
 		}
 		if (numDice === 1) {
 			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
-			if (room.id === 'survivor') {
+			if (user.hasRank(room.id, '+') || (Games.host || Games.host.id === user.id) && room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
+			} else if (user.id === room.id) {
+				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}
 		} else {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
-			if (room.id === 'survivor') {
+			if (user.hasRank(room.id, '+') || (Games.host || Games.host.id === user.id) && room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
 			} else if (user.id === room.id) {
 				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
