@@ -1026,7 +1026,7 @@ exports.commands = {
 	rollsoffame: function(arg, user, room)
 	{
 		var text = '';
-		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id) && room.id !== user.id) text += '/pm ' user.id + ', ';
+		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id) && room.id !== user.id) text += '/pm ' + user.id + ', ';
 		text += 'rof was deleted because of losers like you who think statistically average things are cool';
 		this.say(room, text);
 	},
@@ -1605,7 +1605,7 @@ exports.commands = {
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
 			this.say(room, "/addhtmlbox " + str);
 		} else if (user.id === room.id) {
-			this.say('survivor', "/pminfobox " + user.id + ", " + str);
+			Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 		} else {
 			room.say("!htmlbox " + str); // assuming it is a groupchat for testing
 		}
@@ -1730,7 +1730,7 @@ exports.commands = {
 		}
 		if (numDice === 1) {
 			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
-			if (user.hasRank(room.id, '+') || (Games.host || Games.host.id === user.id) && room.id === 'survivor') {
+			if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
 			} else if (user.id === room.id) {
 				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
@@ -1739,10 +1739,10 @@ exports.commands = {
 			}
 		} else {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
-			if (user.hasRank(room.id, '+') || (Games.host || Games.host.id === user.id) && room.id === 'survivor') {
+			if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
 				this.say(room, "/addhtmlbox " + str);
 			} else if (user.id === room.id) {
-				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
+				Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}
