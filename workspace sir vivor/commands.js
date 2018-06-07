@@ -1601,9 +1601,9 @@ exports.commands = {
 
 	pick: function (target, user, room) {
 		let stuff = target.split(",");
-		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
-			this.say(room, "/addhtmlbox " + str);
+		let str = "<i>We randomly picked:</i> " + Tools.sample(stuff);	
+		if ((user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) && room.id === 'survivor') {
+			Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 		} else if (user.id === room.id) {
 			Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 		} else {
@@ -1730,17 +1730,17 @@ exports.commands = {
 		}
 		if (numDice === 1) {
 			let str = "Roll (1 - " + roll + ")" + (adder ? "+" + adder : "") +": " + sum;
-			if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
-				this.say(room, "/addhtmlbox " + str);
+			if ((user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) && room.id === 'survivor') {
+				Rooms.get('survivor').say("/addhtmlbox " + str);
 			} else if (user.id === room.id) {
-				this.say('survivor', "/pminfobox  " + user.id + ", " + str);
+				Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 			} else {
 				this.say(room, "!htmlbox " + str);
 			}
 		} else {
 			let str = numDice + " Rolls (1 - " + roll + "): " + rolls.join(", ") + "<br></br>" + "Sum: " + sum;
-			if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) && room.id === 'survivor') {
-				this.say(room, "/addhtmlbox " + str);
+			if ((user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) && room.id === 'survivor') {
+				Rooms.get('survivor').say("/addhtmlbox " + str);
 			} else if (user.id === room.id) {
 				Rooms.get('survivor').say("/pminfobox " + user.id + ", " + str);
 			} else {
