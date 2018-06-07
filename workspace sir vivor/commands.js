@@ -1607,7 +1607,7 @@ exports.commands = {
 		} else if (user.id === room.id) {
 			this.say('survivor', "/pminfobox " + user.id + ", " + str);
 		} else {
-			this.say("!htmlbox " + str); // assuming it is a groupchat for testing
+			room.say("!htmlbox " + str); // assuming it is a groupchat for testing
 		}
 	},
 
