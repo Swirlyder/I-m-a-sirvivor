@@ -402,7 +402,7 @@ exports.commands = {
 		if (!opts[1]) {
 			let msg = `${Config.commandcharacter}${cmd} is `;
 			if (!this.settings[cmd] || (!(roomid in this.settings[cmd]))) {
-				msg += 'available for users of rank ${((cmd === 'autoban' || cmd === 'banword') ? '#' : Config.defaultrank)} and above.`;
+				msg += `available for users of rank ${(cmd === 'autoban' || cmd === 'banword') ? '#' : Config.defaultrank} and above.`;
 			}
 			else if (this.settings[cmd][roomid] in CONFIGURABLE_COMMAND_LEVELS) {
 				msg += `available for users of rank ${this.settings[cmd][roomid]} and above.`;
