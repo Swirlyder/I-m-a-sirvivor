@@ -199,14 +199,14 @@ exports.commands = {
 
 	git: function(arg, user, room)
 	{
-		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
+		let text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
 		text += '**Sir Vivor Bot** source code: ' + Config.fork;
 		this.say(room, text);
 	},
 	help: 'guide',
 	guide: function(arg, user, room)
 	{
-		var text = (room === user || user.hasRank(room.id, '#')) ? '' : '/pm ' + user.id + ', ';
+		let text = (room === user || user.hasRank(room.id, '#')) ? '' : '/pm ' + user.id + ', ';
 		if (Config.botguide)
 		{
 			text += 'A guide on how to use this bot can be found here: ' + Config.botguide;
@@ -217,21 +217,21 @@ exports.commands = {
 		}
 		this.say(room, text);
 	},
-    reconnect: 'off',
-    disconnect: 'off',
-    crash: 'off',
-    restart: 'off',
-    off: function(arg, user, room) {
-        if (!user.hasRank('survivor', '%')) return false;
-	    room.say("/logout");
-	    connect();
+	reconnect: 'off',
+	disconnect: 'off',
+	crash: 'off',
+	restart: 'off',
+	off: function(arg, user, room) {
+		if (!user.hasRank('survivor', '%')) return false;
+		room.say("/logout");
+		connect();
 	},
-    kill: function (arg, user, room) {
-        if (!user.hasRank('survivor', '%') || room !== user) return false;
-        if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
-	    room.say("/logout");
-        process.exit();
-    },
+	kill: function (arg, user, room) {
+		if (!user.hasRank('survivor', '%') || room !== user) return false;
+		if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
+		room.say("/logout");
+		process.exit();
+	},
 	/**
 	 * Dev commands
 	 *
@@ -239,16 +239,15 @@ exports.commands = {
 	 * to perform arbitrary actions that can't be done through any other commands
 	 * or to help with upkeep of the bot.
 	 */
-    encrypt: function (target, user, room) {
-        if (!user.isExcepted()) return false;
-        return user.say("Encrypted message: " + Tools.encrypt(target));
-    },
-    decrypt: function (target, user, room) {
-        if (!user.isExcepted()) return false;
-        return user.say("Decrypted message: " + Tools.decrypt(target));
-    },
-	reload: function(arg, user, room)
-	{
+	encrypt: function (target, user, room) {
+        	if (!user.isExcepted()) return false;
+        	return user.say("Encrypted message: " + Tools.encrypt(target));
+	},
+	decrypt: function (target, user, room) {
+		if (!user.isExcepted()) return false;
+		return user.say("Decrypted message: " + Tools.decrypt(target));
+	},
+	reload: function(arg, user, room) {
 		if (!user.isExcepted()) return false;
 		delete require.cache[require.resolve('./commands.js')];
 		global.Commands = require('./commands.js').commands;
@@ -260,64 +259,59 @@ exports.commands = {
 		Rooms.get('survivor').say("/roomauth surv");
 		user.say("Voices have been reloaded.");
 	},
-
-	reloadgames: function (arg,user,room) {
+	reloadgames: function (target, user, room) {
 		if (!user.isExcepted()) return false;
 		delete require.cache[require.resolve('./games.js')];
 		global.Games = require('./games.js');
 		Games.loadGames();
 		this.say(room, 'Games reloaded.');
 	},
-	shutdownmode: function (arg, user, room) {
+	shutdownmode: function (target, user, room) {
 		if (!user.isExcepted()) return false;
 		Config.allowGames = false;
 		room.say("Shutdown mode enabled");
 	},
-	join: function (arg, user, room) {
+	join: function (target, user, room) {
 		if (!user.isExcepted()) return false;
-		this.say(room, '/join ' + arg);
+		this.say(room, '/join ' + target);
 	},
-	custom: function(arg, user, room)
-	{
+	custom: function(target, user, room) {
 		if (!user.isExcepted()) return false;
 		// Custom commands can be executed in an arbitrary room using the syntax
 		// ".custom [room] command", e.g., to do !data pikachu in the room lobuser,
 		// the command would be ".custom [lobuser] !data pikachu". However, using
 		// "[" and "]" in the custom command to be executed can mess this up, so
 		// be careful with them.
-		if (arg.indexOf('[') !== 0 || arg.indexOf(']') < 0)
-		{
-			return this.say(room, arg);
-		}
-		var tarRoomid = arg.slice(1, arg.indexOf(']'));
-		var tarRoom = Rooms.get(tarRoomid);
-		if (!tarRoom) return this.say(room, users.self.name + ' is not in room ' + tarRoomid + '!');
-		arg = arg.substr(arg.indexOf(']') + 1).trim();
-		this.say(tarRoom, arg);
+		if (target.indexOf('[') !== 0 || target.indexOf(']') < 0) return this.say(room, target);
+		const tarRoomid = target.slice(1, target.indexOf(']'));
+		const tarRoom = Rooms.get(tarRoomid);
+		if (!tarRoom) return this.say(room, `I'm is not in room the ${tarRoomid}!`);
+		target = target.substr(target.indexOf(']') + 1).trim();
+		this.say(tarRoom, target);
 	},
 
-	js: function(arg, user, room)
+	js: function(target, user, room)
 	{
 		if (!user.isExcepted()) return false;
 		try
 		{
-			let result = eval(arg.trim());
+			let result = eval(target.trim());
 			this.say(room, JSON.stringify(result));
 		}
 		catch (e)
 		{
-			this.say(room, e.name + ": " + e.message);
+			this.say(room, `${e.name}: ${e.message}`);
 		}
 	},
-	uptime: function(arg, user, room)
+	uptime: function(target, user, room)
 	{
-		var text = ((room === user || user.isExcepted()) ? '' : '/pm ' + user.id + ', ') + '**Uptime:** ';
-		var divisors = [52, 7, 24, 60, 60];
-		var units = ['week', 'day', 'hour', 'minute', 'second'];
-		var buffer = [];
-		var uptime = ~~(process.uptime());
+		let text = ((room === user || user.isExcepted()) ? '' : `/pm ${user.id}', `) + '**Uptime:** ';
+		const divisors = [52, 7, 24, 60, 60];
+		const units = ['week', 'day', 'hour', 'minute', 'second'];
+		const buffer = [];
+		let uptime = ~~(process.uptime());
 		do {
-			let divisor = divisors.pop();
+			const divisor = divisors.pop();
 			let unit = uptime % divisor;
 			buffer.push(unit > 1 ? unit + ' ' + units.pop() + 's' : unit + ' ' + units.pop());
 			uptime = ~~(uptime / divisor);
@@ -353,83 +347,67 @@ exports.commands = {
 	 */
 
 	settings: 'set',
-	set: function(arg, user, room)
-	{
+	set: function(target, user, room) {
 		if (room === user || !user.hasRank(room.id, '#')) return false;
 
-		var opts = arg.split(',');
-		var cmd = toId(opts[0]);
-		var roomid = room.id;
-		if (cmd === 'm' || cmd === 'mod' || cmd === 'modding')
-		{
-			let modOpt;
-			if (!opts[1] || !CONFIGURABLE_MODERATION_OPTIONS[(modOpt = toId(opts[1]))])
-			{
-				return this.say(room, 'Incorrect command: correct syntax is ' + Config.commandcharacter + 'set mod, [' +
-					Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/') + '](, [on/off])');
+		const opts = target.split(',');
+		const cmd = toId(opts[0]);
+		const roomid = room.id;
+		if (cmd === 'm' || cmd === 'mod' || cmd === 'modding') {
+			if (!opts[1] || !CONFIGURABLE_MODERATION_OPTIONS[toId(opts[1])]) {
+				const modOpts = Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/');
+				return this.say(room, `Incorrect command: correct syntax is ${Config.commandcharacter}set mod, [${modOpts}](, [on/off])`);
 			}
-			if (!opts[2]) return this.say(room, 'Moderation for ' + modOpt + ' in this room is currently ' +
-				(this.settings.modding && this.settings.modding[roomid] && modOpt in this.settings.modding[roomid] ? 'OFF' : 'ON') + '.');
+			if (!opts[2]) {
+				const modOpt = (this.settings.modding && this.settings.modding[roomid] && modOpt in this.settings.modding[roomid] ? 'OFF' : 'ON')
+				return this.say(room, `Moderation for ${opts[1]}' in this room is currently ${modOpt}.`);
+			}
 
 			if (!this.settings.modding) this.settings.modding = {};
 			if (!this.settings.modding[roomid]) this.settings.modding[roomid] = {};
 
-			let setting = toId(opts[2]);
-			if (setting === 'on')
-			{
+			const setting = toId(opts[2]);
+			if (setting === 'on') {
 				delete this.settings.modding[roomid][modOpt];
 				if (Object.isEmpty(this.settings.modding[roomid])) delete this.settings.modding[roomid];
 				if (Object.isEmpty(this.settings.modding)) delete this.settings.modding;
 			}
-			else if (setting === 'off')
-			{
+			else if (setting === 'off') {
 				this.settings.modding[roomid][modOpt] = 0;
 			}
-			else
-			{
-				return this.say(room, 'Incorrect command: correct syntax is ' + Config.commandcharacter + 'set mod, [' +
-					Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/') + '](, [on/off])');
+			else {
+				const modOpts = Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/');
+				return this.say(room, `Incorrect command: correct syntax is ${Config.commandcharacter}set mod, [${modOpts}], ([on/off])`);
 			}
 
 			this.writeSettings();
-			return this.say(room, 'Moderation for ' + modOpt + ' in this room is now ' + setting.toUpperCase() + '.');
+			return this.say(room, `Moderation for ${modOpt} in this room is now ${setting.toUpperCase()}.`);
 		}
 
-		if (!(cmd in Commands)) return this.say(room, Config.commandcharacter + '' + opts[0] + ' is not a valid command.');
+		if (!(cmd in Commands)) return this.say(room, `${Config.commandcharacter}${opts[0]} is not a valid command.`);
 
-		var failsafe = 0;
+		let failsafe = 0;
 		while (true)
 		{
-			if (typeof Commands[cmd] === 'string')
-			{
+			if (typeof Commands[cmd] === 'string') {
 				cmd = Commands[cmd];
 			}
-			else if (typeof Commands[cmd] === 'function')
-			{
+			else if (typeof Commands[cmd] === 'function') {
 				if (cmd in CONFIGURABLE_COMMANDS) break;
-				return this.say(room, 'The settings for ' + Config.commandcharacter + '' + opts[0] + ' cannot be changed.');
+				return this.say(room, `The settings for ${Config.commandcharacter}${opts[0]} cannot be changed.`);
 			}
-			else
-			{
-				return this.say(room, 'Something went wrong. PM Morfent or TalkTakesTime here or on Smogon with the command you tried.');
-			}
-
-			if (++failsafe > 5) return this.say(room, 'The command "' + Config.commandcharacter + '' + opts[0] + '" could not be found.');
+			if (++failsafe > 5) return this.say(room, `The command "${Config.commandcharacter}${opts[0]}" could not be found.`);
 		}
 
-		if (!opts[1])
-		{
-			let msg = '' + Config.commandcharacter + '' + cmd + ' is ';
-			if (!this.settings[cmd] || (!(roomid in this.settings[cmd])))
-			{
-				msg += 'available for users of rank ' + ((cmd === 'autoban' || cmd === 'banword') ? '#' : Config.defaultrank) + ' and above.';
+		if (!opts[1]) {
+			let msg = `${Config.commandcharacter}${cmd} is `;
+			if (!this.settings[cmd] || (!(roomid in this.settings[cmd]))) {
+				msg += 'available for users of rank ${((cmd === 'autoban' || cmd === 'banword') ? '#' : Config.defaultrank)} and above.`;
 			}
-			else if (this.settings[cmd][roomid] in CONFIGURABLE_COMMAND_LEVELS)
-			{
-				msg += 'available for users of rank ' + this.settings[cmd][roomid] + ' and above.';
+			else if (this.settings[cmd][roomid] in CONFIGURABLE_COMMAND_LEVELS) {
+				msg += `available for users of rank ${this.settings[cmd][roomid]} and above.`;
 			}
-			else
-			{
+			else {
 				msg += this.settings[cmd][roomid] ? 'available for all users in this room.' : 'not available for use in this room.';
 			}
 
@@ -437,306 +415,154 @@ exports.commands = {
 		}
 
 		let setting = opts[1].trim();
-		if (!(setting in CONFIGURABLE_COMMAND_LEVELS)) return this.say(room, 'Unknown option: "' + setting + '". Valid settings are: off/disable/false, +, %, @, #, &, ~, on/enable/true.');
+		if (!(setting in CONFIGURABLE_COMMAND_LEVELS)) return this.say(room, `Unknown option: "${setting}". Valid settings are: off/disable/false, +, %, @, #, &, ~, on/enable/true.`);
 		if (!this.settings[cmd]) this.settings[cmd] = {};
 		this.settings[cmd][roomid] = CONFIGURABLE_COMMAND_LEVELS[setting];
 
 		this.writeSettings();
-		this.say(room, 'The command ' + Config.commandcharacter + '' + cmd + ' is now ' +
-			(CONFIGURABLE_COMMAND_LEVELS[setting] === setting ? ' available for users of rank ' + setting + ' and above.' :
-				(this.settings[cmd][roomid] ? 'available for all users in this room.' : 'unavailable for use in this room.')));
+		this.say(room, `The command ${Config.commandcharacter}${cmd} is now ${(CONFIGURABLE_COMMAND_LEVELS[setting] === setting ? ' available for users of rank ' + setting + ' and above.' :
+		(this.settings[cmd][roomid] ? 'available for all users in this room.' : 'unavailable for use in this room.'))}`);
 	},
-		blacklist: 'autoban',
-		ban: 'autoban',
-		ab: 'autoban',
-		autoban: function(arg, user, room)
-		{
-			if (room === user || !user.canUse('autoban', room.id)) return false;
-			if (!toId(arg)) return this.say(room, 'You must specify at least one user to blacklist.');
+	blacklist: 'autoban',
+	ban: 'autoban',
+	ab: 'autoban',
+	autoban: function(target, user, room) {
+		if (room === user || !user.canUse('autoban', room.id)) return false;
+		if (!toId(target)) return this.say(room, 'You must specify at least one user to blacklist.');
 
-			arg = arg.split(',');
-			var added = [];
-			var illegalNick = [];
-			var alreadyAdded = [];
-			var roomid = room.id;
-			for (let u of arg)
-			{
-				let tarUser = toId(u);
-				if (!tarUser || tarUser.length > 18)
-				{
-					illegalNick.push(tarUser);
-				}
-				else if (!this.blacklistUser(tarUser, roomid))
-				{
-					alreadyAdded.push(tarUser);
-				}
-				else
-				{
-					added.push(tarUser);
-					this.say(room, '/roomban ' + tarUser + ', Blacklisted user');
-				}
+		const args = target.split(',');
+		const added = [];
+		const illegalNick = [];
+		const alreadyAdded = [];
+		const roomid = room.id;
+		for (let u of args) {
+			const tarUser = toId(u);
+			if (!tarUser || tarUser.length > 18) {
+				illegalNick.push(tarUser);
+			} else if (!this.blacklistUser(tarUser, roomid)) {
+				alreadyAdded.push(tarUser);
+			} else {
+				added.push(tarUser);
+				this.say(room, `roomban ${tarUser} Blacklisted user`);
 			}
-
-			var text = '';
-			if (added.length)
-			{
-				text += 'user' + (added.length > 1 ? 's "' + added.join('", "') + '" were' : ' "' + added[0] + '" was') + ' added to the blacklist';
-				this.say(room, '/modnote ' + text + ' by ' + user.name + '.');
-				this.writeSettings();
-			}
-			if (alreadyAdded.length)
-			{
-				text += ' user' + (alreadyAdded.length > 1 ? 's "' + alreadyAdded.join('", "') + '" are' : ' "' + alreadyAdded[0] + '" is') + ' already present in the blacklist.';
-			}
-			if (illegalNick.length) text += (text ? ' All other' : 'All') + ' users had illegal nicks and were not blacklisted.';
-			this.say(room, text);
-		},
-		unblacklist: 'unautoban',
-		unban: 'unautoban',
-		unab: 'unautoban',
-		unautoban: function(arg, user, room)
-		{
-			if (room === user || !user.canUse('autoban', room.id)) return false;
-			if (!toId(arg)) return this.say(room, 'You must specify at least one user to unblacklist.');
-
-			arg = arg.split(',');
-			var removed = [];
-			var notRemoved = [];
-			var roomid = room.id;
-			for (let u of arg)
-			{
-				let taruser = toId(u);
-				if (!taruser || taruser.length > 18)
-				{
-					notRemoved.push(taruser);
-				}
-				else if (!this.unblacklistUser(taruser, roomid))
-				{
-					notRemoved.push(taruser);
-				}
-				else
-				{
-					removed.push(taruser);
-					this.say(room, '/roomunban ' + taruser);
-				}
-			}
-
-			var text = '';
-			if (removed.length)
-			{
-				text += ' user' + (removed.length > 1 ? 's "' + removed.join('", "') + '" were' : ' "' + removed[0] + '" was') + ' removed from the blacklist';
-				this.say(room, '/modnote ' + text + ' user by ' + user.name + '.');
-				this.writeSettings();
-			}
-			if (notRemoved.length) text += (text.length ? ' No other' : 'No') + ' specified users were present in the blacklist.';
-			this.say(room, text);
-		},
-		rab: 'regexautoban',
-		regexautoban: function(arg, user, room)
-		{
-			if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
-			if (!users.self.hasRank(room.id, '@')) return this.say(room, users.self.name + ' requires rank of @ or higher to (un)blacklist.');
-			if (!arg) return this.say(room, 'You must specify a regular expression to (un)blacklist.');
-
-			try
-			{
-				new RegExp(arg, 'i');
-			}
-			catch (e)
-			{
-				return this.say(room, e.message);
-			}
-
-			if (/^(?:(?:\.+|[a-z0-9]|\\[a-z0-9SbB])(?![a-z0-9\.\\])(?:\*|\{\d+\,(?:\d+)?\}))+$/i.test(arg))
-			{
-				return this.say(room, 'Regular expression /' + arg + '/i cannot be added to the blacklist. Don\'t be Machiavellian!');
-			}
-
-			var regex = '/' + arg + '/i';
-			if (!this.blacklistuser(regex, room.id)) return this.say(room, '/' + regex + ' is already present in the blacklist.');
-
-			var regexObj = new RegExp(arg, 'i');
-			var users = room.users.entries();
-			var groups = Config.groups;
-			var selfid = users.self.id;
-			var selfidx = groups[room.users.get(selfid)];
-			for (let u of users)
-			{
-				let userid = u[0];
-				if (userid !== selfid && regexObj.test(userid) && groups[u[1]] < selfidx)
-				{
-					this.say(room, '/roomban ' + userid + ', Blacklisted user');
-				}
-			}
-
+		}
+		let text = '';
+		if (added.length) {
+			text += 'user' + (added.length > 1 ? 's "' + added.join('", "') + '" were' : ' "' + added[0] + '" was') + ' added to the blacklist';
+			this.say(room, `/modnote ${text} by ${user.name}.`);
 			this.writeSettings();
-			this.say(room, '/modnote Regular expression ' + regex + ' was added to the blacklist user user ' + user.name + '.');
-			this.say(room, 'Regular expression ' + regex + ' was added to the blacklist.');
-		},
-		unrab: 'unregexautoban',
-		unregexautoban: function(arg, user, room)
+		}
+		if (alreadyAdded.length) {
+			text += ' user' + (alreadyAdded.length > 1 ? 's "' + alreadyAdded.join('", "') + '" are' : ' "' + alreadyAdded[0] + '" is') + ' already present in the blacklist.';
+		}
+		if (illegalNick.length) text += (text ? ' All other' : 'All') + ' users had illegal nicks and were not blacklisted.';
+		this.say(room, text);
+	},
+	unblacklist: 'unautoban',
+	unban: 'unautoban',
+	unab: 'unautoban',
+	unautoban: function(target, user, room) {
+		if (room === user || !user.canUse('autoban', room.id)) return false;
+		if (!toId(target)) return this.say(room, 'You must specify at least one user to unblacklist.');
+
+		const args = target.split(',');
+		const removed = [];
+		const notRemoved = [];
+		const roomid = room.id;
+		for (let u of args) {
+			const taruser = toId(u);
+			if (!taruser || taruser.length > 18) {
+				notRemoved.push(taruser);
+			} else if (!this.unblacklistUser(taruser, roomid)) {
+				notRemoved.push(taruser);
+			} else {
+				removed.push(taruser);
+				this.say(room, `/roomunban ${taruser}`);
+			}
+		}
+
+		let text = '';
+		if (removed.length)
 		{
-			if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
-			if (!users.self.hasRank(room.id, '@')) return this.say(room, users.self.name + ' requires rank of @ or higher to (un)blacklist.');
-			if (!arg) return this.say(room, 'You must specify a regular expression to (un)blacklist.');
-
-			arg = '/' + arg.replace(/\\\\/g, '\\') + '/i';
-			if (!this.unblacklistuser(arg, room.id)) return this.say(room, '/' + arg + ' is not present in the blacklist.');
-
+			text += ' user' + (removed.length > 1 ? 's "' + removed.join('", "') + '" were' : ' "' + removed[0] + '" was') + ' removed from the blacklist';
+			this.say(room, `/modnote ${text} by ${user.name}.`);
 			this.writeSettings();
-			this.say(room, '/modnote Regular expression ' + arg + ' was removed from the blacklist user user ' + user.name + '.');
-			this.say(room, 'Regular expression ' + arg + ' was removed from the blacklist.');
-		}, 
+		}
+		if (notRemoved.length) text += (text.length ? ' No other' : 'No') + ' specified users were present in the blacklist.';
+		this.say(room, text);
+	},
+	rab: 'regexautoban',
+	regexautoban: function(target, user, room) {
+		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
+		if (!users.self.hasRank(room.id, '@')) return this.say(room, 'I require rank of @ or higher to blacklist or unblacklist.');
+		if (!target) return this.say(room, 'You must specify a regular expression to blacklist or unblacklist.');
+
+		try {
+			new RegExp(target, 'i');
+		} catch (e) {
+			return this.say(room, e.message);
+		}
+
+		if (/^(?:(?:\.+|[a-z0-9]|\\[a-z0-9SbB])(?![a-z0-9\.\\])(?:\*|\{\d+\,(?:\d+)?\}))+$/i.test(target)) {
+			return this.say(room, 'Regular expression /' + arg + '/i cannot be added to the blacklist. Don\'t be Machiavellian!');
+		}
+
+		const regex = `/${target}/i`;
+		if (!this.blacklistuser(regex, room.id)) return this.say(room, `${regex} is already present in the blacklist.`);
+
+		const regexObj = new RegExp(target, 'i');
+		const users = room.users.entries();
+		const groups = Config.groups;
+		const selfid = users.self.id;
+		const selfidx = groups[room.users.get(selfid)];
+		for (let u of users) {
+			let userid = u[0];
+			if (userid !== selfid && regexObj.test(userid) && groups[u[1]] < selfidx) {
+					this.say(room, `/roomban ${userid}, Blacklisted user`);
+			}
+		}
+
+		this.writeSettings();
+		this.say(room, `/modnote Regular expression ${regex} was added to the blacklist user user ${user.name}.`);
+		this.say(room, `Regular expression ${regex} was added to the blacklist.`);
+	},
+	unrab: 'unregexautoban',
+	unregexautoban: function(target, user, room) {
+		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
+		if (!users.self.hasRank(room.id, '@')) return this.say(room, 'I require rank of @ or higher to blacklist or unblacklist.');
+		if (!target) return this.say(room, 'You must specify a regular expression to blacklist or unblacklist.');
+
+		target = `/${target.replace(/\\\\/g, '\\'}/i`;
+		if (!this.unblacklistuser(target, room.id)) return this.say(room, `${target} is not present in the blacklist.`);
+
+		this.writeSettings();
+		this.say(room, '/modnote Regular expression ${target} was removed from the blacklist user user ${user.name}.');
+		this.say(room, 'Regular expression ${target} was removed from the blacklist.');
+	}, 
 	viewbans: 'viewblacklist',
 	vab: 'viewblacklist',
 	viewautobans: 'viewblacklist',
-	viewblacklist: function(arg, user, room)
-	{
+	viewblacklist: function(target, user, room) {
 		if (room === user || !user.canUse('autoban', room.id)) return false;
+		if (!this.settings.blacklist) return user.say('No users are blacklisted in this room.');
 
-		var text = '/pm ' + user.id + ', ';
-		if (!this.settings.blacklist) return this.say(room, text + 'No users are blacklisted in this room.');
+		const roomid = room.id;
+		const blacklist = this.settings.blacklist[roomid];
+		if (!blacklist) return user.say('No users are blacklisted in this room.');
 
-		var roomid = room.id;
-		var blacklist = this.settings.blacklist[roomid];
-		if (!blacklist) return this.say(room, text + 'No users are blacklisted in this room.');
-
-		if (!arg.length)
-		{
-			let userlist = Object.keys(blacklist);
-			if (!userlist.length) return this.say(room, text + 'No users are blacklisted in this room.');
-			return this.uploadToHastebin('The following users are banned from ' + roomid + ':\n\n' + userlist.join('\n'), function(link)
-			{
-				if (link.startsWith('Error')) return this.say(room, text + link);
-				this.say(room, text + 'Blacklist for room ' + roomid + ': ' + link);
+		if (!target.length) {
+			const userlist = Object.keys(blacklist);
+			if (!userlist.length) return user.say('No users are blacklisted in this room.');
+			return this.uploadToHastebin(`The following users are banned from ${roomid}:\n\n${userlist.join('\n')}`, link => {
+				if (link.startsWith('Error')) return user.say(link);
+				user.say(`Blacklist for room ${roomid}: ${link}`);
 			}.bind(this));
 		}
-
-		var nick = toId(arg);
-		if (!nick || nick.length > 18)
-		{
-			text += 'Invalid username: "' + nick + '".';
-		}
-		else
-		{
-			text += 'user "' + nick + '" is currently ' + (blacklist[nick] || 'not ') + 'blacklisted in ' + roomid + '.';
-		}
-		this.say(room, text);
+		let text = '';
+		const nick = toId(arg);
+		if (!nick || nick.length > 18) return user.say(`Invalid username: "${nick}".`);
+		user.say(`User "${nick}" is currently ${(blacklist[nick] || 'not ')} blacklisted in ${roomid}.`);
 	},
-	/*
-		banphrase: 'banword',
-		banword: function(arg, user, room)
-		{
-			arg = arg.trim().toLowerCase();
-			if (!arg) return false;
-
-			var tarRoom = room.id;
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				tarRoom = room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			var bannedPhrases = this.settings.bannedphrases ? this.settings.bannedphrases[tarRoom] : null;
-			if (!bannedPhrases)
-			{
-				if (bannedPhrases === null) this.settings.bannedphrases = {};
-				bannedPhrases = (this.settings.bannedphrases[tarRoom] = {});
-			}
-			else if (bannedPhrases[arg])
-			{
-				return this.say(room, 'Phrase "' + arg + '" is already banned.');
-			}
-			bannedPhrases[arg] = 1;
-
-			this.writeSettings();
-			this.say(room, 'Phrase "' + arg + '" is now banned.');
-		},
-		unbanphrase: 'unbanword',
-		unbanword: function(arg, user, room)
-		{
-			var tarRoom;
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				tarRoom = room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			arg = arg.trim().toLowerCase();
-			if (!arg) return false;
-			if (!this.settings.bannedphrases) return this.say(room, 'Phrase "' + arg + '" is not currently banned.');
-
-			var bannedPhrases = this.settings.bannedphrases[tarRoom];
-			if (!bannedPhrases || !bannedPhrases[arg]) return this.say(room, 'Phrase "' + arg + '" is not currently banned.');
-
-			delete bannedPhrases[arg];
-			if (Object.isEmpty(bannedPhrases))
-			{
-				delete this.settings.bannedphrases[tarRoom];
-				if (Object.isEmpty(this.settings.bannedphrases)) delete this.settings.bannedphrases;
-			}
-
-			this.writeSettings();
-			this.say(room, 'Phrase "' + arg + '" is no longer banned.');
-		},
-		viewbannedphrases: 'viewbannedwords',
-		vbw: 'viewbannedwords',
-		viewbannedwords: function(arg, user, room)
-		{
-			var tarRoom = room.id;
-			var text = '';
-			var bannedFrom = '';
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-				bannedFrom += 'globally';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				text += '/pm ' + user.id + ', ';
-				bannedFrom += 'in ' + room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			if (!this.settings.bannedphrases) return this.say(room, text + 'No phrases are banned in this room.');
-			var bannedPhrases = this.settings.bannedphrases[tarRoom];
-			if (!bannedPhrases) return this.say(room, text + 'No phrases are banned in this room.');
-
-			if (arg.length)
-			{
-				text += 'The phrase "' + arg + '" is currently ' + (bannedPhrases[arg] || 'not ') + 'banned ' + bannedFrom + '.';
-				return this.say(room, text);
-			}
-
-			var banList = Object.keys(bannedPhrases);
-			if (!banList.length) return this.say(room, text + 'No phrases are banned in this room.');
-
-			this.uploadToHastebin('The following phrases are banned ' + bannedFrom + ':\n\n' + banList.join('\n'), function(link)
-			{
-				if (link.startsWith('Error')) return this.say(room, link);
-				this.say(room, text + 'Banned phrases ' + bannedFrom + ': ' + link);
-			}.bind(this));
-		}, */
 
 	/**
 	 * General commands
@@ -744,40 +570,31 @@ exports.commands = {
 	 * Add custom commands here.
 	 */
 
-	seen: function(arg, user, room)
-	{ // this command is still a bit buggy
-		var text = (room === user ? '' : '/pm ' + user.id + ', ');
-		arg = toId(arg);
-		if (!arg || arg.length > 18) return this.say(room, text + 'Invalid username.');
-		if (arg === user.id)
-		{
+	seen: function(target, user, room) {
+		let text = (room === user ? '' : `/pm ${user.id}, `);
+		target = toId(target);
+		if (!target || target.length > 18) return this.say(room, text + 'Invalid username.');
+		if (target === user.id) {
 			text += 'Have you looked in the mirror lately?';
-		}
-		else if (toId(arg) === user)
-		{
+		} else if (toId(target) === user) {
 			text += 'You might be either blind or illiterate. Might want to get that checked out.';
-		}
-		else if (!this.chatData[arg] || !this.chatData[arg].seenAt)
-		{
-			text += 'The user ' + arg + ' has never been seen.';
-		}
-		else
-		{
-			text += arg + ' was last seen ' + this.getTimeAgo(this.chatData[arg].seenAt) + ' ago' + (
-				this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.');
+		} else if (!this.chatData[target] || !this.chatData[target].seenAt) {
+			text += `The user ${target} has never been seen.`;
+		} else {
+			text += `${Users.add(target).name} was last seen ${this.getTimeAgo(this.chatData[target].seenAt)} ago${(
+				this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.')}`);
 		}
 		this.say(room, text);
 	},
 
 	leave: function (target, user, room) {
-		if (!user.isExcepted()) return;
+		if (!user.isExcepted() || !user.hasRank(room, '#')) return;
 		room.say("/part");
 	},
 
 	// Survivor Commands:
 	// Host commands:
-	host: function(target, user, room)
-	{
+	host: function(target, user, room) {
 		if ((!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
 		let split = target.split(",");
@@ -795,53 +612,50 @@ exports.commands = {
 		}
 		if (Games.host || room.game) {
 			target = Tools.toId(realuser.name);
-			let i = 0, len = Games.hosts.length;
-			for (; i < len; i++) {
-				if (target === Tools.toId(Games.hosts[i][0])) {
-					break;
-				}
+			const len = Games.hosts.length;
+			for (let i = 0; i < len; i++) {
+				if (target === Tools.toId(Games.hosts[i][0])) break;
 			}
 			if (Games.host && Games.host.id === realuser.id) {
-				return room.say(realuser.name + " is already hosting somebody probably sniped you haha");
+				return room.say(`${realuser.name} is already hosting somebody probably sniped you haha`);
 			} else if (i !== len) {
-				this.say(room, realuser.name + " is already on the hostqueue.");
+				room.say(`${realuser.name} is already on the hostqueue.`);
 			} else {
-				this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
+				room.say(`${realuser.name} was added to the hostqueue${(targTheme.length ? " for " + targTheme : "")}!`);
 				Games.hosts.push([realuser.name, targTheme]);
 			}
 			return;
 		}
 		if (Games.hosts.length > 0) {
-			let info = Games.hosts.shift();
+			const info = Games.hosts.shift();
 			Games.hosts.push([realuser.name, targTheme]);
-			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
-			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + info[0] + " hosted");
+			this.say(room, `${realuser.name} was added to the hostqueue${(targTheme.length ? " for " + targTheme : "")}!`);
+			this.say(room, `survgame! ${info[0]} is hosting${(info[1].length ? " **" + info[1] + "**" : "")}! Do ``/me in`` to join!`);
+			this.say(room, `/modnote ${info[0]} hosted`);
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
 		} else {
 			Games.host = realuser;
-			this.say(room, "survgame! " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "")+ "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + realuser.name + " hosted");
+			this.say(room, `survgame! ${realuser.name} is hosting${(targTheme.length ? " **" + targTheme + "**" : "")}! Do ``/me in`` to join!`);
+			this.say(room, `/modnote ${realuser.name} hosted`);
 			Games.addHost(realuser);
 			Games.exportData();
 		}
 	},
 
 	theme: 'themes',
-	themes: function(target, user, room)
-	{
+	themes: function(target, user, room) {
 		if (!Games.canTheme) return;
 		let text = '';
-		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text = '/pm ' + user.id + ', ';
+		if (!(user.hasRank(room.id, '+') || Games.host && Games.host.id === user.id)) text = '/pm ${user.id}, ';
 		let arg = toId(target);
 		if (arg) {
 			if (!(arg in gameTypes)) {
 				text += "Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
 			} else {
-				var data = gameTypes[arg];
-				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
+				const data = gameTypes[arg];
+				text += `**${data[0]}**: __${data[2]}__ Game rules: ${data[1]}`;
 				if (Games.host) Games.hosttype = data[3];
 			}
 		} else {
@@ -849,16 +663,16 @@ exports.commands = {
 		}
 		this.say(room, text);
 		Games.canTheme = false;
-		setTimeout(() => Games.canTheme = true, 5 * 1000);
+		setTimeout(() => Games.canTheme = true, 5000);
 	},
 
 	sethost: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') && Config.canHost.indexOf(user.id) === -1) return;
-		if (Games.host) return room.say("__" + Games.host.name + "__ is currently hosting");
+		if (Games.host) return room.say(`__${Games.host.name}__ is currently hosting`);
 		let targUser = Users.get(Tools.toId(target));
-		if (!targUser) return room.say("**" + target + "** is not currently in the room");
+		if (!targUser) return room.say(`**${target}** is not currently in the room`);
 		Games.host = targUser;
-		room.say("**" + targUser.name + "** has been set as the host.");
+		room.say(`**${targUser.name}** has been set as the host.`);
 	},
 
 	hostban: function (target, user, room) {
