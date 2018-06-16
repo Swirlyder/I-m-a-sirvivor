@@ -528,7 +528,7 @@ exports.commands = {
 		if (!users.self.hasRank(room.id, '@')) return this.say(room, 'I require rank of @ or higher to blacklist or unblacklist.');
 		if (!target) return this.say(room, 'You must specify a regular expression to blacklist or unblacklist.');
 
-		target = `/${target.replace(/\\\\/g, '\\'}/i`;
+		target = `/${target.replace(/\\\\/g, '\\')}/i`;
 		if (!this.unblacklistuser(target, room.id)) return this.say(room, `${target} is not present in the blacklist.`);
 
 		this.writeSettings();
