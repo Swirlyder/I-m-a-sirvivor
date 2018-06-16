@@ -1343,7 +1343,7 @@ exports.commands = {
 		const minutes = Math.floor(x / 60);
 		const seconds = x % 60;
 		clearTimeout(Games.timeout);
-		room.say("Timer set for ${(minutes > 0 ? ((minutes)} minute${(minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "")}.`);
+		this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
 		Games.timeout = setTimeout(() => Games.timer(room), x * 1000);
 		Games.isTimer = true;
 	},
