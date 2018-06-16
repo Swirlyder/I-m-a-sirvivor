@@ -1012,7 +1012,7 @@ exports.commands = {
 	gui: function (target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += `/pm ${user.id}, `;
-		text += `Hi ${target},  I'm Gui♥Shark!`;
+		text += `Hi ${target}, I'm Gui♥Shark!`;
 		room.say(text);
 	},
 	baloor: function (target, user, room) {
