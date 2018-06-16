@@ -1547,23 +1547,22 @@ exports.commands = {
 		dd.addHost(split[0]);
 		dd.addFirst(split[1]);
 		dd.addSecond(split[2]);
-		let names = []
-		for (let i = 3; i < split.length; i++) {
-			dd.addPart(split[i]);
-			names.push(split[i].trim());
+		let names = [];
+		for (const name of split) {
+			dd.addPart(name);
+			names.push(name.trim());
 		}
-		room.say("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
-		room.say("Participation points awarded to: **" + names.join(", ") + "**.");
-		dd.updateModlog(user.name + " did .addpoints " + target);
-		dd.updateModlog("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
-		dd.updateModlog("Participation points awarded to: **" + names.join(", ") + "**.");
+		room.say(`First place awarded to: **${split[1].trim()}**. Second place awarded to: **${split[2].trim()}**. Host points awarded to: **${split[0].trim()}**.`);
+		room.say(`Participation points awarded to: **${names.join(", ")}**.`);
+		dd.updateModlog(`${user.name} did .addpoints ${target}`);
+		dd.updateModlog(`First place awarded to: **${split[1].trim()}**. Second place awarded to: **${split[2].trim()}**. Host points awarded to: **${split[0].trim()}**.`);
+		dd.updateModlog(`Participation points awarded to: **${names.join(", ")}**.`);
 	},
-	dd: function(arg, user, room)
-	{
-		var text = '';
-		if (!user.hasRank(room.id, '+') && room.id !== user.id) return text += '/pm ' + user.id + ', ';
+	dd: function(target, user, room) {
+		let text = '';
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) return text += `/pm ${user.id}, `;
 		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 11AM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
-		this.say(room, text);
+		room.say(text);
 	},
 
 	firsts: 'first',
@@ -1571,74 +1570,69 @@ exports.commands = {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addFirst(target);
-		user.say("First place points awarded to: **" + target + "**.");
-		dd.updateModlog(user.name + " did .first " + target);
-		dd.updateModlog("First place points awarded to: **" + target + "**.");
+		user.say(`First place points awarded to: **${target}**.`);
+		dd.updateModlog(`${user.name} did .first ${target}`);
+		dd.updateModlog(`First place points awarded to: **${target}**.`);
 	},
 	skipdd: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		dd.numSkips++;
-		user.say("1 dd skip added, there are " + dd.numSkips + " remaining.");
+		user.say(`1 dd skip added, there are ${dd.numSkips} remaining.`);
 	},
 	removeskipdd: 'rmskipdd',
 	rmskipdd: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		if (dd.numSkips === 0) return user.say("No dds have been skipped this month.");
 		dd.numSkips--;
-		user.say("1 dd skip removed, there are " + dd.numSkips + " remaining.");
+		user.say(`1 dd skip removed, there are ${dd.numSkips} remaining.`);
 	},
 	seconds: 'second',
 	second: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addSecond(target);
-		user.say("Second place points awarded to: **" + target + "**.");	
-		dd.updateModlog(user.name + " did .second " + target);
-		dd.updateModlog("Second place points awarded to: **" + target + "**.");
+		user.say(`Second place points awarded to: **${target}**.`);	
+		dd.updateModlog(`${user.name} did .second ${target}`);
+		dd.updateModlog(`Second place points awarded to: **${target}**.`);
 	},
 	hp: 'hostpoints',
 	hostpoints: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		dd.addHost(target);
-		user.say("Host points awarded to: **" + target + "**.");
-		dd.updateModlog(user.name + " did .hostpoints " + target);
-		dd.updateModlog("Host points awarded to: **" + target + "**.");
+		user.say(`Host points awarded to: **${target}**.`);
+		dd.updateModlog(`${user.name} did .hostpoints ${target}`);
+		dd.updateModlog(`Host points awarded to: **${target}**.`);
 	},
 	addspecial: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
+		const split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
-		let username = split[0];
-		let numPoints = parseInt(split[1]);
-		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
+		const username = split[0];
+		const numPoints = parseInt(split[1]);
+		if (!numPoints) return user.say(`'${split[1]}' is not a valid number of points to add.`);
 		dd.addSpecial(username, numPoints);
-		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
+		user.say(`**${numPoints}** have been added to **${username.trim()}** on the dd leaderboard.`);
 	},
 	part: 'participation',
 	parts: 'participation',
 	participation: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		for (let i = 0; i < split.length; i++) {
-			split[i] = split[i].trim();
-		}
-		for (let i = 0; i < split.length; i++) {
-			dd.addPart(split[i]);
-		}
-		let msg = "Participation points awarded to: **" + split.join(", ") + "**.";
+		const split = target.split(",");
+		split.map(s => dd.addPart(s.trim()));
+		const msg = `Participation points awarded to: **${split.join(", ")}**.`;
 		if (msg.length > 300) {
-			let len = split.length;
-			let firstHalf = split.slice(0, Math.floor(len / 2.0));
-			let secondHalf = split.slice(Math.floor(len / 2.0));
-			user.say("Participations points awarded to: **" + firstHalf.join(", ") + "**.");
-			user.say("and **" + secondHalf.join(", ") + "**.");
+			const len = split.length;
+			const firstHalf = split.slice(0, Math.floor(len / 2.0));
+			const secondHalf = split.slice(Math.floor(len / 2.0));
+			user.say(`Participations points awarded to: **${firstHalf.join(", ")}**.`);
+			user.say(`and **${secondHalf.join(", ")}**.`);
 		} else {
 			user.say(msg);
 		}
-		dd.updateModlog(user.name + " did .parts " + target);
+		dd.updateModlog(`${user.name} did .parts ${target}`);
 		dd.updateModlog(msg);
 	},
 
@@ -1648,12 +1642,12 @@ exports.commands = {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let msg;
 		if (dd.removeFirst(target)) {
-			msg = "First place removed from: **" + target + "**."
+			msg = `First place removed from: **${target}**.`;
 		} else {
-			msg = "**" + target + "** has never won a game!";
+			msg = `**${target}** has never won a game!`;
 		}
 		user.say(msg);
-		dd.updateModlog(user.name + " did .rmfirst " + target);
+		dd.updateModlog(`${user.name} did .removefirst ${target}`);
 		dd.updateModlog(msg);
 	},
 	
@@ -1663,12 +1657,12 @@ exports.commands = {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let msg;
 		if (dd.removeSecond(target)) {
-			msg = "Second place removed from: **" + target + "**.";
+			msg = `Second place removed from: **${target}**.`;
 		} else {
-			msg = "**" + target + "** has never placed second!";
+			msg = `**${target}** has never placed second!`;
 		}
 		user.say(msg);
-		dd.updateModlog(user.name + " did .rmsecond " + target);
+		dd.updateModlog(`${user.name} did .removesecond ${target}`);
 		dd.updateModlog(msg);
 	},
 
@@ -1677,14 +1671,14 @@ exports.commands = {
 	removehost: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let msg = "";
+		let msg;
 		if (dd.removeHost(target)) {
-			msg = "Host removed from: **" + target + "**."
+			msg = `Host removed from: **${target}**.`;
 		} else {
-			msg = "**" + target + "** has never hosted dd!";
+			msg = `**${target}** has never hosted dd!`;
 		}
 		user.say(msg);
-		dd.updateModlog(user.name + " did .rmhost " + target);
+		dd.updateModlog(`${user.name} did .removehost ${target}`);
 		dd.updateModlog(msg);
 	},
 	removeparts: 'removepart',
@@ -1694,27 +1688,26 @@ exports.commands = {
 	removepart: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		let good = [];
-		let bad = [];
-		for (let i = 0; i < split.length; i++) {
-			let name = split[i];
+		const split = target.split(",");
+		const good = [];
+		const bad = [];
+		for (const name of split) {
 			if (dd.removePart(name)) {
 				good.push(name);
 			} else {
 				bad.push(name);
 			}
 		}
-		let msg = "";
+		let msg;
 		if (good.length > 0 && bad.length > 0) {
-			msg = "Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.";
+			msg = `Participations removed from: **${good.join(", ")}**. I was unable to remove participation from **${bad.join(", ")}**.`;
 		} else if (good.length > 0) {
-			msg = "Participations removed from: **" + good.join(", ") + "**.";
+			msg = `Participations removed from: **${good.join(", ")}**.`;
 		} else {
-			msg = "I was unable to remove participations from **" + bad.join(", ") + "**.";
+			msg = `I was unable to remove participations from **${bad.join(", ")}**.`;
 		}
 		user.say(msg);
-		dd.updateModlog(user.name + " did .rmparts " + target);
+		dd.updateModlog(`${user.name} did .removeparts ${target}`);
 		dd.updateModlog(msg);
 	},
 	
@@ -1722,26 +1715,26 @@ exports.commands = {
 		if (!user.hasRank('survivor', '+')) return;
 		if (!("data" in dd.modlog)) return;
 		let buffer = '';
-		for (let i = 0; i < dd.modlog.data.length; i++) {
-			buffer += dd.modlog.data[i] + '\n';
+		for (const modData of dd.modlog.data) {
+			buffer += `${modData}\n`;
 		}
 		Tools.uploadToHastebin(buffer, (success, link) => {
-			if (success) user.say(link);
-			else user.say('Error connecting to hastebin.');
-        });
+			if (success) return user.say(link);
+			user.say('Error connecting to hastebin.');
+        	});
 	},
 
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		Rooms.get('survivor').say("/subroomgroupchat testing");
 		Rooms.get('survivor').say("/join groupchat-survivor-testing");
-		this.say(room.id, "<<groupchat-survivor-testing>> to test stuff!");
+		this.say(room, "<<groupchat-survivor-testing>> to test stuff!");
 	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		let sorted = dd.getSorted();
+		const sorted = dd.getSorted();
 		let longestLength = 0;
-		let numTabsSpaces = 8.0;
+		const numTabsSpaces = 8.0;
 		for (let i = 0; i < sorted.length; i++) {
 			let length = sorted[i][5].length;
 			if (length > longestLength) longestLength = length;
@@ -1751,8 +1744,8 @@ exports.commands = {
 		for (let i = 0; i < longestLength; i += numTabsSpaces) {
 			sep += "\t";
 		}
-		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tSpecial\tPoints\t\n";
-		let real = [5,1,2,3,0,4];
+		let buffer = `Rank\tName${sep}Firsts\tSeconds\tParts\tHosts\tSpecial\tPoints\t\n`;
+		const real = [5,1,2,3,0,4];
 		for (let i = 0; i < sorted.length; i++) {
 			for (let j = 0; j < 8; j++) {
 				let stuff;
@@ -1762,7 +1755,8 @@ exports.commands = {
 				buffer += stuff;
 				if (j === 1) {
 					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / numTabsSpaces);
-					for (let l = 0; l < numCursTabs + (sorted[i][5].length %8 === 0 ? 0 : 1) ; l++) {
+					const till = numCursTabs + (sorted[i][5].length %8 === 0 ? 0 : 1);
+					for (let l = 0; l < till; l++) {
 						buffer += "\t";
 					}
 				} else {
@@ -1772,23 +1766,23 @@ exports.commands = {
 			buffer += "\n";
 		}
 		Tools.uploadToHastebin(buffer, (success, link) => {
-			if (success) room.say(link);
-			else user.say('Error connecting to hastebin.');
-        });
+			if (success) return room.say(link);
+			user.say('Error connecting to hastebin.');
+        	});
 	},
 
 	chatlines: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		let split = target.split(',');
+		const split = target.split(',');
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 7;
-		let targetID = Tools.toId(split[0]);
-		if (!(targetID in chatmes)) return user.say("**" + split[0] + "** has never said anything in chat.");
-		let messages = chatmes[targetID].messages;
-		let targetName = chatmes[targetID].name;
-		let lines = {};
+		let targetID = toId(split[0]);
+		if (!(targetID in chatmes)) return user.say(`**${split[0]}** has never said anything in chat.`);
+		const messages = chatmes[targetID].messages;
+		const targetName = chatmes[targetID].name;
+		const lines = {};
 		function getDayInfo(daysPrevious) {
-			let today = new Date();
+			const today = new Date();
 			let curDay = today.getDate();
 			let curYear = today.getFullYear();
 			let curMonth = today.getMonth();
@@ -1807,34 +1801,33 @@ exports.commands = {
 			}
 			return [curDay, curMonth, curYear];
 		}
-		let overallstr = targetName + " Chat Lines:\n";
+		let overallstr = `${targetName} Chat Lines:\n`;
 		for (let i = numDays; i >= 0; i--) {
 			let dayInfo = getDayInfo(i);
-			let str = (dayInfo[1] >= 9 ? "" : "0") + (dayInfo[1] + 1) + "-" + (dayInfo[0] > 9 ? "" : "0") + (dayInfo[0]) + "-" + dayInfo[2];
+			const str = (dayInfo[1] >= 9 ? "" : "0") + (dayInfo[1] + 1) + "-" + (dayInfo[0] > 9 ? "" : "0") + (dayInfo[0]) + "-" + dayInfo[2];
 			lines[str] = 0;
-			for (let i = 0; i < messages.length; i++) {
-				let message = messages[i];
+			for (const message of messages) {
 				if (message.day === dayInfo[0] && message.month === dayInfo[1] && message.year === dayInfo[2]) lines[str]++;
 			}
-			overallstr += str + ": " + lines[str] + "\n";
+			overallstr += `${str}: ${lines[str]}\n`;
 		}
 		Tools.uploadToHastebin(overallstr, (success, link) => {
-			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
-			else user.say('Error connecting to hastebin.');
+			if (success) return room.say(`**${targetName}**'s chat line count: ${link}`);
+			user.say('Error connecting to hastebin.');
         	});
 	},
 	toppoints: 'top',
 	top: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
-		let sorted = dd.getSorted();
+		const sorted = dd.getSorted();
 		let num = parseInt(target);
 		if (!num || num < 1) num = 50;
 		if (num > sorted.length) num = sorted.length;
 		if (room.id === user.id) {
-			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = '<div style="overflow-y: scroll; max-height: 250px;"><div class="infobox"><html><body><table align="center" border="2"><tr>';
 			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < 3; i++) {
-				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
+				str +=  `<td style=background-color:#FFFFFF; height="30px"; align="center"><b><font color="black"> ${indices[i]} </font></b></td>`;
 			}
 			str += "</tr>"
 			let strs = [];
@@ -1845,22 +1838,22 @@ exports.commands = {
 					if (j === 0) stuff = i + 1;
 					else if (j === 1) stuff = sorted[i][5];
 					else stuff = dd.getPoints(sorted[i]);
-					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
+					strx += `<td style=background-color:#FFFFFF; height="30px"; align="center"><b><font color="black">${stuff}</font></b></td>`;
 				}
-				strs.push(strx + "</tr>");
+				strs.push(`${strx}</tr>`);
 			}
 			str += strs.join("");
 			str += "</table></body></html></div></div>";	
-			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
+			this.say(Rooms.get('survivor'), `/pminfobox ${user.id}, ${str}`);
 		} else {
-			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
-			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Special", "Points"];
+			let str = '<div style="overflow-y: scroll; max-height: 250px;"><div class="infobox"><html><body><table align="center" border="2"><tr>';
+			const indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Special", "Points"];
 			for (let i = 0; i < indices.length; i++) {
-				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
+				str +=  `<td style=background-color:#FFFFFF; height="30px"; align="center"><b><font color="black">${indices[i]}</font></b></td>`;
 			}
-			str += "</tr>"
-			let real = [5, 1, 2, 3, 0, 4];
-			let strs = [];
+			str += "</tr>";
+			const real = [5, 1, 2, 3, 0, 4];
+			const strs = [];
 			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
 				for (let j = 0; j < indices.length; j++) {
@@ -1872,16 +1865,16 @@ exports.commands = {
 					} else {
 						stuff = sorted[i][real[j - 1]];
 					}
-					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
+					strx += `<td style=background-color:#FFFFFF; height="30px"; align="center"><b><font color="black">${stuff}</font></b></td>`;
 				}
-				strs.push(strx + "</tr>");
+				strs.push(`${strx}</tr>`);
 			}
 			str += strs.join("");
 			str += "</table></body></html></div></div>";
 			if (room.id === 'survivor') {
-				Parse.say(room, "/addhtmlbox " + str);
+				room.say(`/addhtmlbox ${str}`);
 			} else {
-				Parse.say(room, "!htmlbox " + str);
+				room.say(`!htmlbox ${str}`);
 			}
 		}
 		let numFirsts = 0;
@@ -1889,37 +1882,32 @@ exports.commands = {
 			numFirsts += sorted[i][1];
 		}
 		numFirsts += dd.numSkips;
-		let month = new Date().getMonth();
-		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		if (numFirsts === 0) {
-			return room.say("No games have been updated yet this month!");
-		}
-		let times = ['6pm EST', '11am EST'];
-		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");	
+		const month = new Date().getMonth();
+		const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		if (numFirsts === 0) return room.say("No games have been updated yet this month!");
+		const times = ['6pm EST', '11am EST'];
+		room.say(`The last Daily Deathmatch updated was the ${times[numFirsts%2]} game on ${months[month]} ${(Math.floor((numFirsts + 1)/2))}.`);	
 	},
 
 	rename: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
+		const split = target.split(",");
 		if (split.length < 2) return user.say("You must specify an old and new username");
-		let realt = Tools.toId(split[0])
-		if (!(realt in dd.dd)) {
-			return user.say("**" + split[0] + "** is not on the dd leaderboard.");
-		} else {
-			let newid = Tools.toId(split[1]);
-			let newdata = (newid in dd.dd ? dd.dd[newid] : {});
-			let oldname = dd.dd[realt].name;
-			dd.dd[newid] = dd.dd[realt];
-			if (realt !== newid) {
-				for (let i in newdata) {
-					dd.dd[newid][i] += newdata[i];
-				}
+		let realt = toId(split[0])
+		if (!(realt in dd.dd)) return user.say(`**${split[0]}** is not on the dd leaderboard.`);
+		const newid = toId(split[1]);
+		const newdata = (newid in dd.dd ? dd.dd[newid] : {});
+		const oldname = dd.dd[realt].name;
+		dd.dd[newid] = dd.dd[realt];
+		if (realt !== newid) {
+			for (let i in newdata) {
+				dd.dd[newid][i] += newdata[i];
 			}
-			dd.dd[newid].name = split[1].trim();
-			if (realt !== newid) delete dd.dd[realt];
-			return user.say("**" + oldname + "** has been renamed to **" + split[1].trim() + "**.");
 		}
+		dd.dd[newid].name = split[1].trim();
+		if (realt !== newid) delete dd.dd[realt];
+		user.say(`**${oldname}** has been renamed to **${split[1].trim()}**.`);
 	},
 
 	clearlb: function (target, user, room) {
@@ -1927,20 +1915,18 @@ exports.commands = {
 		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
 		dd.dd = {};
 		dd.numSkips = 0;
-		return room.say("The dd leaderboard has been reset.");
+		room.say("The dd leaderboard has been reset.");
 	},
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
-		target = Tools.toId(target);
+		target = toId(target);
 		if (!target) target = user.id;
-		if (!(target in dd.dd)) {
-			return user.say("**" + target + "** does not have any points.");
-		}
-		let sorted = dd.getSorted();
+		if (!(target in dd.dd)) return user.say(`**${target}** does not have any points.`);
+		const sorted = dd.getSorted();
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
-			if (Tools.toId(stuff[5]) === target) {
-				return user.say("**" + stuff[5] + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points, consisting of " + stuff[0] + " hosts, " + stuff[1] + " first places, " + stuff[2] + " second places, and " + stuff[3] + " participations.");
+			if (toId(stuff[5]) === target) {
+				return user.say(`**${stuff[5]}** is #${(i + 1)} on the leaderboard with ${dd.getPoints(stuff)} points, consisting of ${stuff[0]} hosts, ${stuff[1]} first places, ${stuff[2]} second places, and ${stuff[3]} participations.`);
 			}
 		}
 	},
@@ -1948,17 +1934,15 @@ exports.commands = {
 	lastgame: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let numFirsts = 0;
-		let sorted = dd.getSorted();
+		const sorted = dd.getSorted();
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
 		let month = new Date().getMonth();
 		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		if (numFirsts === 0) {
-			return room.say("No games have been updated yet this month!");
-		}
-		let times = ['6pm EST', '2am EST', '12pm EST']
-		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
+		if (numFirsts === 0) return room.say("No games have been updated yet this month!");
+		const times = ['6pm EST', '2am EST', '12pm EST'];
+		room.say(`The last Daily Deathmatch to be updated was the ${times[numFirsts%3]} game on ${months[month]} ${(Math.floor((numFirsts + 1)/3))}.`);	
 	},
 
 	repeat: function (target, user, room) {
