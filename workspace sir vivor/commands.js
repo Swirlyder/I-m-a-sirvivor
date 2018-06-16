@@ -240,15 +240,15 @@ exports.commands = {
 	 * or to help with upkeep of the bot.
 	 */
 	encrypt: function (target, user, room) {
-        	if (!user.isExcepted()) return false;
-        	return user.say("Encrypted message: " + Tools.encrypt(target));
+        	if (!user.isExcepted()) return;
+        	return user.say(`Encrypted message: ${Tools.encrypt(target)}`);
 	},
 	decrypt: function (target, user, room) {
-		if (!user.isExcepted()) return false;
-		return user.say("Decrypted message: " + Tools.decrypt(target));
+		if (!user.isExcepted()) return;
+		return user.say(`Decrypted message: ${Tools.decrypt(target)}`);
 	},
-	reload: function(arg, user, room) {
-		if (!user.isExcepted()) return false;
+	reload: function(target, user, room) {
+		if (!user.isExcepted()) return;
 		delete require.cache[require.resolve('./commands.js')];
 		global.Commands = require('./commands.js').commands;
 		this.say(room, 'Commands reloaded.');
@@ -260,23 +260,23 @@ exports.commands = {
 		user.say("Voices have been reloaded.");
 	},
 	reloadgames: function (target, user, room) {
-		if (!user.isExcepted()) return false;
+		if (!user.isExcepted()) return;
 		delete require.cache[require.resolve('./games.js')];
 		global.Games = require('./games.js');
 		Games.loadGames();
 		this.say(room, 'Games reloaded.');
 	},
 	shutdownmode: function (target, user, room) {
-		if (!user.isExcepted()) return false;
+		if (!user.isExcepted()) return;
 		Config.allowGames = false;
 		room.say("Shutdown mode enabled");
 	},
 	join: function (target, user, room) {
-		if (!user.isExcepted()) return false;
-		this.say(room, '/join ' + target);
+		if (!user.isExcepted()) return;
+		this.say(room, `/join ${target}`);
 	},
 	custom: function(target, user, room) {
-		if (!user.isExcepted()) return false;
+		if (!user.isExcepted()) return;
 		// Custom commands can be executed in an arbitrary room using the syntax
 		// ".custom [room] command", e.g., to do !data pikachu in the room lobuser,
 		// the command would be ".custom [lobuser] !data pikachu". However, using
@@ -300,7 +300,8 @@ exports.commands = {
 		}
 	},
 	uptime: function(target, user, room) {
-		let text = ((room === user || user.isExcepted()) ? '' : `/pm ${user.id}', `) + '**Uptime:** ';
+		let text = (room === user || user.isExcepted() ? '' : `/pm ${user.id}, `);
+		text +=  '**Uptime:** ';
 		const divisors = [52, 7, 24, 60, 60];
 		const units = ['week', 'day', 'hour', 'minute', 'second'];
 		const buffer = [];
@@ -331,7 +332,7 @@ exports.commands = {
 				break;
 		}
 
-		this.say(room, text);
+		room.say(text);
 	},
 
 
