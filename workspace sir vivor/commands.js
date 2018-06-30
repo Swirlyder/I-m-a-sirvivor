@@ -3,8 +3,8 @@
  *
  * @license MIT license
  */
-var GoogleSpreadsheet = require('google-spreadsheet');
-var async = require('async');
+const GoogleSpreadsheet = require('google-spreadsheet');
+let async = require('async');
  
 // spreadsheet key is the long id in the sheets URL 
 
@@ -18,30 +18,25 @@ var async = require('async');
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
 
-var http = require('http');
-var cb = require('origindb')('lb');
-var _ = require('lodash');
-var hostQueue = [];
-var queueText = '';
-var ids = [];
+const http = require('http');
+const cb = require('origindb')('lb');
+let _ = require('lodash');
+let hostQueue = [];
+let queueText = '';
+let ids = [];
  
 let millisToTime = function(millis){
 	let seconds = millis/1000;
 	let hours = Math.floor(seconds/3600);
 	let minutes = Math.floor((seconds-hours*3600)/60);
 	let response;
-	if(hours>0){
+	if (hours > 0) {
 		response = hours + " hour" + (hours === 1 ? "" : "s") + " and " + minutes + " minute" + (minutes === 1 ? "" : "s");
-	}else{
+	} else {
 		response = minutes + " minute" + (minutes === 1 ? "" : "s");
 	}
 	return response;
 };
-if (Config.serverid === 'showdown')
-{
-	var https = require('https');
-	var csv = require('csv-parse');
-}
 
 // .set constants
 const CONFIGURABLE_COMMANDS = {
@@ -67,21 +62,17 @@ const CONFIGURABLE_COMMAND_LEVELS = {
 	'true': true
 };
 
-for (let i in Config.groups)
-{
+for (let i in Config.groups) {
 	if (i !== ' ') CONFIGURABLE_COMMAND_LEVELS[i] = i;
 }
-var host = '';
-var hostId = '';
+let host = '';
+let hostId = '';
 
 function isPM(roomid, userid)
 {
 	if (roomid === userid) return true;
 	else return false;
 }
-
-function lbuild()
-{}
 let gameTypes = {
 			trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
 			trumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
@@ -197,22 +188,17 @@ exports.commands = {
 	 * These commands are here to provide information about the bot.
 	 */
 
-	git: function(arg, user, room)
-	{
-		let text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += '**Sir Vivor Bot** source code: ' + Config.fork;
+	git: function(target, user, room) {
+		let text = (room === user || user.hasRank(room, '+')) ? '' : `/pm ${user.id}, `;
+		text += `**${Config.nick} Bot** source code: ${Config.fork}`;
 		this.say(room, text);
 	},
 	help: 'guide',
-	guide: function(arg, user, room)
-	{
-		let text = (room === user || user.hasRank(room.id, '#')) ? '' : '/pm ' + user.id + ', ';
-		if (Config.botguide)
-		{
+	guide: function(target, user, room) {
+		let text = (room === user || user.hasRank(room.id, '#')) ? '' : `/pm ${user.id}, `;
+		if (Config.botguide) {
 			text += 'A guide on how to use this bot can be found here: ' + Config.botguide;
-		}
-		else
-		{
+		} else {
 			text += 'There is no guide for this bot. PM the owner with any questions.';
 		}
 		this.say(room, text);
@@ -221,12 +207,12 @@ exports.commands = {
 	disconnect: 'off',
 	crash: 'off',
 	restart: 'off',
-	off: function(arg, user, room) {
+	off: function(target, user, room) {
 		if (!user.hasRank('survivor', '%')) return false;
 		room.say("/logout");
 		connect();
 	},
-	kill: function (arg, user, room) {
+	kill: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') || room !== user) return false;
 		if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
 		room.say("/logout");
@@ -247,7 +233,7 @@ exports.commands = {
 		if (!user.isExcepted()) return;
 		return user.say(`Decrypted message: ${Tools.decrypt(target)}`);
 	},
-	reload: function(target, user, room) {
+	reload: function (target, user, room) {
 		if (!user.isExcepted()) return;
 		delete require.cache[require.resolve('./commands.js')];
 		global.Commands = require('./commands.js').commands;
@@ -335,236 +321,10 @@ exports.commands = {
 		room.say(text);
 	},
 
-
 	/**
-	 * Room Owner commands
-	 *
-	 * These commands allow room owners to personalise settings for moderation and command use.
-	 */
-
-	settings: 'set',
-	set: function(target, user, room) {
-		if (room === user || !user.hasRank(room.id, '#')) return false;
-
-		const opts = target.split(',');
-		const cmd = toId(opts[0]);
-		const roomid = room.id;
-		if (cmd === 'm' || cmd === 'mod' || cmd === 'modding') {
-			if (!opts[1] || !CONFIGURABLE_MODERATION_OPTIONS[toId(opts[1])]) {
-				const modOpts = Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/');
-				return this.say(room, `Incorrect command: correct syntax is ${Config.commandcharacter}set mod, [${modOpts}](, [on/off])`);
-			}
-			if (!opts[2]) {
-				const modOpt = (this.settings.modding && this.settings.modding[roomid] && modOpt in this.settings.modding[roomid] ? 'OFF' : 'ON')
-				return this.say(room, `Moderation for ${opts[1]}' in this room is currently ${modOpt}.`);
-			}
-
-			if (!this.settings.modding) this.settings.modding = {};
-			if (!this.settings.modding[roomid]) this.settings.modding[roomid] = {};
-
-			const setting = toId(opts[2]);
-			if (setting === 'on') {
-				delete this.settings.modding[roomid][modOpt];
-				if (Object.isEmpty(this.settings.modding[roomid])) delete this.settings.modding[roomid];
-				if (Object.isEmpty(this.settings.modding)) delete this.settings.modding;
-			}
-			else if (setting === 'off') {
-				this.settings.modding[roomid][modOpt] = 0;
-			}
-			else {
-				const modOpts = Object.keys(CONFIGURABLE_MODERATION_OPTIONS).join('/');
-				return this.say(room, `Incorrect command: correct syntax is ${Config.commandcharacter}set mod, [${modOpts}], ([on/off])`);
-			}
-
-			this.writeSettings();
-			return this.say(room, `Moderation for ${modOpt} in this room is now ${setting.toUpperCase()}.`);
-		}
-
-		if (!(cmd in Commands)) return this.say(room, `${Config.commandcharacter}${opts[0]} is not a valid command.`);
-
-		let failsafe = 0;
-		while (true)
-		{
-			if (typeof Commands[cmd] === 'string') {
-				cmd = Commands[cmd];
-			}
-			else if (typeof Commands[cmd] === 'function') {
-				if (cmd in CONFIGURABLE_COMMANDS) break;
-				return this.say(room, `The settings for ${Config.commandcharacter}${opts[0]} cannot be changed.`);
-			}
-			if (++failsafe > 5) return this.say(room, `The command "${Config.commandcharacter}${opts[0]}" could not be found.`);
-		}
-
-		if (!opts[1]) {
-			let msg = `${Config.commandcharacter}${cmd} is `;
-			if (!this.settings[cmd] || (!(roomid in this.settings[cmd]))) {
-				msg += `available for users of rank ${(cmd === 'autoban' || cmd === 'banword') ? '#' : Config.defaultrank} and above.`;
-			}
-			else if (this.settings[cmd][roomid] in CONFIGURABLE_COMMAND_LEVELS) {
-				msg += `available for users of rank ${this.settings[cmd][roomid]} and above.`;
-			}
-			else {
-				msg += this.settings[cmd][roomid] ? 'available for all users in this room.' : 'not available for use in this room.';
-			}
-
-			return this.say(room, msg);
-		}
-
-		let setting = opts[1].trim();
-		if (!(setting in CONFIGURABLE_COMMAND_LEVELS)) return this.say(room, `Unknown option: "${setting}". Valid settings are: off/disable/false, +, %, @, #, &, ~, on/enable/true.`);
-		if (!this.settings[cmd]) this.settings[cmd] = {};
-		this.settings[cmd][roomid] = CONFIGURABLE_COMMAND_LEVELS[setting];
-
-		this.writeSettings();
-		this.say(room, `The command ${Config.commandcharacter}${cmd} is now ${(CONFIGURABLE_COMMAND_LEVELS[setting] === setting ? ' available for users of rank ' + setting + ' and above.' :
-		(this.settings[cmd][roomid] ? 'available for all users in this room.' : 'unavailable for use in this room.'))}`);
-	},
-	blacklist: 'autoban',
-	ban: 'autoban',
-	ab: 'autoban',
-	autoban: function(target, user, room) {
-		if (room === user || !user.canUse('autoban', room.id)) return false;
-		if (!toId(target)) return this.say(room, 'You must specify at least one user to blacklist.');
-
-		const args = target.split(',');
-		const added = [];
-		const illegalNick = [];
-		const alreadyAdded = [];
-		const roomid = room.id;
-		for (let u of args) {
-			const tarUser = toId(u);
-			if (!tarUser || tarUser.length > 18) {
-				illegalNick.push(tarUser);
-			} else if (!this.blacklistUser(tarUser, roomid)) {
-				alreadyAdded.push(tarUser);
-			} else {
-				added.push(tarUser);
-				this.say(room, `roomban ${tarUser} Blacklisted user`);
-			}
-		}
-		let text = '';
-		if (added.length) {
-			text += 'user' + (added.length > 1 ? 's "' + added.join('", "') + '" were' : ' "' + added[0] + '" was') + ' added to the blacklist';
-			this.say(room, `/modnote ${text} by ${user.name}.`);
-			this.writeSettings();
-		}
-		if (alreadyAdded.length) {
-			text += ' user' + (alreadyAdded.length > 1 ? 's "' + alreadyAdded.join('", "') + '" are' : ' "' + alreadyAdded[0] + '" is') + ' already present in the blacklist.';
-		}
-		if (illegalNick.length) text += (text ? ' All other' : 'All') + ' users had illegal nicks and were not blacklisted.';
-		this.say(room, text);
-	},
-	unblacklist: 'unautoban',
-	unban: 'unautoban',
-	unab: 'unautoban',
-	unautoban: function(target, user, room) {
-		if (room === user || !user.canUse('autoban', room.id)) return false;
-		if (!toId(target)) return this.say(room, 'You must specify at least one user to unblacklist.');
-
-		const args = target.split(',');
-		const removed = [];
-		const notRemoved = [];
-		const roomid = room.id;
-		for (let u of args) {
-			const taruser = toId(u);
-			if (!taruser || taruser.length > 18) {
-				notRemoved.push(taruser);
-			} else if (!this.unblacklistUser(taruser, roomid)) {
-				notRemoved.push(taruser);
-			} else {
-				removed.push(taruser);
-				this.say(room, `/roomunban ${taruser}`);
-			}
-		}
-
-		let text = '';
-		if (removed.length)
-		{
-			text += ' user' + (removed.length > 1 ? 's "' + removed.join('", "') + '" were' : ' "' + removed[0] + '" was') + ' removed from the blacklist';
-			this.say(room, `/modnote ${text} by ${user.name}.`);
-			this.writeSettings();
-		}
-		if (notRemoved.length) text += (text.length ? ' No other' : 'No') + ' specified users were present in the blacklist.';
-		this.say(room, text);
-	},
-	rab: 'regexautoban',
-	regexautoban: function(target, user, room) {
-		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
-		if (!users.self.hasRank(room.id, '@')) return this.say(room, 'I require rank of @ or higher to blacklist or unblacklist.');
-		if (!target) return this.say(room, 'You must specify a regular expression to blacklist or unblacklist.');
-
-		try {
-			new RegExp(target, 'i');
-		} catch (e) {
-			return this.say(room, e.message);
-		}
-
-		if (/^(?:(?:\.+|[a-z0-9]|\\[a-z0-9SbB])(?![a-z0-9\.\\])(?:\*|\{\d+\,(?:\d+)?\}))+$/i.test(target)) {
-			return this.say(room, 'Regular expression /' + arg + '/i cannot be added to the blacklist. Don\'t be Machiavellian!');
-		}
-
-		const regex = `/${target}/i`;
-		if (!this.blacklistuser(regex, room.id)) return this.say(room, `${regex} is already present in the blacklist.`);
-
-		const regexObj = new RegExp(target, 'i');
-		const users = room.users.entries();
-		const groups = Config.groups;
-		const selfid = users.self.id;
-		const selfidx = groups[room.users.get(selfid)];
-		for (let u of users) {
-			let userid = u[0];
-			if (userid !== selfid && regexObj.test(userid) && groups[u[1]] < selfidx) {
-					this.say(room, `/roomban ${userid}, Blacklisted user`);
-			}
-		}
-
-		this.writeSettings();
-		this.say(room, `/modnote Regular expression ${regex} was added to the blacklist user user ${user.name}.`);
-		this.say(room, `Regular expression ${regex} was added to the blacklist.`);
-	},
-	unrab: 'unregexautoban',
-	unregexautoban: function(target, user, room) {
-		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
-		if (!users.self.hasRank(room.id, '@')) return this.say(room, 'I require rank of @ or higher to blacklist or unblacklist.');
-		if (!target) return this.say(room, 'You must specify a regular expression to blacklist or unblacklist.');
-
-		target = `/${target.replace(/\\\\/g, '\\')}/i`;
-		if (!this.unblacklistuser(target, room.id)) return this.say(room, `${target} is not present in the blacklist.`);
-
-		this.writeSettings();
-		this.say(room, '/modnote Regular expression ${target} was removed from the blacklist user user ${user.name}.');
-		this.say(room, 'Regular expression ${target} was removed from the blacklist.');
-	}, 
-	viewbans: 'viewblacklist',
-	vab: 'viewblacklist',
-	viewautobans: 'viewblacklist',
-	viewblacklist: function(target, user, room) {
-		if (room === user || !user.canUse('autoban', room.id)) return false;
-		if (!this.settings.blacklist) return user.say('No users are blacklisted in this room.');
-
-		const roomid = room.id;
-		const blacklist = this.settings.blacklist[roomid];
-		if (!blacklist) return user.say('No users are blacklisted in this room.');
-
-		if (!target.length) {
-			const userlist = Object.keys(blacklist);
-			if (!userlist.length) return user.say('No users are blacklisted in this room.');
-			return this.uploadToHastebin(`The following users are banned from ${roomid}:\n\n${userlist.join('\n')}`, link => {
-				if (link.startsWith('Error')) return user.say(link);
-				user.say(`Blacklist for room ${roomid}: ${link}`);
-			}.bind(this));
-		}
-		let text = '';
-		const nick = toId(arg);
-		if (!nick || nick.length > 18) return user.say(`Invalid username: "${nick}".`);
-		user.say(`User "${nick}" is currently ${(blacklist[nick] || 'not ')} blacklisted in ${roomid}.`);
-	},
-
-	/**
-	 * General commands
-	 *
-	 * Add custom commands here.
-	 */
+	*  General commands
+	*  Add custom commands here.
+	*/
 
 	seen: function(target, user, room) {
 		let text = (room === user ? '' : `/pm ${user.id}, `);
