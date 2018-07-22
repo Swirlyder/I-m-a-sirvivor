@@ -633,7 +633,7 @@ exports.commands = {
 	nbt: function(target, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) text += `/pm ${user.id}, `;
-		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1GU-Zmil6oGBUSlpYqhHaNpNeLjO4RraxnlS3TaEL3pE/edit';
+		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/17FPRqG4jA7tpKUJJ6bqSvwrgKhWx-Mbbg-luXnMkkIg/edit';
 		room.say(text);
 	},
 	rankings: function(target, user, room) {

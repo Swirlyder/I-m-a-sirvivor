@@ -141,6 +141,7 @@ class Game {
 		} else if (this.getRemainingPlayerCount() === 0) {
 			this.say("Everybody was killed!");
 		}
+		Games.lastGameTime = new Date().getTime();
 		if (this.ended) return;
 		if (this.timeout) clearTimeout(this.timeout);
 		if (typeof this.onEnd === 'function') this.onEnd();
@@ -418,6 +419,8 @@ class GamesManager {
 		];
 		this.lastGame = null;
 		this.aprilFools = false;
+		this.lastGameTime = null;
+		this.timeBetweenGames = 900000;
 	}
 
 	importData() {
@@ -751,11 +754,27 @@ class GamesManager {
 		return format;
 	}
 
+	formatTime(time) {
+		let x = Math.floor(time / 1000);
+		let minutes = Math.floor(x / 60);
+		let seconds = x % 60;
+		return (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "");
+	}
+
 	createGame(target, room) {
 		if (room.game) {
 			room.say("A game of " + room.game.name + " is already in progress.");
 			return false;
 		}
+
+		if (this.lastGameTime) {
+			let curTime = new Date().getTime();
+			if ((curTime - this.lastGameTime) < this.timeBetweenGames) {
+				room.say("You must wait another " + this.formatTime(this.lastGameTime + this.timeBetweenGames - curTime) + " before starting another game.");
+				return false;
+			}
+		}
+
 		let format = this.getFormat(target);
 		Game.lastGame = format.baseId;
 		let baseClass;
