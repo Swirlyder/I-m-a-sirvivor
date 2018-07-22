@@ -338,7 +338,7 @@ exports.commands = {
 			text += `The user ${target} has never been seen.`;
 		} else {
 			text += `${Users.add(target).name} was last seen ${this.getTimeAgo(this.chatData[target].seenAt)} ago${(
-				this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.')}`);
+				this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.')}`;
 		}
 		this.say(room, text);
 	},
