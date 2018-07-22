@@ -393,8 +393,8 @@ exports.commands = {
 			Games.exportData();
 		} else {
 			Games.host = realuser;
-			this.say(room, `survgame! ${realuser.name} is hosting${(targTheme.length ? " **" + targTheme + "**" : "")}! Do ``/me in`` to join!`);
-			this.say(room, `/modnote ${realuser.name} hosted`);
+			room.say("survgame! " + realuser.name + " is hosting! Do ``/me in`` to join!");
+			room.say("/modnote " + realuser.name + " hosted");
 			Games.addHost(realuser);
 			Games.exportData();
 		}
