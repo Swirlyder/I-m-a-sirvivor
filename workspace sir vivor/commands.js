@@ -543,6 +543,7 @@ exports.commands = {
 		if (!Games.host || Games.host.id !== user.id) return;
 		Games.host = null;
 		room.say("Thanks for playing!");
+		Games.exportData();
 	},
 	// Informational Commands:
 
@@ -555,7 +556,9 @@ exports.commands = {
 		}
 		if (Games.host && Games.host.id === target) {
 			room.say("The game was forcibly ended.");
-			return Games.host = null;
+			Games.host = null;
+			Games.exportData();
+			return;
 		}
 		let len = Games.hosts.length;
 		for (let i = 0; i < len; i++) {
@@ -612,6 +615,7 @@ exports.commands = {
 		room.say(`The winner is **${Users.add(target).name}**! Thanks for playing.`);
 		Games.host = null;
 		Games.hosttype = null;
+		Games.exportData();
 	},
 
 	intro: function(target, user, room) {
@@ -1255,6 +1259,7 @@ exports.commands = {
 		}
 		room.game.forceEnd();
 		room.say('The game was forcibly ended.');
+		Games.exportData();
 	},
 
 	submit: function (target, user, room) {
