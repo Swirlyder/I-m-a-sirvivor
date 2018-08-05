@@ -2113,7 +2113,7 @@ exports.commands = {
 		} else if (n < 22) {
 			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
-			millis += (35 - n) * 60 * 60 * 1000;
+			millis += (38 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
