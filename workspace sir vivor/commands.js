@@ -1445,7 +1445,7 @@ exports.commands = {
 		}
 		else if (room.id !== user.id)
 		{
-			text = '/pm ' + user + ', ';
+			text = '/pm ' + user.id + ', ';
 		}
 		text += '/me left';
 		this.say(room, text);
