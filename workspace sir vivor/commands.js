@@ -1435,6 +1435,22 @@ exports.commands = {
 		this.say(room, text);
 	},
 
+	alex: 'alexander',
+	alexander489: 'alexander',
+	alexander: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += '/me left';
+		this.say(room, text);
+	},
+
 	guishark: 'gui',
 	gui: function (target, user, room) {
 		var text = '';
