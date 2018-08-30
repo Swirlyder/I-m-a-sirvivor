@@ -142,10 +142,6 @@ let gameTypes = {
 			hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
 			hst: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
 			hs: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
-			fishing: ['Fishing', 'https://docs.google.com/document/d/1Uv8fQhwFIRsqqZ_QAE1ZXh3fgDXYZ4Y4ncMyA9RGdUI/edit', 'Regardless what the score system says, magikarp is still special in our hearts', 1],
-			evolve: ['Evolve', 'https://docs.google.com/document/d/1CRDCidN_Y7TJl3pUuuQ2mRZBBWIyTOT4LU4QFCXnBiU/edit', 'Take your fully evolved Pokemon and prove why you\'re the best of the final evolutions!', 1],
-			freeze: ['Freeze', 'https://docs.google.com/document/d/1APlwueeUBT39zlK1jyyq_YE02SgFqb3_v8ntpw4OWy8/edit', 'Freeze... and find out who you can trust in this winter wonderland', 1],
-			ichooseyou: ['I Choose you', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'In the words of Ash, I choose you, pik- what do you mean I chose HP and got shedinja?!', 1],
 			followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
 			ftl: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
 };
