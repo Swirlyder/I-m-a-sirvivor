@@ -106,6 +106,7 @@ let gameTypes = {
 			towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
 			tower: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
 			td: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
+			survivorparty: ['Survivor Party', 'https://survivor-ps.weebly.com/survivor-party.html', 'The craziest party you\'ll ever go to, we promise.'],
 			pokemonsurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			pokemon: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 			pokesurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
@@ -1848,6 +1849,34 @@ exports.commands = {
 		text += '**Attacker Immunity:** __The attacker doesnt die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
 		this.say(room, text);
 	},
+	soullink: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)';
+		this.say(room, text);
+	},
+	interviews: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += ' Current Poll: https://goo.gl/forms/9EZ02tJR8DClrvJ62 || Interviews: https://docs.google.com/document/d/1M4vv6fs-vQKA2mck1axKkiYEoSSrenPuvbZFWr0NxtA/edit?usp=sharing';
+		this.say(room, text);
+	},
 	spotlight: function(arg, user, room)
 	{
 		var text = '';
@@ -2472,9 +2501,9 @@ exports.commands = {
 
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		Rooms.get('survivor').say("/makegroupchat testing");
-		Rooms.get('survivor').say("/join groupchat-" + Tools.toId(Config.nick) + "-testing");
-		room.say("<<groupchat-" + Tools.toId(Config.nick) + "-testing>> to test stuff!");
+		Rooms.get('survivor').say("/subroomgroupchat testing");
+		Rooms.get('survivor').say("/join groupchat-survivor-testing");
+		room.say("<<groupchat-survivor-testing>> to test stuff!");
 	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
