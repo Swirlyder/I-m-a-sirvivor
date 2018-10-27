@@ -2123,8 +2123,8 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000;
-		if (n < 15) {
-			millis += (14 - n) * 60 * 60 * 1000;
+		if (n < 16) {
+			millis += (15 - n) * 60 * 60 * 1000;
 		} else if (n < 22) {
 			millis += (21 - n) * 60 * 60 * 1000;
 		} else {
@@ -2345,7 +2345,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user + ', ';
 		}
-		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 11AM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
+		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 12PM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
 		this.say(room, text);
 	},
 
