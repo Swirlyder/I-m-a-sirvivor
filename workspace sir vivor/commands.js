@@ -1348,16 +1348,8 @@ exports.commands = {
 	hirl123: 'hurl',
 	hurl: function(arg, user, room)
 	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
-		text += 'received their first promotion in 2016 when a dyslexic staff member misread their name as Girl123';
+		if (!user.hasRank(room.id, '+')) return;
+		let text = '!showimage https://vgy.me/ip3Fc9.png, 800, 200';
 		this.say(room, text);
 	},
 
@@ -2124,11 +2116,11 @@ exports.commands = {
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000;
 		if (n < 16) {
-			millis += (15 - n) * 60 * 60 * 1000;
+			millis += (16 - n) * 60 * 60 * 1000;
 		} else if (n < 22) {
-			millis += (21 - n) * 60 * 60 * 1000;
+			millis += (22 - n) * 60 * 60 * 1000;
 		} else {
-			millis += (38 - n) * 60 * 60 * 1000;
+			millis += (39 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
