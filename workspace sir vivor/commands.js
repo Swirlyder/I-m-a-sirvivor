@@ -785,6 +785,30 @@ exports.commands = {
 		}
 	},
 
+	randtheme: function (arg, user, room) {
+		let text = '';
+		if (!user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id)) {
+			text += '/pn ' + user.id + ', ';
+		}
+		let avail = {};
+		for (let i in gameTypes) {
+			let name = gameTypes[i][0];
+			if (name in avail) {
+				continue;
+			}
+			avail[name] = 1;
+		}
+		let theme = Tools.sample(Object.keys(avail));
+		for (let i in gameTypes) {
+			if (gameTypes[i][0] == theme) {
+				var data = gameTypes[i];
+				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
+				break;
+			}
+		}
+		this.say(room, text);
+	},
+
 	theme: 'themes',
 	themes: function(arg, user, room)
 	{
