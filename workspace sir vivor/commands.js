@@ -1407,6 +1407,21 @@ exports.commands = {
 		this.say(room, text);
 	},
 
+	sciencepanda: 'rach',
+	rach: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'sciencepanda, why do you say that?';
+		this.say(room, text);
+	},
+
 	glacierider: 'glacie',
 	glacie: function (target, user, room) {
 		var text = '';
