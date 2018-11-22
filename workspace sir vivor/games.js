@@ -51,7 +51,8 @@ class Game {
 				Parse.say(this.room, '/w lady monita, .mail ' + Config.developers[i] + ', A game of ' + this.name + ' 		broke in progress! ' + (e ? e : ""));
 			}
 		}
-		this.say("I'm sorry, the game broke. Cheese has been notified and will fix it as soon as they can.");
+		console.log(e);
+		this.say("I'm sorry, the game broke. moo has been notified and will fix it as soon as they can.");
 		this.end();
 	}
 
