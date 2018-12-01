@@ -93,6 +93,7 @@ class Weardown extends Games.Game {
                     this.oplayer.eliminated = true;
                 } else {
                     this.say("The rolls were the same, so **" + this.curPlayer.name + "** is eliminated!");
+                    this.curPlayer.eliminated = true;
                 }
             }
             let doublePlayers = [];

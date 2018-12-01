@@ -1407,6 +1407,21 @@ exports.commands = {
 		this.say(room, text);
 	},
 
+	lssghost: 'ls',
+	ls: function (target, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'try again ' + user.name;
+		this.say(room, text);
+	},
+
 	sciencepanda: 'rach',
 	rach: function (target, user, room) {
 		var text = '';
@@ -2154,12 +2169,12 @@ exports.commands = {
 		let n = d.getHours();
 		let m = d.getMinutes();
 		let millis = (60 - m) * 60 * 1000;
-		if (n < 16) {
+		if (n < 17) {
 			millis += (16 - n) * 60 * 60 * 1000;
-		} else if (n < 22) {
+		} else if (n < 23) {
 			millis += (22 - n) * 60 * 60 * 1000;
 		} else {
-			millis += (39 - n) * 60 * 60 * 1000;
+			millis += (40 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
@@ -2231,6 +2246,8 @@ exports.commands = {
 			roll = parseInt(target);
 			if (!roll) return;
 		}
+		if (numDice > 40) this.say("The number of dice rolled must be a natural number up to 40.");
+		if (roll > 1000000000) this.say("The maximum roll is allowed is 1000000000.");
 		let rolls = [];
 		let sum = adder || 0;
 		for (let i = 0; i < numDice; i++) {
