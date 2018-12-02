@@ -547,8 +547,8 @@ class GamesManager {
 		return true;
 	}
 
-	timer(room) {
-	    room.say("**Time's up!**");
+	timer(room, user) {
+	    room.say("**Time's up, " + user.name + "!**");
 		this.isTimer = false;
 	}
 	onLoad() {
