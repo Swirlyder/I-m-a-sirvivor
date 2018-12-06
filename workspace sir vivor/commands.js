@@ -1335,7 +1335,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user + ', ';
 		}
-		text += '/me can confirm that deetah is a cheetah';
+		text += '!showimage https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715, 400, 225';
 		this.say(room, text);
 	},
 	swirl: 'swirlyder',
