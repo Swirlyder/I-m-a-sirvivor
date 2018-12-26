@@ -1436,7 +1436,13 @@ exports.commands = {
 		text += 'sciencepanda, why do you say that?';
 		this.say(room, text);
 	},
-
+	unleashourpassion: 'mez',
+	uop: 'mez',
+	mez: function (arg, user, room) {
+		let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
+		text += "Consistency is boring.";
+		this.say(room, text);
+	},
 	glacierider: 'glacie',
 	glacie: function (target, user, room) {
 		var text = '';
