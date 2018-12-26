@@ -2089,42 +2089,39 @@ exports.commands = {
 		}
 	},
 
-        hostqueue: 'queue',
-        que: 'queue',
-        q: 'queue',
-        queue: function(arg, user, room) {
-            if (!Games.canQueue) return;
-            if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
+	hostqueue: 'queue',
+	que: 'queue',
+	q: 'queue',
+    queue: function(arg, user, room) {
+		if (!Games.canQueue) return;
+        if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
             if (Games.hosts.length === 0) {
-                this.say(room, 'There are no users in the queue.');
-            } 
-            else {
-                var queueText = '';
-                for (var i = 0; i < Games.hosts.length; i++) {
-                    queueText += '**' + (i + 1) + '.** ';
-                    let it = i == 0 ? '' : '__'
-                    queueText += it + Games.hosts[i][0] + it 
-                    queueText += (Games.hosts[i][1].length ? ", " + Games.hosts[i][1] : "") + " "; 
-                    //add formatting here, down there just adds on to the end whoops
-                }
-                this.say(room, '/announce **Queue:** ' + queueText);
-            }
-            else if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') {
-                this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
-            } 
-            else {
-                var queueText = '';
-                for (var i = 0; i < Games.hosts.length; i++) {
-                    queueText += '**' + (i + 1) + '.** __' + Games.hosts[i] + '__ ';
-                }
-                if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
-                if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
-            }
-            Games.canQueue = false;
-            var t = setTimeout(function () {
-                Games.canQueue = true;
-            }, 5 * 1000);
-        },
+				this.say(room, 'There are no users in the queue.');
+			} else {
+				var queueText = '';
+				for (var i = 0; i < Games.hosts.length; i++) {
+					queueText += '**' + (i + 1) + '.** __' + Games.hosts[i][0] + '__' + (Games.hosts[i][1].length ? ", " + Games.hosts[i][1] : "") + " "; //add formatting here, down there just adds on to the end whoops
+				}
+				this.say(room, '/announce **Queue:** ' + queueText);
+			}
+        } else {
+            if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') {
+				this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
+			} else {
+				var queueText = '';
+				for (var i = 0; i < Games.hosts.length; i++) {
+					let it = i == 0 ? '' : '__'
+					queueText += '**' + (i + 1) + '.** ' + it + Games.hosts[i] + it + ' ';
+				}
+				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
+				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+			}
+        }
+		Games.canQueue = false;
+		var t = setTimeout(function () {
+			Games.canQueue = true;
+		}, 5 * 1000);
+	},
 
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
