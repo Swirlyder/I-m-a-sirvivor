@@ -2736,7 +2736,7 @@ exports.commands = {
 		if (numFirsts === 0) {
 			return room.say("No games have been updated yet this month!");
 		}
-		let times = ['6pm EST', '11am EST'];
+		let times = ['6pm EST', '12pm EST'];
 		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");	
 	},
 
