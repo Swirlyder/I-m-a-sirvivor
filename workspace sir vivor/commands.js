@@ -1941,7 +1941,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://docs.google.com/document/d/1M4vv6fs-vQKA2mck1axKkiYEoSSrenPuvbZFWr0NxtA/edit?usp=sharing';
+		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://survivor-ps.weebly.com/current-auth.html';
 		this.say(room, text);
 	},
 	spotlight: function(arg, user, room)
