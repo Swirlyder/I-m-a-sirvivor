@@ -354,7 +354,20 @@ global.parse = exports.parse = {
 			arg = message.substr(index + 1).trim();
 		}
 		cmd = Tools.toId(cmd);
-		if (!!Commands[cmd]) {
+        if (cmd === "reload") {
+            if (room.id !== 'survivor') return;
+            if (!user.isExcepted()) return;
+            let rt = arg === "text";
+            delete require.cache[require.resolve('./commands/text.js')];
+            if (!rt) {
+                delete require.cache[require.resolve('./commands.js')];
+                Commands = require('./commands.js');
+            }
+            Commands.Replies = require('./commands/text.js');
+            let text = (rt ? 'text ' : '') + "commands reloaded.";
+            this.say(room, text);
+        }
+		else if (!!Commands[cmd]) {
 			let failsafe = 0;
 			while (typeof Commands[cmd] !== "function" && failsafe++ < 10) {
 				cmd = Commands[cmd];
