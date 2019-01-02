@@ -385,7 +385,7 @@ global.parse = exports.parse = {
 				cmd = Commands.Replies[c.substring(2)];
 			}
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
-            text += Commands[cmd];
+            text += Commands.Replies[cmd];
             text = text.replace(/\[user\]/g, user);
             text = text.replace(/\[target\]/g, arg);
             this.say(room, text);
