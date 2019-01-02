@@ -383,6 +383,7 @@ global.parse = exports.parse = {
 			if (c.startsWith("==")) {
 				cmd = Commands.Replies[c.substring(2)];
 			}
+            console.log(cmd);
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
             text += Commands.Replies[cmd];
             text = text.replace(/\[user\]/g, user.name);
