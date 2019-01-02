@@ -45,7 +45,10 @@ module.exports = {
 	
 	glacierider: '==glacie',
 	glacie: '/me freezes',
-	
+    
+	guishark: '==gui',
+	gui: 'Hi [target],  I\'m Gui♥Shark!',
+    
 	alex: '==alexander',
 	alexander489: '==alexander',
 	alexander: '/me left',
