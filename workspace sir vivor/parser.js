@@ -380,8 +380,9 @@ global.parse = exports.parse = {
 		}
         else if (!!Commands.Replies[cmd]) {
 			let failsafe = 0;
-			while (Commands.Replies[cmd].startsWith("==") && failsafe++ < 10) {
-				cmd = Commands.Replies[cmd.substring(2)];
+            let c = Commands.Replies[cmd]
+			while (c.startsWith("==") && failsafe++ < 10) {
+				cmd = Commands.Replies[c.substring(2)];
 			}
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
             text += Commands[cmd];
