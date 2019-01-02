@@ -379,14 +379,13 @@ global.parse = exports.parse = {
 			}
 		}
         else if (!!Commands.Replies[cmd]) {
-			let failsafe = 0;
             let c = Commands.Replies[cmd]
-			while (c.startsWith("==") && failsafe++ < 10) {
+			if (c.startsWith("==")) {
 				cmd = Commands.Replies[c.substring(2)];
 			}
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
             text += Commands.Replies[cmd];
-            text = text.replace(/\[user\]/g, user);
+            text = text.replace(/\[user\]/g, user.name);
             text = text.replace(/\[target\]/g, arg);
             this.say(room, text);
             user.lastcmd = cmd;
