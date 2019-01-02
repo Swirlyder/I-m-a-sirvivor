@@ -165,6 +165,25 @@ class DD {
 		}
 	}
 
+    remSpecial(user, numPoints) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				firsts: 0,
+				seconds: 0,
+				parts: 0,
+				realhosts: 0,
+				special: 0,
+				name: user,
+			}
+		} else {
+			if (this.dd[id].special) {
+				this.dd[id].special -= numPoints;
+			}
+		}
+	}
+    
 	getPoints(item) {
 		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + item[4];
 	}

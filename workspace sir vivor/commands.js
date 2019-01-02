@@ -1918,7 +1918,18 @@ exports.commands = {
 		dd.updateModlog(user.name + " did .rmparts " + target);
 		dd.updateModlog(msg);
 	},
-	
+    remspecial: 'removespecial',
+    removespecial: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
+		let username = split[0];
+		let numPoints = parseInt(split[1]);
+		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
+		dd.remSpecial(username, numPoints);
+		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
+	},
 	ddlog: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		if (!("data" in dd.modlog)) return;
