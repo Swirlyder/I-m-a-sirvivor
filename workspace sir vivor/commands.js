@@ -2224,6 +2224,7 @@ exports.commands = {
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
 	},
+	r: 'dice',
 	roll: 'dice',
 	dice: function (target, user, room) {
 		let realtarget = target;
@@ -2248,10 +2249,10 @@ exports.commands = {
 			numDice = parseInt(target.substr(0, dIndex));;
 			if (!numDice) return;
 			roll = parseInt(target.substr(dIndex + 1));
-			if (!roll) return;	
+			if (!roll) roll = 100;	
 		} else {
 			roll = parseInt(target);
-			if (!roll) return;
+			if (!roll) roll = 100;	
 		}
 		if (numDice > 40) this.say("The number of dice rolled must be a natural number up to 40.");
 		if (roll > 1000000000) this.say("The maximum roll is allowed is 1000000000.");
