@@ -130,5 +130,10 @@ module.exports = {
 	tush: '==tushavi',
 	tushavi: '>noob luck',
 	
+	inac: '==inactive',
+	inactive: 'I don\'t know what to put here',
+
+	
 	meow: 'meow!',
 }
+	
