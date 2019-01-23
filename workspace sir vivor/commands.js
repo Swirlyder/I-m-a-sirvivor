@@ -1544,6 +1544,7 @@ exports.commands = {
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
 	
+	ar: 'allowroll',
 	allowroll: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1) && (!Games.host || Games.host.id !== user.id)) return;
 		if (!target) return;
