@@ -133,7 +133,7 @@ module.exports = {
 	inac: '==inactive',
 	inactive: 'I don\'t know what to put here',
 
-	dominate: '/me T-Poses',
+	dominate: '/me T-Poses on [user]',
 	meow: 'meow!',
 }
 	
