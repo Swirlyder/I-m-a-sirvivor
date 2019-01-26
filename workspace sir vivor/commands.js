@@ -83,68 +83,78 @@ function isPM(roomid, userid)
 function lbuild()
 {}
 let gameTypes = {
-			trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
-			trumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
-			toptrumps: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
-			ttp: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
-			toptrumpspokebattle: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
-			dualtype: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
-			dual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
-			htdt: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
-			htdual: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
-			ht: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
-			hidden: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
-			risk: ['Risk', 'http://survivor-ps.weebly.com/risk.html', 'Pssh, who needs an army when you have a hulk?', 2],
-			classic: ['Classic', 'http://survivor-ps.weebly.com/classic.html', 'Classic Survivor. This is the main game.', 1],
-			hg: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
-			hungergames: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
-			hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
-			hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
-			hiddentype: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
-			hotpotato: ['Hot Potato', 'https://survivor-ps.weebly.com/hot-potato.html', 'This be a real hot potato.', 0],
-			hungergamesanonymous: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
-			towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
-			tower: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
-			td: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
-			survivorparty: ['Survivor Party', 'https://survivor-ps.weebly.com/survivor-party.html', 'The craziest party you\'ll ever go to, we promise.'],
-			pokemonsurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			pokemon: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			pokesurvivor: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			poke: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
-			prisonersdilemma: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
-			pd: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
-			dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
-			dex: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
-			bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
-			bountie: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
-			pole: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
-			poles: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
-			pol: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
-			killerinthedark: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
-			kitd: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
-			kill: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
-			killer: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
-			rockpaperscissors: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 1],
-			rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 1],
-			chasetheace: ['Chase the Ace', 'https://survivor-ps.weebly.com/chase-the-ace.html', 'Can you catch the best card?', 1],
-			cta: ['Chase the Ace', 'https://survivor-ps.weebly.com/chase-the-ace.html', 'Can you catch the best card?', 1],
-			eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
-			eevee: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
-			exclusions: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 1],
-			ex: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 1],
-			ssb: ['Super Survivor Bros', 'http://survivor-ps.weebly.com/super-survivor-bros.html', 'Destroy your hated roomauth with your favourite roomauth!', 2],
-			dotw: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.', 2],
-			dayoftheweek: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.', 2],
-			outlaws: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]', 0],
-			outlaw: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]', 0],
-			russianroulette: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.', 1],
-			rr: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.', 1],
-			hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
-			hst: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
-			hs: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
-			followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
-			ftl: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
+	trump: ['Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+	trumps: 'trump',
+	toptrumps: 'trump',
+	ttp: 'trump',
+	toptrumpspokebattle: 'trump',
+	dualtype: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
+	dual: 'dualtype',
+	htdt: 'dualtype',
+	htdual: 'dualtype',
+	ht: ['Hidden Type', 'http://survivor-ps.weebly.com/hidden-type.html', 'The theme that won our April 2015\'s NBT!', 1],
+	hiddentype: 'ht',
+	hidden: 'ht',
+	risk: ['Risk', 'http://survivor-ps.weebly.com/risk.html', 'Pssh, who needs an army when you have a hulk?', 2],
+	classic: ['Classic', 'http://survivor-ps.weebly.com/classic.html', 'Classic Survivor. This is the main game.', 1],
+	hg: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
+	hungergames: 'hg',
+	hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
+	hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
+	hungergamesanonymous: 'hga',
+	hungergamesanon: 'hga',
+	hotpotato: ['Hot Potato', 'https://survivor-ps.weebly.com/hot-potato.html', 'This be a real hot potato.', 0],
+	td: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles? (Long Games)', 1],
+	towerdefense: 'td',
+	tower: 'td',
+	survivorparty: ['Survivor Party', 'https://survivor-ps.weebly.com/survivor-party.html', 'The craziest party you\'ll ever go to, we promise.'],
+	pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
+	pokemonsurvivor: 'pokesurv',
+	pokemon: 'pokesurv',
+	pokesurvivor: 'pokesurv',
+	poke: 'pokesurv',
+	pd: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
+	prisonersdilemma: 'pd', 
+	dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
+	dex: 'dexterity',
+	bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
+	bountie: 'bounty',
+	pole: ['Poles', 'http://survivor-ps.weebly.com/poles.html', 'Your power is within the cards, can you use them wisely?', 2],
+	poles: 'pole',
+	pol: 'pole',
+	kill: ['Killer in the Dark', 'http://survivor-ps.weebly.com/killer-in-the-dark.html', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+	killerinthedark: 'kill',
+	kitd: 'kill',
+	killer: 'kill',
+	rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Winner of NBT #2!', 1],
+	rockpaperscissors: 'rps',
+	cta: ['Chase the Ace', 'https://survivor-ps.weebly.com/chase-the-ace.html', 'Can you catch the best card?', 1],
+	chasetheace: 'cta',
+	eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
+	eevee: 'eeveelutions',
+	exclusions: ['Exclusions', 'http://survivor-ps.weebly.com/exclusions.html', 'The theme where even you don\'t wanna know who you are...', 1],
+	ex: 'exclusions',
+	ssb: ['Super Survivor Bros', 'http://survivor-ps.weebly.com/super-survivor-bros.html', 'Destroy your hated roomauth with your favourite roomauth!', 2],
+	dotw: ['Day of the Week', 'http://survivor-ps.weebly.com/day-of-the-week.html', 'When "it\'s not my day" becomes literal.', 2],
+	dayoftheweek: 'dotw',
+	outlaws: ['Outlaws', 'http://survivor-ps.weebly.com/outlaws.html', '[Insert "high noon" meme here]', 0],
+	outlaw: 'outlaws',
+	russianroulette: ['Russian Roulette', 'http://survivor-ps.weebly.com/russian_roulette.html', 'Pass like a puss or Pull like a pro.', 1],
+	rr: 'russianroulette',
+	hideandseektag: ['Hide and Seek Tag', 'http://survivor-ps.weebly.com/hide_and_seek.html', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+	hst: 'hideandseektag',
+	hs: 'hideandseektag',
+	followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
+	ftl: 'followtheleader',
+	avoidance: [ 'Avoidance', 'https://survivor-ps.weebly.com/avoidance.html', 'The trick is to pick the number that makes you not lose', 1 ],
+	battleoftheelements: [ 'Battle of the Elements', 'https://survivor-ps.weebly.com/battle-of-the-elements.html', 'A race to the finish through barren terrain', 1 ],
+	bote: 'battleoftheelements',
+	battleroyale: [ 'Battle Royale', 'https://survivor-ps.weebly.com/battle-royale.html', '"It\'s like Fortnite but worse" ~ Survivor Gaming Critics', 1 ],
+	fortnite: 'battleroyale',
+	cakeboss:[ 'Cake Boss', 'https://survivor-ps.weebly.com/cake-boss.html', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake!', 1 ],
+	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever', 1 ],
+	empire: [ 'Empire', 'https://survivor-ps.weebly.com/empire.html', 'The only game where you kill your teammates first!', 1 ],
+	emp: 'empire',
 };
 exports.commands = {
 	/**
@@ -746,6 +756,7 @@ exports.commands = {
 			if (!(targThemeID in gameTypes)) {
 				return room.say("Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html");
 			} else {
+				if (typeof gameTypes[targThemeID] === 'string') targThemeID = gameTypes[targThemeID];
 				targTheme = gameTypes[targThemeID][0];
 			}
 		}
@@ -792,6 +803,7 @@ exports.commands = {
 		}
 		let avail = {};
 		for (let i in gameTypes) {
+			if (typeof gameTypes[i] === 'string') continue;
 			let name = gameTypes[i][0];
 			if (name in avail) {
 				continue;
@@ -800,6 +812,7 @@ exports.commands = {
 		}
 		let theme = Tools.sample(Object.keys(avail));
 		for (let i in gameTypes) {
+			if (typeof gameTypes[i] === 'string') continue;
 			if (gameTypes[i][0] == theme) {
 				var data = gameTypes[i];
 				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
@@ -832,6 +845,7 @@ exports.commands = {
 			else
 			{
 				var data = gameTypes[arg];
+				if (typeof data === 'string') data = gameTypes[data]
 				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
 				if (Games.host) {
 					Games.hosttype = data[3];
