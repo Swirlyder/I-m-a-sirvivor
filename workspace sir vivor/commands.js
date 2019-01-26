@@ -1281,6 +1281,12 @@ exports.commands = {
 		if (arg) text += " on " + arg;
 		this.say(room, text);
 	},
+	hug: function(arg, user, room) {
+		let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
+		text += "/me hugs ";
+		if (arg) text += arg;
+		this.say(room, text);
+	},
 	attackerimmunity: 'ai',
 	ai: function(arg, user, room)
 	{
