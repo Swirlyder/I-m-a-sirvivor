@@ -1272,7 +1272,7 @@ exports.commands = {
    
 	deetah: function (arg, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		text = '!showimage https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715, 400, 225';
+		let text = '!showimage https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715, 400, 225';
 		this.say(room, text);
 	},
 	dominate: function(arg, user, room) {
