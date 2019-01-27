@@ -134,5 +134,8 @@ module.exports = {
 	inactive: 'I don\'t know what to put here',
 
 	meow: 'meow!',
+	
+	sips: '==sip',
+	sip: '/me sips [target]\'s tea',
 }
 	
