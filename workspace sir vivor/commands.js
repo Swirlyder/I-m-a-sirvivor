@@ -1754,6 +1754,9 @@ exports.commands = {
 		if (msg.startsWith("/")) {
 			msg = "/" + msg;
 		}
+		if (msg.startsWith("!")) {
+			msg = "[[]]" + msg;
+		}
 		this.say(room, msg);
 	},
 
