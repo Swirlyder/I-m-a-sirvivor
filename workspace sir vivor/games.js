@@ -52,6 +52,9 @@ class Game {
 			}
 		}
 		console.log(e);
+		let fs = require('fs');
+		if (!fs.existsSync('error.log')) fs.writeFileSync('error.log', '');
+		fs.appendFileSync('error.log', e + "\n\n\n");
 		this.say("I'm sorry, the game broke. moo has been notified and will fix it as soon as they can.");
 		this.end();
 	}
