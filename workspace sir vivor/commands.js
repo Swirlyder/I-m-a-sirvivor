@@ -1682,6 +1682,14 @@ exports.commands = {
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 	},
+	forcesignups: function (target, user, room) {
+		if (!user.hasRank(room.id, '#')) return;
+		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
+		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
+		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
+		let id = Tools.toId(target);
+		room.game.signups();
+	},
 	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
 	    if (!user.hasRank(room.id, '+')) return;
