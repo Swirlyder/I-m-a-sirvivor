@@ -155,6 +155,8 @@ let gameTypes = {
 	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever', 1 ],
 	empire: [ 'Empire', 'https://survivor-ps.weebly.com/empire.html', 'The only game where you kill your teammates first!', 1 ],
 	emp: 'empire',
+	
+	ichooseyou: [ 'I choose you!', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'Pick a stat and pray', 2, 1], 
 };
 exports.commands = {
 	/**
@@ -799,20 +801,18 @@ exports.commands = {
 	randtheme: function (arg, user, room) {
 		let text = '';
 		if (!user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id)) {
-			text += '/pn ' + user.id + ', ';
+			text += '/pm ' + user.id + ', ';
 		}
 		let avail = {};
 		for (let i in gameTypes) {
-			if (typeof gameTypes[i] === 'string') continue;
 			let name = gameTypes[i][0];
-			if (name in avail) {
+			if (name in avail || gameTypes[i][4]) {
 				continue;
 			}
 			avail[name] = 1;
 		}
 		let theme = Tools.sample(Object.keys(avail));
 		for (let i in gameTypes) {
-			if (typeof gameTypes[i] === 'string') continue;
 			if (gameTypes[i][0] == theme) {
 				var data = gameTypes[i];
 				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
