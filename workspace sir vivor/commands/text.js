@@ -37,7 +37,7 @@ module.exports = {
 	ls: 'try again [user]',
 
 	sciencepanda: '==rach',
-	rach: 'sciencepanda, why do you say that?',
+	rach: 'The future is now thanks to sciencepanda!',
 	
 	unleashourpassion: '==mez',
 	uop: '==mez',
