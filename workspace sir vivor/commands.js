@@ -837,6 +837,7 @@ exports.commands = {
 		}
 		let avail = {};
 		for (let i in gameTypes) {
+			if (typeof gameTypes[i] === "string") continue;
 			let name = gameTypes[i][0];
 			if (name in avail || gameTypes[i][4]) {
 				continue;
