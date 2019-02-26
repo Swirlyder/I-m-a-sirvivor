@@ -1837,7 +1837,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user + ', ';
 		}
-		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 12PM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion!";
+		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 12PM and 6PM EST. For every DD you participate in, you earn points, and the person with the most points at the end of the month is champion! You can also earn points by winning userhosted games with 7 or more players. Read more about DD on our website: https://survivor-ps.weebly.com/daily-deathmatch.html";
 		this.say(room, text);
 	},
 
