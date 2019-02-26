@@ -1,54 +1,194 @@
-Pokemon-Showdown-Bot
-====================
+Sir Vivor Commands Guide!
+=========================
 
-A chat bot for the Survivor Room on [Pokémon Showdown][1]. This bot has a number of commands, some helpful and some less so, as well as the capability to moderate, and play games. 
+Hosting Commands 
+---------------------------
 
-  [1]: http://www.pokemonshowdown.com/survivor
+`.host [user]` - if there is no game going on, `[user]` will be hosted! If there is a game, they are added to the hostqueue. 
+Requires: + % @ #
+
+`.dehost [user]` - Ends the current userhosted game. If there is a game, it removes `[user]` from the hostqueue. 
+Requires: + % @ #
+
+`.nexthost` - Hosts the next user in the hostqueue. 
+Requires: + % @ #
+
+`.queue` - Displays the current hostqueue. 
+Requires: + % @ # (broadcasts it in the chat, sends a PM to regular users)
+
+`.subhost [user]` - If the current host leaves, this is can be used to sub in another [user] as the host (without re-hling everybody)
+Requires: + % @ #
+
+`.sethost [user]` - Set the host to `[user]`, when there is no host, without using the hightlight word. Typically only used when Sir Vivor disconnects.
+Requires: + % @ #
 
 
-Installation
-------------
+Hostbanning Commands
+---------------------------------
+`.hostban [user], [days]` - Hostbans `[user]` for the given number of `[days]`.
+Requires: % @ #
 
-Sir Vivor requires [node.js][2] to run.
-This bot has not been tested on every `node.js` version possible, but has the same version requirements as [Pokémon Showdown][3]: either v0.6.3 through v0.8.22, or v0.10.2 and up.
-Install `node.js` if you don't have it yet, try the last stable version.
+`.hostbanned`  - List all users currently hostbanned.
+Requires: % @ #
 
-Next up is cloning this bot. This can be done in two ways: cloning it via `git` or downloading as ZIP.
-Downloading it as ZIP is the easy and lazy way, but is a lot less handy to update than cloning this repository.
+`.bantime [user]` - List the amount of time until `[user]` is unhostbanned.
+Requires: % @ #
 
-To install dependencies, run:
+`.unhostban [user]` - Unhostbans `[user]`
+Requires: % @ #
 
-    npm install
+Bothosted Games Commands:
+-------------------------
 
-Copy `config-example.js` to `config.js` and edit the needed variables.
-To change the commands that the bot responds to, edit `commands.js`.
-To create a new game, add a file to the `games` directory
+`.signups [game]` - Requests signups for a bothosted game of `[game]`. Current themes allowed are every official theme except Classic and Super Survivor Bros.
+Requires: + % @ #
 
-Now, to start the bot, use:
+`.start` - Starts a bothosted game, only works after signups have been announced. 
+Requires: + % @ #
 
-    node main.js
+`.end` - Forcibly ends a bothosted game that is in progress. 
+Requires: + % @ #
 
-Some information will be shown, and will automatically join the room(s) you specified if no error occurs.
+`.autostart [seconds]` - Automatically starts a bothosted game in `[seconds]` seconds.
+Requires: + % @ #
 
-  [2]: http://nodejs.org/
-  [3]: https://github.com/Zarel/Pokemon-Showdown
+`.pl` - Lists the players in the current bothosted game.
+Requires: + % @ #
 
-If any of your commands rely on information normally sent to the Pokémon Showdown Client (e.g. functions that execute based on PM that aren't directly related to normal commands), you will need to make changes to the message method in parser.js under the appropriate case.
+Hosting Commands
+------------------
 
-Development
------------
+`.roll [number]` - Rolls a random number between 1 and `[number]`. You can also specify multiple die, or a number to add, with something like .roll 3d100+50
+Requires: + % @ # or current host.
 
-Everyone is more than welcome to contribute to the bot.
-However, please refrain from adding more example commands.
+ `.pick [a,b,c,...]` - Picks a random item from the comma separated list. 
+Requires: + % @ # or current host.
 
-Credits:
- - Morfent/TalkTakesTime/Quinella/Rival Nick (Original Bot)
- - Hawkie (First customization for survivor)
- - CheeseMuffin (More development)
+`.dt [mon]` - Displays the information for `[mon]`.
+Requires: + % @ # or current host.
 
-License
--------
+`.weak [type]` - Displays the coverage chart for `[type]`.
+Requires: + % @ # or current host.
 
-Sir Vivor is distributed under the terms of the [MIT License][5].
+`.done` - Ends the current host.
+Requires: current host.
 
-  [5]: https://github.com/Swirlyder/I-m-a-sirvivor/blob/master/workspace%20sir%20vivor/README.md
+`.win [user]` - Wins the current user and ends the current game
+Requires: current host.
+
+`.themes` - Posts a link in chat displaying all the themes available in Survivor. 
+Requires: + % @ # or current host.
+
+`.theme [name]` - List more details about theme name. 
+Requires: + % @ # or current host.
+
+`.spotlight` - Displays the rules for spotlight games. 
+Requires: + % @ # or current host.
+
+`.sw `- Displays the rules for Second Wind Modification.
+Requires: + % @ # or current host
+
+`.ai` - Displays rules for Attack's Immunity Modification.
+Requires: + % @ # or current host.
+
+`.golf` - Displays rules for Golf Modification.
+Requires: + % @ # or current host.
+
+ `.rs` - Displays rules for Roll Switch Modification.
+Requires: + % @ # or current host.
+
+`.timer [seconds]` - Starts a timer for `[seconds]` seconds. When the timer ends, it will alert the user who started it.
+Requires: + % @ # or current host.
+
+
+Daily Deathmatch Commands (Roomauth):
+------------------------------------
+`.first [user]` - Adds first place points (aka 10 points) to `[user]` in the DD leaderboard.
+Requires: + % @ #
+
+`.second [user]` - Adds second place points (aka 5 points) to `[user]` in the DD leaderboard.
+Requires: + % @ #
+
+`.part [user1], [user2], …` - Adds participations points (aka 2 points) to the specified users in the DD leaderboard.
+Requires: + % @ #
+
+`.hostpoints [user]` - Adds host points (aka 3 points) to `[user]` in the dd leaderboard.
+Requires: + % @ #
+
+`.rmfirst [user]` - Removes a first place from `[user]` on the dd leaderboard, if possible.
+Requires: + % @ #
+
+`.rmsecond [user]` - Removes a second place from `[user]` on the dd leaderboard, if possible.
+Requires: + % @ #
+
+`.rmhost [user]` - Removes a host from `[user]` on the dd leaderboard, if possible.
+Requires: + % @ #
+
+`.rmparts [user1], [user2], …` - Removes participations from `[user1], [user2], ....`, if possible.
+Requires: + % @ #
+
+`.lastgame` - Checks when the leaderboard was last updated.
+Requires: + % @ #
+
+`.addpoints [host], [first], [second], [user1], [user2], …` - Adds all the dd points in one command.
+Requires: + % @ #
+
+`.rename [old-name], [new-name]` - Removes DD points from `[old-name]` and gives them to `[new-name]`.
+Requires: + % @ #
+
+Daily Deathmatch Commands (All Users):
+-------------------------------------
+`.top [number]`  - Displays ranks `[number]`-4 to n on the dd leaderboard. If `[number]` is omitted or invalid, defaults to displaying the top 5.
+Requires: Nothing
+
+`.points [user]` - Displays `[user]`’s points and ranking on the DD leaderboard.
+Requires: Nothing
+
+Other Commands:
+---------------
+NOTE: All of these commands (except `.agif`, `.roast` and `.reloadvoices`) will work in PMs for regular users 
+
+`.rof` - Displays the Roll of Fame page. 
+Requires: + % @ # or current host
+
+`.intro` - Displays a welcome page for new users.
+Requires:  + % @ #
+
+`.plug` - Displays the Survivor plug.dj room.
+Requires: + % @ #
+
+ `.nbt` - Displays information on Next Big Theme.
+Requires: + % @ #
+
+`.howtohost` - Displays hosting information.
+Requires: + % @ #
+
+`.summary` - Displays summary of Survivor.
+Requires: + % @ #
+
+`.howtoplay` - Displays playing information.
+Requires: + % @ #
+
+`.joke` - Displays a random joke.
+Requires: + % @ #
+
+`.gift [user]` - Gives `[user]` a gift.
+Requires: + % @ #
+
+`.agif` - Displays a random anime gif.
+Requires: #
+
+`.roast [user]` - Roasts the given `[user]`.
+Requires: % @ #
+
+`.reloadvoices` -  If Sir Vivor isn’t responding to commands from Voices (+) in chat, this command can be used to reset his list of voices.
+Requires: + % @ #
+
+`.chatlines [user], [days]` - Get the number of lines spoken in chat by `[user]` over the past `[days]` days. NOTE: This command will incapacitate Sir Vivor until it is done, so try not to use a large number of days while there is something happening in the room.
+Requires: % @ #
+
+`.git` - Sends a link to Sir Vivor's github repository. All pull requests are welcome!
+
+`.guide` - Sends a link to this guide.
+
+Roomauth and former roomauth have their own custom commands which can be seen by doing `.[username]`. These commands display a message as so desired by the user.
