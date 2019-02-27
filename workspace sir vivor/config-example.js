@@ -27,7 +27,7 @@ exports.rooms = ['survivor'];
 // Any private rooms that should be joined.
 // Private rooms will be moderated differently (since /warn doesn't work in them).
 // The bot will also avoid leaking the private rooms through .seen
-exports.privaterooms = ['joim'];
+exports.privaterooms = ['botdevelopment'];
  
 // The character text should start with to be seen as a command.
 // Note that using / and ! might be 'dangerous' since these are used in
@@ -81,7 +81,7 @@ exports.regexautobanwhitelist = [];
  
 // Add a link to the help for the bot here. When there is a link here, .help and .guide
 // will link to it.
-exports.botguide = 'https://docs.google.com/document/d/1Ils5V5pHhZQI4fM2jB4MLAATgfKMRZCMeLaXslC54M8/edit';
+exports.botguide = 'https://github.com/Swirlyder/I-m-a-sirvivor/blob/master/workspace%20sir%20vivor/README.md';
  
 // Add a link to the git repository for the bot here for .git to link to.
 exports.fork = 'http://github.com/Swirlyder/I-m-a-sirvivor';
