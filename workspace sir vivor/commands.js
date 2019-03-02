@@ -1182,7 +1182,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/17FPRqG4jA7tpKUJJ6bqSvwrgKhWx-Mbbg-luXnMkkIg/edit';
+		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1JfaAJ12UPJ_gcrLjvRqxGuPnkucGG3eu2pEafm9Dc2s/edit';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
