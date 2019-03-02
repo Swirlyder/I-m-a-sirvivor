@@ -200,7 +200,14 @@ exports.commands = {
 	git: function(arg, user, room)
 	{
 		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += '**Sir Vivor Bot** source code: ' + Config.fork;
+		text += 'I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!';
+		this.say(room, text);
+	},
+	credits: 'about',
+	about: function(arg, user, room)
+	{
+		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
+		text += 'The source code for this bot can be found here: ' + Config.fork;
 		this.say(room, text);
 	},
 	help: 'guide',
