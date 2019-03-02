@@ -167,26 +167,26 @@ let gameTypes = {
 	hiddenpowersurvivor: [ 'Hidden Power Survivor', 'https://survivor-ps.weebly.com/hidden-power-survivor.html', 'Theme by Rainshaft', 1, 1 ],
 	hps:'hiddenpowersurvivor',
 	hiddenpowersurv: 'hiddenpowersurvivor',
-	ichooseyou: [ 'I choose you!', 'https://docs.google.com/document/d/1OmQbXKx2M1oqFx9srp-1OFq1TE93COFvKqjdMspRxjY/edit', 'Pick a stat and pray... Theme by Baloor and Complexities', 2, 1], 
-	jenga: [ 'Jenga', 'https://docs.google.com/document/d/1D1XX8KVKH0Za0xWjN7oasLdRiBqTPYmDTRjuyuNwvJw/edit', 'The classic game! But it\'s... Survivor...? Theme by A Phantom', 1, 1 ],
-	minefield: [ 'Minefield', 'https://docs.google.com/document/d/12F9JX4_NPg-VOsXS5AjOqTgWqx9JQ8Mcs7U16UL47pQ/edit?usp=sharing', 'Word of advice: Don\'t die! Theme by Shadecession', 1, 1 ],
-	rollboost: [ 'Roll Boost', 'https://docs.google.com/document/d/1zUwbZYFvCugCDshmomE5bLqFVH7PF1to2gtpbFauLqo/edit?usp=sharing', 'Spend your points wisely! \\\\or just roll 100 every time and win anyway\\\\ Theme by Lunarixis', 1, 1 ],
+	ichooseyou: [ 'I choose you!', 'https://survivor-ps.weebly.com/i-choose-you.html', 'Pick a stat and pray... Theme by Baloor and Complexities', 2, 1], 
+	jenga: [ 'Jenga', 'https://survivor-ps.weebly.com/jenga.html', 'The classic game! But it\'s... Survivor...? Theme by A Phantom', 1, 1 ],
+	minefield: [ 'Minefield', 'https://survivor-ps.weebly.com/minefield.html', 'Word of advice: Don\'t die! Theme by Shadecession', 1, 1 ],
+	rollboost: [ 'Roll Boost', 'https://survivor-ps.weebly.com/roll-boost.html', 'Spend your points wisely! \\\\or just roll 100 every time and win anyway\\\\ Theme by Lunarixis', 1, 1 ],
 	rb: 'rollboost',
-	santasautomatedworkshop: [ 'Santa\'s Automated Workshop (SAW)', 'https://docs.google.com/document/d/1e-nO4aLdlSP5lCq-FfReTlkzDIOjrKhiaN5-rTtr3dI/edit', 'Deliver presents like a true good person! Theme by Zeep', 1, 1 ],
+	santasautomatedworkshop: [ 'Santa\'s Automated Workshop (SAW)', 'https://survivor-ps.weebly.com/santas-automated-workshop-saw.html', 'Deliver presents like a true good person! Theme by Zeep', 1, 1 ],
 	saw: 'santasautomatedworkshop',
-	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://docs.google.com/document/d/1LeSBo7SSkRJG8PqUKk8MflKSdTuF2nl-rkFstjQJ9iQ/edit?usp=sharing', 'BURN!! HAHAHA okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
+	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
 	scs: 'statusconditonsurvivor',
-	swords: [ 'Swords', 'https://docs.google.com/document/d/17p0KJEQhr8h13MYfp8bQoNcpQDe7Gh9i6MVvKzU7ut8/edit', 'Get the strongest sword to beat your foes! Theme by Fennekin101', 1, 1 ],
-	tribalcouncil: [ 'Tribal Council', 'https://docs.google.com/document/d/1TyAGHO5YRZ5hEfS9cLwEeZpebztXK1upnqqqBLAUxVw/edit', 'Somehow this theme name reminded me of Spore, anyone remember the game Spore? Theme by Zeonth', 1, 1 ],
+	swords: [ 'Swords', 'https://survivor-ps.weebly.com/swords.html', 'Get the strongest sword to beat your foes! Theme by Fennekin101', 1, 1 ],
+	tribalcouncil: [ 'Tribal Council', 'https://survivor-ps.weebly.com/tribal-council.html', 'Somehow this theme name reminded me of Spore, anyone remember the game Spore? Theme by Zeonth', 1, 1 ],
 	tc: 'tribalcouncil',
-	vivorsfeast: [ 'Vivor\'s Feast', 'https://docs.google.com/document/d/1CRKg7wF8ZqmLtzOSXl47_1U_i1Ka0n42D4P_EKWnHJw/edit?ts=5933515a', 'Sacrifice people to the Vivor overlord! Theme by PenQuin', 1, 1 ],
+	vivorsfeast: [ 'Vivor\'s Feast', 'https://survivor-ps.weebly.com/vivors-feast.html', 'Sacrifice people to the Vivor overlord! Theme by PenQuin', 1, 1 ],
 	vf: 'vivorsfeast',
 	feast: 'vivorsfeast',
-	vwheelanddeal: [ 'V-Wheel and Deal', 'https://docs.google.com/document/d/15zQMGT--GrckvWlH5514fpmotas-C86nRmOAavPFANI/edit', 'It\'s like a lottery but worse. Theme by Plasmaan', 1, 1 ],
+	vwheelanddeal: [ 'V-Wheel and Deal', 'https://survivor-ps.weebly.com/v-wheel-and-deal.html', 'It\'s like a lottery but worse. Theme by Plasmaan', 1, 1 ],
 	vwd: 'vwheelanddeal',
 	wnd: 'vwheelanddeal',
-	weardown: [ 'Wear Down', 'https://docs.google.com/document/d/1f_RGAU9ezc1zryJRtfB3ckGY98jIqnuaVLg3_LfrGJc/edit', 'The game where we all get frustrated over losing all of our health in 2 rounds! Theme by Henka', 1, 1 ],
-	welcometoourchat: [ 'Welcome to Our Chat.jpg Survivor', 'https://docs.google.com/document/d/1bY8P-wvzPyR0RzrzAQtkjWqT5tYAHGr8YXunVDN4uFE/edit', 'When are we adding Gumwaa to this theme? Theme by Swirlyder', 1, 1 ],
+	weardown: [ 'Wear Down', 'https://survivor-ps.weebly.com/wear-down.html', 'The game where we all get frustrated over losing all of our health in 2 rounds! Theme by Henka', 1, 1 ],
+	welcometoourchat: [ 'Welcome to Our Chat.jpg Survivor', 'https://survivor-ps.weebly.com/welcome-to-our-chat.html', 'When are we adding Gumwaa to this theme? Theme by Swirlyder', 1, 1 ],
 	wtoc: 'welcometoourchat',
 	chat: 'welcometoourchat',
 };
@@ -200,14 +200,14 @@ exports.commands = {
 	git: function(arg, user, room)
 	{
 		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += 'I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!';
+		text += 'The source code for this bot can be found here: ' + Config.fork;
 		this.say(room, text);
 	},
 	credits: 'about',
 	about: function(arg, user, room)
 	{
 		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += 'The source code for this bot can be found here: ' + Config.fork;
+		text += 'I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!';
 		this.say(room, text);
 	},
 	help: 'guide',
