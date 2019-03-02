@@ -254,12 +254,15 @@ exports.commands = {
         if (!user.isExcepted()) return false;
         return user.say("Decrypted message: " + Tools.decrypt(target));
     },
-	reload: function(arg, user, room)
-	{
+	reload: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
-		delete require.cache[require.resolve('./commands.js')];
-		global.Commands = require('./commands.js').commands;
-		this.say(room, 'Commands reloaded.');
+		try {
+			this.uncacheTree('./commands.js');
+			Commands = require('./commands.js').commands;
+			this.say(room, 'Commands reloaded.');
+		} catch (e) {
+			error('failed to reload: ' + e.stack);
+		}
 	},
 	reloadvoice: 'reloadvoices',
 	reloadvoices: function (target, user, room) {
