@@ -1169,7 +1169,6 @@ exports.commands = {
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
 	},
-
 	nbt: function(arg, user, room)
 	{
 		var text = '';
@@ -1182,7 +1181,23 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is live! More info here: https://docs.google.com/document/d/1JfaAJ12UPJ_gcrLjvRqxGuPnkucGG3eu2pEafm9Dc2s/edit';
+		text += '**Next Big Theme X** is live! More info here: https://docs.google.com/document/d/1JfaAJ12UPJ_gcrLjvRqxGuPnkucGG3eu2pEafm9Dc2s/edit';
+		this.say(room, text);
+	},
+	nbtsubmissions: 'nbtsubs',
+	nbtsubs: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+
+		text += 'NBT Submission phase has started! Feel free to enter your submissions here: ';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
