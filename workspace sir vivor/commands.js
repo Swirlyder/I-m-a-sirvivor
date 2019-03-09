@@ -1169,6 +1169,20 @@ exports.commands = {
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
 	},
+	smogon: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user + ', ';
+		}
+		text += 'Survivor\'s DD records can be found on Smogon! https://www.smogon.com/forums/threads/daily-deathmatch-2019-survivor-leaderboards.3645594/';
+		this.say(room, text);
+	},
 	nbt: function(arg, user, room)
 	{
 		var text = '';
