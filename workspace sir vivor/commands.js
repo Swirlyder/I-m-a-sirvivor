@@ -1632,15 +1632,21 @@ exports.commands = {
 	next: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
 		let d = new Date();
-		let n = d.getHours();
+		let offset = d.getTimezoneOffset();
+		let n = d.getHours() + offset / 60;
 		let m = d.getMinutes();
+		let gameTimes = [16, 22];
 		let millis = (60 - m) * 60 * 1000;
-		if (n < 17) {
-			millis += (16 - n) * 60 * 60 * 1000;
-		} else if (n < 23) {
-			millis += (22 - n) * 60 * 60 * 1000;
-		} else {
-			millis += (40 - n) * 60 * 60 * 1000;
+		let used = false;
+		for (const time of gameTimes) {
+			if (n < time) {
+				millis += (time - 1 - n) * 60 * 60 * 1000;
+				used = true;
+				break;
+			}
+		}
+		if (!used) {
+			millis += (gameTimes[0] - 1 - n) * 60 * 60 * 1000;
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
