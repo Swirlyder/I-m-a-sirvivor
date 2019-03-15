@@ -1801,7 +1801,7 @@ exports.commands = {
 
 	submit: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
-		this.say(room, 'Visit  https://goo.gl/forms/1hqFg6tR41VxVCSK2 to submit roasts, jokes, and replies!');
+		this.say(room, 'Visit  https://goo.gl/forms/1hqFg6tR41VxVCSK2 to submit any gift, gifs, roasts or jokes! Add as many as you like!');
 	},
 
 	moo: function (target, user, room) {
