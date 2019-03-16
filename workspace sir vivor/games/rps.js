@@ -1,6 +1,6 @@
 'use strict';
 const name = "Rock, Paper, Scissors";
-const description = "__Sorry, no lizards or Spocks involved. Winner of NBT #2!__ Game rules: http://survivor-ps.weebly.com/rock-paper-scissors.html __Modification includes Lizard and Spock:__ https://docs.google.com/document/d/1O_6xyXaOnFf6pvBrq3RZW6rFPZBYdO7Q9OIvHervivI/";
+const description = "__Sorry, no lizards or Spocks involved. Winner of NBT #2!__ Game rules: http://survivor-ps.weebly.com/rock-paper-scissors.html **Modification**: includes Lizard and Spock: https://docs.google.com/document/d/1O_6xyXaOnFf6pvBrq3RZW6rFPZBYdO7Q9OIvHervivI/";
 const id = Tools.toId(name);
 class RPS extends Games.Game {
 	constructor(room) {
