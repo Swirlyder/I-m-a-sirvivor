@@ -1,6 +1,34 @@
 Sir Vivor Commands Guide!
 =========================
 
+Administrative Commands
+---------------------
+
+`.git` - Sends a link to Sir Vivor's github repository in PMs. All contributions are welcome!
+
+`.guide` - Sends a link to this guide.
+
+`.kill` - Makes Sir Vivor log off. It will ask for confirmation before doing so.
+Requires: % @ #
+
+`.custom [text]` - Forces Sir Vivor to execute a command or say a message.
+Requires: user excepted
+
+`.js [string]` - Forces Sir Vivor to execute a javascript string. If no string is provided, returns `undefined`
+Requires: user excepted
+
+`.uptime` - Says how long Sir Vivor has been currently online.
+Requires: #
+
+`.seen [user]` - Says the last time `[user]` was seen in the same rooms Sir Vivor. NOTE: This will also reveal `[user]`'s alternate accounts. Be careful!
+
+`.reloadvoices` -  If Sir Vivor isn’t responding to commands from Voices (+) in chat, this command can be used to reset his list of voices.
+Requires: + % @ #
+
+`.chatlines [user], [days]` - Get the number of lines spoken in chat by `[user]` over the past `[days]` days. NOTE: This command will incapacitate Sir Vivor until it is done, so try not to use a large number of days while there is something happening in the room.
+Requires: % @ #
+
+
 Hosting Commands 
 ---------------------------
 
@@ -136,6 +164,9 @@ Requires: + % @ #
 `.rename [old-name], [new-name]` - Removes DD points from `[old-name]` and gives them to `[new-name]`.
 Requires: + % @ #
 
+`.skipdd` - Skips a DD. Used whenever DDs are cancelled for events.
+Requires: % @ #
+
 Daily Deathmatch Commands (All Users):
 -------------------------------------
 `.top [number]`  - Displays ranks `[number]`-4 to n on the dd leaderboard. If `[number]` is omitted or invalid, defaults to displaying the top 5.
@@ -186,15 +217,5 @@ Requires: #
 
 `.roast [user]` - Roasts the given `[user]`.
 Requires: % @ #
-
-`.reloadvoices` -  If Sir Vivor isn’t responding to commands from Voices (+) in chat, this command can be used to reset his list of voices.
-Requires: + % @ #
-
-`.chatlines [user], [days]` - Get the number of lines spoken in chat by `[user]` over the past `[days]` days. NOTE: This command will incapacitate Sir Vivor until it is done, so try not to use a large number of days while there is something happening in the room.
-Requires: % @ #
-
-`.git` - Sends a link to Sir Vivor's github repository in PMs. All pull requests are welcome!
-
-`.guide` - Sends a link to this guide.
 
 Roomauth and former roomauth have their own custom commands which can be seen by doing `.[username]`. These commands display a message as so desired by the user.
