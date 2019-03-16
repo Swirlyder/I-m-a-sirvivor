@@ -1402,6 +1402,16 @@ exports.commands = {
 		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://survivor-ps.weebly.com/current-auth.html';
 		this.say(room, text);
 	},
+	meme: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		text += '/addhtmlbox <center><a href="https://youtu.be/DLzxrzFCyOs"><button title="Dot Not Click Me">Click Me</button></a></center>';
+		this.say(room, text);
+	},
 	spotlight: function(arg, user, room)
 	{
 		var text = '';
