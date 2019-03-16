@@ -128,7 +128,7 @@ let gameTypes = {
 	killer: 'kill',
 	rps: ['Rock, Paper, Scissors', 'http://survivor-ps.weebly.com/rock-paper-scissors.html', 'Sorry, no lizards or Spocks involved. Winner of NBT #2!', 1],
 	rockpaperscissors: 'rps',
-	rpsls: ['Rock, Paper, Scissors, Lizard, Spock', 'https://docs.google.com/document/d/1O_6xyXaOnFf6pvBrq3RZW6rFPZBYdO7Q9OIvHervivI/', 'Modification of Rock, Paper, Scissors! Includes Lizard and Spock!', 2],
+	rpsls: ['Rock, Paper, Scissors, Lizard, Spock', 'https://docs.google.com/document/d/e/2PACX-1vR70TQUV1fODj8cGW7r2Vvta5O5pkOXhVsNjw1nVQDWK_8O0YDcnskXrXgXWVnp075OWOHwjxNNZkSL/pub', 'Modification of Rock, Paper, Scissors! Includes Lizard and Spock!', 2],
 	rockpaperscissorslizardspock: 'rpsls',
 	cta: ['Chase the Ace', 'https://survivor-ps.weebly.com/chase-the-ace.html', 'Can you catch the best card?', 1],
 	chasetheace: 'cta',
