@@ -11,7 +11,7 @@ Administrative Commands
 `.kill` - Makes Sir Vivor log off. It will ask for confirmation before doing so.
 Requires: % @ #
 
-`.custom [text]` - Forces Sir Vivor to execute a command or say a message.
+`.custom [text]` OR `.custom {[room]} [text]` - Forces Sir Vivor to execute a command or say a message. If `{[room]}` is provided, Sir Vivor will perform the task in the target room. Room name must be in `[brackets]`. For example: `.custom [survivor] hi`, `.custom [survivor] /modchat ac` Can be dangerous if misused.
 Requires: user excepted
 
 `.js [string]` - Forces Sir Vivor to execute a javascript string. If no string is provided, returns `undefined`
