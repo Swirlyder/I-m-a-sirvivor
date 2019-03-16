@@ -169,6 +169,12 @@ Requires: + % @ #
 `.howtoplay` - Displays playing information.
 Requires: + % @ #
 
+`.submit` - Sends a link where users can submit jokes, roasts, agifs, gifs and more.
+Requires: + % @ #
+
+`.meme` - Displays a button. Clicking it will lead to a rickroll.
+Requires: + % @ #
+
 `.joke` - Displays a random joke.
 Requires: + % @ #
 
@@ -187,7 +193,7 @@ Requires: + % @ #
 `.chatlines [user], [days]` - Get the number of lines spoken in chat by `[user]` over the past `[days]` days. NOTE: This command will incapacitate Sir Vivor until it is done, so try not to use a large number of days while there is something happening in the room.
 Requires: % @ #
 
-`.git` - Sends a link to Sir Vivor's github repository. All pull requests are welcome!
+`.git` - Sends a link to Sir Vivor's github repository in PMs. All pull requests are welcome!
 
 `.guide` - Sends a link to this guide.
 
