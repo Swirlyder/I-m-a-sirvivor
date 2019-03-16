@@ -17,9 +17,9 @@ class RPS extends Games.Game {
 	onStart() {
 		if (this.variation) {
 			this.poss = ['rock', 'lizard', 'spock', 'scissors', 'paper', 'r', 'l', 'sp', 's', 'p'];
-			this.rpsname = "rpslsp";
+			this.rpsname = "rock, paper, scissors, lizard, spock";
 		} else {
-			this.rpsname = "rps";
+			this.rpsname = "rock, paper, scissors";
 			this.poss = ['rock', 'scissors', 'paper', 'r', 's', 'p'];
 		}
 		this.nextRound();
@@ -182,7 +182,7 @@ class RPS extends Games.Game {
 		if (this.straightRPS) {
 			let index = this.poss.indexOf(Tools.toId(target));
 			if (index === -1) {
-				return user.say("That is not a valid rps attack!");
+				return user.say("That is not a valid RPS attack!");
 			}
 			if (this.rps.has(player)) {
 				return user.say("You have already chosen this round!");
@@ -194,7 +194,7 @@ class RPS extends Games.Game {
 		} else {
 			let split = target.split(",");
 			if (split.length !== 2) {
-				return user.say("**Usage:** ``" + Config.commandCharacter + "destroy [user], [rps]``");
+				return user.say("**Usage:** ``" + Config.commandCharacter + "destroy [user], [weapon]``");
 			}
 			let attackedPlayer = this.players[Tools.toId(split[0])];
 			if (Tools.toId(split[0]) === "constructor") return user.say("You cannot attack 'constructor'");
@@ -203,7 +203,7 @@ class RPS extends Games.Game {
 			if (attackedPlayer.id === player.id) return user.say(">Attacking yourself.");
 			let index = this.poss.indexOf(Tools.toId(split[1]));
 			if (index === -1) {
-				return user.say("That is not a valid rps attack!");
+				return user.say("That is not a valid RPS attack!");
 			}
 			if (this.attacks.has(player)) {
 				return user.say("You have already attacked someone this round.");
