@@ -915,7 +915,7 @@ exports.commands = {
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
 		Games.host = targUser;
 		room.say("**" + targUser.name + "** has been set as the host.");
-		room.say("/modnote " + targUser.name + " has been set as the host by" + user.name +".");		
+		room.say("/modnote " + targUser.name + " has been set as the host by " + user.name +".");		
 	},
 
 	hostban: function (target, user, room) {
