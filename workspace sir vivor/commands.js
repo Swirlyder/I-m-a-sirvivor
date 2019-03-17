@@ -915,6 +915,7 @@ exports.commands = {
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
 		Games.host = targUser;
 		room.say("**" + targUser.name + "** has been set as the host.");
+		room.say("/modnote" + targUser.name + "** has been set as the host by" + user.name +".");		
 	},
 
 	hostban: function (target, user, room) {
@@ -966,6 +967,7 @@ exports.commands = {
 		if (!user) return room.say("You can only host somebody currently in the room.");
 		Games.host = user;
 		room.say("**" + Games.host.name + "** has subbed in as the host!");
+		room.say("/modnote" + Games.host.name + "** has subhosted");
 	},
 	pants: function (target, user, room) {
 		let text = '';
@@ -1805,6 +1807,7 @@ exports.commands = {
 			if (Games.host) {
 				Games.host = null;
 				this.say(room, 'The game was forcibly ended.');
+				this.say(room, + user.name + 'ended a game.');
 			}
 			return;
 		}
