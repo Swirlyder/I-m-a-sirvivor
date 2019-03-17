@@ -1773,6 +1773,7 @@ exports.commands = {
 		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
+	    	room.say("/modnote " + user.name + " started signups of " + room.game.name + ".");
 	},
 	forcesignups: function (target, user, room) {
 		if (!user.hasRank(room.id, '#')) return;
@@ -1781,6 +1782,7 @@ exports.commands = {
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let id = Tools.toId(target);
 		room.game.signups();
+		room.say("/modnote " + user.name + " forcibly started signups of " + room.game.name".");
 	},
 	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
@@ -1798,6 +1800,7 @@ exports.commands = {
 		}
 		console.log(id);
 		room.game.signups();
+		room.say("/modnote " + user.name + " started a random game of " + room.game.name +".");
 	},
 
 	endgame: 'end',
