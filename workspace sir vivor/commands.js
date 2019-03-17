@@ -1782,7 +1782,7 @@ exports.commands = {
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let id = Tools.toId(target);
 		room.game.signups();
-		room.say("/modnote " + user.name + " forcibly started signups of " + room.game.name".");
+		room.say("/modnote " + user.name + " forcibly started signups of " + room.game.name + ".");
 	},
 	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
