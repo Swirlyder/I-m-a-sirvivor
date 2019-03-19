@@ -1342,13 +1342,13 @@ exports.commands = {
 	hurl: function(arg, user, room)
 	{
 		if (!user.hasRank(room.id, '+')) return;
-		let text = '!showimage https://vgy.me/ip3Fc9.png, 800, 200';
+		let text = '/addhtmlbox <img src="https://vgy.me/ip3Fc9.png" height="200" width="800">';
 		this.say(room, text);
 	},
    
 	deetah: function (arg, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		let text = '!showimage https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715, 400, 225';
+		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
 		this.say(room, text);
 	},
 	dominate: function(arg, user, room) {
