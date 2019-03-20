@@ -34,7 +34,7 @@ module.exports = {
 	azuuli: '/me explodes',
 
 	lssghost: '==ls',
-	ls: 'try again [user]',
+	ls: 'try again [target]',
 
 	sciencepanda: '==rach',
 	rach: 'The future is now thanks to sciencepanda!',
@@ -84,7 +84,7 @@ module.exports = {
 	dl: 'dont lose? HA! More like dont win :^)',
 	
 	zyx14: '==zyx',
-	zyx: 'Famous for .woof and needs to update his number by 3 years',
+	zyx: 'Famous for .woof and needs to update his number by 5 years',
 	
 	random: '==hawkie',
 	hawkie: 'Which random username will he switch to now?',
