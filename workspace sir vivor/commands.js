@@ -932,6 +932,7 @@ exports.commands = {
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 7;
 		return room.say(Games.hostBan(targUser, numDays));
+		room.say("/modnote " + targUser + " has been hostbanned for " + numDays + " by " + user.name +".");
 	},
 
    
@@ -954,6 +955,7 @@ exports.commands = {
 	unhostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		return room.say(Games.unHostBan(target));
+		room.say("/modnote " + Games.unHostBan + " has been unhostbanned by " + user.name +".");
 	},
 
 	bantime: function (target, user, room) {
