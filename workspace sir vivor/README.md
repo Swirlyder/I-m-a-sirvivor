@@ -4,11 +4,7 @@ Sir Vivor Commands Guide!
 Administrative Commands
 ---------------------
 
-`.git` - Sends a link to Sir Vivor's github repository in PMs. All contributions are welcome!
-
-`.guide` - Sends a link to this guide.
-
-`.kill` - Makes Sir Vivor log off. It will ask for confirmation before doing so.
+`.kill` - Makes Sir Vivor log off. He will ask for confirmation before doing so.
 Requires: % @ #
 
 `.custom [text]` OR `.custom {[room]} [text]` - Forces Sir Vivor to execute a command or say a message. If `{[room]}` is provided, Sir Vivor will perform the task in the target room. Room name must be in `[brackets]`. For example: `.custom [survivor] hi`, `.custom [survivor] /modchat ac` Can be dangerous if misused.
@@ -17,13 +13,20 @@ Requires: user excepted
 `.js [string]` - Forces Sir Vivor to execute a javascript string. If no string is provided, returns `undefined`
 Requires: user excepted
 
+`.reload` - Reloads Sir Vivor's `commands.js` file without having to manually restart him. NOTE: This command is currently bugged and will cause Sir Vivor to no longer to respond to any commands unless he is manually restarted. Be careful!
+Requires: user excepted
+
 `.uptime` - Says how long Sir Vivor has been currently online.
 Requires: #
 
-`.seen [user]` - Says the last time `[user]` was seen in the same rooms Sir Vivor. NOTE: This will also reveal `[user]`'s alternate accounts. Be careful!
+`.seen [user]` - Says the last time `[user]` was seen in the same rooms Sir Vivor. Works in PMs only. NOTE: This will also reveal `[user]`'s alternate accounts. Be careful!
+Requires: Nothing
 
 `.reloadvoices` -  If Sir Vivor isn’t responding to commands from Voices (+) in chat, this command can be used to reset his list of voices.
 Requires: + % @ #
+
+`.crash` - Forces Sir Vivor to restart if he starts breaking.
+Requires: % @ #
 
 `.chatlines [user], [days]` - Get the number of lines spoken in chat by `[user]` over the past `[days]` days. NOTE: This command will incapacitate Sir Vivor until it is done, so try not to use a large number of days while there is something happening in the room.
 Requires: % @ #
@@ -44,7 +47,7 @@ Requires: + % @ #
 `.queue` - Displays the current hostqueue. 
 Requires: + % @ # (broadcasts it in the chat, sends a PM to regular users)
 
-`.subhost [user]` - If the current host leaves, this is can be used to sub in another [user] as the host (without re-hling everybody)
+`.subhost [user]` - If the current host leaves, this is can be used to sub in another `[user]` as the host (without re-hling everybody)
 Requires: + % @ #
 
 `.sethost [user]` - Set the host to `[user]`, when there is no host, without using the hightlight word. Typically only used when Sir Vivor disconnects.
@@ -158,13 +161,16 @@ Requires: + % @ #
 `.lastgame` - Checks when the leaderboard was last updated.
 Requires: + % @ #
 
+`.next` - Says when the next DD game is happening. 
+Requires: + % @ #
+
 `.addpoints [host], [first], [second], [user1], [user2], …` - Adds all the dd points in one command.
 Requires: + % @ #
 
 `.rename [old-name], [new-name]` - Removes DD points from `[old-name]` and gives them to `[new-name]`.
 Requires: + % @ #
 
-`.skipdd` - Skips a DD. Used whenever DDs are cancelled for events.
+`.skipdd` - Skips a DD. Used whenever DDs are cancelled for events. NOTE: This command can bug Sir Vivor's date tracking
 Requires: % @ #
 
 Daily Deathmatch Commands (All Users):
@@ -177,10 +183,17 @@ Requires: Nothing
 
 Other Commands:
 ---------------
-NOTE: All of these commands (except `.agif`, `.roast` and `.reloadvoices`) will work in PMs for regular users 
+NOTE: All of these commands (except `.agif`, `.roast`, `.repeat`) will work in PMs for regular users 
+
+`.git` - Sends a link to Sir Vivor's github repository in PMs. All contributions are welcome!
+
+`.guide` - Sends a link to this guide.
 
 `.rof` - Displays the Roll of Fame page. 
 Requires: + % @ # or current host
+
+`.repeat [message], [time], [number of times]` - Makes Sir Vivor repeat a `[message]` every `[number of times]` every `[time]` minutes.   e.g. `.repeat hello world, 60, 10` (10 times every 60 minutes)
+Requires: % @ #
 
 `.intro` - Displays a welcome page for new users.
 Requires:  + % @ #
@@ -212,10 +225,16 @@ Requires: + % @ #
 `.gift [user]` - Gives `[user]` a gift.
 Requires: + % @ #
 
+`.gif` - Displays a gif.
+Requires: #
+
 `.agif` - Displays a random anime gif.
 Requires: #
 
 `.roast [user]` - Roasts the given `[user]`.
 Requires: % @ #
+
+`.smogon` - Displays a link to the Survivor leaderboard thread on Smogon forums.
+Requires: + % @ #
 
 Roomauth and former roomauth have their own custom commands which can be seen by doing `.[username]`. These commands display a message as so desired by the user.
