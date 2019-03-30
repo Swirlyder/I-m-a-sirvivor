@@ -481,7 +481,7 @@ global.parse = exports.parse = {
 	},
 	processChatData: function (userid, roomid, msg) {
 		// NOTE: this is still in early stages
-		if (Games.host && Games.host.id === userid) return;
+		if (Games.host && Games.host.id === userid || roomid === 'botdevelopment') return;
 		msg = msg.trim().replace(/[ \u0000\u200B-\u200F]+/g, ' '); // removes extra spaces and null characters so messages that should trigger stretching do so
 		this.updateSeen(userid, 'c', roomid);
 		var now = Date.now();
