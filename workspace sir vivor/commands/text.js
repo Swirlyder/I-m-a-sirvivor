@@ -139,6 +139,6 @@ module.exports = {
 	sip: '/me sips [target]\'s tea',
 	
 	dn: '==deeznuts',
-	deeznutz: '[target]? More like deez nuts :^)',
+	deeznuts: '[target]? More like deez nuts :^)',
 }
 	
