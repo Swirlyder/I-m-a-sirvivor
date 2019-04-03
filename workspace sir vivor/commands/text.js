@@ -137,5 +137,8 @@ module.exports = {
 	
 	sips: '==sip',
 	sip: '/me sips [target]\'s tea',
+	
+	dn: '==deeznuts',
+	deeznutz: '[target]? More like deez nuts :^)',
 }
 	
