@@ -1353,12 +1353,6 @@ exports.commands = {
 		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
 		this.say(room, text);
 	},
-	dr: 'damnright',
-	damnright: function (arg, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		let text = '/addhtmlbox <img src="https://media.giphy.com/media/1sutZOgPTvmIEvahdc/giphy.gif" height="300" width="300">';
-		this.say(room, text);
-	},
 	dominate: function(arg, user, room) {
 		let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
 		text += "/me T-Poses";
