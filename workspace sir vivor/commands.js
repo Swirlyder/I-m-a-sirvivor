@@ -130,6 +130,8 @@ let gameTypes = {
 	rockpaperscissors: 'rps',
 	rpsls: ['Rock, Paper, Scissors, Lizard, Spock', 'https://docs.google.com/document/d/e/2PACX-1vR70TQUV1fODj8cGW7r2Vvta5O5pkOXhVsNjw1nVQDWK_8O0YDcnskXrXgXWVnp075OWOHwjxNNZkSL/pub', 'Modification of Rock, Paper, Scissors! Includes Lizard and Spock!', 2],
 	rockpaperscissorslizardspock: 'rpsls',
+	rb: ['Roll Battle', 'https://survivor-ps.weebly.com/roll-battle.html', 'You decide if you win or lose!', 1],
+	rollbattle: 'rb',
 	cta: ['Chase the Ace', 'https://survivor-ps.weebly.com/chase-the-ace.html', 'Can you catch the best card?', 1],
 	chasetheace: 'cta',
 	eeveelutions: ['Eeveelutions', 'http://survivor-ps.weebly.com/eeveelutions.html', 'More than one kind? I can\'t beleevee this!', 1],
