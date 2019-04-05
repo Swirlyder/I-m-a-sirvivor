@@ -140,5 +140,8 @@ module.exports = {
 	
 	dn: '==deeznuts',
 	deeznuts: '[target]? More like deez nuts :^)',
+	
+	dr: '==damnright',
+	damnright: 'Damn right I\'m [target].',
 }
 	
