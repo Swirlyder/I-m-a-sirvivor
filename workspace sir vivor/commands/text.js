@@ -44,7 +44,7 @@ module.exports = {
 	mez: 'Consistency is boring.',
 	
 	glacierider: '==glacie',
-	glacie: '/me freezes',
+	glacie: 'https://www.reddit.com/r/breadstapledtotrees',
     
 	guishark: '==gui',
 	gui: 'Hi [target],  I\'m Gui♥Shark!',
