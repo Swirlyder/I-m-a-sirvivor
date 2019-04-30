@@ -176,7 +176,7 @@ let gameTypes = {
 	rb: 'rollboost',
 	santasautomatedworkshop: [ 'Santa\'s Automated Workshop (SAW)', 'https://survivor-ps.weebly.com/santas-automated-workshop-saw.html', 'Deliver presents like a true good person! Theme by Zeep', 1, 1 ],
 	saw: 'santasautomatedworkshop',
-	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
+	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA! okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
 	scs: 'statusconditonsurvivor',
 	swords: [ 'Swords', 'https://survivor-ps.weebly.com/swords.html', 'Get the strongest sword to beat your foes! Theme by Fennekin101', 1, 1 ],
 	tribalcouncil: [ 'Tribal Council', 'https://survivor-ps.weebly.com/tribal-council.html', 'Somehow this theme name reminded me of Spore, anyone remember the game Spore? Theme by Zeonth', 1, 1 ],
@@ -192,6 +192,12 @@ let gameTypes = {
 	welcometoourchat: [ 'Welcome to Our Chat.jpg Survivor', 'https://survivor-ps.weebly.com/welcome-to-our-chat.html', 'When are we adding Gumwaa to this theme? Theme by Swirlyder', 1, 1 ],
 	wtoc: 'welcometoourchat',
 	chat: 'welcometoourchat',
+	bossbattle: [ 'Boss Battle', 'https://survivor-ps.weebly.com/boss-battle.html', 'Instead of battling each other, work together to defeat a powerful opponent! Theme by Guishark and Hurl', 1, 1 ],
+	bb: 'bossbattle',
+	chooseyourroll: [ 'Choose Your Roll', 'https://survivor-ps.weebly.com/choose-your-roll.html', 'Theme by Excited Raichu', 1, 1 ],
+	cyr: 'chooseyourroll',
+	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'You wake up in a mysterious room, and realize you are not alone, will you escape alive? Theme by LS\'s Ghost', 1, 1 ],
+	thm: 'thehauntedmansion',
 };
 exports.commands = {
 	/**
