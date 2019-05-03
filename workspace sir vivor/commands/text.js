@@ -11,7 +11,6 @@ module.exports = {
 	wishes: '==unfixable',
 	unfixable: 'The best eyebrows on PS! and Smogon bar none~',
 
-	usainbot: 'Inferior consumer model',
 
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
@@ -141,7 +140,7 @@ module.exports = {
 	dn: '==deeznuts',
 	deeznuts: '[target]? More like deez nuts :^)',
 	
-	dr: '==damnright',
-	damnright: 'Damn right I\'m [target].',
+	gim: '==gimm1ck',
+	gimm1ck: '/me squats',
 }
 	
