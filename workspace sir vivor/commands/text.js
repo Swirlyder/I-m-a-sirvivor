@@ -142,5 +142,8 @@ module.exports = {
 	
 	gim: '==gimm1ck',
 	gimm1ck: '/me squats',
+	
+	toni: '==tonixy',
+	tonixy: 'free quilava flow',
 }
 	
