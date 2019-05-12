@@ -79,7 +79,7 @@ class LegoTD extends Games.Game {
 				}
 				this.handleAttacks();
 			} else {
-				this.say("**" + this.curPlayer.name + "**, who do you wish to attack?");
+				this.say("**" + this.curPlayer.name + "**, who do you wish to attack? ``" + Config.commandCharacter + "attack [user]``");
 				this.timeout = setTimeout(() => this.nextRound(), 90 * 1000);
 			}
 		}
