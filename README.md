@@ -54,6 +54,7 @@ Credits:
  These users have full control of this bot and are able to use any command, regardless of their rank:
  
  - Aknolan
+ - bobochan
  - Bon Dance
  - Hawkie
  - inactive
