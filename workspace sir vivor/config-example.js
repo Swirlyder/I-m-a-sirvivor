@@ -70,8 +70,8 @@ exports.debuglevel = 0;
  
 // bys who can use all commands regardless of their rank. Be very cautious
 // with this, especially on servers other than main.
-exports.excepts = ['swirlyder', 'penquin','hawkie', 'bondance', 'paradise', 'aknolan', 'moo', 'inactive'];
-exports.canHost = ['ceterisparibus', 'deetah', 'inactive', 'lilblueshuppet', 'pancake', 'phable', 'phantomgenius', 'ryyjyywyy', 'spieky', 'vividsunset', 'spects'];
+exports.excepts = [''];
+exports.canHost = [''];
  
 // Whitelisted bys are those who the bot will not enforce moderation for.
 exports.whitelist = [];
