@@ -43,27 +43,12 @@ However, please refrain from adding more example commands.
 
 Credits:
  - Morfent/TalkTakesTime/Quinella/Rival Nick (Original Bot)
- - Hawkie (First customization for survivor, Major Development)
  - Swirlyder (Bot Owner and Repo Owner)
  - CheeseMuffin (Major Development, Bot Owner and Maintainer)
+ - Hawkie (First customization for survivor, Major Development)
  - inactive (Development, Maintainer)
- - UnleashOurPassion (Development, Maintainer)
+ - UnleashOurPassion (Development)
  
- User Excepted
- ---------------
- These users have full control of this bot and are able to use any command, regardless of their rank:
- 
- - Aknolan
- - bobochan
- - Bon Dance
- - Hawkie
- - inactive
- - moo (Cheese)
- - Paradise
- - PenQuin
- - Rach
- - Swirlyder 
- - UnleashOurPassion
 
 License
 -------
