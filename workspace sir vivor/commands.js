@@ -792,7 +792,7 @@ exports.commands = {
 	// Host commands:
 	host: function(target, user, room)
 	{
-		if ((!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
+		if ((!user.hasRank(room.id, '+') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
 		let split = target.split(",");
 		let realuser = Users.get(split[0]);
