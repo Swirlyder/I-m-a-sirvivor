@@ -1099,23 +1099,6 @@ exports.commands = {
 		this.say(room, room.id)
 		this.say(room, user.id)
 	},
-	rof: 'rolls',
-	rolls: 'rollsoffame',
-	rollsoffame: function(arg, user, room)
-	{
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
-		text += 'rof was deleted because of losers like you who think statistically average things are cool';
-		this.say(room, text);
-	},
-
 	win: function (target, user, room) {
 		if (!Games.host || Games.host.id !== user.id || room === user) return;
 		/*let split = target.split(",");
