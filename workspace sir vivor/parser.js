@@ -514,7 +514,7 @@ global.parse = exports.parse = {
 				for (let bannedPhrase of bannedPhrases) {
 					if (msg.toLowerCase().indexOf(bannedPhrase) > -1) {
 						pointVal = 2;
-						muteMessage = ', Automated response: your message contained a banned phrase';
+						muteMessage = ', Your message contained a banned phrase';
 						break;
 					}
 				}
@@ -527,7 +527,7 @@ global.parse = exports.parse = {
 			if ((useDefault || !('flooding' in modSettings)) && isFlooding) {
 				if (pointVal < 2) {
 					pointVal = 2;
-					muteMessage = ', Automated response: flooding';
+					muteMessage = ', Do not flood the chat.';
 				}
 			}
 			// moderation for caps (over x% of the letters in a line of y characters are capital)
@@ -535,7 +535,7 @@ global.parse = exports.parse = {
 			if ((useDefault || !('caps' in modSettings)) && capsMatch && toId(msg).length > MIN_CAPS_LENGTH && (capsMatch.length >= ~~(toId(msg).length * MIN_CAPS_PROPORTION))) {
 				if (pointVal < 1) {
 					pointVal = 1;
-					muteMessage = ', Automated response: caps';
+					muteMessage = ', Do not abuse caps.';
 				}
 			}
 			// moderation for stretching (over x consecutive characters in the message are the same)
@@ -543,7 +543,7 @@ global.parse = exports.parse = {
 			if ((useDefault || !('stretching' in modSettings)) && stretchMatch) {
 				if (pointVal < 1) {
 					pointVal = 1;
-					muteMessage = ', Automated response: stretching';
+					muteMessage = ', Do not stretch your posts.';
 				}
 			}
 
@@ -562,7 +562,7 @@ global.parse = exports.parse = {
 				// if the bot has % and not @, it will default to hourmuting as its highest level of punishment instead of roombanning
 				if (roomData.points >= 4 && !Users.self.hasRank(roomid, '@')) cmd = 'hourmute';
 				if (userData.zeroTol > 4) { // if zero tolerance users break a rule they get an instant roomban or hourmute
-					muteMessage = ', Automated response: zero tolerance user';
+					muteMessage = ', Zero tolerance user';
 					cmd = Users.self.hasRank(roomid, '@') ? 'roomban' : 'hourmute';
 				}
 				if (roomData.points > 1) userData.zeroTol++; // getting muted or higher increases your zero tolerance level (warns do not)
