@@ -197,7 +197,7 @@ global.parse = exports.parse = {
 			case 'battle':
 				Battles.handleMessage(splitMessage.join("|"));
 			case 'updateuser':
-				if (spl[2] !== Config.nick) return;
+				if (spl[2] !== (" " + Config.nick)) return;
 
 				if (spl[3] !== '1') {
 					error('failed to log in, still guest');
