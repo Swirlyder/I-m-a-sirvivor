@@ -11,11 +11,18 @@ var users = Users.users = Object.create(null);
 
 class User {
 	constructor (username, roomid) {
-		this.name = username.substr(1);
+		this.name = this.sanitizeName(username.substr(1));
 		this.id = toId(this.name);
 		this.rooms = new Map();
 		if (roomid) this.rooms.set(roomid, username.charAt(0));
 	}
+
+        sanitizeName(username) {
+	        if (username.indexOf("@") !== -1) {
+			return username.substr(0, username.indexOf("@"));
+		}
+		return username;
+        }
 
 	isExcepted () {
 		return Config.excepts.includes(this.id);
@@ -55,8 +62,9 @@ class User {
 	rename (username) {
 		var oldid = this.id;
 		delete users[oldid];
-		this.id = toId(username);
-		this.name = username.substr(1);
+		this.name = this.sanitizeName(username.substr(1));
+		this.id = toId(this.name);
+console.log(this.name);
 		users[this.id] = this;
 		return this;
 	}
