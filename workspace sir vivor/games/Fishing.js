@@ -76,7 +76,7 @@ function getFish(roll) {
 
 const name = "Fishing";
 const id = Tools.toId(name);
-const description = "https://docs.google.com/document/d/1Uv8fQhwFIRsqqZ_QAE1ZXh3fgDXYZ4Y4ncMyA9RGdUI/edit";
+const description = "__Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales__ Game Rules: https://survivor-ps.weebly.com/fishing.html";
 
 class Fishing extends Games.Game {
 	constructor(room) {
