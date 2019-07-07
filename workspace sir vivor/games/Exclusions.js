@@ -275,7 +275,7 @@ class EXC extends Games.Game {
 		let msgID = Tools.toId(target);
 		let stretchMatch = /(.)\1{7,}/gi.test(msgID) || /(..+)\1{4,}/gi.test(msgID);
 		if (stretchMatch) {
-			return user.say("Your nickname has too much stretching.");
+			return user.say("Your nickname contains too much stretching.");
 		}
 		player.nick = target;
 		this.nicks.push(Tools.toId(target));
