@@ -215,7 +215,7 @@ class EXC extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.id !== this.nickPlayer.id) return;
 		let attackedPlayer = this.players[Tools.toId(target)];
-		if (Tools.toId(target) === "constructor") return user.say("You cannot suspect 'constructor'");
+		if (Tools.toId(target) === "constructor") return user.say("You cannot suspect 'constructor'.");
 		if (!attackedPlayer) return user.say("That is not a valid player!");
 		if (attackedPlayer.nick === this.nick) {
 			this.say("Correct! RIP **" + attackedPlayer.name + "**.");
@@ -234,7 +234,7 @@ class EXC extends Games.Game {
 		if (!curPlayer) return;
 		let realID = toId(target);
 		let oplayer = this.players[realID];
-		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
+		if (Tools.toId(target) === "constructor") return user.say("You cannot attack 'constructor'.");
 		if (!oplayer) {
 			user.say("That player is not in the game!");
 			return;
@@ -261,7 +261,7 @@ class EXC extends Games.Game {
 
 	nick(target, user) {
 		if (!target) return;
-		if (Tools.toId(target) === "survgame") return user.say("You cannot set your name as survgame.");
+		if (Tools.toId(target) === "survgame") return user.say("You cannot set this as your nickname!");
 		let player = this.players[user.id];
 		if (!player) return;
 		if (player.nick) return user.say("You have already chosen a nickname!");
