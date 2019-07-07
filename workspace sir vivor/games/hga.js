@@ -164,7 +164,7 @@ class HGA extends Games.Game {
 
 	nick(target, user) {
 		if (!target) return;
-		if (Tools.toId(target) === "survgame") return user.say("You cannot set your name as survgame.");
+		if (Tools.toId(target) === "survgame") return user.say("You cannot set this as your nickname.");
 		let player = this.players[user.id];
 		if (!player) return;
 		if (player.nick) return user.say("You have already chosen a nickname!");
@@ -178,7 +178,7 @@ class HGA extends Games.Game {
 		let msgID = Tools.toId(target);
 		let stretchMatch = /(.)\1{7,}/gi.test(msgID) || /(..+)\1{4,}/gi.test(msgID);
 		if (stretchMatch) {
-			return user.say("Your nickname has too much stretching.");
+			return user.say("Your nickname contains too much stretching.");
 		}
 		player.nick = target;
 		this.nicks.push(Tools.toId(target));
