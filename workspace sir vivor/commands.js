@@ -153,8 +153,6 @@ let gameTypes = {
 	bote: 'battleoftheelements',
 	cakeboss:[ 'Cake Boss', 'https://survivor-ps.weebly.com/cake-boss.html', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake! Theme by Baloor', 1, 1 ],
 	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever. Theme by BlueTopaz7', 1, 1 ],
-	empire: [ 'Empire', 'https://survivor-ps.weebly.com/empire.html', 'The only game where you kill your teammates first! Theme by Shadecession', 1, 1 ],
-	emp: 'empire',
 	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'Theme by PenQuin', 1, 1 ],
 	evo: 'evolve',
 	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', ' Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales', 1, 1 ],
@@ -186,13 +184,13 @@ let gameTypes = {
 	vwd: 'vwheelanddeal',
 	wnd: 'vwheelanddeal',
 	weardown: [ 'Wear Down', 'https://survivor-ps.weebly.com/wear-down.html', 'The game where we all get frustrated over losing all of our health in 2 rounds! Theme by Henka', 1, 1 ],
-	rollbattle: ['Roll Battle', 'https://survivor-ps.weebly.com/roll-battle.html', 'You decide if you win or lose!', 1, 1],
 	bossbattle: [ 'Boss Battle', 'https://survivor-ps.weebly.com/boss-battle.html', 'Instead of battling each other, work together to defeat a powerful opponent! Theme by Guishark and Hurl', 1, 1 ],
 	bb: 'bossbattle',
 	chooseyourroll: [ 'Choose Your Roll', 'https://survivor-ps.weebly.com/choose-your-roll.html', 'Will you reap the rewards of taking the path less traveled by? Theme by Excited Raichu', 1, 1 ],
 	cyr: 'chooseyourroll',
 	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000! Theme by LS\'s Ghost', 1, 1 ],
 	thm: 'thehauntedmansion',
+	resistance: ['Resistance', 'https://survivor-ps.weebly.com/resistance.html', 'You beat them in the roll, but did you beat them by enough? Theme by Shadecession', 1, 1 ] ,
 };
 exports.commands = {
 	/**
@@ -1416,8 +1414,7 @@ exports.commands = {
 		}
 		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
-	},
-    
+	}, 
     secondwind: 'sw',
     sw: function(arg, user, room)
 	{
@@ -1478,7 +1475,20 @@ exports.commands = {
 		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack__';
 		this.say(room, text);
 	},
-
+	empire: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '**Empire:** __Before the game starts, players pick between two empires. The host then makes two PLs based on the players\' choices, and carries out the game as if it were two games, one per empire. The winners of each empire then make it to finals.__';
+		this.say(room, text);
+	},
 
 	joke: function(arg, user, room)
 	{
