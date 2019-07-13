@@ -155,7 +155,7 @@ let gameTypes = {
 	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever. Theme by BlueTopaz7', 1, 1 ],
 	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'Theme by PenQuin', 1, 1 ],
 	evo: 'evolve',
-	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', ' Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales', 1, 1 ],
+	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales', 1, 1 ],
 	fish: 'fishing',
 	ghostsbusters: [ 'Ghosts (Busters)', 'https://survivor-ps.weebly.com/ghosts-busters.html', '...Who ya gonna call? Theme by Baloor', 1, 1 ],
 	gb: 'ghostsbusters',
