@@ -87,6 +87,7 @@ let gameTypes = {
 	trumps: 'trump',
 	toptrumps: 'trump',
 	ttp: 'trump',
+	longttp: ['Long Top Trumps Pokebattle', 'http://survivor-ps.weebly.com/top-trumps-pokebattle.html', 'Where your partners\' lesser strengths can become their **greatest heroes**.', 1],
 	toptrumpspokebattle: 'trump',
 	dualtype: ['Hidden type mod: Dual Type', 'http://survivor-ps.weebly.com/ht-dual-types.html', 'Wow, now they can have TWO different types? So cool', 1],
 	dual: 'dualtype',
