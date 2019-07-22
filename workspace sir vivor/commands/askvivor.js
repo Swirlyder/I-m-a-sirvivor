@@ -53,6 +53,28 @@ module.exports = {
             },
         ],
     },
+    owo: {
+        priority: 4,
+        placement: "suffix",
+        responses: [
+            {
+                username: false,
+                before: "OwO What's this???",
+            },
+            {
+                username: false,
+                before: "oWo",
+            },
+            {
+                username: false,
+                before: "UwU",
+            },
+             {
+                username: false,
+                before: "Stop being a weeb.",
+            },
+        ],
+    },
     when: {
         priority: 3,
         placement: "suffix",
