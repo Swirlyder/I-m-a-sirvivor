@@ -145,5 +145,8 @@ module.exports = {
 	
 	toni: '==tonixy',
 	tonixy: 'free quilava flow',
+	
+	wenis: '==elbowskinn',
+	elbowskinn: '!dt linoone',
 }
 	
