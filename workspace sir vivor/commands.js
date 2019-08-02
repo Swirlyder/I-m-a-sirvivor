@@ -157,7 +157,7 @@ let gameTypes = {
 	bote: 'battleoftheelements',
 	cakeboss:[ 'Cake Boss', 'https://survivor-ps.weebly.com/cake-boss.html', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake! Theme by Baloor', 1, 1 ],
 	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever. Theme by BlueTopaz7', 1, 1 ],
-	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'Theme by PenQuin', 1, 1 ],
+	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'This isn\'t even my final form!, Theme by PenQuin', 1, 1 ],
 	evo: 'evolve',
 	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales', 1, 1 ],
 	fish: 'fishing',
@@ -194,7 +194,7 @@ let gameTypes = {
 	cyr: 'chooseyourroll',
 	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000! Theme by LS\'s Ghost', 1, 1 ],
 	thm: 'thehauntedmansion',
-	resistance: ['Resistance', 'https://survivor-ps.weebly.com/resistance.html', 'You beat them in the roll, but did you beat them by enough? Theme by Shadecession', 1, 1 ] ,
+
 };
 exports.commands = {
 	/**
@@ -1379,6 +1379,21 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 		text += 'At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)';
+		this.say(room, text);
+	},
+	resistance: 'res',
+	res: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'The host will do a roll with a number appropriate for the theme. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must beat their opponent by a margin of the resistance number or higher in order for their attack to be successful.';
 		this.say(room, text);
 	},
 	interviews: function(arg, user, room)
