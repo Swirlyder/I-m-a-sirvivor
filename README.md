@@ -3,11 +3,6 @@ Sir Vivor
 
 A chat bot for the Survivor Room on [Pokémon Showdown][1]. This bot has a number of commands, some helpful and some less so, as well as the capability to moderate, and play games. 
 
-Currently used in
-  [1]: http://www.pokemonshowdown.com/survivor
-  [2]: http://www.pokemonshowdown.com/chinese
-  [3]: http://www.pokemonshowdown.com/videogames
-
 
 Installation
 ------------
