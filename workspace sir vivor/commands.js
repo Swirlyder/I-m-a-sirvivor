@@ -177,7 +177,7 @@ let gameTypes = {
 	santasautomatedworkshop: [ 'Santa\'s Automated Workshop (SAW)', 'https://survivor-ps.weebly.com/santas-automated-workshop-saw.html', 'Deliver presents like a true good person! Theme by Zeep', 1, 1 ],
 	saw: 'santasautomatedworkshop',
 	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA! okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
-	scs: 'statusconditonsurvivor',
+	scs: 'statusconditionsurvivor',
 	tribalcouncil: [ 'Tribal Council', 'https://survivor-ps.weebly.com/tribal-council.html', 'Somehow this theme name reminded me of Spore, anyone remember the game Spore? Theme by Zeonth', 1, 1 ],
 	tc: 'tribalcouncil',
 	vivorsfeast: [ 'Vivor\'s Feast', 'https://survivor-ps.weebly.com/vivors-feast.html', 'Sacrifice people to the Vivor overlord! Theme by PenQuin', 1, 1 ],
