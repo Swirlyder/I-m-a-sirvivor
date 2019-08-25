@@ -56,9 +56,9 @@ class HST extends Games.Game {
 		}
 		this.actions.clear();
 		this.numActions = 0;
-		if (this.seekerLives === 1) {
+		if (this.seekerLives === 1 || this.getRemainingPlayerCount() === 2) {
 			this.locations = {};
-			let newlocs = Tools.sample(Object.keys(locations), 3);
+			let newlocs = Tools.sample(Object.keys(locations), 2);
 			for (let i = 0; i < newlocs.length; i++) {
 				this.locations[newlocs[i]] = locations[newlocs[i]];
 			}
