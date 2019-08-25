@@ -101,7 +101,7 @@ let gameTypes = {
 	hg: ['Hunger Games', 'http://survivor-ps.weebly.com/hunger-games.html', 'Classic but with a twist: No alliances.', 0],
 	hungergames: 'hg',
 	hgs: ['Hunger Games Spotlight', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
-	hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games-anon.html', 'Hunger Games but you don\'t know who is who...', 0],
+	hga: ['Hunger Games Anon', 'http://survivor-ps.weebly.com/hunger-games.html', 'Hunger Games but you don\'t know who is who...', 0],
 	hungergamesanonymous: 'hga',
 	hungergamesanon: 'hga',
 	hotpotato: ['Hot Potato', 'https://survivor-ps.weebly.com/hot-potato.html', 'This be a real hot potato.', 0],
@@ -1393,7 +1393,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Counter Attack:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful__.';
+		text += '**Resistance:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful__.';
 		this.say(room, text);
 	},
 	anonymous: 'anon',
