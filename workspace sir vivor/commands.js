@@ -193,6 +193,7 @@ let gameTypes = {
 	cyr: 'chooseyourroll',
 	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000! Theme by LS\'s Ghost', 1, 1 ],
 	thm: 'thehauntedmansion',
+	casino: ['Casino', ' https://survivor-ps.weebly.com/casino.html', 'Place your bets and hope for the best!', 1, 1],
 
 };
 exports.commands = {
@@ -1392,7 +1393,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'The host will do a roll with a number appropriate for the theme. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must beat their opponent by a margin of the resistance number or higher in order for their attack to be successful.';
+		text += '**Counter Attack:** __The host will do a roll with a number appropriate for the theme. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must beat their opponent by a margin of the resistance number or higher in order for their attack to be successful__.';
 		this.say(room, text);
 	},
 	interviews: function(arg, user, room)
