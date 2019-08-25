@@ -1396,6 +1396,21 @@ exports.commands = {
 		text += '**Counter Attack:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful__.';
 		this.say(room, text);
 	},
+	anonymous: 'anon',
+	anon: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '**Anonymous:** __The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames__.';
+		this.say(room, text);
+	},
 	interviews: function(arg, user, room)
 	{
 		var text = '';
