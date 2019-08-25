@@ -148,5 +148,7 @@ module.exports = {
 	
 	wenis: '==elbowskinn',
 	elbowskinn: '!dt linoone',
+	
+	ptoad: 'teehee',
 }
 	
