@@ -1393,7 +1393,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Counter Attack:** __The host will do a roll with a number appropriate for the theme. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must beat their opponent by a margin of the resistance number or higher in order for their attack to be successful__.';
+		text += '**Counter Attack:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful__.';
 		this.say(room, text);
 	},
 	interviews: function(arg, user, room)
