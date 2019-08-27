@@ -1352,6 +1352,21 @@ exports.commands = {
 		if (arg) text += arg;
 		this.say(room, text);
 	},
+	pointsystem: 'point',
+	point: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+'))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += 'Survivor has changed its leaderboard system! Check this page out for more details: https://survivor-ps.weebly.com/points-system.html';
+		this.say(room, text);
+	},
 	attackerimmunity: 'ai',
 	ai: function(arg, user, room)
 	{
