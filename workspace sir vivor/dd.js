@@ -7,10 +7,6 @@ class DD {
 	constructor() {
 		this.dd = {};
 		this.modlog = {};
-		this.firstpoints = 10;
-		this.secondpoints = 5;
-		this.realhostpoints = 3;
-		this.partpoints = 2;
 		this.numSkips = 0;
 	}
 
@@ -35,164 +31,47 @@ class DD {
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
 	}
 
-	addSpecial(user, numPoints) {
+	addpoints (user, numPoints) {
 		let name = user.trim();
 		let id = Tools.toId(name);
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				firsts: 0,
-				seconds: 0,
-				parts: 0,
-				realhosts: 0,
-				special: numPoints,
+				points: numPoints,
 				name: user,
 			}
 		} else {
-			if (this.dd[id].special) {
-				this.dd[id].special += numPoints;
+			if (this.dd[id].points) {
+				this.dd[id].points += numPoints;
 			} else {
-				this.dd[id].special = numPoints;
+				this.dd[id].points = numPoints;
 			}
 		}
 	}
 
-	addHost(user) {
+  remPoints(user, numPoints) {
 		let name = user.trim();
 		let id = Tools.toId(name);
 		if (!(id in this.dd)) {
 			this.dd[id] = {
-				firsts: 0,
-				seconds: 0,
-				parts: 0,
-				realhosts: 1,
-				special: 0,
+				points: 0,
 				name: user,
 			}
 		} else {
-			if (this.dd[id].realhosts) {
-				this.dd[id].realhosts++;
-			} else {
-				this.dd[id].realhosts = 1;
+			if (this.dd[id].points) {
+				this.dd[id].points -= numPoints;
 			}
 		}
 	}
 
-	addFirst(user) {
-		let id = Tools.toId(user.trim());
-		if (!(id in this.dd)) {
-			this.dd[id] = {
-				firsts: 1,
-				seconds: 0,
-				parts: 0,
-				realhosts: 0,
-				special: 0,
-				name: user.trim(),
-			}
-		} else {
-			this.dd[id].firsts++;
-		}
-	}
-
-	addSecond(user) {
-		let id = Tools.toId(user.trim());
-		if (!(id in this.dd)) {
-			this.dd[id] = {
-				firsts: 0,
-				seconds: 1,
-				parts: 0,
-				realhosts: 0,
-				special: 0,
-				name: user.trim(),
-			}
-		} else {
-			this.dd[id].seconds++;
-		}
-	}
-
-	addPart(user) {
-		let id = Tools.toId(user.trim());
-		if (!(id in this.dd)) {
-			this.dd[id] = {
-				firsts: 0,
-				seconds: 0,
-				parts: 1,
-				realhosts: 0,
-				special: 0,
-				name: user.trim(),
-			}
-		} else {
-			this.dd[id].parts++;
-		}
-	}
-
-	removeHost(user) {
-		let id = Tools.toId(user);
-		if (!(id in this.dd) || this.dd[id].realhosts === 0) {
-			return false;
-		} else {
-			this.dd[id].realhosts--;
-			return true;
-		}
-	}
-
-	removeFirst(user) {
-		let id = Tools.toId(user);
-		if (!(id in this.dd) || this.dd[id].firsts === 0) {
-			return false
-		} else {
-			this.dd[id].firsts--;
-			return true;
-		}
-	}
-
-	removeSecond(user) {
-		let id = Tools.toId(user);
-		if (!(id in this.dd) || this.dd[id].seconds === 0) {
-			return false
-		} else {
-			this.dd[id].seconds--;
-			return true;
-		}
-	}
-
-	removePart(user) {
-		let id = Tools.toId(user);
-		if (!(id in this.dd) || this.dd[id].parts === 0) {
-			return false
-		} else {
-			this.dd[id].parts--;
-			return true;
-		}
-	}
-
-    remSpecial(user, numPoints) {
-		let name = user.trim();
-		let id = Tools.toId(name);
-		if (!(id in this.dd)) {
-			this.dd[id] = {
-				firsts: 0,
-				seconds: 0,
-				parts: 0,
-				realhosts: 0,
-				special: 0,
-				name: user,
-			}
-		} else {
-			if (this.dd[id].special) {
-				this.dd[id].special -= numPoints;
-			}
-		}
-	}
-    
 	getPoints(item) {
-		return this.realhostpoints * item[0] + this.firstpoints * item[1] + this.secondpoints * item[2] + this.partpoints * item[3] + item[4];
+		return item[0];
 	}
 
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.realhosts, item.firsts, item.seconds, item.parts, item.special || 0, item.name]);
+			items.push([item.points || 0, item.name]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
@@ -205,7 +84,7 @@ class DD {
 		});
 		return items;
 	}
-	
+
 	updateModlog(message) {
 		this.modlog.data.push(message);
 		this.exportData();
