@@ -2005,7 +2005,7 @@ exports.commands = {
   addpointsbot: 'addbot',
   addbot: function (target, user, room) {
     if (!target) return user.say("No target found :" + target);
-    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
     let split = target.split(",");
     if (split.length < 2) return user.say("You must specify the number of players, followed by the winner and runner-up.");
     let numPlayers = parseInt(split[0]);
@@ -2044,7 +2044,7 @@ exports.commands = {
   addpointsuser: 'adduser',
   adduser: function (target, user, room) {
     if (!target) return user.say("No target found :" + target);
-    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
     let split = target.split(",");
     if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner and the runner-up.");
     let numPlayers = parseInt(split[0]);
@@ -2098,7 +2098,7 @@ exports.commands = {
   addpointsofficial: 'addfish',
   addfish: function (target, user, room) {
     if (!target) return user.say("No target found :" + target);
-    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
     let split = target.split(",");
     if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
     let numPlayers = parseInt(split[0]);
@@ -2264,7 +2264,7 @@ exports.commands = {
   remspecial: 'removespecial',
   removespecial: function (target, user, room) {
   	if (!target) return;
-  	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+  	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
   	let split = target.split(",");
   	if (split.length !== 2) return user.say("You must specify number of points and the user to remove them from.");
   	let username = split[0];
