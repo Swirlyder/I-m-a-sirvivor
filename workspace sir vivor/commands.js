@@ -5,8 +5,8 @@
  */
 var GoogleSpreadsheet = require('google-spreadsheet');
 var async = require('async');
- 
-// spreadsheet key is the long id in the sheets URL 
+
+// spreadsheet key is the long id in the sheets URL
 
 
 
@@ -24,7 +24,7 @@ var _ = require('lodash');
 var hostQueue = [];
 var queueText = '';
 var ids = [];
- 
+
 let millisToTime = function(millis){
 	let seconds = millis/1000;
 	let hours = Math.floor(seconds/3600);
@@ -118,7 +118,7 @@ let gameTypes = {
 	pokesurvivor: 'pokesurv',
 	poke: 'pokesurv',
 	pd: ['Prisoner\'s Dilemma', 'https://survivor-ps.weebly.com/prisoners-dilemma.html', 'Cooperate or Betray... which one benefits you more?', 1],
-	prisonersdilemma: 'pd', 
+	prisonersdilemma: 'pd',
 	dexterity: ['Dexterity', 'http://survivor-ps.weebly.com/dexterity.html', 'Where accuracy can give you the advantage or just make you fail...', 1],
 	dex: 'dexterity',
 	bounty: ['Bounty', 'http://survivor-ps.weebly.com/bounty.html', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
@@ -169,7 +169,7 @@ let gameTypes = {
 	hiddenpowersurvivor: [ 'Hidden Power Survivor', 'https://survivor-ps.weebly.com/hidden-power-survivor.html', 'Your Hidden Power is... Hm. I don\'t know, it\'s hidden. Theme by Rainshaft', 1, 1 ],
 	hps:'hiddenpowersurvivor',
 	hiddenpowersurv: 'hiddenpowersurvivor',
-	ichooseyou: [ 'I choose you!', 'https://survivor-ps.weebly.com/i-choose-you.html', 'Pick a stat and pray... Theme by Baloor and Complexities', 2, 1], 
+	ichooseyou: [ 'I choose you!', 'https://survivor-ps.weebly.com/i-choose-you.html', 'Pick a stat and pray... Theme by Baloor and Complexities', 2, 1],
 	jenga: [ 'Jenga', 'https://survivor-ps.weebly.com/jenga.html', 'The classic game! But it\'s... Survivor...? Theme by A Phantom', 1, 1 ],
 	minefield: [ 'Minefield', 'https://survivor-ps.weebly.com/minefield.html', 'Word of advice: Don\'t die! Theme by Shadecession', 1, 1 ],
 	rollboost: [ 'Roll Boost', 'https://survivor-ps.weebly.com/roll-boost.html', 'Spend your points wisely! \\\\or just roll 100 every time and win anyway\\\\ Theme by Lunarixis', 1, 1 ],
@@ -602,7 +602,7 @@ exports.commands = {
 			this.writeSettings();
 			this.say(room, '/modnote Regular expression ' + arg + ' was removed from the blacklist user user ' + user.name + '.');
 			this.say(room, 'Regular expression ' + arg + ' was removed from the blacklist.');
-		}, 
+		},
 	viewbans: 'viewblacklist',
 	vab: 'viewblacklist',
 	viewautobans: 'viewblacklist',
@@ -919,7 +919,7 @@ exports.commands = {
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
 		Games.host = targUser;
 		room.say("**" + targUser.name + "** has been set as the host.");
-		room.say("/modnote " + targUser.name + " has been set as the host by " + user.name +".");		
+		room.say("/modnote " + targUser.name + " has been set as the host by " + user.name +".");
 	},
 
 	hostban: function (target, user, room) {
@@ -936,11 +936,11 @@ exports.commands = {
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 7;
 		Rooms.get('survivor').say("/modnote " + target + " has been hostbanned for " + numDays + " days by " + user.name +".");
-		return room.say(Games.hostBan(targUser, numDays));	
+		return room.say(Games.hostBan(targUser, numDays));
 	},
 
-   
-  
+
+
 	hostbanned: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
         if (Object.keys(Games.hostbans).length === 0) {
@@ -948,18 +948,18 @@ exports.commands = {
         } else {
             let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
             msg += Object.keys(Games.hostbans).map(key => {
-               return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>"; 
+               return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>";
             }).join("");
             return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></body></html></div></div>");
         }
-        
+
 		//return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
 	},
 
 	unhostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		Rooms.get('survivor').say("/modnote " + target + " has been unhostbanned by " + user.name +".");
-		return room.say(Games.unHostBan(target));	
+		return room.say(Games.unHostBan(target));
 	},
 
 	bantime: function (target, user, room) {
@@ -990,7 +990,7 @@ exports.commands = {
 		let numDays = 7;
 		if (split.length > 1) {
 			numDays = Math.floor(Tools.toId(split[1]));
-		} 
+		}
 		if (!numDays) {
 			numDays = 7;
 		}
@@ -1326,7 +1326,7 @@ exports.commands = {
 			room.say(text2);
 		}
 	},
-    
+
 	hirl123: 'hurl',
 	hurl: function(arg, user, room)
 	{
@@ -1334,7 +1334,7 @@ exports.commands = {
 		let text = '/addhtmlbox <img src="https://vgy.me/ip3Fc9.png" height="200" width="800">';
 		this.say(room, text);
 	},
-   
+
 	deetah: function (arg, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
@@ -1463,7 +1463,7 @@ exports.commands = {
 		}
 		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
-	}, 
+	},
     secondwind: 'sw',
     sw: function(arg, user, room)
 	{
@@ -1645,7 +1645,7 @@ exports.commands = {
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let stuff = target.split(",");
-		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);	
+		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff);
 		if (room.id === 'survivor') {
 			this.say(room, "/addhtmlbox " + str);
 		} else {
@@ -1710,7 +1710,7 @@ exports.commands = {
 		}
 		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
 	},
-	
+
 	ar: 'allowroll',
 	allowroll: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1) && (!Games.host || Games.host.id !== user.id)) return;
@@ -1775,10 +1775,10 @@ exports.commands = {
 			numDice = parseInt(target.substr(0, dIndex));;
 			if (!numDice) return;
 			roll = parseInt(target.substr(dIndex + 1));
-			if (!roll) roll = 100;	
+			if (!roll) roll = 100;
 		} else {
 			roll = parseInt(target);
-			if (!roll) roll = 100;	
+			if (!roll) roll = 100;
 		}
 		if (numDice > 40) this.say("The number of dice rolled must be a natural number up to 40.");
 		if (roll > 1000000000) this.say("The maximum roll is allowed is 1000000000.");
@@ -1896,7 +1896,7 @@ exports.commands = {
 			user.say(text);
 		}
 	},
-	
+
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		let roasts = ["If I wanted to die, I would climb to the top of " + target + "'s ego and jump to their IQ", target + ", I was going to give you a nasty look but I see that you’ve already got one.", target + ", you always bring me so much joy. As soon as you leave the room.", target + ", some day you'll go far - and i really hope you stay there.", "To call " + target + " a donkey would be an insult to the donkey.", target + ", You're the reason the gene pool needs a lifeguard", target + "'s breath is so bad, their dentist treats them over the phone.", "I tried making " + target + " my password but my computer said it was too weak.", "If laughter is the best medicine, " + target + "'s face must be curing the world.", target + ", you remind me of Kurt Angle. You suck!", target + ', your presence here is as bad as __OM Room__\'s theme', target + ", you remind me of gold. You weigh a fuck ton.", target + ", your body looks like a kindergartners attempt to make a person out of playdoh", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those __pants__ don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?", "Accidents happen. LIKE YOU!", target + " is proof god has a sense of humor.", target + ", you put the fun in dysfunctional."];
@@ -1949,170 +1949,330 @@ exports.commands = {
 		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 12PM and 6PM EST. Read more about DD on our website: https://survivor-ps.weebly.com/daily-deathmatch.html";
 		this.say(room, text);
 	},
+  //
+	// firsts: 'first',
+	// first: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	dd.addFirst(target);
+	// 	user.say("First place points awarded to: **" + target + "**.");
+	// 	dd.updateModlog(user.name + " did .first " + target);
+	// 	dd.updateModlog("First place points awarded to: **" + target + "**.");
+	// },
+	// skipdd: function (target, user, room) {
+	// 	if (!user.hasRank('survivor', %)) return;
+	// 	dd.numSkips++;
+	// 	user.say("1 dd skip added, there are " + dd.numSkips + " remaining.");
+	// },
+	// removeskipdd: 'rmskipdd',
+	// rmskipdd: function (target, user, room) {
+	// 	if (!user.hasRank('survivor', %)) return;
+	// 	if (dd.numSkips === 0) return user.say("No dds have been skipped this month.");
+	// 	dd.numSkips--;
+	// 	user.say("1 dd skip removed, there are " + dd.numSkips + " remaining.");
+	// },
+	// seconds: 'second',
+	// second: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	dd.addSecond(target);
+	// 	user.say("Second place points awarded to: **" + target + "**.");
+	// 	dd.updateModlog(user.name + " did .second " + target);
+	// 	dd.updateModlog("Second place points awarded to: **" + target + "**.");
+	// },
+	// hp: 'hostpoints',
+	// hostpoints: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	dd.addHost(target);
+	// 	user.say("Host points awarded to: **" + target + "**.");
+	// 	dd.updateModlog(user.name + " did .hostpoints " + target);
+	// 	dd.updateModlog("Host points awarded to: **" + target + "**.");
+	// },
 
-	firsts: 'first',
-	first: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		dd.addFirst(target);
-		user.say("First place points awarded to: **" + target + "**.");
-		dd.updateModlog(user.name + " did .first " + target);
-		dd.updateModlog("First place points awarded to: **" + target + "**.");
-	},
-	skipdd: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
-		dd.numSkips++;
-		user.say("1 dd skip added, there are " + dd.numSkips + " remaining.");
-	},
-	removeskipdd: 'rmskipdd',
-	rmskipdd: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
-		if (dd.numSkips === 0) return user.say("No dds have been skipped this month.");
-		dd.numSkips--;
-		user.say("1 dd skip removed, there are " + dd.numSkips + " remaining.");
-	},
-	seconds: 'second',
-	second: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		dd.addSecond(target);
-		user.say("Second place points awarded to: **" + target + "**.");	
-		dd.updateModlog(user.name + " did .second " + target);
-		dd.updateModlog("Second place points awarded to: **" + target + "**.");
-	},
-	hp: 'hostpoints',
-	hostpoints: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		dd.addHost(target);
-		user.say("Host points awarded to: **" + target + "**.");
-		dd.updateModlog(user.name + " did .hostpoints " + target);
-		dd.updateModlog("Host points awarded to: **" + target + "**.");
-	},
-	addspecial: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
-		let username = split[0];
-		let numPoints = parseInt(split[1]);
-		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
-		dd.addSpecial(username, numPoints);
-		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
-	},
-	part: 'participation',
-	parts: 'participation',
-	participation: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		for (let i = 0; i < split.length; i++) {
-			split[i] = split[i].trim();
-		}
-		for (let i = 0; i < split.length; i++) {
-			dd.addPart(split[i]);
-		}
-		let msg = "Participation points awarded to: **" + split.join(", ") + "**.";
-		if (msg.length > 300) {
-			let len = split.length;
-			let firstHalf = split.slice(0, Math.floor(len / 2.0));
-			let secondHalf = split.slice(Math.floor(len / 2.0));
-			user.say("Participations points awarded to: **" + firstHalf.join(", ") + "**.");
-			user.say("and **" + secondHalf.join(", ") + "**.");
-		} else {
-			user.say(msg);
-		}
-		dd.updateModlog(user.name + " did .parts " + target);
-		dd.updateModlog(msg);
-	},
+  addspecial: function (target, user, room) {
+  	if (!target) return user.say("No target found :" + target);
+  	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+  	let split = target.split(",");
+  	if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
+  	let username = split[0];
+  	let numPoints = parseInt(split[1]);
+  	if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
+  	dd.addpoints(username, numPoints);
+  	return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
+  },
 
-	rmfirst: 'removefirst',
-	removefirst: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let msg;
-		if (dd.removeFirst(target)) {
-			msg = "First place removed from: **" + target + "**."
-		} else {
-			msg = "**" + target + "** has never won a game!";
-		}
-		user.say(msg);
-		dd.updateModlog(user.name + " did .rmfirst " + target);
-		dd.updateModlog(msg);
-	},
-	
-	rmsecond: 'removesecond',
-	removesecond: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let msg;
-		if (dd.removeSecond(target)) {
-			msg = "Second place removed from: **" + target + "**.";
-		} else {
-			msg = "**" + target + "** has never placed second!";
-		}
-		user.say(msg);
-		dd.updateModlog(user.name + " did .rmsecond " + target);
-		dd.updateModlog(msg);
-	},
+  addpointsbot: 'addbot',
+  addbot: function (target, user, room) {
+    if (!target) return user.say("No target found :" + target);
+    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    let split = target.split(",");
+    if (split.length < 2) return user.say("You must specify the number of players, followed by the winner and runner-up.");
+    let numPlayers = parseInt(split[0]);
+    if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+    if (split.length < 3 && numPlayers > 6) return user.say("Please also specify the runner up for games with 7+ players.");
+    let first = split[1];
+    let firstpoints = 0;
+    let secondpoints = 0;
+    if (numPlayers < 4) {
+      return user.say("Bot hosted games with at least 4 players are worth points.");
+    }
+    else if (numPlayers < 7) {
+      firstpoints = 2;
+      dd.addpoints(first, firstpoints);
+      return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    }
+    else if (numPlayers < 10) {
+      firstpoints = 3;
+      secondpoints = 1;
+    }
+    else if (numPlayers < 13) {
+      firstpoints = 5;
+      secondpoints = 2;
+    }
+    else if (numPlayers >= 13) {
+      firstpoints = 7;
+      secondpoints = 4;
+    }
+    dd.addpoints(first, firstpoints);
+    let second = split[2];
+    dd.addpoints(second, secondpoints);
+    user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+  },
 
-	rmhost: 'removehost',
-	rmhosts: 'removehost',
-	removehost: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let msg = "";
-		if (dd.removeHost(target)) {
-			msg = "Host removed from: **" + target + "**."
-		} else {
-			msg = "**" + target + "** has never hosted dd!";
-		}
-		user.say(msg);
-		dd.updateModlog(user.name + " did .rmhost " + target);
-		dd.updateModlog(msg);
-	},
-	removeparts: 'removepart',
-	removeparticipation: 'removepart',
-	rmpart: 'removepart',
-	rmparts: 'removepart',
-	removepart: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		let good = [];
-		let bad = [];
-		for (let i = 0; i < split.length; i++) {
-			let name = split[i];
-			if (dd.removePart(name)) {
-				good.push(name);
-			} else {
-				bad.push(name);
-			}
-		}
-		let msg = "";
-		if (good.length > 0 && bad.length > 0) {
-			msg = "Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.";
-		} else if (good.length > 0) {
-			msg = "Participations removed from: **" + good.join(", ") + "**.";
-		} else {
-			msg = "I was unable to remove participations from **" + bad.join(", ") + "**.";
-		}
-		user.say(msg);
-		dd.updateModlog(user.name + " did .rmparts " + target);
-		dd.updateModlog(msg);
-	},
-    remspecial: 'removespecial',
-    removespecial: function (target, user, room) {
-		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let split = target.split(",");
-		if (split.length !== 2) return user.say("You must specify number of points and the user to remove them from.");
-		let username = split[0];
-		let numPoints = parseInt(split[1]);
-		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to remove.");
-		dd.remSpecial(username, numPoints);
-		return user.say("**" + numPoints + "** have been removed from **" + username.trim() + "** on the dd leaderboard.");
-	},
+  addpointsuser: 'adduser',
+  adduser: function (target, user, room) {
+    if (!target) return user.say("No target found :" + target);
+    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    let split = target.split(",");
+    if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner and the runner-up.");
+    let numPlayers = parseInt(split[0]);
+    if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+    if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up for games with 6+ players.");
+    let host = split[1];
+    let first = split[2];
+    let hostpoints = 0;
+    let firstpoints = 0;
+    let secondpoints = 0;
+    if (numPlayers < 4) {
+      return user.say("User hosted games with at least 4 players are worth points.");
+    }
+    else if (numPlayers < 6) {
+      hostpoints = 2;
+      firstpoints = 3;
+      dd.addpoints(host, hostpoints);
+      dd.addpoints(first, firstpoints);
+      user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+      return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    }
+    else if (numPlayers == 6) {
+      hostpoints = 2;
+      firstpoints = 3;
+      secondpoints = 1;
+    }
+    else if (numPlayers < 10) {
+      hostpoints = 3;
+      firstpoints = 5;
+      secondpoints = 2;
+    }
+    else if (numPlayers < 13) {
+      hostpoints = 5;
+      firstpoints = 7;
+      secondpoints = 4;
+    }
+    else if (numPlayers >= 13) {
+      hostpoints = 8;
+      firstpoints = 10;
+      secondpoints = 6;
+    }
+    dd.addpoints(host, hostpoints);
+    dd.addpoints(first, firstpoints);
+    let second = split[3];
+    dd.addpoints(second, secondpoints);
+    user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+    user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+  },
+
+  addpointsofficial: 'addfish',
+  addfish: function (target, user, room) {
+    if (!target) return user.say("No target found :" + target);
+    if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+    let split = target.split(",");
+    if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
+    let numPlayers = parseInt(split[0]);
+    if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+    if (split.length != numPlayers+2) return user.say("Please check the number of players.");
+    let host = split[1];
+    let first = split[2];
+    let second = split[3];
+    let hostpoints = 0;
+    let firstpoints = 0;
+    let secondpoints = 0;
+    let partpoints = 0;
+    if (numPlayers < 4) {
+      return user.say("Official games with at least 4 players are worth points.");
+    }
+    else if (numPlayers < 7) {
+      hostpoints = 3;
+      firstpoints = 6;
+      secondpoints = 4;
+      partpoints = 1;
+      if (numPlayers < 6) {
+        secondpoints = 1;
+      }
+    }
+    else if (numPlayers < 10) {
+      hostpoints = 5;
+      firstpoints = 8;
+      secondpoints = 5;
+      partpoints = 2;
+    }
+    else if (numPlayers < 13) {
+      hostpoints = 7;
+      firstpoints = 10;
+      secondpoints = 7;
+      partpoints = 3;
+    }
+    else if (numPlayers >= 13) {
+      hostpoints = 9;
+      firstpoints = 13;
+      secondpoints = 9;
+      partpoints = 4;
+    }
+    let partlist = '';
+    dd.addpoints(host, hostpoints);
+    dd.addpoints(first, firstpoints);
+    dd.addpoints(second, secondpoints);
+    for (let i = 4 ; i < split.length ; i++) {
+      let part = split[i];
+      dd.addpoints(part, partpoints);
+      if (i == 4) {
+        if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
+        else partlist = part.trim()
+      }
+      else if (i == split.length - 1) partlist += " and " + part.trim();
+      else partlist += ", " + part.trim();
+    }
+    user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+    user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+    return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+  },
+	// part: 'participation',
+	// parts: 'participation',
+	// participation: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	let split = target.split(",");
+	// 	for (let i = 0; i < split.length; i++) {
+	// 		split[i] = split[i].trim();
+	// 	}
+	// 	for (let i = 0; i < split.length; i++) {
+	// 		dd.addPart(split[i]);
+	// 	}
+	// 	let msg = "Participation points awarded to: **" + split.join(", ") + "**.";
+	// 	if (msg.length > 300) {
+	// 		let len = split.length;
+	// 		let firstHalf = split.slice(0, Math.floor(len / 2.0));
+	// 		let secondHalf = split.slice(Math.floor(len / 2.0));
+	// 		user.say("Participations points awarded to: **" + firstHalf.join(", ") + "**.");
+	// 		user.say("and **" + secondHalf.join(", ") + "**.");
+	// 	} else {
+	// 		user.say(msg);
+	// 	}
+	// 	dd.updateModlog(user.name + " did .parts " + target);
+	// 	dd.updateModlog(msg);
+	// },
+  //
+	// rmfirst: 'removefirst',
+	// removefirst: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	let msg;
+	// 	if (dd.removeFirst(target)) {
+	// 		msg = "First place removed from: **" + target + "**."
+	// 	} else {
+	// 		msg = "**" + target + "** has never won a game!";
+	// 	}
+	// 	user.say(msg);
+	// 	dd.updateModlog(user.name + " did .rmfirst " + target);
+	// 	dd.updateModlog(msg);
+	// },
+  //
+	// rmsecond: 'removesecond',
+	// removesecond: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	let msg;
+	// 	if (dd.removeSecond(target)) {
+	// 		msg = "Second place removed from: **" + target + "**.";
+	// 	} else {
+	// 		msg = "**" + target + "** has never placed second!";
+	// 	}
+	// 	user.say(msg);
+	// 	dd.updateModlog(user.name + " did .rmsecond " + target);
+	// 	dd.updateModlog(msg);
+	// },
+  //
+	// rmhost: 'removehost',
+	// rmhosts: 'removehost',
+	// removehost: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	let msg = "";
+	// 	if (dd.removeHost(target)) {
+	// 		msg = "Host removed from: **" + target + "**."
+	// 	} else {
+	// 		msg = "**" + target + "** has never hosted dd!";
+	// 	}
+	// 	user.say(msg);
+	// 	dd.updateModlog(user.name + " did .rmhost " + target);
+	// 	dd.updateModlog(msg);
+	// },
+	// removeparts: 'removepart',
+	// removeparticipation: 'removepart',
+	// rmpart: 'removepart',
+	// rmparts: 'removepart',
+	// removepart: function (target, user, room) {
+	// 	if (!target) return;
+	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+	// 	let split = target.split(",");
+	// 	let good = [];
+	// 	let bad = [];
+	// 	for (let i = 0; i < split.length; i++) {
+	// 		let name = split[i];
+	// 		if (dd.removePart(name)) {
+	// 			good.push(name);
+	// 		} else {
+	// 			bad.push(name);
+	// 		}
+	// 	}
+	// 	let msg = "";
+	// 	if (good.length > 0 && bad.length > 0) {
+	// 		msg = "Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.";
+	// 	} else if (good.length > 0) {
+	// 		msg = "Participations removed from: **" + good.join(", ") + "**.";
+	// 	} else {
+	// 		msg = "I was unable to remove participations from **" + bad.join(", ") + "**.";
+	// 	}
+	// 	user.say(msg);
+	// 	dd.updateModlog(user.name + " did .rmparts " + target);
+	// 	dd.updateModlog(msg);
+	// },
+  remspecial: 'removespecial',
+  removespecial: function (target, user, room) {
+  	if (!target) return;
+  	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
+  	let split = target.split(",");
+  	if (split.length !== 2) return user.say("You must specify number of points and the user to remove them from.");
+  	let username = split[0];
+  	let numPoints = parseInt(split[1]);
+  	if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to remove.");
+  	dd.remPoints(username, numPoints);
+  	return user.say("**" + numPoints + "** have been removed from **" + username.trim() + "** on the dd leaderboard.");
+  },
 	ddlog: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		if (!("data" in dd.modlog)) return;
@@ -2221,6 +2381,7 @@ exports.commands = {
 	toppoints: 'top',
 	top: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
+    let isempty = true;
 		let sorted = dd.getSorted();
 		let num = parseInt(target);
 		if (!num || num < 1) num = 50;
@@ -2238,23 +2399,23 @@ exports.commands = {
 				for (let j = 0; j < 3; j++) {
 					let stuff;
 					if (j === 0) stuff = i + 1;
-					else if (j === 1) stuff = sorted[i][5];
+					else if (j === 1) stuff = sorted[i][1];
 					else stuff = dd.getPoints(sorted[i]);
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
-			str += "</table></body></html></div></div>";	
+			str += "</table></body></html></div></div>";
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
 			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
-			let indices = ["Rank", "Name", "Firsts", "Seconds", "Parts", "Hosts", "Special", "Points"];
+			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < indices.length; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 			}
 			str += "</tr>"
-			let real = [5, 1, 2, 3, 0, 4];
+			let real = [1,0];
 			let strs = [];
 			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
@@ -2265,6 +2426,7 @@ exports.commands = {
 					} else if (j === (indices.length - 1)) {
 						stuff = dd.getPoints(sorted[i]);
 					} else {
+            console.log(sorted[i][j-1]);
 						stuff = sorted[i][real[j - 1]];
 					}
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
@@ -2283,15 +2445,7 @@ exports.commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			numFirsts += sorted[i][1];
 		}
-		numFirsts += dd.numSkips;
-		let month = new Date().getMonth();
-		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		if (numFirsts === 0) {
-			return room.say("No games have been updated yet this month!");
-		}
-		let times = ['6pm EST', '12pm EST'];
-		return room.say("The last Daily Deathmatch updated was the " + times[numFirsts%2] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/2)) + ".");	
-	},
+  },
 
 	rename: function (target, user, room) {
 		if (!target) return;
@@ -2353,7 +2507,7 @@ exports.commands = {
 			return room.say("No games have been updated yet this month!");
 		}
 		let times = ['6pm EST', '12pm EST']
-		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");	
+		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts%3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1)/3)) + ".");
 	},
 
 	repeat: function (target, user, room) {
