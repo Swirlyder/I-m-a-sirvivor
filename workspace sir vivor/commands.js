@@ -1689,28 +1689,6 @@ exports.commands = {
 		}
 	},
 
-	next: function (target, user, room) {
-		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
-		let d = new Date();
-		let offset = d.getTimezoneOffset();
-		let n = d.getHours() + offset / 60;
-		let m = d.getMinutes();
-		let gameTimes = [16, 22];
-		let millis = (60 - m) * 60 * 1000;
-		let used = false;
-		for (const time of gameTimes) {
-			if (n < time) {
-				millis += (time - 1 - n) * 60 * 60 * 1000;
-				used = true;
-				break;
-			}
-		}
-		if (!used) {
-			millis += (gameTimes[0] - 1 - n) * 60 * 60 * 1000;
-		}
-		room.say("The next Daily Deathmatch is in " + millisToTime(millis) + ".")
-	},
-
 	ar: 'allowroll',
 	allowroll: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1) && (!Games.host || Games.host.id !== user.id)) return;
@@ -1935,61 +1913,7 @@ exports.commands = {
 		dd.updateModlog("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
 		dd.updateModlog("Participation points awarded to: **" + names.join(", ") + "**.");
 	},
-	dd: function(arg, user, room)
-	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user + ', ';
-		}
-		text += "Daily Deathmatch (DD) is Survivor's system for official games, in which two games are hosted daily at 12PM and 6PM EST. Read more about DD on our website: https://survivor-ps.weebly.com/daily-deathmatch.html";
-		this.say(room, text);
-	},
-  //
-	// firsts: 'first',
-	// first: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	dd.addFirst(target);
-	// 	user.say("First place points awarded to: **" + target + "**.");
-	// 	dd.updateModlog(user.name + " did .first " + target);
-	// 	dd.updateModlog("First place points awarded to: **" + target + "**.");
-	// },
-	// skipdd: function (target, user, room) {
-	// 	if (!user.hasRank('survivor', %)) return;
-	// 	dd.numSkips++;
-	// 	user.say("1 dd skip added, there are " + dd.numSkips + " remaining.");
-	// },
-	// removeskipdd: 'rmskipdd',
-	// rmskipdd: function (target, user, room) {
-	// 	if (!user.hasRank('survivor', %)) return;
-	// 	if (dd.numSkips === 0) return user.say("No dds have been skipped this month.");
-	// 	dd.numSkips--;
-	// 	user.say("1 dd skip removed, there are " + dd.numSkips + " remaining.");
-	// },
-	// seconds: 'second',
-	// second: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	dd.addSecond(target);
-	// 	user.say("Second place points awarded to: **" + target + "**.");
-	// 	dd.updateModlog(user.name + " did .second " + target);
-	// 	dd.updateModlog("Second place points awarded to: **" + target + "**.");
-	// },
-	// hp: 'hostpoints',
-	// hostpoints: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	dd.addHost(target);
-	// 	user.say("Host points awarded to: **" + target + "**.");
-	// 	dd.updateModlog(user.name + " did .hostpoints " + target);
-	// 	dd.updateModlog("Host points awarded to: **" + target + "**.");
-	// },
-
+	
   addspecial: function (target, user, room) {
   	if (!target) return user.say("No target found :" + target);
   	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -2160,107 +2084,6 @@ exports.commands = {
     if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
-	// part: 'participation',
-	// parts: 'participation',
-	// participation: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	let split = target.split(",");
-	// 	for (let i = 0; i < split.length; i++) {
-	// 		split[i] = split[i].trim();
-	// 	}
-	// 	for (let i = 0; i < split.length; i++) {
-	// 		dd.addPart(split[i]);
-	// 	}
-	// 	let msg = "Participation points awarded to: **" + split.join(", ") + "**.";
-	// 	if (msg.length > 300) {
-	// 		let len = split.length;
-	// 		let firstHalf = split.slice(0, Math.floor(len / 2.0));
-	// 		let secondHalf = split.slice(Math.floor(len / 2.0));
-	// 		user.say("Participations points awarded to: **" + firstHalf.join(", ") + "**.");
-	// 		user.say("and **" + secondHalf.join(", ") + "**.");
-	// 	} else {
-	// 		user.say(msg);
-	// 	}
-	// 	dd.updateModlog(user.name + " did .parts " + target);
-	// 	dd.updateModlog(msg);
-	// },
-  //
-	// rmfirst: 'removefirst',
-	// removefirst: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	let msg;
-	// 	if (dd.removeFirst(target)) {
-	// 		msg = "First place removed from: **" + target + "**."
-	// 	} else {
-	// 		msg = "**" + target + "** has never won a game!";
-	// 	}
-	// 	user.say(msg);
-	// 	dd.updateModlog(user.name + " did .rmfirst " + target);
-	// 	dd.updateModlog(msg);
-	// },
-  //
-	// rmsecond: 'removesecond',
-	// removesecond: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	let msg;
-	// 	if (dd.removeSecond(target)) {
-	// 		msg = "Second place removed from: **" + target + "**.";
-	// 	} else {
-	// 		msg = "**" + target + "** has never placed second!";
-	// 	}
-	// 	user.say(msg);
-	// 	dd.updateModlog(user.name + " did .rmsecond " + target);
-	// 	dd.updateModlog(msg);
-	// },
-  //
-	// rmhost: 'removehost',
-	// rmhosts: 'removehost',
-	// removehost: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	let msg = "";
-	// 	if (dd.removeHost(target)) {
-	// 		msg = "Host removed from: **" + target + "**."
-	// 	} else {
-	// 		msg = "**" + target + "** has never hosted dd!";
-	// 	}
-	// 	user.say(msg);
-	// 	dd.updateModlog(user.name + " did .rmhost " + target);
-	// 	dd.updateModlog(msg);
-	// },
-	// removeparts: 'removepart',
-	// removeparticipation: 'removepart',
-	// rmpart: 'removepart',
-	// rmparts: 'removepart',
-	// removepart: function (target, user, room) {
-	// 	if (!target) return;
-	// 	if (!user.hasRank('survivor', %) && (Config.canHost.indexOf(user.id) === -1)) return;
-	// 	let split = target.split(",");
-	// 	let good = [];
-	// 	let bad = [];
-	// 	for (let i = 0; i < split.length; i++) {
-	// 		let name = split[i];
-	// 		if (dd.removePart(name)) {
-	// 			good.push(name);
-	// 		} else {
-	// 			bad.push(name);
-	// 		}
-	// 	}
-	// 	let msg = "";
-	// 	if (good.length > 0 && bad.length > 0) {
-	// 		msg = "Participations removed from: **" + good.join(", ") + "**. I was unable to remove participation from **" + bad.join(", ") + "**.";
-	// 	} else if (good.length > 0) {
-	// 		msg = "Participations removed from: **" + good.join(", ") + "**.";
-	// 	} else {
-	// 		msg = "I was unable to remove participations from **" + bad.join(", ") + "**.";
-	// 	}
-	// 	user.say(msg);
-	// 	dd.updateModlog(user.name + " did .rmparts " + target);
-	// 	dd.updateModlog(msg);
-	// },
   remspecial: 'removespecial',
   removespecial: function (target, user, room) {
   	if (!target) return;
