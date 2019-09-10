@@ -1923,7 +1923,7 @@ exports.commands = {
   	let numPoints = parseInt(split[1]);
   	if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
   	dd.addpoints(username, numPoints);
-  	return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the dd leaderboard.");
+  	return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the leaderboard.");
   },
 
   addpointsbot: 'addbot',
@@ -2094,7 +2094,7 @@ exports.commands = {
   	let numPoints = parseInt(split[1]);
   	if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to remove.");
   	dd.remPoints(username, numPoints);
-  	return user.say("**" + numPoints + "** have been removed from **" + username.trim() + "** on the dd leaderboard.");
+  	return user.say("**" + numPoints + "** have been removed from **" + username.trim() + "** on the leaderboard.");
   },
 	ddlog: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
