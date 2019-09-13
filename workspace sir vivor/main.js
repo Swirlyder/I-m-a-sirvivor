@@ -123,7 +123,7 @@ var WebSocketClient = require('websocket').client;
 global.Tools = require('./tools.js');
 console.log(Tools.mod(912673, 688165, 1032247));
 global.Battles = require('./Battles.js');
-global.dd = require('./dd.js');
+global.dd = require('./points.js');
 dd.importData();
 global.Commands = require('./commands.js').commands;
 global.Users = require('./users.js');
