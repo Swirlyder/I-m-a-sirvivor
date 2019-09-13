@@ -639,121 +639,6 @@ exports.commands = {
 		}
 		this.say(room, text);
 	},
-	/*
-		banphrase: 'banword',
-		banword: function(arg, user, room)
-		{
-			arg = arg.trim().toLowerCase();
-			if (!arg) return false;
-
-			var tarRoom = room.id;
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				tarRoom = room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			var bannedPhrases = this.settings.bannedphrases ? this.settings.bannedphrases[tarRoom] : null;
-			if (!bannedPhrases)
-			{
-				if (bannedPhrases === null) this.settings.bannedphrases = {};
-				bannedPhrases = (this.settings.bannedphrases[tarRoom] = {});
-			}
-			else if (bannedPhrases[arg])
-			{
-				return this.say(room, 'Phrase "' + arg + '" is already banned.');
-			}
-			bannedPhrases[arg] = 1;
-
-			this.writeSettings();
-			this.say(room, 'Phrase "' + arg + '" is now banned.');
-		},
-		unbanphrase: 'unbanword',
-		unbanword: function(arg, user, room)
-		{
-			var tarRoom;
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				tarRoom = room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			arg = arg.trim().toLowerCase();
-			if (!arg) return false;
-			if (!this.settings.bannedphrases) return this.say(room, 'Phrase "' + arg + '" is not currently banned.');
-
-			var bannedPhrases = this.settings.bannedphrases[tarRoom];
-			if (!bannedPhrases || !bannedPhrases[arg]) return this.say(room, 'Phrase "' + arg + '" is not currently banned.');
-
-			delete bannedPhrases[arg];
-			if (Object.isEmpty(bannedPhrases))
-			{
-				delete this.settings.bannedphrases[tarRoom];
-				if (Object.isEmpty(this.settings.bannedphrases)) delete this.settings.bannedphrases;
-			}
-
-			this.writeSettings();
-			this.say(room, 'Phrase "' + arg + '" is no longer banned.');
-		},
-		viewbannedphrases: 'viewbannedwords',
-		vbw: 'viewbannedwords',
-		viewbannedwords: function(arg, user, room)
-		{
-			var tarRoom = room.id;
-			var text = '';
-			var bannedFrom = '';
-			if (room === user)
-			{
-				if (!user.isExcepted()) return false;
-				tarRoom = 'global';
-				bannedFrom += 'globally';
-			}
-			else if (user.canUse('banword', room.id))
-			{
-				text += '/pm ' + user.id + ', ';
-				bannedFrom += 'in ' + room.id;
-			}
-			else
-			{
-				return false;
-			}
-
-			if (!this.settings.bannedphrases) return this.say(room, text + 'No phrases are banned in this room.');
-			var bannedPhrases = this.settings.bannedphrases[tarRoom];
-			if (!bannedPhrases) return this.say(room, text + 'No phrases are banned in this room.');
-
-			if (arg.length)
-			{
-				text += 'The phrase "' + arg + '" is currently ' + (bannedPhrases[arg] || 'not ') + 'banned ' + bannedFrom + '.';
-				return this.say(room, text);
-			}
-
-			var banList = Object.keys(bannedPhrases);
-			if (!banList.length) return this.say(room, text + 'No phrases are banned in this room.');
-
-			this.uploadToHastebin('The following phrases are banned ' + bannedFrom + ':\n\n' + banList.join('\n'), function(link)
-			{
-				if (link.startsWith('Error')) return this.say(room, link);
-				this.say(room, text + 'Banned phrases ' + bannedFrom + ': ' + link);
-			}.bind(this));
-		}, */
-
 	/**
 	 * General commands
 	 *
@@ -1317,14 +1202,17 @@ exports.commands = {
 	para: function(arg, user, room)
 	{
 		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo, Snap, Hawkie';
-		let text2 = 'Toni XY, Henka, OM room, Zeonth, Zyx14, phable, deetah, Hurl, Abd1710, cleo, Ls's Ghost, ptoad, Rainshaft, phantom genius, wob, Ceteris, Gimm1ck, Shadecession, Rach, Harambeween';
-                let text3 = 'geene, inactive, mitsuki, Tushavi, Zyg-ten, Santa Vivor, and Guishark; and in 23 years, I've learned one thing. You never know WHAT anime is going to be good.';
+		let text2 = 'Toni XY, Henka, OM room, Zeonth, Zyx14, phable, deetah, Hurl, Abd1710, cleo, Ls\'s Ghost, ptoad, Rainshaft, phantom genius, wob, Ceteris, Gimm1ck, Shadecession, Rach, Harambeween';
+                let text3 = 'geene, inactive, mitsuki, Tushavi, Zyg-ten, Santa Vivor, and Guishark; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
+			user.say(text3);
+			
 		} else {
 			room.say(text1);
 			room.say(text2);
+			room.say(text3);
 		}
 	},
 	hirl123: 'hurl',
