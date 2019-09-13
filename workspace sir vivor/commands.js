@@ -1313,11 +1313,12 @@ exports.commands = {
 	},
 
     // Special staff commands (all the other staff commands are in commands/text.js)
-    paradise: 'para',
+   paradise: 'para',
 	para: function(arg, user, room)
 	{
-		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Bon Dance, Aknolan, PenQuin, Swirlyder, Aknolan, Cheese, Hawkie, Henka, OM room, phable';
-		let text2 = 'Soccer, Zeonth, SnapEasy, blink182, Deathbywobbuffet, Cyclotic, Zyg-Ten%, and Zyx14; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo, Snap, Hawkie';
+		let text2 = 'Toni XY, Henka, OM room, Zeonth, Zyx14, phable, deetah, Hurl, Abd1710, cleo, Ls's Ghost, ptoad, Rainshaft, phantom genius, wob, Ceteris, Gimm1ck, Shadecession, Rach, Harambeween';
+                let text3 = 'geene, inactive, mitsuki, Tushavi, Zyg-ten, Santa Vivor, and Guishark; and in 23 years, I've learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
@@ -1326,7 +1327,6 @@ exports.commands = {
 			room.say(text2);
 		}
 	},
-
 	hirl123: 'hurl',
 	hurl: function(arg, user, room)
 	{
