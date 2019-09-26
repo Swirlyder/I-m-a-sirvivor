@@ -150,5 +150,8 @@ module.exports = {
 	elbowskinn: '!dt linoone',
 	
 	ptoad: 'teehee',
+	
+	sak: '==sksham',
+	sksham: '[target], you suck!',
 }
 	
