@@ -193,7 +193,12 @@ let gameTypes = {
 	cyr: 'chooseyourroll',
 	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000! Theme by LS\'s Ghost', 1, 1 ],
 	thm: 'thehauntedmansion',
-	casino: ['Casino', ' https://survivor-ps.weebly.com/casino.html', 'Place your bets and hope for the best!', 1, 1],
+	casino: ['Casino', 'https://survivor-ps.weebly.com/bank.html', 'Place your bets and hope for the best!', 1, 1],
+	bank: ['Bank', ' https://survivor-ps.weebly.com/casino.html', 'Sometimes greed is good... but only sometimes.', 1, 1],
+	blackjack: ['Black Jack', 'https://survivor-ps.weebly.com/blackjack.html', 'A survivor themed game of blackjack', 1, 1],
+	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
+	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
+	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
 
 };
 exports.commands = {
