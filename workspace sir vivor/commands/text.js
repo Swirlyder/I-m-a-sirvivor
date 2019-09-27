@@ -124,7 +124,7 @@ module.exports = {
 	zyg: '/me sighs... what is there to say?',
 	
 	omroom: '==om',
-	om: '"OM Goodness! Leave OM Room alone..." ;~;',
+	om: 'OM... Just make Swirl the Server Admin already.',
 	
 	tush: '==tushavi',
 	tushavi: '>noob luck',
