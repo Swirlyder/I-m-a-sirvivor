@@ -9,7 +9,7 @@
  */
 'use strict';
  
-const MESSAGE_THROTTLE = 650;
+const MESSAGE_THROTTLE = 110;
 
 // First dependencies and welcome message
 require('babel/register')({
