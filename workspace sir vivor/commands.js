@@ -1078,7 +1078,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme X** is live! More info here: https://docs.google.com/document/d/1JfaAJ12UPJ_gcrLjvRqxGuPnkucGG3eu2pEafm9Dc2s/edit';
+		text += '**Next Big Theme XI** is live! More info here: https://docs.google.com/document/d/1GUKhSCVNFAMp5a0_ET0lmrh_meVfAvz209k-NUPzlb4/edit';
 		this.say(room, text);
 	},
 	nbtsubmissions: 'nbtsubs',
