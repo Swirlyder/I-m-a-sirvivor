@@ -152,54 +152,56 @@ let gameTypes = {
 	hs: 'hideandseektag',
 	followtheleader: ['Follow The Leader', 'http://survivor-ps.weebly.com/follow-the-leader.html', 'A bitter civil war ensues with noble deeds and treacherous backstabbing galore, but only the strongest and fittest will rise up and become The True Survivor. Do you have what it takes to keep the crown?', 1],
 	ftl: 'followtheleader',
-	avoidance: [ 'Avoidance', 'https://survivor-ps.weebly.com/avoidance.html', 'The trick is to pick the number that makes you not lose. Theme by Snap', 1, 1 ],
-	battleoftheelements: [ 'Battle of the Elements', 'https://survivor-ps.weebly.com/battle-of-the-elements.html', 'A race to the finish through barren terrain! Theme by deetah', 1, 1 ],
+	avoidance: [ 'Avoidance', 'https://survivor-ps.weebly.com/avoidance.html', 'The trick is to pick the number that makes you not lose.', 1],
+	battleoftheelements: [ 'Battle of the Elements', 'https://survivor-ps.weebly.com/battle-of-the-elements.html', 'A race to the finish through barren terrain!', 1],
 	bote: 'battleoftheelements',
-	cakeboss:[ 'Cake Boss', 'https://survivor-ps.weebly.com/cake-boss.html', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake! Theme by Baloor', 1, 1 ],
-	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever. Theme by BlueTopaz7', 1, 1 ],
-	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'This isn\'t even my final form!, Theme by PenQuin', 1, 1 ],
+	cakeboss:[ 'Cake Boss', 'https://survivor-ps.weebly.com/cake-boss.html', 'Kill your opposition, take their ingredients, and be the first to make the Ultimate Cake!', 1],
+	dragonorbs: [ 'Dragon Orbs', 'https://survivor-ps.weebly.com/dragon-orbs.html', 'Get your power level over 9000 by collecting getting the right balls or whatever.', 1],
+	evolve: [ 'Evolve', 'https://survivor-ps.weebly.com/evolve.html', 'This isn\'t even my final form!', 1],
 	evo: 'evolve',
-	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them? Theme by Fuzzytales', 1, 1 ],
+	fishing: [ 'Fishing', 'https://survivor-ps.weebly.com/fishing.html', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 1],
 	fish: 'fishing',
-	ghostsbusters: [ 'Ghosts (Busters)', 'https://survivor-ps.weebly.com/ghosts-busters.html', '...Who ya gonna call? Theme by Baloor', 1, 1 ],
+	ghostsbusters: [ 'Ghosts (Busters)', 'https://survivor-ps.weebly.com/ghosts-busters.html', '...Who ya gonna call?', 1],
 	gb: 'ghostsbusters',
 	ghosts: 'ghostsbusters',
-	gottacatchemall: [ 'Gotta Catch Em All', 'https://survivor-ps.weebly.com/gotta-catch-em-all.html', 'Theme by Tushavi', 1, 1 ],
+	gottacatchemall: [ 'Gotta Catch Em All', 'https://survivor-ps.weebly.com/gotta-catch-em-all.html', 'Are you the greatest there ever was? Prove it!', 1],
 	gcea: 'gottacatchemall',
-	hiddenpowersurvivor: [ 'Hidden Power Survivor', 'https://survivor-ps.weebly.com/hidden-power-survivor.html', 'Your Hidden Power is... Hm. I don\'t know, it\'s hidden. Theme by Rainshaft', 1, 1 ],
+	hiddenpowersurvivor: [ 'Hidden Power Survivor', 'https://survivor-ps.weebly.com/hidden-power-survivor.html', 'Your Hidden Power is... Hm. I don\'t know, it\'s hidden.', 1],
 	hps:'hiddenpowersurvivor',
 	hiddenpowersurv: 'hiddenpowersurvivor',
-	ichooseyou: [ 'I choose you!', 'https://survivor-ps.weebly.com/i-choose-you.html', 'Pick a stat and pray... Theme by Baloor and Complexities', 2, 1],
-	jenga: [ 'Jenga', 'https://survivor-ps.weebly.com/jenga.html', 'The classic game! But it\'s... Survivor...? Theme by A Phantom', 1, 1 ],
-	minefield: [ 'Minefield', 'https://survivor-ps.weebly.com/minefield.html', 'Word of advice: Don\'t die! Theme by Shadecession', 1, 1 ],
-	rollboost: [ 'Roll Boost', 'https://survivor-ps.weebly.com/roll-boost.html', 'Spend your points wisely! \\\\or just roll 100 every time and win anyway\\\\ Theme by Lunarixis', 1, 1 ],
+	ichooseyou: [ 'I choose you!', 'https://survivor-ps.weebly.com/i-choose-you.html', 'Pick a stat and pray...', 2],
+	jenga: [ 'Jenga', 'https://survivor-ps.weebly.com/jenga.html', 'The classic game! But it\'s... Survivor...?', 1],
+	minefield: [ 'Minefield', 'https://survivor-ps.weebly.com/minefield.html', 'Watch your step!', 1],
+	rollboost: [ 'Roll Boost', 'https://survivor-ps.weebly.com/roll-boost.html', 'Spend your points wisely! \\\\or just roll 100 every time and win anyway\\\\', 1],
 	rb: 'rollboost',
 	santasautomatedworkshop: [ 'Santa\'s Automated Workshop (SAW)', 'https://survivor-ps.weebly.com/santas-automated-workshop-saw.html', 'Deliver presents like a true good person! Theme by Zeep', 1, 1 ],
 	saw: 'santasautomatedworkshop',
-	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA! okay sorry that wasn\'t funny... Theme by deetah', 1, 1 ],
+	statusconditionsurvivor: [ 'Status Condition Survivor', 'https://survivor-ps.weebly.com/status-condition-survivor.html', 'BURN!! HAHAHA! okay sorry that wasn\'t funny...', 1],
 	scs: 'statusconditionsurvivor',
-	tribalcouncil: [ 'Tribal Council', 'https://survivor-ps.weebly.com/tribal-council.html', 'Somehow this theme name reminded me of Spore, anyone remember the game Spore? Theme by Zeonth', 1, 1 ],
+	tribalcouncil: [ 'Tribal Council', 'https://survivor-ps.weebly.com/tribal-council.html', 'Unlike most elections, you don\'t want to be voted in this one', 1],
 	tc: 'tribalcouncil',
-	vivorsfeast: [ 'Vivor\'s Feast', 'https://survivor-ps.weebly.com/vivors-feast.html', 'Sacrifice people to the Vivor overlord! Theme by PenQuin', 1, 1 ],
+	vivorsfeast: [ 'Vivor\'s Feast', 'https://survivor-ps.weebly.com/vivors-feast.html', 'Sacrifice people to the Vivor overlord!', 1],
 	vf: 'vivorsfeast',
 	feast: 'vivorsfeast',
-	vwheelanddeal: [ 'V-Wheel and Deal', 'https://survivor-ps.weebly.com/v-wheel-and-deal.html', 'It\'s like a lottery but worse. Theme by Plasmaan', 1, 1 ],
+	vwheelanddeal: [ 'V-Wheel and Deal', 'https://survivor-ps.weebly.com/v-wheel-and-deal.html', 'It\'s like a lottery but worse.', 1],
 	vwd: 'vwheelanddeal',
 	wnd: 'vwheelanddeal',
-	weardown: [ 'Wear Down', 'https://survivor-ps.weebly.com/wear-down.html', 'The game where we all get frustrated over losing all of our health in 2 rounds! Theme by Henka', 1, 1 ],
-	bossbattle: [ 'Boss Battle', 'https://survivor-ps.weebly.com/boss-battle.html', 'Instead of battling each other, work together to defeat a powerful opponent! Theme by Guishark and Hurl', 1, 1 ],
+	weardown: [ 'Wear Down', 'https://survivor-ps.weebly.com/wear-down.html', 'The game where we all get frustrated over losing all of our health in 2 rounds!', 1],
+	bossbattle: [ 'Boss Battle', 'https://survivor-ps.weebly.com/boss-battle.html', 'Instead of battling each other, work together to defeat a powerful opponent!', 1],
 	bb: 'bossbattle',
-	chooseyourroll: [ 'Choose Your Roll', 'https://survivor-ps.weebly.com/choose-your-roll.html', 'Will you reap the rewards of taking the path less traveled by? Theme by Excited Raichu', 1, 1 ],
+	chooseyourroll: [ 'Choose Your Roll', 'https://survivor-ps.weebly.com/choose-your-roll.html', 'Will you reap the rewards of taking the path less traveled by?', 1],
 	cyr: 'chooseyourroll',
-	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000! Theme by LS\'s Ghost', 1, 1 ],
+	thehauntedmansion: [ 'The Haunted Mansion', 'https://survivor-ps.weebly.com/the-haunted-mansion.html', 'Hope you brought your Poltergust 3000!', 1],
 	thm: 'thehauntedmansion',
+	thebridge: ['The Bridge', 'https://survivor-ps.weebly.com/the-bridge.html', 'Why burn the bridge when it will crumble on its own?', 1],
+	bridge: 'thebridge',
 	casino: ['Casino', 'https://survivor-ps.weebly.com/bank.html', 'Place your bets and hope for the best!', 1, 1],
 	bank: ['Bank', ' https://survivor-ps.weebly.com/casino.html', 'Sometimes greed is good... but only sometimes.', 1, 1],
 	blackjack: ['Black Jack', 'https://survivor-ps.weebly.com/blackjack.html', 'A survivor themed game of blackjack', 1, 1],
 	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
-
+	
 };
 exports.commands = {
 	/**
@@ -1260,7 +1262,7 @@ exports.commands = {
 		text += 'Survivor has changed its leaderboard system! Check this page out for more details: https://survivor-ps.weebly.com/points-system.html';
 		this.say(room, text);
 	},
-	attackerimmunity: 'ai',
+	attackersimmunity: 'ai',
 	ai: function(arg, user, room)
 	{
 		var text = '';
@@ -1272,9 +1274,10 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Attacker Immunity:** __The attacker doesnt die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
+		text += '**Attacker\'s Immunity:** __The attacker doesn\'t die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
 		this.say(room, text);
 	},
+	sl: 'soullink',
 	soullink: function(arg, user, room)
 	{
 		var text = '';
@@ -1286,7 +1289,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)';
+		text += '**Soul Link:** __At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)__';
 		this.say(room, text);
 	},
 	resistance: 'res',
@@ -1301,7 +1304,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Resistance:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful__.';
+		text += '**Resistance:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful.__';
 		this.say(room, text);
 	},
 	anonymous: 'anon',
@@ -1316,7 +1319,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Anonymous:** __The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames__.';
+		text += '**Anonymous:** __The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames.__';
 		this.say(room, text);
 	},
 	interviews: function(arg, user, room)
@@ -1354,7 +1357,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Spotlight:** __an attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
+		text += '**Spotlight:** __An attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
 		this.say(room, text);
 	},
     secondwind: 'sw',
@@ -1369,7 +1372,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'In the **Second Wind** game mode, every player has 2 lives';
+		text += '**Second Wind:** __Players have 2 lives each.__';
 		this.say(room, text);
 	},
 
@@ -1384,7 +1387,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id+ ', ';
 		}
-		text += '**Golf:** __Lower rolls win. Opposite of normal survivor__';
+		text += '**Golf:** __Lower rolls win. Opposite of normal survivor.__';
 		this.say(room, text);
 	},
 	counterattack: 'ca',
@@ -1414,7 +1417,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack__';
+		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack.__';
 		this.say(room, text);
 	},
 	empire: function(arg, user, room)
@@ -1760,7 +1763,7 @@ exports.commands = {
 	},
 
 	bomb: function (target, user, room) {
-		let text = "A bomb is a player that, when eliminated, \"explodes\" and eliminates the player that eliminated them.";
+		let text = "**Bomb:** __A bomb is a player that, when eliminated, \"explodes\" and eliminates the player that eliminated them.__";
 		if (user.hasRank(room.id, '+')) {
 			room.say(text);
 		} else {
