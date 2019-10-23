@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Weardown';
-const description = '__The game where we all get frustrated over losing all of our health in 2 rounds! Theme by Henka__ Game rules: https://survivor-ps.weebly.com/wear-down.html'
+const description = '__The game where we all get frustrated over losing all of our health in 2 rounds!__ Game rules: https://survivor-ps.weebly.com/wear-down.html'
 const id = Tools.toId(name);
 
 class Weardown extends Games.Game {
