@@ -5,7 +5,7 @@
     "babel": "5.8.23",
     "babel-core": "5.8.24",
     "colors": "1.1.2",
-    "csv-parse": "1.0.0",
+    "csv-parse": "4.4.6",
     "edit-google-spreadsheet": "^0.2.21",
     "google-auth-library": "^0.10.0",
     "google-spreadsheet": "^2.0.3",
