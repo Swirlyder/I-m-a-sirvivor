@@ -10,7 +10,7 @@
     "google-auth-library": "^0.10.0",
     "google-spreadsheet": "^2.0.3",
     "googleapis": "^16.1.0",
-    "lodash": "^4.15.0",
+    "lodash": "^4.17.13",
     "origindb": "^2.6.1",
     "sugar": "1.4.1",
     "websocket": "1.0.21"
