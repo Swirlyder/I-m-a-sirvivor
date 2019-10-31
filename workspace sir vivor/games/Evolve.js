@@ -13,7 +13,7 @@ for (let i in Tools.data.pokedex) {
 }
 
 const name = "Evolve";
-const description = "__This isn\'t even my final form!, Theme by PenQuin.__ Game Rules: https://survivor-ps.weebly.com/evolve.html";
+const description = "__This isn\'t even my final form!__ Game Rules: https://survivor-ps.weebly.com/evolve.html";
 const id = Tools.toId(name);
 
 class Evolve extends Games.Game {
