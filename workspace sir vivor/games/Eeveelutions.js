@@ -160,6 +160,13 @@ class Eevee extends Games.Game {
 			}
 		}
 		if (this.doingb) {
+			if (this.eevee2 === 'Jolteon') {
+				if (this.eevee1 === 'Sylveon') {
+					this.roll2 = '2d65';
+				} else {
+					this.roll2 = '2d65';
+				}
+			}
 			if (this.eevee2 === 'Leafeon') {
 				this.roll2 += 25
 			}
