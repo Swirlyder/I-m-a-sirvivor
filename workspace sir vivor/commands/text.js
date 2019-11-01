@@ -151,7 +151,7 @@ module.exports = {
 	
 	ptoad: 'teehee',
 	
-	sak: '==sksham',
-	sksham: '[target], you suck!',
+	bobo: '==bobochan',
+	bobochan: '蜀酱波波在此，谁敢出来撒野/翻译',
 }
 	
