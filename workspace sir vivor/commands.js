@@ -271,7 +271,7 @@ exports.commands = {
 	reload: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		try {
-			this.uncacheTree('./commands.js');
+			delete require.cache[require.resolve('./commands.js')];
 			Commands = require('./commands.js').commands;
 			this.say(room, 'Commands reloaded.');
 		} catch (e) {
