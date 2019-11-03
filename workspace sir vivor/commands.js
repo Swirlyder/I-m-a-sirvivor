@@ -2196,6 +2196,7 @@ exports.commands = {
 		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
 		dd.dd = {};
 		dd.numSkips = 0;
+		dd.exportData()
 		return room.say("The dd leaderboard has been reset.");
 	},
 	points: function (target, user, room) {
