@@ -2129,7 +2129,7 @@ exports.commands = {
 			str += "</table></body></html></div></div>";
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
-			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div><html><body><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < indices.length; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
