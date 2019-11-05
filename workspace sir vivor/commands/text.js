@@ -55,6 +55,7 @@ module.exports = {
 	baloor: '__You must be...DELETED!__',
 	
 	cet: '==pak',
+	ceteris: '==pak',
 	ceterisparibus: '==pak',
 	pak: 'CHOO CHOO ALL ABOARD THE PARTYBUS TRAIN',
 
@@ -109,7 +110,7 @@ module.exports = {
 	summer: '==moq',
 	moq: 'Don\'t moq me for all my name changes ;_;',
 	
-	morgantactician: 'Emma☯Femcario: Wind Waker, Amiibo Hunter, and  the 5 time Survivor Champion!',
+	morgantactician: 'Emma☯Femcario: Wind Waker, Amiibo Hunter, and the 5 time Survivor Champion!',
 	
 	pipeitup: '/ME dabs',
 	
@@ -153,5 +154,8 @@ module.exports = {
 	
 	bobo: '==bobochan',
 	bobochan: '蜀酱波波在此，谁敢出来撒野/翻译',
+	
+	geene: '/me spins',
+	
 }
 	
