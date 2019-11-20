@@ -157,5 +157,8 @@ module.exports = {
 	workshop: '<<survivorworkshop>>',
 	
 	geene: '/me spins',
+	
+	myster: '==myster17',
+	myster17: 'Bugbuzz off, [target]!',
 }
 	
