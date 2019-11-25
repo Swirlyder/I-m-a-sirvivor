@@ -38,6 +38,8 @@ class DD {
 			this.dd[id] = {
 				points: numPoints,
 				name: user,
+				color: "000000",
+				bgcolor: "ffffff"
 			}
 		} else {
 			if (this.dd[id].points) {
@@ -67,11 +69,56 @@ class DD {
 		return item[0];
 	}
 
+	settextcolor(user, hexcolor) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				points: 0,
+				name: user,
+				color: hexcolor,
+			}
+		} else {
+			if (this.dd[id].color) {
+				this.dd[id].color = hexcolor;
+			} else {
+				this.dd[id].color = hexcolor;
+			}
+		}
+	}
+
+	setbgcolor(user, hexcolor) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				points: 0,
+				name: user,
+				bgcolor: hexcolor,
+			}
+		} else {
+			if (this.dd[id].color) {
+				this.dd[id].bgcolor = hexcolor;
+			} else {
+				this.dd[id].bgcolor = hexcolor;
+			}
+		}
+	}
+
+	getTextColor(item) {
+		return item[2];
+	}
+
+	getBgColor(item) {
+		return item[3];
+	}
+
+
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.points || 0, item.name]);
+			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
