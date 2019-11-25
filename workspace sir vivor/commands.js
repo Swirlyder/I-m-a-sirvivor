@@ -202,7 +202,7 @@ let gameTypes = {
 	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
-	
+
 };
 exports.commands = {
 	/**
@@ -1216,7 +1216,7 @@ exports.commands = {
 			user.say(text1);
 			user.say(text2);
 			user.say(text3);
-			
+
 		} else {
 			room.say(text1);
 			room.say(text2);
@@ -1810,7 +1810,7 @@ exports.commands = {
 		dd.updateModlog("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
 		dd.updateModlog("Participation points awarded to: **" + names.join(", ") + "**.");
 	},
-	
+
   addspecial: function (target, user, room) {
   	if (!target) return user.say("No target found :" + target);
   	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -1867,15 +1867,18 @@ exports.commands = {
     if (!target) return user.say("No target found :" + target);
     if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
     let split = target.split(",");
-    if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner and the runner-up.");
+    if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the rest of the players.");
     let numPlayers = parseInt(split[0]);
     if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
     if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up for games with 6+ players.");
+		if (split.length < 5 && numPlayers >= 7) return user.say("Please mention all players who took part for games with 7+ players.")
+		if (numPlayers >= 7 && split.length != numPlayers + 2) return user.say("Please check the number of players.")
     let host = split[1];
     let first = split[2];
     let hostpoints = 0;
     let firstpoints = 0;
     let secondpoints = 0;
+		let partpoints = 0;
     if (numPlayers < 4) {
       return user.say("User hosted games with at least 4 players are worth points.");
     }
@@ -1893,27 +1896,42 @@ exports.commands = {
       secondpoints = 1;
     }
     else if (numPlayers < 10) {
-      hostpoints = 3;
-      firstpoints = 5;
-      secondpoints = 2;
+      hostpoints = 4;
+      firstpoints = 6;
+      secondpoints = 3;
+			partpoints = 1;
     }
     else if (numPlayers < 13) {
-      hostpoints = 5;
-      firstpoints = 7;
-      secondpoints = 4;
+      hostpoints = 6;
+      firstpoints = 9;
+      secondpoints = 5;
+			partpoints =  2;
     }
     else if (numPlayers >= 13) {
       hostpoints = 8;
-      firstpoints = 10;
-      secondpoints = 6;
+      firstpoints = 12;
+      secondpoints = 7;
+			partpoints = 3;
     }
+		let partlist = '';
     dd.addpoints(host, hostpoints);
     dd.addpoints(first, firstpoints);
     let second = split[3];
     dd.addpoints(second, secondpoints);
     user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
-    return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+ 		user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+		for (let i = 4 ; i < split.length ; i++) {
+			let part = split[i];
+			dd.addpoints(part, partpoints);
+			if (i == 4) {
+				if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
+				else partlist = part.trim()
+			}
+			else if (i == split.length - 1) partlist += " and " + part.trim();
+			else partlist += ", " + part.trim();
+		}
+		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
 
   addpointsofficial: 'addfish',
@@ -1936,7 +1954,7 @@ exports.commands = {
       return user.say("Official games with at least 4 players are worth points.");
     }
     else if (numPlayers < 7) {
-      hostpoints = 3;
+      hostpoints = 4;
       firstpoints = 6;
       secondpoints = 4;
       partpoints = 1;
@@ -1945,22 +1963,22 @@ exports.commands = {
       }
     }
     else if (numPlayers < 10) {
-      hostpoints = 5;
-      firstpoints = 8;
-      secondpoints = 5;
-      partpoints = 2;
-    }
-    else if (numPlayers < 13) {
-      hostpoints = 7;
-      firstpoints = 10;
-      secondpoints = 7;
+      hostpoints = 6;
+      firstpoints = 9;
+      secondpoints = 6;
       partpoints = 3;
     }
-    else if (numPlayers >= 13) {
-      hostpoints = 9;
-      firstpoints = 13;
-      secondpoints = 9;
+    else if (numPlayers < 13) {
+      hostpoints = 8;
+      firstpoints = 12;
+      secondpoints = 8;
       partpoints = 4;
+    }
+    else if (numPlayers >= 13) {
+      hostpoints = 10;
+      firstpoints = 15;
+      secondpoints = 10;
+      partpoints = 5;
     }
     let partlist = '';
     dd.addpoints(host, hostpoints);
@@ -1981,6 +1999,31 @@ exports.commands = {
     if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
+
+	settextcolor: function (target, user, room) {
+  	if (!target) return user.say("No target found :" + target);
+  	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+  	let split = target.split(",");
+  	if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
+  	let username = split[0];
+  	let hexcolor = split[1].trim();
+  	if (hexcolor.length !== 6 || isNaN(Number('0x' + hexcolor))) return user.say("'" + split[1] + "' is not a valid hex color code.");
+  	dd.settextcolor(username, hexcolor);
+  	return user.say("**" + hexcolor + "** has been set as the text color of **" + username.trim() + "**, on the leaderboard.");
+  },
+
+	setbgcolor: function (target, user, room) {
+		if (!target) return user.say("No target found :" + target);
+  	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+  	let split = target.split(",");
+  	if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
+  	let username = split[0];
+  	let hexcolor = split[1].trim();
+  	if (hexcolor.length !== 6 || isNaN(Number('0x' + hexcolor))) return user.say("'" + split[1] + "' is not a valid hex color code.");
+  	dd.setbgcolor(username, hexcolor);
+  	return user.say("**" + hexcolor + "** has been set as the background color of **" + username.trim() + "**, on the leaderboard.");
+  },
+
   remspecial: 'removespecial',
   removespecial: function (target, user, room) {
   	if (!target) return;
@@ -2139,6 +2182,8 @@ exports.commands = {
 			let strs = [];
 			for (let i = Math.max(0, num - 50); i < num; i++) {
 				let strx = "<tr>";
+				let bgcolor = dd.getBgColor(sorted[i]);
+				let textcolor = dd.getTextColor(sorted[i]);
 				for (let j = 0; j < indices.length; j++) {
 					let stuff;
 					if (j === 0) {
@@ -2149,7 +2194,7 @@ exports.commands = {
             console.log(sorted[i][j-1]);
 						stuff = sorted[i][real[j - 1]];
 					}
-					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
+					strx += "<td style=background-color:#" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=#" + textcolor + ">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx + "</tr>");
 			}
@@ -2207,7 +2252,7 @@ exports.commands = {
 			return user.say("**" + target + "** does not have any points.");
 		}
 		let sorted = dd.getSorted();
-		
+
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
 			if (Tools.toId(stuff[1]) === target) {
