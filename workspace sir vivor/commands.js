@@ -202,6 +202,7 @@ let gameTypes = {
 	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
+	tokensoflife: ['Tokens of Life', 'https://survivor-ps.weebly.com/tokens-of-life.html', 'Who needs a Circle when you have Tokens?', 1],
 
 };
 exports.commands = {
@@ -1081,7 +1082,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme XI** is live! More info here: https://docs.google.com/document/d/1GUKhSCVNFAMp5a0_ET0lmrh_meVfAvz209k-NUPzlb4/edit';
+		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://survivor-ps.weebly.com/nbt.html';
 		this.say(room, text);
 	},
 	nbtsubmissions: 'nbtsubs',
@@ -1097,7 +1098,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += 'NBT Submission phase has started! Feel free to enter your submissions here: ';
+		text += '**Next Big Theme** is not currently in session. Check out previous NBT winners here: https://survivor-ps.weebly.com/nbt-hall-of-fame.html';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
