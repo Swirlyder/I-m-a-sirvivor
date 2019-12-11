@@ -106,11 +106,17 @@ class DD {
 	}
 
 	getTextColor(item) {
-		return item[2];
+		if (item[2])
+			return '#' + item[2];
+		else
+			return '#000000'
 	}
 
 	getBgColor(item) {
-		return item[3];
+		if (item[3])
+			return '#' + item[3];
+		else
+			return '#FFFFFF'
 	}
 
 
