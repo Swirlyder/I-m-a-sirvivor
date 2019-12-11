@@ -1082,7 +1082,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme XI** is live! More info here: https://docs.google.com/document/d/1GUKhSCVNFAMp5a0_ET0lmrh_meVfAvz209k-NUPzlb4/edit';
+		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://survivor-ps.weebly.com/nbt.html';
 		this.say(room, text);
 	},
 	nbtsubmissions: 'nbtsubs',
@@ -1098,7 +1098,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += 'NBT Submission phase has started! Feel free to enter your submissions here: ';
+		text += '**Next Big Theme** is not currently in session. Check out previous NBT winners here: https://survivor-ps.weebly.com/nbt-hall-of-fame.html';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
@@ -2195,7 +2195,7 @@ exports.commands = {
             console.log(sorted[i][j-1]);
 						stuff = sorted[i][real[j - 1]];
 					}
-					strx += "<td style=background-color:#" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=#" + textcolor + ">" + stuff + "</font></b></td>";
+					strx += "<td style=background-color:" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=" + textcolor + ">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx + "</tr>");
 			}
