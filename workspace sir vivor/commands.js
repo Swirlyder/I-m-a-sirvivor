@@ -202,6 +202,7 @@ let gameTypes = {
 	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
+	tokensoflife: ['Tokens of Life', 'https://survivor-ps.weebly.com/tokens-of-life.html', 'Who needs a Circle when you have Tokens?', 1],
 
 };
 exports.commands = {
