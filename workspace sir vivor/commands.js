@@ -2195,7 +2195,7 @@ exports.commands = {
             console.log(sorted[i][j-1]);
 						stuff = sorted[i][real[j - 1]];
 					}
-					strx += "<td style=background-color:#" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=#" + textcolor + ">" + stuff + "</font></b></td>";
+					strx += "<td style=background-color:" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=" + textcolor + ">" + stuff + "</font></b></td>";
 				}
 				strs.push(strx + "</tr>");
 			}
