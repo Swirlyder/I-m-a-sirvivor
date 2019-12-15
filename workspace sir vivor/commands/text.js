@@ -40,6 +40,9 @@ module.exports = {
 	
 	unleashourpassion: '==mez',
 	uop: '==mez',
+	akasianse: '==mez',
+	felucia: '==mez',
+	felu: '==mez',
 	mez: 'Consistency is boring.',
 	
 	glacierider: '==glacie',
@@ -159,6 +162,8 @@ module.exports = {
 	geene: '/me spins',
 	
 	myster: '==myster17',
+	bugbuzzing: '==myster17',
+	bug: '==myster17',
 	myster17: 'Bugbuzz off, [target]!',
 }
 	
