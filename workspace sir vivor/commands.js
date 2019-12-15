@@ -214,30 +214,21 @@ exports.commands = {
 
 	git: function(arg, user, room)
 	{
-		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += 'The source code for this bot can be found here: ' + Config.fork;
-		this.say(room, text);
+		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let text = Config.fork ? "No source code link found." : "The source code for this bot can be found here: " + Config.fork;
+		room.say(prefix + text);
 	},
 	credits: 'about',
 	about: function(arg, user, room)
 	{
-		var text = (room === user || user.hasRank(room, '+')) ? '' : '/pm ' + user.id + ', ';
-		text += 'I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!';
-		this.say(room, text);
+		user.say(`I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!`)
 	},
 	help: 'guide',
 	guide: function(arg, user, room)
 	{
-		var text = (room === user || user.hasRank(room.id, '#')) ? '' : '/pm ' + user.id + ', ';
-		if (Config.botguide)
-		{
-			text += 'A guide on how to use this bot can be found here: ' + Config.botguide;
-		}
-		else
-		{
-			text += 'There is no guide for this bot. PM the owner with any questions.';
-		}
-		this.say(room, text);
+		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let text = Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "A guide on how to use this bot can be found here: " + Config.botguide;
+		room.say(prefix + text);
 	},
     reconnect: 'off',
     disconnect: 'off',
@@ -274,7 +265,7 @@ exports.commands = {
 		try {
 			delete require.cache[require.resolve('./commands.js')];
 			Commands = require('./commands.js').commands;
-			this.say(room, 'Commands reloaded.');
+			room.say('Commands reloaded.');
 		} catch (e) {
 			error('failed to reload: ' + e.stack);
 		}
@@ -291,7 +282,7 @@ exports.commands = {
 		delete require.cache[require.resolve('./games.js')];
 		global.Games = require('./games.js');
 		Games.loadGames();
-		this.say(room, 'Games reloaded.');
+		room.say('Games reloaded.');
 	},
 	shutdownmode: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
@@ -300,7 +291,7 @@ exports.commands = {
 	},
 	join: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
-		this.say(room, '/join ' + arg);
+		send('|/join ' + arg);
 	},
 	custom: function(arg, user, room)
 	{
@@ -367,7 +358,7 @@ exports.commands = {
 				break;
 		}
 
-		this.say(room, text);
+		room.say(text);
 	},
 
 
@@ -656,27 +647,21 @@ exports.commands = {
 
 	seen: function(arg, user, room)
 	{ // this command is still a bit buggy
-		var text = (room === user ? '' : '/pm ' + user.id + ', ');
 		arg = toId(arg);
 		if (!arg || arg.length > 18) return this.say(room, text + 'Invalid username.');
 		if (arg === user.id)
 		{
-			text += 'Have you looked in the mirror lately?';
+			return user.say('Have you looked in the mirror lately?');
 		}
 		else if (toId(arg) === user)
 		{
-			text += 'You might be either blind or illiterate. Might want to get that checked out.';
+			return user.say('You might be either blind or illiterate. Might want to get that checked out.');
 		}
 		else if (!this.chatData[arg] || !this.chatData[arg].seenAt)
 		{
-			text += 'The user ' + arg + ' has never been seen.';
+			return user.say('The user ' + arg + ' has never been seen.');
 		}
-		else
-		{
-			text += arg + ' was last seen ' + this.getTimeAgo(this.chatData[arg].seenAt) + ' ago' + (
-				this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.');
-		}
-		this.say(room, text);
+		return user.say(arg + ' was last seen ' + this.getTimeAgo(this.chatData[arg].seenAt) + ' ago' + (this.chatData[arg].lastSeen ? ', ' + this.chatData[arg].lastSeen : '.'));
 	},
 
 	leave: function (target, user, room) {
@@ -741,20 +726,17 @@ exports.commands = {
 	},
 
 	randtheme: function (arg, user, room) {
-		let text = '';
-		if (!user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id)) {
-			text += '/pm ' + user.id + ', ';
-		}
-		let avail = {};
+		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
+		let avail = [];
 		for (let i in gameTypes) {
 			if (typeof gameTypes[i] === "string") continue;
 			let name = gameTypes[i][0];
-			if (name in avail || gameTypes[i][4]) {
+			if (avail.includes(name) || gameTypes[i][4]) {
 				continue;
 			}
-			avail[name] = 1;
+			avail.push(name);
 		}
-		let theme = Tools.sample(Object.keys(avail));
+		let theme = Tools.sample(avail);
 		for (let i in gameTypes) {
 			if (gameTypes[i][0] == theme) {
 				var data = gameTypes[i];
@@ -762,48 +744,35 @@ exports.commands = {
 				break;
 			}
 		}
-		this.say(room, text);
+		target.say(text);
 	},
 
 	theme: 'themes',
 	themes: function(arg, user, room)
 	{
 		if (!Games.canTheme) return;
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
-		{
-			var text = '';
-		}
-		else
-		{
-			var text = '/pm ' + user.id + ', ';
-		}
-
+		let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
 		arg = toId(arg);
-		if (arg)
-		{
-			if (!(arg in gameTypes))
-			{
-				text += "Invalid game type. The game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html";
-			}
-			else
-			{
-				var data = gameTypes[arg];
-				if (typeof data === 'string') data = gameTypes[data]
-				text += '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
-				if (Games.host) {
-					Games.hosttype = data[3];
-				}
-			}
+		if (!arg) return target.say("The list of game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html");
+		if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html");
+		let data = gameTypes[arg];
+		if (typeof data === 'string') data = gameTypes[data];
+		
+		let text = '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
+		if (Games.host) {
+			Games.hosttype = data[3];
 		}
-		else
-		{
-			text += "The list of game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html";
-		}
-		this.say(room, text);
+		target.say(text);
+		if (room == user) return;
 		Games.canTheme = false;
 		var t = setTimeout(function () {
 			Games.canTheme = true;
 		}, 5 * 1000);
+	},
+
+	events: function(arg, user, room) {
+		let target = user.hasRank(room.id, '+') ? room : user;
+		target.say("Link to the Survivor events page: https://survivor-ps.weebly.com/survivor-events.html");
 	},
 
 	sethost: function (target, user, room) {
