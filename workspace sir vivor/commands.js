@@ -783,7 +783,7 @@ exports.commands = {
 		{
 			if (!(arg in gameTypes))
 			{
-				text += "Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
+				text += "Invalid game type. The game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html";
 			}
 			else
 			{
@@ -797,7 +797,7 @@ exports.commands = {
 		}
 		else
 		{
-			text += "The list of game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html";
+			text += "The list of game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html";
 		}
 		this.say(room, text);
 		Games.canTheme = false;
