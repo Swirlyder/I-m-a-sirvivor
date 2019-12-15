@@ -396,6 +396,11 @@ global.parse = exports.parse = {
 			if (c.startsWith("==")) {
 				cmd = c.substring(2);
 			}
+			let target = user.hasRank(room.id, '+') ? room : user;
+			if (cmd === user.id && (!user.lastSelfCommand || user.lastSelfCommand - Date.now() >= 4*60*60*1000)) {
+				target = room;
+				user.lastSelfCommand = Date.now();
+			}
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
             text += Commands.Replies[cmd];
             text = text.replace(/\[user\]/g, user.name);
