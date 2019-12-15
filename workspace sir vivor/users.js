@@ -17,12 +17,12 @@ class User {
 		if (roomid) this.rooms.set(roomid, username.charAt(0));
 	}
 
-        sanitizeName(username) {
-	        if (username.indexOf("@") !== -1) {
-			return username.substr(0, username.indexOf("@"));
+    sanitizeName(username) {
+        if (username.indexOf("@") !== -1) {
+			return username.slice(0, username.indexOf("@"));
 		}
 		return username;
-        }
+    }
 
 	isExcepted () {
 		return Config.excepts.includes(this.id);
@@ -56,7 +56,6 @@ class User {
 
     say(message) {
 		send('|/w ' + this.id + ', ' + message);
-		send('|/w ' + this.id + ',/asdf');
     }
 
 	rename (username) {
@@ -64,7 +63,6 @@ class User {
 		delete users[oldid];
 		this.name = this.sanitizeName(username.substr(1));
 		this.id = toId(this.name);
-console.log(this.name);
 		users[this.id] = this;
 		return this;
 	}
