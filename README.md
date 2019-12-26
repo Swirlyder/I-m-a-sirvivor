@@ -45,7 +45,9 @@ Credits:
  - CheeseMuffin (Major Development, Bot Owner and Maintainer)
  - Hawkie (First customization for survivor, Major Development)
  - inactive (Development, Maintainer)
- - UnleashOurPassion (Development)
+ - Felucia (Development)
+ - Tushavi (Development)
+ - Shadecession (Development)
  
 
 License
