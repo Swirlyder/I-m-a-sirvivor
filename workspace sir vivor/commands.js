@@ -311,7 +311,8 @@ exports.commands = {
 		arg = arg.substr(arg.indexOf(']') + 1).trim();
 		this.say(tarRoom, arg);
 	},
-
+	
+	eval: 'js',
 	js: function(arg, user, room)
 	{
 		if (!user.isExcepted()) return false;
