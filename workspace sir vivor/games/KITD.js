@@ -225,7 +225,7 @@ class KITD extends Games.Game {
 			}
 		}
 		else {
-			this.say("**" + winPlayer.name + "** defended successfully!");
+			this.say("**???** defended successfully!");
 			this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 		}
 	}
@@ -233,7 +233,7 @@ class KITD extends Games.Game {
 	handlePick(message) {
 		if (this.playerRoles.get(this.curPlayer) === 'Cop') {
 			if (message === "Failure") {
-				this.say("**" + this.oplayer.name + "** defended successfully!");
+				this.say("**???** defended successfully!");
 				this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 			}
 			else {
