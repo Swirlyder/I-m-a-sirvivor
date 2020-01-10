@@ -741,7 +741,7 @@ exports.commands = {
 		for (let i in gameTypes) {
 			if (gameTypes[i][0] == theme) {
 				var data = gameTypes[i];
-				return target.say(text**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1]);
+				return target.say('**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1]);
 			}
 		}
 		
