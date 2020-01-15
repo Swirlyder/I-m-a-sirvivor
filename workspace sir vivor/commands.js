@@ -2038,7 +2038,7 @@ exports.commands = {
     	let full = toId(arg) === "full";
     	let ret = [''];
     	let n = 0;
-    	if (!full) ret[n] += "Only showing the last 100 entries. To view the full point log use ``.pointlog full``";
+    	if (!full) ret[n] += "Only showing the last 100 entries. To view the full point log use <code>.pointlog full</code>";
     	for (let x in data) {
     		if (x > 100 && !full) break;
     		let i = data[x];
