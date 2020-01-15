@@ -2032,11 +2032,16 @@ exports.commands = {
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
     pointlog: function(arg, user, room) {
-    	if (!user.hasRank('survivor', '%')) return;
+    	if (!user.hasRank('survivor', '+')) return;
     	let data = dd.modlog.data;
     	if (!data.length) return user.say("There are no recorded point log actions.");
-    	let ret = '';
-    	for (let i of data) {
+    	let full = toId(arg) === "full";
+    	let ret = [''];
+    	let n = 0;
+    	if (!full) ret += "Only showing the last 100 entries. To view the full point log use ``.pointlog full``";
+    	for (let x in data) {
+    		if (x > 100 && !full) break;
+    		let i = data[x];
     		let date = new Date(i.date);
     		date = `[${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}]`;
     		let conv = {
@@ -2057,9 +2062,14 @@ exports.commands = {
     			if (i.part) unit += `Participation (${i.part[0]}): <i>${i.part.slice(1).join(', ')}</i><br>`;
     		}
     		unit += `</details>`
-    		ret += unit;
+    		if (ret.length + unit.length <= 100000) ret[n] += unit;
+    		else {
+    			n += 1;
+    			ret[n] = '';
+    			ret[n] += unit;
+    		}
     	}
-    	Rooms.get('survivor').say(`/pminfobox ${user.id}, ${ret}`);
+    	for (let i of ret) Rooms.get('survivor').say(`/pminfobox ${user.id}, ${i}`);
     },
 
 	settextcolor: function (target, user, room) {
