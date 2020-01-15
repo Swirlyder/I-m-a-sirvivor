@@ -1809,9 +1809,18 @@ exports.commands = {
       return user.say("Bot hosted games with at least 4 players are worth points.");
     }
     else if (numPlayers < 7) {
-      firstpoints = 2;
-      dd.addpoints(first, firstpoints);
-      return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+		firstpoints = 2;
+		let modlogEntry = {
+			command: "addbot",
+			user: user.id,
+			first: [firstpoints, first],
+			second: false,
+			host: false,
+			part: false
+		};
+		dd.updateModlog(modlogEntry);
+		dd.addpoints(first, firstpoints);
+		return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
     }
     else if (numPlayers < 10) {
       firstpoints = 3;
@@ -1828,6 +1837,15 @@ exports.commands = {
     dd.addpoints(first, firstpoints);
     let second = split[2];
     dd.addpoints(second, secondpoints);
+    let modlogEntry = {
+    	command: "addbot",
+    	user: user.id,
+    	first: [firstpoints, first],
+    	second: [secondpoints, second],
+    	host: false,
+    	part: false
+    };
+    dd.updateModlog(modlogEntry);
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
     return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
   },
@@ -1841,67 +1859,85 @@ exports.commands = {
     let numPlayers = parseInt(split[0]);
     if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
     if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up for games with 6+ players.");
-		if (split.length < 5 && numPlayers >= 7) return user.say("Please mention all players who took part for games with 7+ players.")
-		if (numPlayers >= 7 && split.length != numPlayers + 2) return user.say("Please check the number of players.")
+	if (split.length < 5 && numPlayers >= 7) return user.say("Please mention all players who took part for games with 7+ players.")
+	if (numPlayers >= 7 && split.length != numPlayers + 2) return user.say("Please check the number of players.")
     let host = split[1];
     let first = split[2];
     let hostpoints = 0;
     let firstpoints = 0;
     let secondpoints = 0;
-		let partpoints = 0;
+	let partpoints = 0;
     if (numPlayers < 4) {
       return user.say("User hosted games with at least 4 players are worth points.");
     }
     else if (numPlayers < 6) {
-      hostpoints = 2;
-      firstpoints = 3;
-      dd.addpoints(host, hostpoints);
-      dd.addpoints(first, firstpoints);
-      user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
-      return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+		hostpoints = 2;
+		firstpoints = 3;
+		dd.addpoints(host, hostpoints);
+		dd.addpoints(first, firstpoints);
+		let modlogEntry = {
+			command: "adduser",
+			user: user.id,
+			first: [firstpoints, first],
+			second: false,
+			host: [hostpoints, host],
+			part: false
+		};
+		dd.updateModlog(modlogEntry);
+		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+		return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
     }
     else if (numPlayers == 6) {
-      hostpoints = 2;
-      firstpoints = 3;
-      secondpoints = 1;
+		hostpoints = 2;
+		firstpoints = 3;
+		secondpoints = 1;
     }
     else if (numPlayers < 10) {
-      hostpoints = 4;
-      firstpoints = 6;
-      secondpoints = 3;
-			partpoints = 1;
+		hostpoints = 4;
+		firstpoints = 6;
+		secondpoints = 3;
+		partpoints = 1;
     }
     else if (numPlayers < 13) {
-      hostpoints = 6;
-      firstpoints = 9;
-      secondpoints = 5;
-			partpoints =  2;
+		hostpoints = 6;
+		firstpoints = 9;
+		secondpoints = 5;
+		partpoints =  2;
     }
     else if (numPlayers >= 13) {
-      hostpoints = 8;
-      firstpoints = 12;
-      secondpoints = 7;
-			partpoints = 3;
+		hostpoints = 8;
+		firstpoints = 12;
+		secondpoints = 7;
+		partpoints = 3;
     }
-		let partlist = '';
+	let partlist = '';
     dd.addpoints(host, hostpoints);
     dd.addpoints(first, firstpoints);
     let second = split[3];
     dd.addpoints(second, secondpoints);
     user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
- 		user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
-		for (let i = 4 ; i < split.length ; i++) {
-			let part = split[i];
-			dd.addpoints(part, partpoints);
-			if (i == 4) {
-				if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
-				else partlist = part.trim()
-			}
-			else if (i == split.length - 1) partlist += " and " + part.trim();
-			else partlist += ", " + part.trim();
+	user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+	for (let i = 4 ; i < split.length ; i++) {
+		let part = split[i];
+		dd.addpoints(part, partpoints);
+		if (i == 4) {
+			if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
+			else partlist = part.trim()
 		}
-		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+		else if (i == split.length - 1) partlist += " and " + part.trim();
+		else partlist += ", " + part.trim();
+	}
+	let modlogEntry = {
+		command: "adduser",
+		user: user.id,
+		first: [firstpoints, first],
+		second: [secondpoints, second],
+		host: [hostpoints, host],
+		part: [partpoints].concat(split.slice(4));
+	};
+	dd.updateModlog(modlogEntry);
+	return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
 
   addpointsofficial: 'addfish',
@@ -1924,31 +1960,31 @@ exports.commands = {
       return user.say("Official games with at least 4 players are worth points.");
     }
     else if (numPlayers < 7) {
-      hostpoints = 4;
-      firstpoints = 6;
-      secondpoints = 4;
-      partpoints = 1;
-      if (numPlayers < 6) {
-        secondpoints = 1;
-      }
+		hostpoints = 4;
+		firstpoints = 6;
+		secondpoints = 4;
+		partpoints = 1;
+		if (numPlayers < 6) {
+			secondpoints = 1;
+		}
     }
     else if (numPlayers < 10) {
-      hostpoints = 6;
-      firstpoints = 9;
-      secondpoints = 6;
-      partpoints = 3;
+		hostpoints = 6;
+		firstpoints = 9;
+		secondpoints = 6;
+		partpoints = 3;
     }
     else if (numPlayers < 13) {
-      hostpoints = 8;
-      firstpoints = 12;
-      secondpoints = 8;
-      partpoints = 4;
+		hostpoints = 8;
+		firstpoints = 12;
+		secondpoints = 8;
+		partpoints = 4;
     }
     else if (numPlayers >= 13) {
-      hostpoints = 10;
-      firstpoints = 15;
-      secondpoints = 10;
-      partpoints = 5;
+		hostpoints = 10;
+		firstpoints = 15;
+		secondpoints = 10;
+		partpoints = 5;
     }
     let partlist = '';
     dd.addpoints(host, hostpoints);
@@ -1967,6 +2003,15 @@ exports.commands = {
     user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
     if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+	let modlogEntry = {
+		command: "adduser",
+		user: user.id,
+		first: [firstpoints, first],
+		second: [secondpoints, second],
+		host: [hostpoints, host],
+		part: [partpoints].concat(split.slice(4));
+	};
+	dd.updateModlog(modlogEntry);
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
 
