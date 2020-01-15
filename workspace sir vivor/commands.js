@@ -1934,7 +1934,7 @@ exports.commands = {
 		first: [firstpoints, first],
 		second: [secondpoints, second],
 		host: [hostpoints, host],
-		part: [partpoints].concat(split.slice(4));
+		part: [partpoints].concat(split.slice(4))
 	};
 	dd.updateModlog(modlogEntry);
 	return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
@@ -2009,7 +2009,7 @@ exports.commands = {
 		first: [firstpoints, first],
 		second: [secondpoints, second],
 		host: [hostpoints, host],
-		part: [partpoints].concat(split.slice(4));
+		part: [partpoints].concat(split.slice(4))
 	};
 	dd.updateModlog(modlogEntry);
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
