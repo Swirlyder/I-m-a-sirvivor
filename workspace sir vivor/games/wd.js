@@ -79,7 +79,7 @@ class Weardown extends Games.Game {
             this.rollb = roll;
             if (this.rolla < 1) this.rolla = 1;
             if (this.rollb < 1) this.rollb = 1;
-            let curHP = this.hp.set(this.curPlayer);
+            let curHP = this.hp.get(this.curPlayer);
             let otherHP = this.hp.get(this.oplayer);
             if (this.rolla > curHP) this.rolla = curHP;
             if (this.rollb > otherHP) this.rollb = otherHP;
