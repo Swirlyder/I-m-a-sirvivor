@@ -1786,10 +1786,20 @@ exports.commands = {
   	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
   	let split = target.split(",");
   	if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
-  	let username = split[0];
+  	let username = split[0].trim();
   	let numPoints = parseInt(split[1]);
   	if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
   	dd.addpoints(username, numPoints);
+	let modlogEntry = {
+		command: "addspecial",
+		user: user.id,
+		points: [numPoints, username],
+		first: false,
+		second: false,
+		host: false,
+		part: false,
+		date: Date.now()
+	};
   	return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the leaderboard.");
   },
 
@@ -1816,7 +1826,8 @@ exports.commands = {
 			first: [firstpoints, first],
 			second: false,
 			host: false,
-			part: false
+			part: false,
+			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
 		dd.addpoints(first, firstpoints);
@@ -1843,7 +1854,8 @@ exports.commands = {
     	first: [firstpoints, first],
     	second: [secondpoints, second],
     	host: false,
-    	part: false
+    	part: false,
+		date: Date.now()
     };
     dd.updateModlog(modlogEntry);
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
@@ -1881,7 +1893,8 @@ exports.commands = {
 			first: [firstpoints, first],
 			second: false,
 			host: [hostpoints, host],
-			part: false
+			part: false,
+			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
 		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
@@ -1934,7 +1947,8 @@ exports.commands = {
 		first: [firstpoints, first],
 		second: [secondpoints, second],
 		host: [hostpoints, host],
-		part: [partpoints].concat(split.slice(4))
+		part: [partpoints].concat(split.slice(4)),
+		date: Date.now()
 	};
 	dd.updateModlog(modlogEntry);
 	return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
@@ -2004,16 +2018,47 @@ exports.commands = {
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
     if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
 	let modlogEntry = {
-		command: "adduser",
+		command: "addfish",
 		user: user.id,
 		first: [firstpoints, first],
 		second: [secondpoints, second],
 		host: [hostpoints, host],
-		part: [partpoints].concat(split.slice(4))
+		part: [partpoints].concat(split.slice(4)),
+		date: Date.now()
 	};
 	dd.updateModlog(modlogEntry);
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
+    pointlog: function(arg, user, room) {
+    	if (!user.hasRank('survivor', '%')) return;
+    	let data = dd.modlog.data;
+    	if (!data.length) return user.say("There are no recorded point log actions.");
+    	let ret = '';
+    	for (let i of data) {
+    		let date = new Date(i.date);
+    		date = `[${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}]`;
+    		let conv = {
+    			"adduser": "User",
+    			"addbot": "Bot",
+    			"addspecial": "Special",
+    			"addfish": "Official" 
+    		}
+    		let unit = `<details><summary><b>${conv[i.command]}</b> by ${i.user}</summary>`;
+    		unit += `${date}<br>`;
+    		if (i.command === "addspecial") {
+    			unit += `User (${i.points[0]}): <i>${i.points[1]}</i>`;
+    		}
+    		else {
+    			if (i.host) unit += `Host (${i.host[0]}): <i>${i.host[1]}</i><br>`;
+    			if (i.first) unit += `First (${i.first[0]}): <i>${i.first[1]}</i><br>`;
+    			if (i.second) unit += `Second (${i.second[0]}): <i>${i.second[1]}</i><br>`;
+    			if (i.part) unit += `Participation (${i.part[0]}): <i>${i.part.slice(1).join(', ')}</i><br>`;
+    		}
+    		unit += `</details>`
+    		ret += unit;
+    	}
+    	Rooms.get('survivor').say(`/pminfobox ${user.id}, ${ret}`);
+    },
 
 	settextcolor: function (target, user, room) {
   	if (!target) return user.say("No target found :" + target);
