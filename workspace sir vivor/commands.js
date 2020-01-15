@@ -1802,7 +1802,7 @@ exports.commands = {
     let numPlayers = parseInt(split[0]);
     if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
     if (split.length < 3 && numPlayers > 6) return user.say("Please also specify the runner up for games with 7+ players.");
-    let first = split[1];
+    let first = split[1].trim();
     let firstpoints = 0;
     let secondpoints = 0;
     if (numPlayers < 4) {
@@ -1835,7 +1835,7 @@ exports.commands = {
       secondpoints = 4;
     }
     dd.addpoints(first, firstpoints);
-    let second = split[2];
+    let second = split[2].trim();
     dd.addpoints(second, secondpoints);
     let modlogEntry = {
     	command: "addbot",
@@ -1861,8 +1861,8 @@ exports.commands = {
     if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up for games with 6+ players.");
 	if (split.length < 5 && numPlayers >= 7) return user.say("Please mention all players who took part for games with 7+ players.")
 	if (numPlayers >= 7 && split.length != numPlayers + 2) return user.say("Please check the number of players.")
-    let host = split[1];
-    let first = split[2];
+    let host = split[1].trim();
+    let first = split[2].trim();
     let hostpoints = 0;
     let firstpoints = 0;
     let secondpoints = 0;
@@ -1913,7 +1913,7 @@ exports.commands = {
 	let partlist = '';
     dd.addpoints(host, hostpoints);
     dd.addpoints(first, firstpoints);
-    let second = split[3];
+    let second = split[3].trim();
     dd.addpoints(second, secondpoints);
     user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
     user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
@@ -1949,9 +1949,9 @@ exports.commands = {
     let numPlayers = parseInt(split[0]);
     if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
     if (split.length != numPlayers+2) return user.say("Please check the number of players.");
-    let host = split[1];
-    let first = split[2];
-    let second = split[3];
+    let host = split[1].trim();
+    let first = split[2].trim();
+    let second = split[3].trim();
     let hostpoints = 0;
     let firstpoints = 0;
     let secondpoints = 0;
