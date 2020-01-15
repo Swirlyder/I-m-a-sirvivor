@@ -720,7 +720,7 @@ exports.commands = {
 		} else {
 			Games.host = realuser;
 			this.say(room, "survgame! " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "")+ "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + realuser.name + " hosted");
+			this.say(room, "/modnote HOST: " + realuser.name + " hosted");
 			Games.addHost(realuser);
 			Games.exportData();
 		}
