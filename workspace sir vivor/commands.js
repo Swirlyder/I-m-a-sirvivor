@@ -2086,7 +2086,7 @@ exports.commands = {
     	}
     	dd.modlog.data.reverse();
     	for (let i of units) {
-    		if (ret[n].length + i.length <= 100000) ret += i;
+    		if (ret[n].length + i.length <= 100000) ret[n] += i;
     		else {
     			n += 1;
     			ret[n] = '';
