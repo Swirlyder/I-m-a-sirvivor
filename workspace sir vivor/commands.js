@@ -2056,7 +2056,7 @@ exports.commands = {
     	if (!full && data.length > 100) ret[n] += "Only showing the last 100 results. To view the full point log use <code>.pointlog full</code>";
     	for (let i of data) {
     		if (units.length === 100 && !full) break;
-    		let searchstr = `${toId(i.command)} ${toId(conv[i.command])} ${toId(i.user)} ${toId()}`;
+    		let searchstr = `${toId(i.command)} ${toId(conv[i.command])} ${toId(i.user)}`;
     		if (i.command === "addspecial") {
     			searchstr += ` ${i.points[1]}`;
     		}
