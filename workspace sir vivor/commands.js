@@ -1764,6 +1764,7 @@ exports.commands = {
 	apt: 'addpoints',
 	addpoints: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		return user.say('.addpoints is no longer used.');
 		let split = (target.indexOf(',') === -1 ? target.split("|") : target.split(","));
 		if (split.length < 4) return room.say("You have to specify the host, winner, second place, and at least one participant");
 		dd.addHost(split[0]);
@@ -1800,6 +1801,7 @@ exports.commands = {
 		part: false,
 		date: Date.now()
 	};
+	dd.updateModlog(modlogEntry);
   	return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the leaderboard.");
   },
 
