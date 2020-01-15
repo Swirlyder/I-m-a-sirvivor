@@ -2089,7 +2089,8 @@ exports.commands = {
     		if (ret[n].length + i.length <= 100000) ret += i;
     		else {
     			n += 1;
-    			ret[n] = i;
+    			ret[n] = '';
+    			ret[n] += i;
     		}
     	}
     	for (let i of ret) Rooms.get('survivor').say(`/pminfobox ${user.id}, ${i}`);
