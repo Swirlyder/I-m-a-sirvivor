@@ -48,6 +48,7 @@ class DD {
 				this.dd[id].points = numPoints;
 			}
 		}
+		this.exportData();
 	}
 
   remPoints(user, numPoints) {
@@ -63,6 +64,7 @@ class DD {
 				this.dd[id].points -= numPoints;
 			}
 		}
+		this.exportData();
 	}
 
 	getPoints(item) {
