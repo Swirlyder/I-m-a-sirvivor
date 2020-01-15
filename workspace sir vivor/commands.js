@@ -1219,6 +1219,7 @@ exports.commands = {
 		this.say(room, text);
 	},
 	pointsystem: 'point',
+	points: 'point',
 	point: function(arg, user, room)
 	{
 		var text = '';
@@ -2214,7 +2215,7 @@ exports.commands = {
 		dd.exportData()
 		return room.say("The dd leaderboard has been reset.");
 	},
-	points: function (target, user, room) {
+	position: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
 		if (!target) target = user.id;
