@@ -2038,21 +2038,38 @@ exports.commands = {
     	if (!user.hasRank('survivor', '+')) return;
     	let data = dd.modlog.data.reverse();
     	if (!data.length) return user.say("There are no recorded point log actions.");
-    	let full = toId(arg) === "full";
-    	let ret = [''];
-    	let n = 0;
-    	if (!full && data.length > 100) ret[n] += "Only showing the last 100 entries. To view the full point log use <code>.pointlog full</code>";
-    	for (let x in data) {
-    		if (x > 100 && !full) break;
-    		let i = data[x];
+    	let args = arg.split(',');
+    	let full = toId(args[0]) === "full";
+    	if (!full && args.length > 1) full = toId(args[1]) === "full";
+    	let search = false;
+    	if (args[0] && args[0] !== "full") search = toId(args[0]);
+    	else if (args[1] && args[1] !== "full") search = toId(args[1]);
+    	let units = [];
+    	let conv = {
+			"adduser": "User",
+			"addbot": "Bot",
+			"addspecial": "Special",
+			"addfish": "Official" 
+		}
+		let ret = [''];
+		let n = 0;
+    	if (!full && data.length > 100) ret[n] += "Only showing the last 100 results. To view the full point log use <code>.pointlog full</code>";
+    	for (let i of data) {
+    		if (units.length === 100 && !full) break;
+    		let searchstr = `${toId(i.command)} ${toId(conv[i.command])} ${toId(i.user)} ${toId()}`;
+    		if (i.command === "addspecial") {
+    			searchstr += ` ${i.points[1]}`;
+    		}
+    		else {
+    			if (i.host) searchstr += ` ${toId(i.host[1])}`;
+    			if (i.first) searchstr += ` ${toId(i.first[1])}`;
+    			if (i.second) searchstr += ` ${toId(i.second[1])}`;
+    			if (i.part) for (let nom of i.part.slice(1)) searchstr += ` ${toId(nom)}`;
+    		}
+    		if (search && !searchstr.includes(search)) continue;
     		let date = new Date(i.date);
     		date = `[${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}]`;
-    		let conv = {
-    			"adduser": "User",
-    			"addbot": "Bot",
-    			"addspecial": "Special",
-    			"addfish": "Official" 
-    		}
+    		
     		let unit = `<details><summary><b>${conv[i.command]}</b> by ${i.user}</summary>`;
     		unit += `${date}<br>`;
     		if (i.command === "addspecial") {
@@ -2065,14 +2082,16 @@ exports.commands = {
     			if (i.part) unit += `Participation (${i.part[0]}): <i>${i.part.slice(1).join(', ')}</i><br>`;
     		}
     		unit += `</details>`
-    		if (ret[n].length + unit.length <= 100000) ret[n] += unit;
-    		else {
-    			n += 1;
-    			ret[n] = '';
-    			ret[n] += unit;
-    		}
+    		units.push(unit);
     	}
     	dd.modlog.data.reverse();
+    	for (let i of units) {
+    		if (ret[n].length + i.length <= 100000) ret += i;
+    		else {
+    			n += 1;
+    			ret[n] = i;
+    		}
+    	}
     	for (let i of ret) Rooms.get('survivor').say(`/pminfobox ${user.id}, ${i}`);
     },
 
