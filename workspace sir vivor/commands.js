@@ -713,7 +713,7 @@ exports.commands = {
 			Games.hosts.push([realuser.name, targTheme]);
 			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
 			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + info[0] + " hosted");
+			this.say(room, "/modnote HOST: " + info[0] + " hosted");
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
@@ -1664,7 +1664,7 @@ exports.commands = {
 		//if (id === 'ftl' || id === 'followtheleader') return room.say("Follow the Leader is currently down for repairs.");
 		if (!Games.createGame(target, room)) return;
 		room.game.signups();
-	    	room.say("/modnote " + user.name + " started signups of " + room.game.name + ".");
+		room.say("/modnote HOST: " + user.name + " started signups of " + room.game.name + ".");
 	},
 	forcesignups: function (target, user, room) {
 		if (!user.hasRank(room.id, '#')) return;
@@ -1691,7 +1691,7 @@ exports.commands = {
 		}
 		console.log(id);
 		room.game.signups();
-		room.say("/modnote " + user.name + " started a random game of " + room.game.name +".");
+		room.say("/modnote HOST: " + user.name + " started a random game of " + room.game.name +".");
 	},
 
 	endgame: 'end',
