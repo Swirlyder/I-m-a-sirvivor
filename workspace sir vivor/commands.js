@@ -2036,7 +2036,7 @@ exports.commands = {
   },
     pointlog: function(arg, user, room) {
     	if (!user.hasRank('survivor', '+')) return;
-    	let data = dd.modlog.data;
+    	let data = dd.modlog.data.reverse();
     	if (!data.length) return user.say("There are no recorded point log actions.");
     	let full = toId(arg) === "full";
     	let ret = [''];
@@ -2072,6 +2072,7 @@ exports.commands = {
     			ret[n] += unit;
     		}
     	}
+    	dd.modlog.data.reverse();
     	for (let i of ret) Rooms.get('survivor').say(`/pminfobox ${user.id}, ${i}`);
     },
 
