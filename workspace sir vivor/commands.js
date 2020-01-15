@@ -1649,6 +1649,9 @@ exports.commands = {
 			}
 		}
 	},
+	chainroll: function(arg, user, room) {
+		return;
+	},
 
 	join: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
@@ -1953,7 +1956,7 @@ exports.commands = {
 		date: Date.now()
 	};
 	dd.updateModlog(modlogEntry);
-	return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+	if (partpoints !== 0) return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
 
   addpointsofficial: 'addfish',
