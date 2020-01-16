@@ -58,19 +58,19 @@ class Evolve extends Games.Game {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
 		if (this.round%3 === 2) {
 			this.say("**This round, you can also choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
-			this.hasEvolved.clear();
 			this.canEvolve = true;
 		}
 		else this.canEvolve = false;
 		this.order = [];
 		this.attacks.clear();
+		this.hasEvolved.clear();
 		this.numAttacks = 0;
 		this.canAttack = true;
 		this.timeout = setTimeout(() => this.listWaiting(), 60 * 1000);
 	}
 
 	listWaiting() {
-		this.say("Waiting on: " + Object.values(this.players).filter(pl => !pl.eliminated && !this.attacks.has(pl)).map(pl => pl.name).join(", "));
+		this.say("Waiting on: " + Object.values(this.players).filter(pl => !pl.eliminated && !this.attacks.has(pl) && !this.hasEvolved.has(pl)).map(pl => pl.name).join(", "));
 		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
 	}
 
@@ -182,6 +182,11 @@ class Evolve extends Games.Game {
 		}
 		this.hasEvolved.set(player, true);
 		player.say("You have evolved into **" + Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].species + "**!");
+		this.numAttacks++;
+		if (this.numAttacks === this.getRemainingPlayerCount()) {
+			clearTimeout(this.timeout);
+			this.handleAttacks();
+		}
 	}
 }
 
