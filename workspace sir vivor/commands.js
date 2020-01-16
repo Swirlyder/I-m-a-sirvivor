@@ -1649,8 +1649,90 @@ exports.commands = {
 			}
 		}
 	},
-	chainroll: function(arg, user, room) {
-		return;
+	newroll: function(arg, user, room) {
+		// Permission check
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
+			let index = Games.excepted.indexOf(user.id);
+			if (index === -1) return;
+			Games.excepted.splice(index, 1);
+		}
+	    roll = arg.toString().split("//")[0];
+	    
+	    if (!roll) roll = "100";
+	    let add = roll.indexOf("+");
+	    let sub = roll.indexOf("-");
+	    let index = -1;
+	    if (add > sub) {
+	        if (sub !== -1) index = sub;
+	        else index = add;
+	    }
+	    if (sub > add) {
+	        if (add !== -1) index = add;
+	        else index = sub;
+	    }
+	    
+	    let addition = index == -1 ? false : roll.substring(index); // We'll come back to this later
+	    if (index !== -1) roll = roll.substring(0, index);
+	    
+	    roll = roll.split("d");
+	    if (roll.length > 2) return room.say("Invalid dice format.");
+	    let dice = roll[0];
+	    let faces = roll[1];
+	    if (roll.length === 1) {
+	        faces = roll[0];
+	        dice = "1";
+	    }
+	    else {
+	        if (!dice) dice = "1";
+	        if (!faces) faces = "100";
+	    }
+	    
+	    dice = parseInt(dice);
+	    faces = parseInt(faces);
+	    if (isNaN(dice) || isNaN(faces)) return room.say("Invalid dice format.");
+	    let rolls = [];
+	    let total = 0;
+	    for (let i = 0; i < dice; i++) {
+	        let roll = Math.floor(Math.random() * faces) + 1;
+	        rolls.push(roll);
+	        total += roll;
+	    }
+	    let addit = 0;
+	    if (addition) {
+	        addition = addition.split('');
+	        let cur = addition.shift();
+	        let cv = "";
+	        for (let ch of addition) {
+	            if (ch === "+" || ch === "-") {
+	                if (!cv) return room.say("Invalid dice format.");
+	                cv = parseInt(cv);
+	                if (isNaN(cv)) return room.say("Invalid dice format.");
+	                if (cur === "+") addit += cv;
+	                else addit -= cv;
+	                cv = "";
+	                cur = ch;
+	                continue;
+	            }
+	            if ("0123456789".indexOf(ch) !== -1) {
+	                cv += ch;
+	                continue;
+	            }
+	            if (ch === " ") continue;
+	            return room.say("Invalid dice format.");
+	        }
+	        
+	        if (!cv) return room.say("Invalid dice format.");
+	        cv = parseInt(cv);
+	        if (isNaN(cv)) return room.say("Invalid dice format.");
+	        if (cur === "+") addit += cv;
+	        else addit -= cv;
+	        total += addit;
+	    }
+	    let ret = `Roll (1 - ${faces})${addit !== 0 ? (addit < 0 ? " -" : " +") + " " + Math.abs(addit) : ""}: ${total}`;
+	    if (dice > 1) {
+	    	ret = `${dice} Rolls (1 - ${faces}): ${rolls.join(', ')}<br>Sum${addit !== 0 ? (addit < 0 ? " - " : " + ") + Math.abs(addit) : ""}: ${total}`;
+	    }
+	    this.say(room, `/addhtmlbox ${ret}`);
 	},
 
 	join: function (arg, user, room) {
