@@ -36,7 +36,9 @@ class Avoidance extends Games.Game {
 		else {
 			let targets = Object.values(this.players).filter(pl => !pl.eliminated && this.numbers.get(pl) === this.number);
 			if (targets.length === 2) {
-				this.say(`${targets[0].name} attacks ${targets[1].name}`);
+				this.say(`**${targets[0].name} attacks ${targets[1].name}**`);
+				this.attacker = targets[0];
+				this.defender = targets[1];
 				this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
 			}
 			else {
@@ -160,6 +162,7 @@ class Avoidance extends Games.Game {
 		target = parseInt(target, 10);
 		if (isNaN(target) || target < 1 || target > this.maxNum) return player.say(`You need to pick a number between 1 and ${this.maxNum}.`);
 		this.numbers.set(player, target);
+		player.say('You chose ``' + target + '``.');
 		if (this.numbers.size === this.getRemainingPlayerCount()) {
 			clearTimeout(this.timeout);
 			this.handleAttacks();
@@ -179,6 +182,7 @@ class Avoidance extends Games.Game {
 		if (this.numbers.get(targPlayer) === this.number) return user.say("That player can't be attacked this round.");
 		if (targPlayer === this.curPlayer) return this.say(">Attacking yourself.");
 		this.attacks.set(player, targPlayer);
+		player.say('You attacked ``' + targPlayer.name + '``.');
 		if (this.attacks.size === Object.values(this.players).filter(pl => !pl.eliminated && this.numbers.get(pl) === this.number).length) {
 			clearTimeout(this.timeout);
 			this.handleAttacks();
