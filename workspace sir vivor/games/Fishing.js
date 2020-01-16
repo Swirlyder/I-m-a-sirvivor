@@ -210,7 +210,7 @@ class Fishing extends Games.Game {
 		let player = this.players[user.id];
 		if (!this.canRod || !player || player.eliminated) return;
 		target = toId(target);
-		if (this.hasPicked.includes(player)) return user.say("You have already picked a rod.");
+		if (this.rods.has(player)) return user.say("You have already picked a rod.");
 		if (!['old', 'good', 'super'].includes(target)) return user.say('Usage: ``.choose old/good/super``');
 		this.rods.set(player, target);
 		this.hasPicked.add(player);
