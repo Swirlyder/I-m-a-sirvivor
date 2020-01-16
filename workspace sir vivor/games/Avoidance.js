@@ -72,7 +72,7 @@ class Avoidance extends Games.Game {
 			else if (!this.attacks.has(this.players[i]) && this.numbers.get(this.players[i]) === this.number) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
-		setTimeout(() => this.elimWaiting(), 30 * 1000);
+		this.timeout = setTimeout(() => this.elimWaiting(), 30 * 1000);
 	}
 
 	elimWaiting() {
