@@ -1,41 +1,76 @@
 'use strict';
 
-let fishdict = {
-	old: {
-		"Wailmer": [40, 1],
-		"Tentacool": [-20, 19],
-		"Tympole": [10, 49],
-		"Poliwag": [20, 68],
-		"Dratini": [50, 69],
-		"Bruxish": [30, 85],
-		"Milotic": [40, 99],
-		"Golden Magikarp": [80, 100]
-	},
-	good: {
-		"Wailord": [50, 1],
-		"Carvanha": [-35, 19],
-		"Floatzel": [35, 49],
-		"Milotic": [40, 68],
-		"Pink Dratini": [75, 69],
-		"Dragalge": [-35, 85],
-		"Clawitzer": [60, 99],
-		"Red Toxapex": [120, 100]
-	},
-	super: {
-		"Kyogre": [100, 1],
-		"Sharpedo": [-50, 19],
-		"Mega Sharpedo": [false, 49],
-		"Lumineon": [75, 68],
-		"Dragonair": [120, 69],
-		"Kabutops": [90, 85],
-		"Omastar": [110, 99],
-		"Red Gyarados": [150, 100]
-	}
-}
-function getFish(rod, roll) {
-	for (let i in fishdict[rod]) {
-		if (fishdict[rod][i][1] > roll) continue;
-		return [i, fishdict[rod][i][0]]
+function getFish(roll) {
+	if (roll === 1) {
+		return {
+			name: "Kyogre",
+			value: 100,
+		};
+	} else if (roll === 6 || roll === 66) {
+		return {
+			name: "Random Nugget",
+			value: 80,
+		};
+	} else if (roll === 69) {
+		return {
+			name: "Shiny Gyarados",
+			value: 125,
+		};
+	} else if (roll === 100) {
+		return {
+			name: "Golden Magikarp",
+			value: 150,
+		};
+	} else if (roll < 11) {
+		return {
+			name: "Feebas",
+			value: 2,
+		};
+	} else if (roll < 22) {
+		 return {
+			name: "Magikarp",
+			value: 5,
+		};
+	} else if (roll < 33) {
+		return {
+			name: "Goldeen",
+			value: 10,
+		};
+	} else if (roll < 44) {
+		return {
+			name: "Seaking",
+			value: 15,
+		};
+	} else if (roll < 55) {
+		return {
+			name: "Alomomola",
+			value: 20,
+		};
+	} else if (roll < 66) {
+		return {
+			name: "Stunfisk",
+			value: 25,
+		};
+	} else if (roll < 75) {
+		 return {
+			name: "Basculin Blue",
+			value: 30,
+		};
+	} else if (roll < 78) {
+		return {
+			name: "Broken Pokeball",
+			value: -34,
+		};
+	} else if (roll < 90) {
+		return {
+			name: "Basculin Red",
+			value: 35,
+		};
+	} else {
+		return {
+			name: "Qwilfish",
+			value: 50,
+		};
 	}
 }
 
@@ -50,10 +85,7 @@ class Fishing extends Games.Game {
 		this.id = id;
 		this.description = description;
 		this.hasRolled = new Set();
-		this.hasPicked = new Set();
 		this.rolls = new Map();
-		this.rods = new Map();
-		this.canRod = false;
 		this.fishNum = 0;
 	}
 
@@ -79,17 +111,6 @@ class Fishing extends Games.Game {
 				this.curPlayer = null;
 			}
 			this.say("!pick " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "[" + this.rolls.get(pl) + "]").join(", "));
-		}
-	}
-
-	beforeNextRound() {
-		if (this.round < 4) {
-			this.hasPicked.clear();
-			this.canRod = true;
-			this.say("**PL: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "[" + this.rolls.get(pl) + "]").join(", ") + "! Pick your rod using ``.choose [old/good/super]``**!");
-			this.timeout = setTimeout(() => this.listWaiting(), 45 * 1000);
-		} else {
-			this.nextRound();
 		}
 	}
 
@@ -139,19 +160,13 @@ class Fishing extends Games.Game {
 
 	handleRoll(roll) {
 		if (this.round < 4) {
-			let fish = getFish(this.rods.get(this.curPlayer), roll);
+			let fish = getFish(roll);
 			let curRoll = this.rolls.get(this.curPlayer);
-			curRoll += fish[1];
-			this.say("**" + this.curPlayer.name + "** reels in **" + fish[0] + "**!");
-			if (fish[1] === false) {
-				this.curPlayer.eliminated = true;
-				this.say("**" + this.curPlayer.name + "** is eliminated!");
-			} 
-			else {
-				this.curPlayer.say("You gained **" + fish[1] + "** to your roll!");
-				this.rolls.set(this.curPlayer, curRoll);
-				this.hasRolled.add(this.curPlayer);
-			}
+			curRoll += fish.value;
+			this.say("**" + this.curPlayer.name + "** reels in **" + fish.name + "**!");
+			this.curPlayer.say("You gained **" + fish.value + "** to your roll!");
+			this.rolls.set(this.curPlayer, curRoll);
+			this.hasRolled.add(this.curPlayer);
 			this.timeout = setTimeout (() => this.doNextPick(), 5 * 1000); 
 		} else if (!this.rolla) {
 			this.rolla = roll;
@@ -177,22 +192,6 @@ class Fishing extends Games.Game {
 		}
 	}
 
-	listWaiting() {
-		this.say("Waiting on: " + Object.values(this.players).filter(pl => !pl.eliminated && !this.rods.has(pl)).map(pl => pl.name).join(", "));
-		this.timeout = setTimeout(() => this.elimPlayers(), 30 * 1000);
-	}
-
-	elimPlayers() {
-		for (let userID in this.players) {
-			let player = this.players[userID];
-			if (!player.eliminated && !this.rods.has(player)) {
-				player.eliminated = true;
-				player.say("You didn't pick a rod and are eliminated!");
-			}
-		}
-		this.nextRound();
-	}
-
 	attack(target, user) {
 		let player = this.players[user.id];
 		if (!player || !this.curPlayer || player !== this.curPlayer) return;
@@ -205,31 +204,11 @@ class Fishing extends Games.Game {
 		clearTimeout(this.timeout);
 		this.doAttack();
 	}
-
-	choose(target, user) {
-		let player = this.players[user.id];
-		if (!this.canRod || !player || player.eliminated) return;
-		target = toId(target);
-		if (this.hasPicked.includes(player)) return user.say("You have already picked a rod.");
-		if (!['old', 'good', 'super'].includes(target)) return user.say('Usage: ``.choose old/good/super``');
-		this.rods.set(player, target);
-		this.hasPicked.add(player);
-		user.say('You have picked the ``' + target + ' rod``!');
-		if (this.hasPicked.size === this.getRemainingPlayerCount()) {
-			clearTimeout(this.timeout);
-			this.nextRound();
-		}
-	}
 }
 
 exports.game = Fishing;
 exports.name = name;
 exports.id = id;
 exports.description = description;
-exports.commands = {
-	"choose": "choose"
-};
-exports.pmCommands = {
-	"choose": true
-}
+exports.commands = [];
 
