@@ -25,6 +25,7 @@ class Avoidance extends Games.Game {
 	onNextRound() {
 		if (this.phase && this.getRemainingPlayerCount() === 2) {
 			this.phase = false;
+			this.say("**We're down to the last 2 players!**")
 		}
 		if (this.phase) {
 			this.pl();
@@ -110,6 +111,10 @@ class Avoidance extends Games.Game {
 			if (this.attacks.size) {
 				this.attacker = Array.from(this.attacks.keys())[0];
 				this.defender = this.attacks.get(this.attacker);
+				if (this.defender.eliminated) {
+					this.attacks.delete(this.attacker);
+					return this.handleAttacks();
+				}
 				this.say(`**${this.attacker.name} attacks ${this.defender.name}!**`);
 				this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
 			}
