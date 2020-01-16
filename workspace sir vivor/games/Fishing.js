@@ -102,8 +102,8 @@ class Fishing extends Games.Game {
 		} else if (availPlayers.length === 1) {
 			this.curPlayer = availPlayers[0];
 			this.say("Rolling for **" + this.curPlayer.name + "**'s next catch!");
-			fishNum++;
-			let cmd = fishNum % 2 === 0 ? "!roll" : "!dice";
+			this.fishNum++;
+			let cmd = this.fishNum % 2 === 0 ? "!roll" : "!dice";
 			this.say(cmd + " 100");	
 		} else {
 			this.say("!pick __" + Object.values(this.players).filter(pl => !pl.eliminated && !this.hasRolled.has(pl)).map(pl => pl.name).join("__, __") + "__");
