@@ -38,7 +38,7 @@ class Avoidance extends Games.Game {
 				let players = this.getRemainingPlayers();
 				this.attacker = players[Object.keys(players)[this.round % 2 === 0 ? 0 : 1]];
 				this.defender = players[Object.keys(players)[this.round % 2 === 0 ? 1 : 0]];
-				this.say(`**${this.attacker} attacks ${this.defender}**`);
+				this.say(`**${this.attacker.name} attacks ${this.defender.name}**`);
 				this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
 			}
 			else {
