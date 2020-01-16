@@ -56,11 +56,16 @@ class Evolve extends Games.Game {
 
 	onNextRound() {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
+		if (this.round%3 === 2) {
+			this.say("**This round, you can also choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
+			this.hasEvolved.clear();
+			this.canEvolve = true;
+		}
+		else this.canEvolve = false;
 		this.order = [];
 		this.attacks.clear();
 		this.numAttacks = 0;
 		this.canAttack = true;
-		this.canEvolve = false;
 		this.timeout = setTimeout(() => this.listWaiting(), 60 * 1000);
 	}
 
@@ -82,6 +87,7 @@ class Evolve extends Games.Game {
 
 	beforeNextRound() {
 		if (this.getRemainingPlayerCount() < 2) return this.nextRound();
+		return this.nextRound();
 		if (this.round%3 === 2) {
 			this.say("**You can now choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
 			this.hasEvolved.clear();
@@ -143,6 +149,7 @@ class Evolve extends Games.Game {
 		let player = this.players[user.id];
 		if (!player || player.eliminated || !this.canAttack) return;
 		if (this.attacks.has(player)) return user.say("You have already attacked somebody!");
+		if (this.hasEvolved.has(player)) return player.say("You have already evolved!");
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("Usage: ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]");
 		let targPlayer = this.players[Tools.toId(split[0])];
@@ -161,9 +168,11 @@ class Evolve extends Games.Game {
 
 	evolve(target, user) {
 		let player = this.players[user.id];
-		if (!player || player.eliminated || !this.canEvolve) return;
+		if (!player || player.eliminated) return;
+		if (!this.canEvolve) return player.say("You can't evolve this round");
 		let mon = this.mons.get(player);
 		if (!Tools.data.pokedex[mon].evos) return player.say("You have already evolved twice!");
+		if (this.attacks.has(player)) return user.say("You have already attacked somebody!");
 		if (this.hasEvolved.has(player)) return player.say("You have already evolved!");
 		this.mons.set(player, Tools.data.pokedex[mon].evos[0]);
 		if (Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].evos) {
