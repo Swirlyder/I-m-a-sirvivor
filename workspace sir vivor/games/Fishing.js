@@ -66,6 +66,7 @@ class Fishing extends Games.Game {
 
 	onNextRound() {
 		this.hasRolled.clear();
+		this.rods = new Map();
 		if (this.round < 4) {
 			this.say("/wall Beginning Round " + this.round + "!");
 			this.beforeNextRound();
