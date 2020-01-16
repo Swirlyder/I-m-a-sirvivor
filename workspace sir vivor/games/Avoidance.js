@@ -63,7 +63,7 @@ class Avoidance extends Games.Game {
 		let waiting = [];
 		for (let i in players) {
 			if (this.phase) if (!this.numbers.has(players[i])) waiting.push(players[i].name);
-			else if (!this.attacks.has(players[i]) && numbers.get(players[i]) === this.number) waiting.push(players[i].name);
+			else if (!this.attacks.has(players[i]) && this.numbers.get(players[i]) === this.number) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
 		setTimeout(() => this.elimWaiting(), 30 * 1000);
@@ -77,7 +77,7 @@ class Avoidance extends Games.Game {
 				waiting.push(players[i].name);
 				players[i].eliminated = true;
 			} 
-			else if (!this.attacks.has(players[i]) && numbers.get(players[i]) === this.number) {
+			else if (!this.attacks.has(players[i]) && this.numbers.get(players[i]) === this.number) {
 				waiting.push(players[i].name);
 				players[i].eliminated = true;
 			}
