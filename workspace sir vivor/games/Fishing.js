@@ -215,7 +215,7 @@ class Fishing extends Games.Game {
 		this.rods.set(player, target);
 		this.hasPicked.add(player);
 		user.say('You have picked the ``' + target + ' rod``!');
-		if (this.hasPicked.size === this.getRemainingPlayerCount()) {
+		if (this.rods.size === this.getRemainingPlayerCount()) {
 			clearTimeout(this.timeout);
 			this.nextRound();
 		}
