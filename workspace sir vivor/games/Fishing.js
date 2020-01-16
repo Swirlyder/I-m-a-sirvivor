@@ -23,8 +23,8 @@ let fishdict = {
 	},
 	super: {
 		"Kyogre": [100, 1],
-		"Sharpedo": [-50, 19],
-		"Mega Sharpedo": [false, 49],
+		"Sharpedo": [-50, 29],
+		"Mega Sharpedo": [false, 40],
 		"Lumineon": [75, 68],
 		"Dragonair": [120, 69],
 		"Kabutops": [90, 85],
