@@ -51,7 +51,7 @@ class Avoidance extends Games.Game {
 				}
 				else {
 					this.canAtk = true;
-					this.say(`**${targets.join(', ')}! PM me your target using \`\`.destroy [user]\`\`.**`);
+					this.say(`**${targets.map(pl => pl.name).join(', ')}! PM me your target using \`\`.destroy [user]\`\`.**`);
 					this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
 				}
 			}
@@ -183,12 +183,12 @@ class Avoidance extends Games.Game {
 		if (!this.canAtk) return;
 		if (this.attacks.has(player)) return user.say("You already chose your target.");
 		if (!player) return;
-		if (this.numbers.get(player) === this.number) return user.say("You can't attack this round.");
+		if (this.numbers.get(player) !== this.number) return user.say("You can't attack this round.");
 		if (toId(target) === "constructor") return user.say("You cannot attack 'constructor'");
 		let targPlayer = this.players[toId(target)];
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
-		if (this.numbers.get(targPlayer) === this.number) return user.say("That player can't be attacked this round.");
+		if (this.numbers.get(targPlayer) !== this.number) return user.say("That player can't be attacked this round.");
 		if (targPlayer === this.curPlayer) return this.say(">Attacking yourself.");
 		this.attacks.set(player, targPlayer);
 		player.say('You attacked ``' + targPlayer.name + '``.');
