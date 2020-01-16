@@ -1595,9 +1595,7 @@ exports.commands = {
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
 	},
-	r: 'dice',
-	roll: 'dice',
-	dice: function (target, user, room) {
+	oldroll: function (target, user, room) {
 		let realtarget = target;
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
 			let index = Games.excepted.indexOf(user.id);
@@ -1649,7 +1647,9 @@ exports.commands = {
 			}
 		}
 	},
-	newroll: function(arg, user, room) {
+	r: 'dice',
+	roll: 'dice',
+	dice: function(arg, user, room) {
 		// Permission check
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
 			let index = Games.excepted.indexOf(user.id);
@@ -1690,6 +1690,8 @@ exports.commands = {
 	    dice = parseInt(dice);
 	    faces = parseInt(faces);
 	    if (isNaN(dice) || isNaN(faces)) return room.say("Invalid dice format.");
+	    if (dice > 40) return room.say("The number of dice rolled must be a natural number up to 40.");
+	    if (faces > 1000000000) return room.say("The maximum roll is allowed is 1000000000.");
 	    let rolls = [];
 	    let total = 0;
 	    for (let i = 0; i < dice; i++) {
