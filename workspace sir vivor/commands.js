@@ -1656,7 +1656,7 @@ exports.commands = {
 			if (index === -1) return;
 			Games.excepted.splice(index, 1);
 		}
-	    roll = arg.toString().split("//")[0];
+	    let roll = arg.toString().split("//")[0];
 	    
 	    if (!roll) roll = "100";
 	    let add = roll.indexOf("+");
