@@ -120,7 +120,10 @@ class Avoidance extends Games.Game {
 				if (i[1] === roll) toAttack.push(i[0]);
 			}
 			if (toAttack.length <= 1) {
-				if (toAttack.length === 1) this.say(`**${toAttack[0].name} is eliminated!**`);
+				if (toAttack.length === 1) {
+					this.say(`**${toAttack[0].name} is eliminated!**`);
+					toAttack[0].eliminated = true;
+				}
 				this.nextRound();
 			}
 			else {
