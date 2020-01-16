@@ -151,9 +151,11 @@ class Avoidance extends Games.Game {
 			if (!this.rolla) this.rolla = roll;
 			else if (!this.rollb) {
 				this.rollb = roll;
+				this.attacks.delete(this.attacker);
 				if (this.rolla > this.rollb) {
 					this.say(`**${this.defender.name} is eliminated!**`);
 					this.defender.eliminated = true;
+					this.attacks.delete(this.defender);
 				}
 				else if (this.rolla < this.rollb) {
 					this.say(`**${this.attacker.name} is eliminated!**`);
