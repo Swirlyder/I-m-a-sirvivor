@@ -68,7 +68,7 @@ class Fishing extends Games.Game {
 		this.hasRolled.clear();
 		if (this.round < 4) {
 			this.say("/wall Beginning Round " + this.round + "!");
-			this.timeout = setTimeout(() => this.doNextPick(), 5 * 1000);
+			this.beforeNextRound();
 		} else {
 			if (this.round === 4) {
 				this.say("It is now time for Hunger Games Spotlight!");
@@ -190,7 +190,7 @@ class Fishing extends Games.Game {
 				player.say("You didn't pick a rod and are eliminated!");
 			}
 		}
-		this.nextRound();
+		this.doNextPick();
 	}
 
 	attack(target, user) {
@@ -217,7 +217,7 @@ class Fishing extends Games.Game {
 		user.say('You have picked the ``' + target + ' rod``!');
 		if (this.rods.size === this.getRemainingPlayerCount()) {
 			clearTimeout(this.timeout);
-			this.nextRound();
+			this.doNextPick();
 		}
 	}
 }
