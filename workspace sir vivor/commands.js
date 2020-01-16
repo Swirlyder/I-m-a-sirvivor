@@ -1656,9 +1656,11 @@ exports.commands = {
 			if (index === -1) return;
 			Games.excepted.splice(index, 1);
 		}
-	    let roll = arg.toString().split("//")[0];
+	    let roll = arg.toString().split("//")[0]; // text after // is ignored
 	    
-	    if (!roll) roll = "100";
+	    if (!roll) roll = "100"; // blank .r gives d100
+
+	    // Find the index of the first addition or subtraction
 	    let add = roll.indexOf("+");
 	    let sub = roll.indexOf("-");
 	    let index = -1;
@@ -1671,43 +1673,45 @@ exports.commands = {
 	        else index = sub;
 	    }
 	    
-	    let addition = index == -1 ? false : roll.substring(index); // We'll come back to this later
+	    // Split between rolls and flat number additions
+	    let addition = index == -1 ? false : roll.substring(index);
 	    if (index !== -1) roll = roll.substring(0, index);
 	    
+	    // Split and check for XdY format
 	    roll = roll.split("d");
 	    if (roll.length > 2) return room.say("Invalid dice format.");
 	    let dice = roll[0];
 	    let faces = roll[1];
-	    if (roll.length === 1) {
+	    if (roll.length === 1) { // No "d" is found so the roll is just a single number
 	        faces = roll[0];
 	        dice = "1";
 	    }
-	    else {
+	    else { // Fills in XdY with defaults if only X or Y is given
 	        if (!dice) dice = "1";
 	        if (!faces) faces = "100";
 	    }
 	    
 	    dice = parseInt(dice);
 	    faces = parseInt(faces);
-	    if (isNaN(dice) || isNaN(faces)) return room.say("Invalid dice format.");
-	    if (dice > 40) return room.say("The number of dice rolled must be a natural number up to 40.");
-	    if (faces > 1000000000) return room.say("The maximum roll is allowed is 1000000000.");
+	    if (isNaN(dice) || isNaN(faces)) return room.say("Invalid dice format."); // X and Y in XdY must be numbers
+	    if (dice > 40) return room.say("The number of dice rolled must be a natural number up to 40."); // Too many dice is bad
+	    if (faces > 1000000000) return room.say("The maximum roll is allowed is 1000000000."); // Too big a dice is bad
 	    let rolls = [];
 	    let total = 0;
-	    for (let i = 0; i < dice; i++) {
+	    for (let i = 0; i < dice; i++) { // Do rolls
 	        let roll = Math.floor(Math.random() * faces) + 1;
 	        rolls.push(roll);
 	        total += roll;
 	    }
 	    let addit = 0;
-	    if (addition) {
-	        addition = addition.split('');
+	    if (addition) { // This adds all additions together so 1d100+1+2+6+3 is parsed as 1d100+12
+	        addition = addition.split(''); // Char by char split 
 	        let cur = addition.shift();
-	        let cv = "";
+	        let cv = ""; // cv is where we store the current number
 	        for (let ch of addition) {
-	            if (ch === "+" || ch === "-") {
+	            if (ch === "+" || ch === "-") { // there shouldn't be 2 +/- in sequence. eg 1d100++12 is a bad format
 	                if (!cv) return room.say("Invalid dice format.");
-	                cv = parseInt(cv);
+	                cv = parseInt(cv); 
 	                if (isNaN(cv)) return room.say("Invalid dice format.");
 	                if (cur === "+") addit += cv;
 	                else addit -= cv;
@@ -1715,20 +1719,20 @@ exports.commands = {
 	                cur = ch;
 	                continue;
 	            }
-	            if ("0123456789".indexOf(ch) !== -1) {
+	            if ("0123456789".indexOf(ch) !== -1) { // if the character is a number, add it to the current value
 	                cv += ch;
 	                continue;
 	            }
-	            if (ch === " ") continue;
-	            return room.say("Invalid dice format.");
+	            if (ch === " ") continue; // ignore spaces
+	            return room.say("Invalid dice format."); // It's not a number, +/-, or a space, so it's wrong
 	        }
 	        
-	        if (!cv) return room.say("Invalid dice format.");
+	        if (!cv) return room.say("Invalid dice format."); // Don't end additions with + or -
 	        cv = parseInt(cv);
 	        if (isNaN(cv)) return room.say("Invalid dice format.");
 	        if (cur === "+") addit += cv;
 	        else addit -= cv;
-	        total += addit;
+	        total += addit; // add the whole thing to the total
 	    }
 	    let ret = `Roll (1 - ${faces})${addit !== 0 ? (addit < 0 ? " -" : " +") + " " + Math.abs(addit) : ""}: ${total}`;
 	    if (dice > 1) {
