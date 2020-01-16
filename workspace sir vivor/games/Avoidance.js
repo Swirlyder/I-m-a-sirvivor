@@ -15,6 +15,7 @@ class Avoidance extends Games.Game {
 	}
 
 	onStart() {
+		this.maxNum = Math.ceil(this.getRemainingPlayerCount() / 1.5);
 		this.phase = true;
 		this.numbers = new Map();
 		this.attacks = new Map();
@@ -89,6 +90,7 @@ class Avoidance extends Games.Game {
 			}
 		}
 		this.say(waiting.join(', ') + ` ha${waiting.length === 1 ? "s" : "ve"} been eliminated for not sending their ${this.phase ? "number" : "attack"} in time.`);
+		if (this.getRemainingPlayerCount() <= 1) return this.end();
 		this.handleAttacks();
 	}
 
