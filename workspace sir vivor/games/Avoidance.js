@@ -31,6 +31,7 @@ class Avoidance extends Games.Game {
 		if (this.phase) {
 			this.pl();
 			this.numbers.clear();
+			this.maxNum = Math.ceil(this.getRemainingPlayerCount() / 1.5);
 			this.say("Choose your number in my PMs using ``.choose [number (1-" + this.maxNum + ")]``.");
 			this.canNum = true;
 			this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
