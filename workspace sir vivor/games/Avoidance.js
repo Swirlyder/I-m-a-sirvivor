@@ -63,8 +63,10 @@ class Avoidance extends Games.Game {
 		let players = this.getRemainingPlayers();
 		let waiting = [];
 		for (let i in players) {
-			if (this.phase) if (!this.numbers.has(players[i])) waiting.push(players[i].name);
-			else if (!this.attacks.has(players[i]) && this.numbers.get(players[i]) === this.number) waiting.push(players[i].name);
+			if (this.phase) {
+				if (!this.numbers.has(this.players[i])) waiting.push(players[i].name);
+			}
+			else if (!this.attacks.has(this.players[i]) && this.numbers.get(this.players[i]) === this.number) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
 		setTimeout(() => this.elimWaiting(), 30 * 1000);
@@ -74,16 +76,18 @@ class Avoidance extends Games.Game {
 		let players = this.getRemainingPlayers();
 		let waiting = [];
 		for (let i in players) {
-			if (this.phase) if (!this.numbers.has(players[i])) {
+			if (this.phase) {
+				if (!this.numbers.has(this.players[i])) {
+					waiting.push(this.players[i].name);
+					this.players[i].eliminated = true;
+				} 
+			}
+			else if (!this.attacks.has(this.players[i]) && this.numbers.get(this.players[i]) === this.number) {
 				waiting.push(players[i].name);
-				players[i].eliminated = true;
-			} 
-			else if (!this.attacks.has(players[i]) && this.numbers.get(players[i]) === this.number) {
-				waiting.push(players[i].name);
-				players[i].eliminated = true;
+				this.players[i].eliminated = true;
 			}
 		}
-		this.say(waiting.join(', ') + ` ha${waiting.length === 1 ? "s" : "ve"} been eliminated for not sending their ${phase ? "number" : "attack"} in time.`);
+		this.say(waiting.join(', ') + ` ha${waiting.length === 1 ? "s" : "ve"} been eliminated for not sending their ${this.phase ? "number" : "attack"} in time.`);
 		this.handleAttacks();
 	}
 
