@@ -26,7 +26,7 @@ class Avoidance extends Games.Game {
 		if (this.phase && this.getRemainingPlayerCount() === 2) {
 			this.phase = false;
 		}
-		else if (this.phase) {
+		if (this.phase) {
 			this.pl();
 			this.numbers.clear();
 			this.say("Choose your number in my PMs using ``.choose [number (1-" + this.maxNum + ")]``.");
@@ -34,17 +34,26 @@ class Avoidance extends Games.Game {
 			this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
 		}
 		else {
-			let targets = Object.values(this.players).filter(pl => !pl.eliminated && this.numbers.get(pl) === this.number);
-			if (targets.length === 2) {
-				this.say(`**${targets[0].name} attacks ${targets[1].name}**`);
-				this.attacker = targets[0];
-				this.defender = targets[1];
+			if (this.getRemainingPlayerCount() === 2) {
+				let players = this.getRemainingPlayers();
+				this.attacker = players[Object.keys(players)[this.round % 2 === 0 ? 0 : 1]];
+				this.defender = players[Object.keys(players)[this.round % 2 === 0 ? 1 : 0]];
+				this.say(`**${this.attacker} attacks ${this.defender}**`);
 				this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
 			}
 			else {
-				this.canAtk = true;
-				this.say(`**${targets.join(', ')}! PM me your target using \`\`.destroy [user]\`\`.**`);
-				this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
+				let targets = Object.values(this.players).filter(pl => !pl.eliminated && this.numbers.get(pl) === this.number);
+				if (targets.length === 2) {
+					this.say(`**${targets[0].name} attacks ${targets[1].name}**`);
+					this.attacker = targets[0];
+					this.defender = targets[1];
+					this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
+				}
+				else {
+					this.canAtk = true;
+					this.say(`**${targets.join(', ')}! PM me your target using \`\`.destroy [user]\`\`.**`);
+					this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
+				}
 			}
 		}
 	}
