@@ -51,6 +51,7 @@ class Avoidance extends Games.Game {
 				}
 				else {
 					this.canAtk = true;
+					this.attacks = new Map();
 					this.say(`**${targets.map(pl => pl.name).join(', ')}! PM me your target using \`\`.destroy [user]\`\`.**`);
 					this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
 				}
@@ -103,7 +104,7 @@ class Avoidance extends Games.Game {
 				this.canAtk = false;
 			}
 			if (this.attacks.size) {
-				this.attacker = Object.keys(this.attacks)[0];
+				this.attacker = Array.from(this.attacks.keys())[0];
 				this.defender = this.attacks.get(this.attacker);
 				this.say(`**${this.attacker.name} attacks ${this.defender.name}!**`);
 				this.timeout = setTimeout(() => this.sayRolls(), 2 * 1000);
