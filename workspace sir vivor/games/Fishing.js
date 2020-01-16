@@ -34,7 +34,7 @@ let fishdict = {
 }
 function getFish(rod, roll) {
 	for (let i in fishdict[rod]) {
-		if (fishdict[rod][i][1] <= roll) return [i, fishdict[rod][i][0]]
+		if (fishdict[rod][i][1] >= roll) return [i, fishdict[rod][i][0]]
 		
 	}
 }
