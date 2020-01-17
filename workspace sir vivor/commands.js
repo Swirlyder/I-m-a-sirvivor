@@ -203,7 +203,12 @@ let gameTypes = {
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
 	tokensoflife: ['Tokens of Life', 'https://survivor-ps.weebly.com/tokens-of-life.html', 'Who needs a Circle when you have Tokens?', 1],
-
+	eclipsesurvivor: ['Eclipse Survivor', 'https://survivor-ps.weebly.com/eclipse-survivor.html', 'Use the power of the Sun and the Moon to take you to victory!', 1],
+	eclipse: 'eclipsesurvivor',
+	es: 'eclipsesurvivor',
+	holidaysurvivor: ['Holiday Survivor', 'https://survivor-ps.weebly.com/holiday-survivor.html', 'Complete the quest to be the best Holiday Spirit!', 1],
+	holiday: 'holidaysurvivor',
+	
 };
 exports.commands = {
 	/**
