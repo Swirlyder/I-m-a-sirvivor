@@ -32,8 +32,8 @@ module.exports = {
 	azu: '==azuuli',
 	azuuli: '/me explodes',
 
-	lssghost: '==ls',
-	ls: 'try again [target]',
+	wyrmwind: '==wyrm',
+	wyrm: '/me throws a gold coin at [target]',
 
 	sciencepanda: '==rach',
 	rach: 'The future is now thanks to sciencepanda!',
