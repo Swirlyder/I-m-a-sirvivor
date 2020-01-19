@@ -1202,7 +1202,7 @@ exports.commands = {
 	hurl: function(arg, user, room)
 	{
 		if (!user.hasRank(room.id, '+')) return;
-		let text = '/addhtmlbox <img src="https://vgy.me/ip3Fc9.png" height="200" width="800">';
+		let text = '/addhtmlbox <img src="https://i.vgy.me/ip3Fc9.png" width="0" height="0" style="height:135px;width:auto">';
 		this.say(room, text);
 	},
 
