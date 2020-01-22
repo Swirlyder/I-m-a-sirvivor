@@ -55,12 +55,21 @@ class DragonOrbs extends Games.Game {
 		let players = this.getRemainingPlayers();
 		let waiting = [];
 		for (let i in players) {
-			if (!this.attacks[i]) {
-				waiting.push(players[i].name);
-				players[i].eliminated = true;
+			if (!this.phase) {
+				if (!this.attacks[i]) {
+					waiting.push(players[i].name);
+					players[i].eliminated = true;
+				}
 			}
+			else {
+				if (!this.numbers[i] && (players[i].name === this.attacker.name || players[i].name === this.defender.name)) {
+					waiting.push(players[i].name);
+					players[i].eliminated = true;
+				}
+			}
+
 		}
-		this.say(waiting.join(', ') + ` ha${waiting.length === 1 ? "s" : "ve"} been eliminated for not sending their ${this.phase ? number : attack} in time.`);
+		this.say(waiting.join(', ') + ` ha${waiting.length === 1 ? "s" : "ve"} been eliminated for not sending their ${this.phase ? "number" : "attack"} in time.`);
 		if (this.getRemainingPlayerCount() <= 1) return this.end();
 		this.handleAttacks();
 	}
