@@ -28,6 +28,7 @@ class Minefield extends Games.Game {
 		this.attacks = {};
 		this.nextRound();
 		this.phase = false;
+		this.bypass = false;
 	}
 
 	onNextRound() {
