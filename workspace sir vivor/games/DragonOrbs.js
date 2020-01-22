@@ -29,6 +29,7 @@ class DragonOrbs extends Games.Game {
 			this.attacker = players[n1];
 			this.defender = players[n2];
 			this.say(`**${this.attacker.name} attacks ${this.defender.name}! Choose your number using \`\`.choose [number (1-3)]\`\`**`);
+			this.phase = true;
 			this.timeout = setTimeout(() => this.checkWaiting(), 15 * 1000);
 			return;
 		}
@@ -41,7 +42,7 @@ class DragonOrbs extends Games.Game {
 		let players = this.getRemainingPlayers();
 		let waiting = [];
 		for (let i in players) {
-			if (!phase)	if (!this.attacks[i]) waiting.push(players[i].name);
+			if (!this.phase)	if (!this.attacks[i]) waiting.push(players[i].name);
 			else if (!this.numbers[i] && (players[i].name === this.attacker.name || players[i].name === this.defender.name)) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
