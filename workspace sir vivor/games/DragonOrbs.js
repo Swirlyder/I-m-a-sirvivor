@@ -53,6 +53,7 @@ class DragonOrbs extends Games.Game {
 		if (Object.keys(this.attacks).length) {
 			this.attacker = Object.keys(this.attacks)[0];
 			this.defender = this.players[this.attacks[this.attacker]];
+			this.attacker = this.players[this.attacker];
 			if (this.defender.eliminated) {
 				delete this.attacks(toId(this.attacker.name));
 				return this.handleAttacks();
@@ -80,11 +81,11 @@ class DragonOrbs extends Games.Game {
 		}
 		else if (!this.rollb) {
 			this.rollb = roll;
-			this.attacks.delete(this.attacker);
+			delete this.attacks[toId(this.attacker.name)];
 			if (this.rolla > this.rollb) {
 				this.say(`**${this.defender.name} is eliminated!**`);
 				this.defender.eliminated = true;
-				this.attacks.delete(this.defender);
+				delete this.attacks[toId(this.defender.name)];
 			}
 			else if (this.rolla < this.rollb) {
 				this.say(`**${this.attacker.name} is eliminated!**`);
