@@ -220,7 +220,7 @@ exports.commands = {
 	git: function(arg, user, room)
 	{
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
-		let text = Config.fork ? "No source code link found." : "The source code for this bot can be found here: " + Config.fork;
+		let text = !Config.fork ? "No source code link found." : "The source code for this bot can be found here: " + Config.fork;
 		room.say(prefix + text);
 	},
 	credits: 'about',
@@ -232,7 +232,7 @@ exports.commands = {
 	guide: function(arg, user, room)
 	{
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
-		let text = Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "A guide on how to use this bot can be found here: " + Config.botguide;
+		let text = !Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "A guide on how to use this bot can be found here: " + Config.botguide;
 		room.say(prefix + text);
 	},
     reconnect: 'off',
@@ -1961,6 +1961,19 @@ exports.commands = {
     return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
   },
 
+  rpoints: function(arg, user, room) {
+  	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+  	let last = dd.modlog.pop();
+  	if (last.first) dd.remPoints(last.first[1], last.first[0]);
+  	if (last.second) dd.remPoints(last.second[1], last.second[0]);
+  	if (last.host) dd.remPoints(last.host[1], last.host[0]);
+  	if (last.part) {
+  		let points = last.part.shift();
+  		for (let i of last.part) dd.remPoints(i, points);
+  	}
+  	if (last.special) dd.remPoints(last.special[1], last.special[0]);
+  	user.say('Point award reverted.');
+  }.
   addpointsuser: 'adduser',
   adduser: function (target, user, room) {
     if (!target) return user.say("No target found :" + target);
