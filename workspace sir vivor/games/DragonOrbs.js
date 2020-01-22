@@ -23,7 +23,7 @@ class DragonOrbs extends Games.Game {
 		this.numbers = {};
 		if (this.getRemainingPlayerCount() === 2) {
 			let players = this.getRemainingPlayers();
-			this.say("**Only 2 players remain!");
+			this.say("**Only 2 players remain!**");
 			let n1 = Object.keys(players)[0];
 			let n2 = Object.keys(players)[1];
 			this.attacker = players[n1];
