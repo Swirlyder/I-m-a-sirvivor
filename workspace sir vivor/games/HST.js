@@ -8,8 +8,27 @@ const locations = {
 	attic: {name: "in the **Attic**", roundname: "Attic", aliases: ["attic", "theattic"]},
 	closet: {name: "in the **Closet**", roundname: "Closet", aliases: ["closet", "thecloset"]},
 	basement: {name: "in the **Basement**", roundname: "Basement", aliases: ["basement", "thebasement"]},
+	fridge: {name: "in the **Fridge**", roundname: "Fridge", aliases: ["fridge", "thefridge", "refrigerator"]},
+	bushes: {name: "in the **Bushes**", roundname: "Bushes", aliases: ["bush", "bushes"]},
+	pantry: {name: "in the **Pantry**", roundname: "Pantry", aliases: ["pantry", "thepantry"]},
+	cellar: {name: "in the **Wine Cellar**", roundname: "Wine Cellar", aliases: ["cellar", "winecellar", "wine"]},
+	shelf: {name: "on top of the **Shelf**", roundname: "On the Shelf", aliases: ["shelf", "ontheshelf", "ontopoftheshelf"]},
+	garbage: {name: "in the **Garbage Can**", roundname: "Garbage Can", aliases: ["trash", "garbage", "garbagecan", "trashcan"]},
+	lamp: {name: "pretending to be a **Lamp**", roundname: "Lamp", aliases: ["lamp"]},
+	seeker: {name: "behind the **Seeker**", roundname: "Behind the Seeker", aliases: ["behindtheseeker", "seeker"]},
+	garage: {name: "in the **Garage**", roundname: "Garage", aliases: ["garage", "thegarage"]},
+	table: {name: "**Under the Table**", roundname: "Under the Table", aliases: ["table", "underthetable"]},
+	tree: {name: "in a **Tree**", roundname: "Tree", aliases: ["tree"]},
 }
 
+let buildLocations = function(n) {
+	let newlocs = Tools.sample(Object.keys(locations), n);
+	let ret = {}
+	for (let i = 0; i < newlocs.length; i++) {
+		ret[newlocs[i]] = locations[newlocs[i]];
+	}
+	return ret;
+}
 class HST extends Games.Game {
 	constructor(room) {
 		super(room);
@@ -26,7 +45,7 @@ class HST extends Games.Game {
 	}
 
 	onStart() {
-		this.locations = locations;
+		this.locations = buildLocations(4);
 		this.say("/wall **Players: (" + this.getRemainingPlayerCount() + ")**: " + this.getPlayerNames(this.getRemainingPlayers()) + " | Each round use ``" + Config.commandCharacter + "choose [location]``");
 		this.say("!pick " + this.getPlayerNames(this.getRemainingPlayers()));
 	}
@@ -51,17 +70,14 @@ class HST extends Games.Game {
 	}
 
 	onNextRound() {
+		this.locations = buildLocations(4);
 		if (this.getRemainingPlayerCount() === 1) {
 			return this.end();
 		}
 		this.actions.clear();
 		this.numActions = 0;
 		if (this.seekerLives === 1 || this.getRemainingPlayerCount() === 2) {
-			this.locations = {};
-			let newlocs = Tools.sample(Object.keys(locations), 2);
-			for (let i = 0; i < newlocs.length; i++) {
-				this.locations[newlocs[i]] = locations[newlocs[i]];
-			}
+			this.locations = buildLocations(2);
 		}
 		this.say("/wall ``Hiders:`` " + Object.keys(this.players).filter(p => !this.players[p].eliminated && this.roles.get(this.players[p]) !== 'seeker').map(p => this.players[p].name).join(", ") + " | ``Seeker:`` " + this.players[this.seekerID].name + '[' + this.seekerLives + '] | ``Locations:`` ' + Object.keys(this.locations).map(loc => this.locations[loc].roundname).join(", "));
 		this.acceptActions = true;

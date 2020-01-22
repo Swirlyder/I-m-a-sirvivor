@@ -66,7 +66,7 @@ class Minefield extends Games.Game {
 			if (!this.attacks[i]) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
-		this.timeout = setTimeout(() => this.elimWaiting(), (this.phase ? 10 : 30) * 1000);
+		this.timeout = setTimeout(() => this.elimWaiting(), 30 * 1000);
 	}
 
 	elimWaiting() {
