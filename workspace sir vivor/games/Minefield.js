@@ -12,7 +12,7 @@ class Minefield extends Games.Game {
 	}
 
 	checkMine(num) {
-		if (!this.number) return false;
+		if (this.number === false) return false;
 		if (!this.before) return false;
 		num = (num % 100).toString();
 		if (num.length < 2) num = "0" + num;
