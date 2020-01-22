@@ -1969,7 +1969,7 @@ exports.commands = {
 
   rpoints: function(arg, user, room) {
   	if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-  	let last = dd.modlog.pop();
+  	let last = dd.modlog.data.pop();
   	if (last.first) dd.remPoints(last.first[1], last.first[0]);
   	if (last.second) dd.remPoints(last.second[1], last.second[0]);
   	if (last.host) dd.remPoints(last.host[1], last.host[0]);
