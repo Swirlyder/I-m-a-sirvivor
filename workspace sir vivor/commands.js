@@ -1775,6 +1775,8 @@ exports.commands = {
 		if (Games.host) return room.say(Games.host.name + " is hosting a game.");
 		if (room.game) return room.say("A game of " + room.game.name + " is in progress.");
 		let id = Tools.toId(target);
+		Games.lastGameTime = false;
+		if (!Games.createGame(target, room)) return;
 		room.game.signups();
 		room.say("/modnote " + user.name + " forcibly started signups of " + room.game.name + ".");
 	},
