@@ -19,6 +19,19 @@ class DragonOrbs extends Games.Game {
 
 	onNextRound() {
 		this.phase = false;
+		this.attacks = {};
+		this.numbers = {};
+		if (this.getRemainingPlayerCount() === 2) {
+			let players = this.getRemainingPlayers();
+			this.say("**Only 2 players remain!");
+			let n1 = Object.keys(players)[0];
+			let n2 = Object.keys(players)[1];
+			this.attacker = players[n1];
+			this.defender = players[n2];
+			this.say(`**${this.attacker.name} attacks ${this.defender.name}! Choose your number using \`\`.choose [number (1-3)]\`\`**`);
+			this.timeout = setTimeout(() => this.checkWaiting(), 15 * 1000);
+			return;
+		}
 		this.pl()
 		this.say("**PM me your attack using ``.destroy [name]``**");
 		this.timeout = setTimeout(() => this.checkWaiting(), 45 * 1000);
@@ -50,12 +63,14 @@ class DragonOrbs extends Games.Game {
 	}
 
 	handleAttacks() {
+		if (this.getRemainingPlayerCount() <= 2) return this.nextRound();
 		if (Object.keys(this.attacks).length) {
-			this.attacker = Object.keys(this.attacks)[0];
+			let n = Object.keys(this.attacks).length
+			this.attacker = Object.keys(this.attacks)[Math.floor(Math.random() * n)];
 			this.defender = this.players[this.attacks[this.attacker]];
 			this.attacker = this.players[this.attacker];
 			if (this.defender.eliminated) {
-				delete this.attacks(toId(this.attacker.name));
+				delete this.attacks[toId(this.attacker.name)];
 				return this.handleAttacks();
 			}
 			this.say(`**${this.attacker.name} attacks ${this.defender.name}! Choose your number using \`\`.choose [number (1-3)]\`\`**`);
