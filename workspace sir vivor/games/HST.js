@@ -125,7 +125,7 @@ class HST extends Games.Game {
 		let seeked = this.actions.get(this.players[this.seekerID]);
 		let caught = [];
 		let noCatch = true;
-		let text = '**' + this.players[this.seekerID].name + '** decides to search ' + this.locations[seeked].name + ' and finds ';
+		let text = '**' + this.players[this.seekerID].name + '** decides to search ' + (seeked === "lamp" ? "for people " : "") + this.locations[seeked].name + ' and finds ';
 		for (let userID in this.players) {
 			let player = this.players[userID];
 			if (player.eliminated || this.roles.get(player) === 'seeker') continue;
