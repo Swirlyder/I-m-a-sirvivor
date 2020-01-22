@@ -94,7 +94,7 @@ class Minefield extends Games.Game {
 				delete this.attacks[toId(this.attacker.name)];
 				return this.handleAttacks();
 			}
-			this.say(`**${this.attacker.name} attacks ${this.defender.name}!`);
+			this.say(`**${this.attacker.name} attacks ${this.defender.name}!**`);
 			this.sayRolls();
 		}
 		else {
@@ -105,8 +105,8 @@ class Minefield extends Games.Game {
 	sayRolls() {
 		this.rolla = false;
 		this.rollb = false;
-		this.say('!roll ' + this.atkroll);
-		this.say('!dice ' + this.defroll);
+		this.say('!roll 100');
+		this.say('!dice 100');
 	}
 
 	handlePick(pick) {
