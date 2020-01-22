@@ -1973,7 +1973,7 @@ exports.commands = {
   	}
   	if (last.special) dd.remPoints(last.special[1], last.special[0]);
   	user.say('Point award reverted.');
-  }.
+  },
   addpointsuser: 'adduser',
   adduser: function (target, user, room) {
     if (!target) return user.say("No target found :" + target);
