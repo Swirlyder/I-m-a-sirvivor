@@ -49,6 +49,7 @@ class Minefield extends Games.Game {
 			let n2 = Object.keys(players)[1];
 			this.attacker = players[n1];
 			this.defender = players[n2];
+			this.phase = "damage";
 			this.say(`**${this.attacker.name} attacks ${this.defender.name}!**`);
 			this.sayRolls();
 			return;
