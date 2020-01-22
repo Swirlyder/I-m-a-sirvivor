@@ -228,6 +228,12 @@ exports.commands = {
 	{
 		user.say(`I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!`)
 	},
+	site: function(arg, user, room)
+	{
+		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let text = "https://survivor-ps.weebly.com/";
+		room.say(prefix + text);
+	},
 	help: 'guide',
 	guide: function(arg, user, room)
 	{
