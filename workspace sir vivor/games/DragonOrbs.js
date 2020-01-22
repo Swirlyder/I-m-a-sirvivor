@@ -143,7 +143,7 @@ class DragonOrbs extends Games.Game {
 		if (!targPlayer) return user.say("That player is not in the game!");
 		if (targPlayer.eliminated) return user.say("That player has already been eliminated!");
 		if (targPlayer === this.curPlayer) return this.say(">Attacking yourself.");
-		this.attacks[user.id],= toId(target);
+		this.attacks[user.id] = toId(target);
 		player.say('You attacked ``' + targPlayer.name + '``.');
 		if (Object.keys(this.attacks).length === Object.values(this.players).filter(pl => !pl.eliminated && this.numbers.get(pl) === this.number).length) {
 			clearTimeout(this.timeout);
