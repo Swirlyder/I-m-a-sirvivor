@@ -42,7 +42,9 @@ class DragonOrbs extends Games.Game {
 		let players = this.getRemainingPlayers();
 		let waiting = [];
 		for (let i in players) {
-			if (!this.phase)	if (!this.attacks[i]) waiting.push(players[i].name);
+			if (!this.phase) {
+				if (!this.attacks[i]) waiting.push(players[i].name);
+			}
 			else if (!this.numbers[i] && (players[i].name === this.attacker.name || players[i].name === this.defender.name)) waiting.push(players[i].name);
 		}
 		this.say('Waiting for: ' + waiting.join(', '));
