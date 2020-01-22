@@ -155,7 +155,7 @@ class DragonOrbs extends Games.Game {
 exports.name = name;
 exports.description = description;
 exports.id = id;
-exports.game = Avoidance;
+exports.game = DragonOrbs;
 exports.commands = {
 	destroy: "destroy",
 	choose: "choose"
