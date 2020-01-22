@@ -58,7 +58,7 @@ class DragonOrbs extends Games.Game {
 				delete this.attacks(toId(this.attacker.name));
 				return this.handleAttacks();
 			}
-			this.say(`**${this.attacker.name} attacks ${this.defender.name}! Choose your number using ``.choose [number (1-3)]``**`);
+			this.say(`**${this.attacker.name} attacks ${this.defender.name}! Choose your number using \`\`.choose [number (1-3)]\`\`**`);
 			this.phase = true;
 			this.numbers = {};
 			this.timeout = setTimeout(() => this.checkWaiting(), 15 * 1000);
