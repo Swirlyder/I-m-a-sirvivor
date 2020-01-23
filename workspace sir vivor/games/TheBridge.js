@@ -36,8 +36,17 @@ class Bridge extends Games.Game {
 		this.defender = false;
 		this.current = false;
 		this.say(`/wall Round ${this.round}`);
+		if (this.getRemainingPlayerCount() === 0) {
+			this.say(`**Everyone died! Bringing back ${this.steps.join(', ')}`);
+			for (let i of this.steps) {
+				players[i].eliminated = false;
+			}
+			if (this.getRemainingPlayerCount() === 1) return this.end();
+		}
+		this.steps = []
 		let npl = this.numPL();
 		let PL = this.getRemainingPlayers();
+		
 		let wins = [];
 		for (let i in PL) {
 			if (this.planks[i] >= this.max) wins.push(PL[i].name);
@@ -169,6 +178,7 @@ class Bridge extends Games.Game {
 		this.say(`**${player.name} is taking a single step!**`);
 		this.planks[player.id] += 1;
 		this.phase = "step";
+		this.steps.push(player.id);
 		this.say("!pick break, no break");
 	}
 
