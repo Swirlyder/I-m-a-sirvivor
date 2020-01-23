@@ -13,7 +13,7 @@ class Bridge extends Games.Game {
 
 	numPL() {
 		let ret = Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + " [" + this.planks[toId(pl.name)] + "]").join(", ");
-		this.say(ret);
+		this.say('**' + ret + '**');
 		return ret;
 	}
 
@@ -36,7 +36,7 @@ class Bridge extends Games.Game {
 		this.defender = false;
 		this.current = false;
 		this.say(`/wall Round ${this.round}`);
-		this.numPL();
+		let npl = this.numPL();
 		let PL = this.getRemainingPlayers();
 		let wins = [];
 		for (let i in PL) {
@@ -56,7 +56,7 @@ class Bridge extends Games.Game {
 		}
 		else {
 			this.phase = "move";
-			this.rpl = this.numPL().split(', ');
+			this.rpl = this.npl.split(', ');
 			setTimeout(() => this.nextPlayer(), 2500);
 		}
 	}
@@ -156,7 +156,7 @@ class Bridge extends Games.Game {
 		if (!player) return;
 		if (player.id !== this.current.id) return;
 		clearTimeout(this.timeout);
-		this.say(`**${Player.name} is taking a single step!**`);
+		this.say(`**${player.name} is taking a single step!**`);
 		this.planks[player.id] += 1;
 		this.phase = "step";
 		this.say("!pick break, no break");
@@ -167,7 +167,7 @@ class Bridge extends Games.Game {
 		if (!player) return;
 		if (player.id !== this.current.id) return;
 		clearTimeout(this.timeout);
-		this.say(`**${Player.name} is leaping 2 planks ahead!**`);
+		this.say(`**${olayer.name} is leaping 2 planks ahead!**`);
 		this.planks[player.id] += 2;
 		this.phase = "leap";
 		this.sayRolls();
