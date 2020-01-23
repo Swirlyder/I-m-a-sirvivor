@@ -62,7 +62,16 @@ class Bridge extends Games.Game {
 	}
 
 	nextPlayer() {
+		if (this.getRemainingPlayerCount() <= 1) return this.end();
 		if (this.rpl.length === 0) setTimeout(() => this.nextRound(), 3 * 100);
+		else if (this.rpl.length === 1) {
+			let pick = this.rpl[0];
+			this.rpl.splice(this.rpl.indexOf(pick), 1);
+			let player = pick.split(' [')[0];
+			this.current = this.players[toId(player)];
+			this.say(`**${this.current.name}! You're up! You can choose to step for 1 plank or leap for 2 planks using \`\`.step\`\` or \`\`.leap\`\`**`);
+			this.timeout = setTimeout(() => checkWaiting(), 30 * 1000);
+		}
 		else this.say('!pick ' + this.rpl.join(', '));
 	}
 
