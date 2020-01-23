@@ -56,7 +56,7 @@ class Bridge extends Games.Game {
 		}
 		else {
 			this.phase = "move";
-			this.rpl = this.npl.split(', ');
+			this.rpl = npl.split(', ');
 			setTimeout(() => this.nextPlayer(), 2500);
 		}
 	}
