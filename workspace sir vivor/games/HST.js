@@ -19,6 +19,7 @@ const locations = {
 	garage: {name: "in the **Garage**", roundname: "Garage", aliases: ["garage", "thegarage"]},
 	table: {name: "**Under the Table**", roundname: "Under the Table", aliases: ["table", "underthetable"]},
 	tree: {name: "in a **Tree**", roundname: "Tree", aliases: ["tree"]},
+	insight: {name: "in **Plain Sight**", roundname: "Plain Sight", aliases: ["sight", "plain", "plainsight", "inplainsight"]},
 }
 
 let buildLocations = function(n) {
