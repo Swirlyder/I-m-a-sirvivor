@@ -62,7 +62,7 @@ class Bridge extends Games.Game {
 	}
 
 	nextPlayer() {
-		if (this.getRemainingPlayerCount() <= 1) return this.end();
+		//if (this.getRemainingPlayerCount() <= 1) return this.end();
 		if (this.rpl.length === 0) setTimeout(() => this.nextRound(), 3 * 100);
 		else if (this.rpl.length === 1) {
 			let pick = this.rpl[0];
@@ -149,6 +149,7 @@ class Bridge extends Games.Game {
 				else if (this.rolla < this.rollb) {
 					if (this.phase === "step") this.say(`**Despite taking it easy, ${this.current.name} fell to their doom...**`);
 					else this.say(`**${this.current.name} should've thought twice about rushing ahead, now they're gone...**`);
+					this.saveroll += 5;
 					this.current.eliminated = true;
 					setTimeout(() => this.nextPlayer(), 2 * 1000);
 				}
