@@ -56,14 +56,14 @@ class Bridge extends Games.Game {
 		}
 		else {
 			this.phase = "move";
-			this.round = this.numPL();
+			this.rpl = this.numPL().split(', ');
 			setTimeout(() => this.nextPlayer(), 2500);
 		}
 	}
 
 	nextPlayer() {
-		if (this.round.length === 0) setTimeout(() => this.nextRound(), 3 * 100);
-		else this.say('!pick ' + this.round);
+		if (this.rpl.length === 0) setTimeout(() => this.nextRound(), 3 * 100);
+		else this.say('!pick ' + this.rpl.join(', '));
 	}
 
 	checkWaiting() {
@@ -102,7 +102,7 @@ class Bridge extends Games.Game {
 			this.timeout = setTimeout(() => checkWaiting(), 30 * 1000);
 		}
 		else {
-			this.round.splice(this.round.indexOf(pick), 1);
+			this.rpl.splice(this.rpl.indexOf(pick), 1);
 			let player = pick.split(' [')[0];
 			this.current = this.players[toId(player)];
 			this.say(`**${this.current.name}! You're up! You can choose to step for 1 plank or leap for 2 planks using \`\`.step\`\` or \`\`.leap\`\`**`);
@@ -200,6 +200,7 @@ exports.name = name;
 exports.description = description;
 exports.id = id;
 exports.game = Bridge;
+exports.aliases = ['thebridge', 'bridge'];
 exports.commands = {
 	step: "step",
 	leap: "leap",
