@@ -1,5 +1,5 @@
 'use strict';
-const name = "Minefield";
+const name = "Bridge";
 const description = "__Why burn the bridge when it will crumble on its own?__ Game rules: https://survivor-ps.weebly.com/the-bridge.html";
 const id = Tools.toId(name);
 
