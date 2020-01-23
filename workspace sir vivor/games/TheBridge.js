@@ -167,7 +167,7 @@ class Bridge extends Games.Game {
 		if (!player) return;
 		if (player.id !== this.current.id) return;
 		clearTimeout(this.timeout);
-		this.say(`**${olayer.name} is leaping 2 planks ahead!**`);
+		this.say(`**${player.name} is leaping 2 planks ahead!**`);
 		this.planks[player.id] += 2;
 		this.phase = "leap";
 		this.sayRolls();
