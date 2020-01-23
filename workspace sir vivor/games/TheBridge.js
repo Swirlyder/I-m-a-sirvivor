@@ -1,5 +1,5 @@
 'use strict';
-const name = "Bridge";
+const name = "The Bridge";
 const description = "__Why burn the bridge when it will crumble on its own?__ Game rules: https://survivor-ps.weebly.com/the-bridge.html";
 const id = Tools.toId(name);
 
@@ -27,7 +27,7 @@ class Bridge extends Games.Game {
 			this.planks[i] = 1;
 		}
 		this.phase = false;
-		this.max = Math.ceil(this.getRemainingPlayerCount() * 1.75);
+		this.max = Math.ceil(this.getRemainingPlayerCount() * 1.25);
 		this.say(`/wall Players win if they reach plank \`\`${this.max}\`\``);
 		this.nextRound();
 	}
@@ -72,7 +72,7 @@ class Bridge extends Games.Game {
 
 	nextPlayer() {
 		//if (this.getRemainingPlayerCount() <= 1) return this.end();
-		if (this.rpl.length === 0) setTimeout(() => this.nextRound(), 3 * 100);
+		if (this.rpl.length === 0) setTimeout(() => this.nextRound(), 5 * 1000);
 		else if (this.rpl.length === 1) {
 			let pick = this.rpl[0];
 			this.rpl.splice(this.rpl.indexOf(pick), 1);
@@ -108,7 +108,7 @@ class Bridge extends Games.Game {
 
 	handlePick(pick) {
 		if (pick === "break") {
-			this.say("**The plank breaks! Let's see if they can save themselves");
+			this.say("**The plank breaks! Let's see if they can save themselves**");
 			this.sayRolls();
 		}
 		else if (pick === "no break") {
