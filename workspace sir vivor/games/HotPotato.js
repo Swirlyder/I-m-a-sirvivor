@@ -52,7 +52,7 @@ class HotPotato extends Games.Game {
 			let text = "**" + this.curPlayer.name + "**, choose another player to pass the potato to with ``" + Config.commandCharacter + "pass [user]``!"
 			if (this.variation) text += "(Current passing roll is " + this.atkroll;
 			else text += "(There are **" + this.curPotatoRounds + "** tosses left)"
-			this.say( );
+			this.say(text);
 			this.timeout = setTimeout(() => this.sayPotatoWaiting(), 60 * 1000);
 		}
 		
