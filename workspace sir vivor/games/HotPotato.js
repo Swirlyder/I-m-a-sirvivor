@@ -16,10 +16,12 @@ class HotPotato extends Games.Game {
 	}
 
 	onStart() {
+		if (this.variation) this.maxPotatoRounds = 100;
 		this.nextRound();
 	}
 
 	onNextRound() {
+		if (this.variation) this.atkroll = 200;
 		this.say("/wall Round " + this.round + "! Remaining Players: " + this.getPlayerNames(this.getRemainingPlayers()));
 		this.curPotatoRounds = this.maxPotatoRounds;;
 		this.timeout = setTimeout(() => this.beginPotato(), 5 * 1000);
@@ -35,7 +37,7 @@ class HotPotato extends Games.Game {
 	}
 
 	nextPotato() {
-		if (this.curPotatoRounds === 0) {
+		if (this.curPotatoRounds === 0 || (this.variation && this.explode)) {
 			this.say("**BOOM**! The potato exploded on **" + this.curPlayer.name + "**!");
 			this.curPlayer.eliminated = true;
 			this.curPlayer = null;
@@ -47,7 +49,10 @@ class HotPotato extends Games.Game {
 			this.pass(Object.values(this.getRemainingPlayers()).filter(pl => pl !== this.curPlayer).map(pl => pl.name).join(""), this.curPlayer);
 		} else {
 			this.canPotato = true;
-			this.say("**" + this.curPlayer.name + "**, choose another player to pass the potato to with ``" + Config.commandCharacter + "pass [user]``! (There are **" + this.curPotatoRounds + "** tosses left)");
+			let text = "**" + this.curPlayer.name + "**, choose another player to pass the potato to with ``" + Config.commandCharacter + "pass [user]``!"
+			if (this.variation) text += "(Current passing roll is " + this.atkroll;
+			else text += "(There are **" + this.curPotatoRounds + "** tosses left)"
+			this.say( );
 			this.timeout = setTimeout(() => this.sayPotatoWaiting(), 60 * 1000);
 		}
 		
@@ -69,8 +74,11 @@ class HotPotato extends Games.Game {
 		if (winPlayer === this.curPlayer) {
 			this.say("**" + this.curPlayer.name + "** passes the potato to **" + this.oplayer.name + "**!");
 			this.curPlayer = this.oplayer;
-		} else {
+			this.atkroll -= 10;
+		} else if (!this.variation) {
 			this.say("**" + this.curPlayer.name + "** failed to pass the potato!");
+		} else {
+			this.explode = true;
 		}
 		this.curPotatoRounds--;
 		this.timeout = setTimeout(() => this.nextPotato(), 5 * 1000);
@@ -85,8 +93,14 @@ class HotPotato extends Games.Game {
 		this.canPotato = false;
 		this.oplayer = oplayer;
 		this.say("**" + this.curPlayer.name + "** attempts to pass the potato to **" + this.oplayer.name + "**!");
-		this.roll1 = 100;
-		this.roll2 = 125;
+		if (this.variation) {
+			this.roll1 = this.atkroll;
+			this.roll2 = 100;
+		}
+		else {
+			this.roll1 = 100;
+			this.roll2 = 125;
+		}
 		this.timeout = setTimeout(() => this.sayPlayerRolls(), 5 * 1000);
 	}
 }
@@ -99,3 +113,11 @@ exports.aliases = ["hp"];
 exports.commands = {
 	"pass": "pass",
 }
+exports.variations = [
+	{
+		name: "Hot Potato Timer",
+		aliases: ["hpt"],
+		variation: "timer",
+		variationAliases: ["timed"],
+	}
+]
