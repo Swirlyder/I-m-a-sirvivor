@@ -49,6 +49,7 @@ class Evolve extends Games.Game {
 			let mon = Tools.sample(goodmons);
 			let player = this.order.shift();
 			this.mons.set(player, mon);
+			if (this.variation) this.hp.set(player, mon.baseStats.hp);
 			player.say("Your mon is **" + Tools.data.pokedex[mon].species + "**!");
 			this.timeout = setTimeout(() => this.handoutmon(), 5 * 1000);
 		}
@@ -56,7 +57,7 @@ class Evolve extends Games.Game {
 
 	onNextRound() {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
-		if (this.round%3 === 2) {
+		if (this.round%3 === (this.variation ? 3 : 2)) {
 			this.say("**This round, you can also choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
 			this.canEvolve = true;
 		}
@@ -125,15 +126,20 @@ class Evolve extends Games.Game {
 	}
 
 	handleWinner(winPlayer, losePlayer) {
-		let diff = Math.abs(this.rolla - this.rollb);
-		let losehp = this.hp.get(losePlayer);
-		if (diff >= losehp) {
-			this.say("**" + losePlayer.name + "** loses all of their health! They were: ");
-			this.say("!dt " + this.mons.get(losePlayer));
-			losePlayer.eliminated = true;
-		} else {
-			this.say("**" + losePlayer.name + "** loses **" + diff + "** health!");
-			this.hp.set(losePlayer, losehp - diff);
+		if (this.variation && this.losePlayer === this.curPlayer) {
+			this.say('**AI**');
+		}
+		else {
+			let diff = Math.abs(this.rolla - this.rollb);
+			let losehp = this.hp.get(losePlayer);
+			if (diff >= losehp) {
+				this.say("**" + losePlayer.name + "** loses all of their health! They were: ");
+				this.say("!dt " + this.mons.get(losePlayer));
+				losePlayer.eliminated = true;
+			} else {
+				this.say("**" + losePlayer.name + "** loses **" + diff + "** health!");
+				this.hp.set(losePlayer, losehp - diff);
+			}
 		}
 		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
 	}
@@ -179,7 +185,9 @@ class Evolve extends Games.Game {
 			this.hp.set(player, 75);
 		} else {
 			this.hp.set(player, 100);
+
 		}
+		if (this.variation) this.hp.set(player, this.mons.get(player).baseStats.hp);
 		this.hasEvolved.set(player, true);
 		player.say("You have evolved into **" + Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].species + "**!");
 		this.numAttacks++;
@@ -203,3 +211,11 @@ exports.pmCommands = {
 	"destroy": true,
 	"evolve": true,
 }
+exports.variations = [
+	{
+		name: "Shade's Evolve",
+		aliases: [],
+		variation: "shade",
+		variationAliases: ["shades"],
+	}
+]
