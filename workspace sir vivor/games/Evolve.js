@@ -57,7 +57,7 @@ class Evolve extends Games.Game {
 
 	onNextRound() {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
-		if (this.round%3 === (this.variation ? 3 : 2)) {
+		if (this.round%3 === (this.variation ? 0 : 2)) {
 			this.say("**This round, you can also choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
 			this.canEvolve = true;
 		}
