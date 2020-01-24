@@ -126,7 +126,7 @@ class Evolve extends Games.Game {
 	}
 
 	handleWinner(winPlayer, losePlayer) {
-		if (this.variation && this.losePlayer === this.curPlayer) {
+		if (this.variation && losePlayer.id === this.curPlayer.id) {
 			this.say('**AI**');
 		}
 		else {
