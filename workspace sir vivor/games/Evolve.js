@@ -49,7 +49,7 @@ class Evolve extends Games.Game {
 			let mon = Tools.sample(goodmons);
 			let player = this.order.shift();
 			this.mons.set(player, mon);
-			if (this.variation) this.hp.set(player, mon.baseStats.hp);
+			if (this.variation) this.hp.set(player, Tools.data.pokedex[mon].baseStats.hp);
 			player.say("Your mon is **" + Tools.data.pokedex[mon].species + "**!");
 			this.timeout = setTimeout(() => this.handoutmon(), 5 * 1000);
 		}
@@ -187,7 +187,7 @@ class Evolve extends Games.Game {
 			this.hp.set(player, 100);
 
 		}
-		if (this.variation) this.hp.set(player, this.mons.get(player).baseStats.hp);
+		if (this.variation) this.hp.set(player, Tools.data.pokedex[this.mons.get(player)].baseStats.hp);
 		this.hasEvolved.set(player, true);
 		player.say("You have evolved into **" + Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].species + "**!");
 		this.numAttacks++;
