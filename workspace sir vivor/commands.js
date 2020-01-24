@@ -1179,7 +1179,7 @@ exports.commands = {
 		}
 		if (Users.get(info[0])) {
 			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote " + info[0] + " hosted");
+			this.say(room, "/modnote HOST: " + info[0] + " hosted");
 			Games.host = Users.get(info[0]);
 			Games.addHost(info[0]);
 			Games.points = null;
