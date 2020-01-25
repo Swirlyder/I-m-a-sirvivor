@@ -111,6 +111,7 @@ let gameTypes = {
 	legotd: ['Lego Tower Defense', 'https://survivor-ps.weebly.com/lego-td.html', 'Now defending your tower is fun for the whole family!', 1],
 	legotowerdefense: 'legotd',
 	legotower: 'legotd',
+	lego: 'legotd',
 	survivorparty: ['Survivor Party', 'https://survivor-ps.weebly.com/survivor-party.html', 'The craziest party you\'ll ever go to, we promise.', 1],
 	pokesurv: ['Pokemon Survivor', 'http://survivor-ps.weebly.com/pokemon-survivor.html **Note: Players can use /modjoin + in their battles to avoid scouting. Hosts can !randpoke to players in PMs.**', 'Let the dice decide your partner! A true test of battling skill!', 0],
 	pokemonsurvivor: 'pokesurv',
@@ -199,6 +200,7 @@ let gameTypes = {
 	thebridge: ['The Bridge', 'https://survivor-ps.weebly.com/the-bridge.html', 'Why burn the bridge when it will crumble on its own?', 1],
 	bridge: 'thebridge',
 	tagteamsurvivor: ['Tag Team Survivor', 'https://survivor-ps.weebly.com/tag-team-survivor.html', 'Will you become the world\'s greatest tag team?', 1],
+	tagteam: 'tagteamsurvivor',
 	casino: ['Casino', 'https://survivor-ps.weebly.com/casino.html', 'Place your bets and hope for the best!', 1, 1],
 	bank: ['Bank', 'https://survivor-ps.weebly.com/bank.html', 'Sometimes greed is good... but only sometimes.', 1, 1],
 	blackjack: ['Blackjack', 'https://survivor-ps.weebly.com/blackjack.html', 'A survivor themed game of blackjack.', 1, 1],
@@ -208,7 +210,6 @@ let gameTypes = {
 	tokensoflife: ['Tokens of Life', 'https://survivor-ps.weebly.com/tokens-of-life.html', 'Who needs a Circle when you have Tokens?', 1],
 	eclipsesurvivor: ['Eclipse Survivor', 'https://survivor-ps.weebly.com/eclipse-survivor.html', 'Use the power of the Sun and the Moon to take you to victory!', 1],
  	eclipse: 'eclipsesurvivor',
- 	es: 'eclipsesurvivor',
  	holidaysurvivor: ['Holiday Survivor', 'https://survivor-ps.weebly.com/holiday-survivor.html', 'Complete the quest to be the best Holiday Spirit!', 1],
  	holiday: 'holidaysurvivor',
 
