@@ -11,7 +11,8 @@ class Minefield extends Games.Game {
 		this.id = id;
 	}
 
-	checkMine(num) {
+	checkMine(num, stacked = false) {
+		if (stacked) return this.stack.includes(num%100);
 		if (this.number === false) return false;
 		if (!this.before) return false;
 		num = (num % 100).toString();
@@ -26,14 +27,18 @@ class Minefield extends Games.Game {
 
 	onStart() {
 		this.attacks = {};
+		if (this.variation === "stacked") this.stack = [];
 		this.phase = false;
 		this.bypass = false;
+
+		this.before = false;
+		this.number = false;
 		this.nextRound();
 	}
 
 	onNextRound() {
-		this.before = false; // This variable name is bad, needs to be renamed eventually
-		this.number = false;
+		if (this.variation === "simple") this.before = false; // This variable name is bad, needs to be renamed eventually
+		if (this.variation === "simple") this.number = false;
 		this.phase = "mine";
 		this.pl();
 		this.say(`!roll 10`);
@@ -111,10 +116,13 @@ class Minefield extends Games.Game {
 	}
 
 	handlePick(pick) {
-		this.before = pick === "beginning" ? 1 : 2;
+		if (this.variation !== "simple" || this.before === false) this.before = pick === "beginning" ? 1 : 2;
 		let nums = [];
 		for (let i = 1; i <= 100; i++) {
-			if (this.checkMine(i)) nums.push(i);
+			if (this.checkMine(i)) {
+				nums.push(i);
+				if (this.variation === "stacked") this.stack.push(i);
+			}
 		}
 		this.say(`**The mines are anything ${this.before === 1 ? "starting with" : "ending on"} a ${this.number % 10}** (${nums.join(', ')})`);
 		setTimeout(() => this.afterMines(), 2000);
@@ -122,7 +130,7 @@ class Minefield extends Games.Game {
 
 	handleRoll(roll) {
 		if (this.phase === "mine") {
-			this.number = roll % 10;
+			if (this.variation !== "simple" || this.number === false) this.number = roll % 10;
 			this.say('!pick beginning, end');
 		}
 		if (this.phase === "damage") {
@@ -194,3 +202,23 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true
 }
+exports.variations = [
+	{
+		name: "Stacked Minefield",
+		aliases: [],
+		variation: "stacked",
+		variationAliases: [],
+	},
+	{
+		name: "Simple Minefield",
+		aliases: [],
+		variation: "simple",
+		variationAliases: [],
+	},
+	/*{
+		name: "Double Whammy Minefield",
+		aliases: ["doubleminefield", "whammyminefield"],
+		variation: "doublewhammy",
+		variationAliases: ["double", "whammy"],
+	},*/
+]
