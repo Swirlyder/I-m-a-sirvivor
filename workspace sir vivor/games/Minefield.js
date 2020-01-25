@@ -37,8 +37,8 @@ class Minefield extends Games.Game {
 	}
 
 	onNextRound() {
-		if (this.variation === "simple") this.before = false; // This variable name is bad, needs to be renamed eventually
-		if (this.variation === "simple") this.number = false;
+		if (this.variation !== "simple") this.before = false; // This variable name is bad, needs to be renamed eventually
+		if (this.variation !== "simple") this.number = false;
 		this.phase = "mine";
 		this.pl();
 		this.say(`!roll 10`);
@@ -124,7 +124,8 @@ class Minefield extends Games.Game {
 				if (this.variation === "stacked") this.stack.push(i);
 			}
 		}
-		this.say(`**The mines are anything ${this.before === 1 ? "starting with" : "ending on"} a ${this.number % 10}** (${nums.join(', ')})`);
+		if (this.variation !== "stacked") this.say(`**The mines are anything ${this.before === 1 ? "starting with" : "ending on"} a ${this.number % 10}** (${nums.join(', ')})`);
+		else this.say(`**The mines are anything ${this.before === 1 ? "starting with" : "ending on"} a ${this.number % 10}** (Full list: ${this.stack.join(', ')})`);
 		setTimeout(() => this.afterMines(), 2000);
 	}
 
