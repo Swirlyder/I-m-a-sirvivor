@@ -1,16 +1,23 @@
 'use strict';
 
-let goodmons = [];
-for (let i in Tools.data.pokedex) {
-	let mon = Tools.data.pokedex[i];
-	if (mon.num < 1 || mon.baseSpecies) continue;
-	if (mon.evos && mon.evos.length === 1) {
-		let evo = Tools.data.pokedex[mon.evos[0]];
-		if (evo.evos && evo.evos.length === 1) {
-			goodmons.push(i);
+let goodmons = {};
+let dex = Tools.data.pokexex;
+for (let s0 in dex) {
+	let b0 = dex[s0];
+	if (b0.num < 1) continue;
+	if (b0.evos) {
+		for (let s1 of mon.evos) {
+			let b1 = dex[toId(s1)];
+			if (b1.evos) {
+				for (let s2 of b1.evos) {
+					if (goodmons[s0]) goodmons[s0] = [];
+					goodmons[s0].push(`${s0},${s1},${s2}`);
+				}
+			}
 		}
 	}
 }
+
 
 const name = "Evolve";
 const description = "__This isn\'t even my final form!__ Game Rules: https://survivor-ps.weebly.com/evolve.html";
@@ -23,6 +30,7 @@ class Evolve extends Games.Game {
 		this.description = description;
 		this.id = id;
 		this.mons = new Map();
+		this.paths = new Map();
 		this.hp = new Map();
 		this.attacks = new Map();
 		this.hasEvolved = new Map();
@@ -46,9 +54,11 @@ class Evolve extends Games.Game {
 		if (this.order.length === 0) {
 			this.nextRound();
 		} else {
-			let mon = Tools.sample(goodmons);
+			let mon = Tools.sample(Object.keys(goodmons));
+			let path = Tools.sample(goodmons[mon]);
 			let player = this.order.shift();
 			this.mons.set(player, mon);
+			this.paths.set(player, path);
 			if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[mon].baseStats.hp);
 			player.say("Your mon is **" + Tools.data.pokedex[mon].species + "**!");
 			this.timeout = setTimeout(() => this.handoutmon(), 0.2 * 1000);
@@ -180,16 +190,19 @@ class Evolve extends Games.Game {
 		if (!Tools.data.pokedex[mon].evos) return player.say("You have already evolved twice!");
 		if (this.attacks.has(player)) return user.say("You have already attacked somebody!");
 		if (this.hasEvolved.has(player)) return player.say("You have already evolved!");
-		this.mons.set(player, Tools.data.pokedex[mon].evos[0]);
-		if (Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].evos) {
+
+		let path = this.paths.get(player).split(',');
+		let index = path.indexOf(toId(mon)) + 1;
+		let evo = path[index];
+		this.mons.set(player, evo);
+		if (index === 1) {
 			this.hp.set(player, 75);
 		} else {
 			this.hp.set(player, 100);
-
 		}
-		if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[this.mons.get(player)].baseStats.hp);
+		if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[evo].baseStats.hp);
 		this.hasEvolved.set(player, true);
-		player.say("You have evolved into **" + Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].species + "**!");
+		player.say("You have evolved into **" + Tools.data.pokedex[evo].species + "**!");
 		this.numAttacks++;
 		if (this.numAttacks === this.getRemainingPlayerCount()) {
 			clearTimeout(this.timeout);
