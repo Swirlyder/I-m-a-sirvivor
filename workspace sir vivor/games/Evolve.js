@@ -1,7 +1,7 @@
 'use strict';
 
 let goodmons = {};
-let dex = Tools.data.pokexex;
+let dex = Tools.data.pokedex;
 for (let s0 in dex) {
 	let b0 = dex[s0];
 	if (b0.num < 1) continue;
@@ -10,7 +10,7 @@ for (let s0 in dex) {
 			let b1 = dex[toId(s1)];
 			if (b1.evos) {
 				for (let s2 of b1.evos) {
-					if (goodmons[s0]) goodmons[s0] = [];
+					if (!goodmons[s0]) goodmons[s0] = [];
 					goodmons[s0].push(`${s0},${s1},${s2}`);
 				}
 			}
