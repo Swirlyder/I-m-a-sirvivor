@@ -6,7 +6,7 @@ for (let s0 in dex) {
 	let b0 = dex[s0];
 	if (b0.num < 1) continue;
 	if (b0.evos) {
-		for (let s1 of mon.evos) {
+		for (let s1 of b0.evos) {
 			let b1 = dex[toId(s1)];
 			if (b1.evos) {
 				for (let s2 of b1.evos) {
