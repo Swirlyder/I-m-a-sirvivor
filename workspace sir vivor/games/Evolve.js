@@ -78,7 +78,7 @@ class Evolve extends Games.Game {
 	elimPlayers() {
 		for (let userID in this.players) {
 			let player = this.players[userID];
-			if (!player.eliminated && !this.attacks.has(player)) {
+			if (!player.eliminated && !this.attacks.has(player) && !this.hasEvolved.has(player)) {
 				player.eliminated = true;
 				player.say("You didn't attack anybody and are eliminated!");
 			}
