@@ -71,7 +71,7 @@ class TTP extends Games.Game {
 					names.push("**" + mons[i].species + "**");
 				}
 				this.sayHand(player);
-				this.timeout = setTimeout(() => this.handoutMon(), 3 * 1000);
+				this.timeout = setTimeout(() => this.handoutMon(), 0.2 * 1000);
 			}
 		} catch (e) {
 			this.mailbreak(e);

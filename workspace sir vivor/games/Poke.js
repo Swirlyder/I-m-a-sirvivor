@@ -64,7 +64,7 @@ class Poke extends Games.Game {
 				let player = this.players[Tools.toId(this.order.shift())];
 				let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
 				while (mon.num < 1) {
-							mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
+					mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
 				}
 				while (mon.evos) {
 					mon = Tools.data.pokedex[mon.evos[0]];
@@ -78,7 +78,7 @@ class Poke extends Games.Game {
 				player.say("Your pokemon is **" + mon.species + "**!");
 				this.mons.set(player, mon);
 				this.hasAdvanced.set(player, true);
-				this.timeout = setTimeout(() => this.handoutmon(), 2 * 1000);
+				this.timeout = setTimeout(() => this.handoutmon(), 0.2 * 1000);
 			}
 		} catch (e) {
 			this.mailbreak(e);
@@ -140,7 +140,7 @@ class Poke extends Games.Game {
 				this.matchups.push([player1, player2]);
 			}
 			this.say("/wall " + (this.finals ? "Final round " : "Round " + this.round) + " matchups! " + this.matchups.map(v => v[0].name + " vs. " + v[1].name).join(", ") + "." + (nomatchups.length > 0 ? (" Bye: " + nomatchups[0].name + ".") : ""))
-			this.say("/wall Use ``" + Config.commandCharacter + "check [link]`` during your battle, and make sure the tier is Gen 7 Anything Goes! If .check isn't working, you can do ``/invite Sir Vivor`` as well");
+			this.say("/wall Use ``" + Config.commandCharacter + "check [link]`` during your battle, and make sure the tier is National Dex AG! If .check isn't working, you can do ``/invite Sir Vivor`` as well");
 			this.say("/wall To prevent scouting, you can use ``/modjoin +`` followed by ``/roomvoice Sir Vivor`` (before inviting).");
 			this.numMatches = 0;
 			this.numTotal = this.matchups.length;
@@ -306,7 +306,7 @@ class Poke extends Games.Game {
 		target = target.substr(target.lastIndexOf("/") + 1);
 		let split = target.split("-");
 		if (split.length !== 3) return;
-		if (split[1] !== "gen7anythinggoes") return user.say("The tier required is Gen 7 Anything Goes");
+		if (split[1] !== "gen8nationaldexag") return user.say("The tier required is Gen 8 National Dex AG");
 		this.say("/join " + target);
 	}
 

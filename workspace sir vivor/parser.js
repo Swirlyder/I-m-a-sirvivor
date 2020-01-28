@@ -262,7 +262,7 @@ global.parse = exports.parse = {
 
 				spl = spl.slice(4).join('|');
 				if (spl.startsWith('/invite ') && !(toId(spl.substr(8)) === 'lobby')) {
-					if (toId(spl.substr(8)).startsWith('battlegen7anythinggoes') || user.isExcepted()) {
+					if (toId(spl.substr(8)).startsWith('battlegen8nationaldexag') || user.isExcepted()) {
 						return send('|/join ' + spl.substr(8));
 					}
 				}

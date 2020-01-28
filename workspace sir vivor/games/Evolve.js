@@ -49,15 +49,15 @@ class Evolve extends Games.Game {
 			let mon = Tools.sample(goodmons);
 			let player = this.order.shift();
 			this.mons.set(player, mon);
-			if (this.variation) this.hp.set(player, Tools.data.pokedex[mon].baseStats.hp);
+			if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[mon].baseStats.hp);
 			player.say("Your mon is **" + Tools.data.pokedex[mon].species + "**!");
-			this.timeout = setTimeout(() => this.handoutmon(), 5 * 1000);
+			this.timeout = setTimeout(() => this.handoutmon(), 0.2 * 1000);
 		}
 	}
 
 	onNextRound() {
 		this.say("**Players (" + this.getRemainingPlayerCount() + ")**: " + Object.values(this.players).filter(pl => !pl.eliminated).map(pl => pl.name + "(" + this.hp.get(pl) + ")").join(", ") + "! PM me your attacks now with ``" + Config.commandCharacter + "destroy [user], [physical/special (or p/s)]``");
-		if (this.round%3 === (this.variation ? 0 : 2)) {
+		if (this.round%3 === (this.variation === "shade" ? 0 : 2)) {
 			this.say("**This round, you can also choose to evolve with ``" + Config.commandCharacter + "evolve``**!");
 			this.canEvolve = true;
 		}
@@ -126,7 +126,7 @@ class Evolve extends Games.Game {
 	}
 
 	handleWinner(winPlayer, losePlayer) {
-		if (this.variation && losePlayer.id === this.curPlayer.id) {
+		if (this.variation === "shade" && losePlayer.id === this.curPlayer.id) {
 			this.say('**AI**');
 		}
 		else {
@@ -187,7 +187,7 @@ class Evolve extends Games.Game {
 			this.hp.set(player, 100);
 
 		}
-		if (this.variation) this.hp.set(player, Tools.data.pokedex[this.mons.get(player)].baseStats.hp);
+		if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[this.mons.get(player)].baseStats.hp);
 		this.hasEvolved.set(player, true);
 		player.say("You have evolved into **" + Tools.data.pokedex[Tools.data.pokedex[mon].evos[0]].species + "**!");
 		this.numAttacks++;
