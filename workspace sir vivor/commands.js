@@ -208,6 +208,7 @@ let gameTypes = {
 	lucky7: ['Lucky 7', 'https://survivor-ps.weebly.com/lucky-7.html', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
 	roulette: ['Roulette', 'https://survivor-ps.weebly.com/roulette.html', 'The roulette wheel is spinning, place your bets now!', 1, 1],
 	slots: ['Slots', 'https://survivor-ps.weebly.com/slots.html', 'Insert X coin(s) to play!', 1, 1],
+	yahtzee: ['Yahtzee', 'https://survivor-ps.weebly.com/yahtzee.html', 'A classic dice game with a Survivor twist!', 1, 1],
 	tokensoflife: ['Tokens of Life', 'https://survivor-ps.weebly.com/tokens-of-life.html', 'Who needs a Circle when you have Tokens?', 1],
 	tokens: 'tokensoflife',
 	eclipsesurvivor: ['Eclipse Survivor', 'https://survivor-ps.weebly.com/eclipse-survivor.html', 'Use the power of the Sun and the Moon to take you to victory!', 1],
@@ -216,7 +217,10 @@ let gameTypes = {
  	holidaysurvivor: ['Holiday Survivor', 'https://survivor-ps.weebly.com/holiday-survivor.html', 'Complete the quest to be the best Holiday Spirit!', 1],
  	holiday: 'holidaysurvivor',
 	holidaysurv: 'holidaysurvivor',
-
+	puppetmaster: ['Puppet Master', 'https://survivor-ps.weebly.com/puppet-master.html', 'What are you going to do next? It’s not your choice, after all.', 1],
+	pm: 'puppetmaster',
+	puppet: 'puppetmaster',
+	
 };
 exports.commands = {
 	/**
