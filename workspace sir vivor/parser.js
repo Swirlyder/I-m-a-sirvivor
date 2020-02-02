@@ -112,6 +112,7 @@ global.parse = exports.parse = {
 	},
 	message: function (message, room) {
 		var spl = message.split('|');
+		if (message.includes("added a roomevent titled") || message.includes("edited the roomevent titled")) this.say(room, "/events sortby date | asc");
 		switch (spl[1]) {
 			case 'challstr':
 				info('received challstr, logging in...');
