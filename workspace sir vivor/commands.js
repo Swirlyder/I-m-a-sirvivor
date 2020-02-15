@@ -2278,6 +2278,17 @@ exports.commands = {
 		Rooms.get('survivor').say("/join groupchat-survivor-testing");
 		room.say("<<groupchat-survivor-testing>> to test stuff!");
 	},
+	psevent: function (arg, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let args = arg.split(',');
+		if (toId(args[0]) === "add") {
+			Rooms.get('survivor').say('/events add ' + args.slice(1).join(','));
+		}
+		else if (toId(args[0]) === "remove") {
+			Rooms.get('survivor').say('/events remove ' + args.slice(1).join(','));
+		}
+		else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)");
+	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		let sorted = dd.getSorted();
