@@ -2287,7 +2287,7 @@ exports.commands = {
 		else if (toId(args[0]) === "remove") {
 			Rooms.get('survivor').say('/events remove ' + args.slice(1).join(','));
 		}
-		else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)");
+		else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)');
 	},
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
