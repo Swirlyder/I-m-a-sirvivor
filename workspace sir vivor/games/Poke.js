@@ -58,8 +58,8 @@ class Poke extends Games.Game {
 	handoutmon() {
 		try {
 			if (this.order.length === 0) {
-				this.say("/wall You have 1 minute to make your teams!");
-				this.timeout = setTimeout(() => this.nextRound(), 1 * 60 * 1000);
+				this.say("/wall You have 3 minutes to make your teams!");
+				this.timeout = setTimeout(() => this.nextRound(), 3 * 60 * 1000);
 			} else {
 				let player = this.players[Tools.toId(this.order.shift())];
 				let mon = Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))];
