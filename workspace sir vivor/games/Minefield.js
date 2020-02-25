@@ -151,6 +151,7 @@ class Minefield extends Games.Game {
 				if (this.checkMine(roll)) {
 					this.say(`${this.defender.name} rolled a mine! They're eliminated.`);
 					this.defender.eliminated = true;
+					delete this.attacks[toId(this.defender.name)];
 					return setTimeout(() => this.handleAttacks(), 2 * 1000);
 				}
 				this.rollb = roll;
