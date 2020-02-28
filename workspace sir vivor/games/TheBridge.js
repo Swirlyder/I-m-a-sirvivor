@@ -186,7 +186,7 @@ class Bridge extends Games.Game {
 		let player = this.players[user.id];
 		if (!player) return;
 		if (player.id !== this.current.id) return;
-		if (this.planks[player.id] = this.max-1) return this.say(user, "You can't leap! There are no 2 planks left...");
+		if (this.planks[player.id] === this.max-1) return this.say(user, "You can't leap! There are no 2 planks left...");
 		clearTimeout(this.timeout);
 		this.say(`**${player.name} is leaping 2 planks ahead!**`);
 		this.planks[player.id] += 2;
