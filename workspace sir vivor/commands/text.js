@@ -155,7 +155,7 @@ module.exports = {
 	ptoad: 'teehee',
 	
 	bobo: '==bobochan',
-	bobochan: '蜀酱波波在此，谁敢出来撒野/翻译',
+	bobochan: '妮可妮可妮[target]，波波酱在此！',
 	
 	workshop: '<<survivorworkshop>>',
 	
@@ -165,5 +165,9 @@ module.exports = {
 	bugbuzzing: '==myster17',
 	bug: '==myster17',
 	myster17: 'Bugbuzz off, [target]!',
+	
+	egg: '[target] has been egged!',
+	
+	dywy: '胖吉胖吉胖吉猫',
 }
 	
