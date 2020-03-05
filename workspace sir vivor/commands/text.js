@@ -133,7 +133,7 @@ module.exports = {
 	tushavi: '>noob luck',
 	
 	inac: '==inactive',
-	inactive: 'I don\'t know what to put here',
+	inactive: 'My Art is an explosion!!',
 
 	meow: 'meow!',
 	
