@@ -220,8 +220,26 @@ let gameTypes = {
 	puppetmaster: ['Puppet Master', 'https://survivor-ps.weebly.com/puppet-master.html', 'What are you going to do next? It’s not your choice, after all.', 1],
 	pm: 'puppetmaster',
 	puppet: 'puppetmaster',
-	
+
 };
+
+let eventTypes = {
+	twentyfourhoursurvivor: ['24 Hour Survivor', 'https://survivor-ps.weebly.com/24-hour-survivor.html', 'ALL DAY ROLL BATTLES EVERY DAY.'],
+	twentyfour: 'twentyfourhoursurvivor',
+	tfhs: 'twentyfourhoursurvivor',
+	authhunt: ['Auth Hunt', 'https://survivor-ps.weebly.com/auth-hunt.html', 'You\'ve played their games, but now they play yours... hunt them down.'],
+	authbattle: 'authhunt',
+	challenges: ['Challenges', 'https://survivor-ps.weebly.com/challenges.html', 'Try to do more than just win the game!​'],
+	chieves: 'challenges',
+	freeforall: ['Free for All', 'https://survivor-ps.weebly.com/free-for-all.html', 'Take out as many opponents as you can!'],
+	ffa: 'freeforall',
+	minigames: ['Minigames', 'https://survivor-ps.weebly.com/minigames.html', 'A mini spin on Survivor games.'],
+	minigame: 'minigames',
+	survivorshowdown: ['Survivor Showdown', 'https://survivor-ps.weebly.com/survivor-showdown.html', 'Use your points wisely.'],
+	ss: 'survivorshowdown',
+
+};
+
 exports.commands = {
 	/**
 	 * Help commands
@@ -334,7 +352,7 @@ exports.commands = {
 		arg = arg.substr(arg.indexOf(']') + 1).trim();
 		this.say(tarRoom, arg);
 	},
-	
+
 	eval: 'js',
 	js: function(arg, user, room)
 	{
@@ -767,7 +785,7 @@ exports.commands = {
 				return target.say('**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1]);
 			}
 		}
-		
+
 	},
 
 	theme: 'themes',
@@ -780,7 +798,7 @@ exports.commands = {
 		if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://survivor-ps.weebly.com/survivor-themes.html");
 		let data = gameTypes[arg];
 		if (typeof data === 'string') data = gameTypes[data];
-		
+
 		let text = '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
 		if (Games.host) {
 			Games.hosttype = data[3];
@@ -793,9 +811,18 @@ exports.commands = {
 		}, 5 * 1000);
 	},
 
-	events: function(arg, user, room) {
+	events: 'event',
+	event: function(arg, user, room)
+	{
 		let target = user.hasRank(room.id, '+') ? room : user;
-		target.say("Link to the Survivor events page: https://survivor-ps.weebly.com/survivor-events.html");
+		arg = toId(arg);
+		if (!arg) return target.say("Link to the Survivor events page: https://survivor-ps.weebly.com/survivor-events.html");
+		if (!eventTypes[arg]) return target.say("Invalid event type. The events can be found here: https://survivor-ps.weebly.com/survivor-events.html");
+		let data = eventTypes[arg];
+		if (typeof data === 'string') data = eventTypes[data];
+
+		let text = '**' + data[0] + '**: __' + data[2] + '__ Event rules: ' + data[1];
+		target.say(text);
 	},
 
 	sethost: function (target, user, room) {
@@ -1681,7 +1708,7 @@ exports.commands = {
 			Games.excepted.splice(index, 1);
 		}
 	    let roll = arg.toString().split("//")[0]; // text after // is ignored
-	    
+
 	    if (!roll) roll = "100"; // blank .r gives d100
 
 	    // Find the index of the first addition or subtraction
@@ -1696,11 +1723,11 @@ exports.commands = {
 	        if (add !== -1) index = add;
 	        else index = sub;
 	    }
-	    
+
 	    // Split between rolls and flat number additions
 	    let addition = index == -1 ? false : roll.substring(index);
 	    if (index !== -1) roll = roll.substring(0, index);
-	    
+
 	    // Split and check for XdY format
 	    roll = roll.split("d");
 	    if (roll.length > 2) return room.say("Invalid dice format.");
@@ -1714,7 +1741,7 @@ exports.commands = {
 	        if (!dice) dice = "1";
 	        if (!faces) faces = "100";
 	    }
-	    
+
 	    dice = parseInt(dice);
 	    faces = parseInt(faces);
 	    if (isNaN(dice) || isNaN(faces)) return room.say("Invalid dice format."); // X and Y in XdY must be numbers
@@ -1729,13 +1756,13 @@ exports.commands = {
 	    }
 	    let addit = 0;
 	    if (addition) { // This adds all additions together so 1d100+1+2+6+3 is parsed as 1d100+12
-	        addition = addition.split(''); // Char by char split 
+	        addition = addition.split(''); // Char by char split
 	        let cur = addition.shift();
 	        let cv = ""; // cv is where we store the current number
 	        for (let ch of addition) {
 	            if (ch === "+" || ch === "-") { // there shouldn't be 2 +/- in sequence. eg 1d100++12 is a bad format
 	                if (!cv) return room.say("Invalid dice format.");
-	                cv = parseInt(cv); 
+	                cv = parseInt(cv);
 	                if (isNaN(cv)) return room.say("Invalid dice format.");
 	                if (cur === "+") addit += cv;
 	                else addit -= cv;
@@ -1750,7 +1777,7 @@ exports.commands = {
 	            if (ch === " ") continue; // ignore spaces
 	            return room.say("Invalid dice format."); // It's not a number, +/-, or a space, so it's wrong
 	        }
-	        
+
 	        if (!cv) return room.say("Invalid dice format."); // Don't end additions with + or -
 	        cv = parseInt(cv);
 	        if (isNaN(cv)) return room.say("Invalid dice format.");
@@ -2176,7 +2203,7 @@ exports.commands = {
 			"adduser": "User",
 			"addbot": "Bot",
 			"addspecial": "Special",
-			"addfish": "Official" 
+			"addfish": "Official"
 		}
 		let ret = [''];
 		let n = 0;
@@ -2196,7 +2223,7 @@ exports.commands = {
     		if (search && !searchstr.includes(search)) continue;
     		let date = new Date(i.date);
     		date = `[${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}]`;
-    		
+
     		let unit = `<details><summary><b>${conv[i.command]}</b> by ${i.user}</summary>`;
     		unit += `${date}<br>`;
     		if (i.command === "addspecial") {
