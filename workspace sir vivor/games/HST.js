@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Hide & Seek Tag';
-const description = '__Stop being so damn edgy and just play a childhood game for once.__ Game rules: http://survivor-ps.weebly.com/hide_and_seek.html';
+const description = '__Stop being so damn edgy and just play a childhood game for once.__ Game rules: http://survivor-ps.weebly.com/hide-and-seek-tag.html';
 const id = Tools.toId(name);
 const locations = {
 	bed: {name: "**Under the Bed**", roundname: "Under the Bed", aliases: ["bed", "utb", "underthebed"]},
