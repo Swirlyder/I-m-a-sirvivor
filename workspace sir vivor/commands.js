@@ -725,7 +725,7 @@ exports.commands = {
 		if (split.length > 1) {
 			let targThemeID = Tools.toId(split[1]);
 			if (!(targThemeID in gameTypes)) {
-				return room.say("Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-more.html");
+				return room.say("Invalid game type. The game types can be found here: http://survivor-ps.weebly.com/themes-and-events.html");
 			} else {
 				if (typeof gameTypes[targThemeID] === 'string') targThemeID = gameTypes[targThemeID];
 				targTheme = gameTypes[targThemeID][0];
@@ -1191,7 +1191,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Survivor Themes and How to Play Them: http://survivor-ps.weebly.com/themes-and-more.html';
+		text += 'Survivor Themes and How to Play Them: http://survivor-ps.weebly.com/themes-and-events.html';
 		this.say(room, text);
 	},
 
