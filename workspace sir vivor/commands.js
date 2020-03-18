@@ -2188,6 +2188,51 @@ exports.commands = {
 	dd.updateModlog(modlogEntry);
     return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
   },
+  addpointssurvivorshowdown: 'addss',
+  addss: function (target, user, room) {
+    if (!target) return user.say("No target found :" + target);
+    if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+    let split = target.split(",");
+    if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
+    let numPlayers = parseInt(split[0]);
+    if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+    if (split.length != numPlayers+2) return user.say("Please check the number of players.");
+    let host = split[1].trim();
+    let first = split[2].trim();
+    let second = split[3].trim();
+    let hostpoints = 8;
+    let firstpoints = 15;
+    let secondpoints = 10;
+    let partpoints = 3;
+    let partlist = '';
+    dd.addpoints(host, hostpoints);
+    dd.addpoints(first, firstpoints);
+    dd.addpoints(second, secondpoints);
+    for (let i = 4 ; i < split.length ; i++) {
+      let part = split[i];
+      dd.addpoints(part, partpoints);
+      if (i == 4) {
+        if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
+        else partlist = part.trim()
+      }
+      else if (i == split.length - 1) partlist += " and " + part.trim();
+      else partlist += ", " + part.trim();
+    }
+    user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+    user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+    user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+	let modlogEntry = {
+		command: "addss",
+		user: user.id,
+		first: [firstpoints, first],
+		second: [secondpoints, second],
+		host: [hostpoints, host],
+		part: [partpoints].concat(split.slice(4)),
+		date: Date.now()
+	};
+	dd.updateModlog(modlogEntry);
+    return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+  },
     pointlog: function(arg, user, room) {
     	if (!user.hasRank('survivor', '+')) return;
     	let data = dd.modlog.data.reverse();
