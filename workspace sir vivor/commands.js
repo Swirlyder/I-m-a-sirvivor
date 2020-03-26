@@ -1456,6 +1456,21 @@ exports.commands = {
 		text += '**Empire:** __Before the game starts, players pick between two empires. The host then makes two PLs based on the players\' choices, and carries out the game as if it were two games, one per empire. The winners of each empire then make it to finals.__';
 		this.say(room, text);
 	},
+	
+	triplethreat: function(arg, user, room)
+	{
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id))
+		{
+			text = '';
+		}
+		else if (room.id !== user.id)
+		{
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '**Triple Threat:** __When selected, players will attack 2 other players instead of just 1, and all 3 players will roll, with the player that rolls the lowest being eliminated, and the other 2 being safe (works best in tandem with Spotlight modification)__';
+		this.say(room, text);
+	},
 
 	joke: function(arg, user, room)
 	{
