@@ -543,7 +543,7 @@ global.parse = exports.parse = {
 				}
 			}
 			// moderation for stretching (over x consecutive characters in the message are the same)
-			let stretchMatch = /(.)\1{7,}/gi.test(msg) || /(..+)\1{4,}/gi.test(msg); // matches the same character (or group of characters) 8 (or 5) or more times in a row
+			let stretchMatch = /(.)\1{11,}/gi.test(msg) || /(..+)\1{6,}/gi.test(msg); // matches the same character (or group of characters) 12 (or 7) or more times in a row
 			if ((useDefault || !('stretching' in modSettings)) && stretchMatch) {
 				if (pointVal < 1) {
 					pointVal = 1;
