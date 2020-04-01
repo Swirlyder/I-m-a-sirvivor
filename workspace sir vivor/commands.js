@@ -819,6 +819,7 @@ exports.commands = {
 		if (Games.host) {
 			Games.hosttype = data[3];
 		}
+		text = "<<saw>>";
 		target.say(text);
 		if (room == user) return;
 		Games.canTheme = false;
