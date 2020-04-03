@@ -226,7 +226,7 @@ let gameTypes = {
 	towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles?', 1],
 	td: 'towerdefense',
 	tower: 'towerdefense',
-	legotowerdefense: ['Lego Tower Defense', 'https://survivor-ps.weebly.com/lego-td.html', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
+	legotowerdefense: ['Lego Tower Defense', 'https://survivor-ps.weebly.com/lego-tower-defense.html', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
 	legotd: 'legotowerdefense',
 	legotower: 'legotowerdefense',
 	lego: 'legotowerdefense',
