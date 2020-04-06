@@ -226,7 +226,7 @@ let gameTypes = {
 	towerdefense: ['Tower Defense', 'http://survivor-ps.weebly.com/tower-defense.html', 'Can you defend your tower? Who will be left standing when the dust settles?', 1],
 	td: 'towerdefense',
 	tower: 'towerdefense',
-	legotowerdefense: ['Lego Tower Defense', 'https://survivor-ps.weebly.com/lego-td.html', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
+	legotowerdefense: ['Lego Tower Defense', 'https://survivor-ps.weebly.com/lego-tower-defense.html', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
 	legotd: 'legotowerdefense',
 	legotower: 'legotowerdefense',
 	lego: 'legotowerdefense',
@@ -1550,8 +1550,9 @@ exports.commands = {
 		}
     },
 
+	modifications: 'mods',
 	mods: function (arg,user, room) {
-		var text = 'Host it your way, with these custom mods: http://survivor-ps.weebly.com/custommodifications.html';
+		var text = 'Host it your way, with these theme modifications: http://survivor-ps.weebly.com/theme-modifications.html';
 		if (user.hasRank(room.id, '+')) {
 			this.say(room, text);
 		} else {
