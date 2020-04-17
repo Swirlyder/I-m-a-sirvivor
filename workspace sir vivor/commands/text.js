@@ -123,9 +123,6 @@ module.exports = {
 	
 	henka: 'H E N K A B O Y S',
 	
-	hirl: '==hurl',
-	hurl: '/me hurls',
-	
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
 	
@@ -177,5 +174,14 @@ module.exports = {
 	
 	pisxel: 'LOL cringe',
 	pix: '==pisxel',
+	
+	profsapling: '==prof',
+	sapling: '==prof',
+	prof: 'Welcome [target] to the Survivor region! Are you a boy, or a girl?',
+	
+	orionssign: 'orion',
+	orion: ':pepecry:',
+	
+	
 }
 	
