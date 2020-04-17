@@ -32,8 +32,8 @@ module.exports = {
 	azu: '==azuuli',
 	azuuli: '/me explodes',
 
-	wyrmwind: '==wyrm',
-	wyrm: '/me throws a gold coin at [target]',
+	lssghost: '==ls',
+	ls: '/me throws a gold coin at [target]',
 
 	sciencepanda: '==rach',
 	rach: 'The future is now thanks to sciencepanda!',
@@ -123,6 +123,9 @@ module.exports = {
 	
 	henka: 'H E N K A B O Y S',
 	
+	hirl: '==hurl',
+	hurl: '/me hurls',
+	
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
 	
@@ -171,5 +174,8 @@ module.exports = {
 	toss: 'The egg was passed on to [target].',
 	
 	dywy: '胖吉胖吉胖吉猫',
+	
+	pisxel: 'LOL cringe',
+	pix: '==pisxel',
 }
 	
