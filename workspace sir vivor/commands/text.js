@@ -182,7 +182,6 @@ module.exports = {
 	orionssign: 'orion',
 	orion: ':pepecry:',
 	
-	micro: '==micromorphic',
-	micromorphic: '.what;,
+	
 }
 	
