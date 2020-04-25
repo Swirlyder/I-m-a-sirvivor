@@ -118,7 +118,6 @@ module.exports = {
 	
 	sanjay: '/ME resigns',
 	
-	micro: '==microwavable',
 	microwavable: '*GGGHHHH*....beep beep bepp....beep beep beep...beep bee-',
 	
 	henka: 'H E N K A B O Y S',
@@ -182,6 +181,7 @@ module.exports = {
 	orionssign: 'orion',
 	orion: ':pepecry:',
 	
-	
+	micro: '==micromorphic',
+	micromorphic: 'what',
 }
 	
