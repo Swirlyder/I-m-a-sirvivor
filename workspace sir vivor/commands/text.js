@@ -11,7 +11,6 @@ module.exports = {
 	wishes: '==unfixable',
 	unfixable: 'The best eyebrows on PS! and Smogon bar none~',
 
-
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
 	
@@ -88,9 +87,6 @@ module.exports = {
 	zyx14: '==zyx',
 	zyx: 'Famous for .woof and needs to update his number by 5 years',
 	
-	random: '==hawkie',
-	hawkie: 'Which random username will he switch to now?',
-	
 	tikitik: '==tiki',
 	tiki: 'Survivor\'s Resident Russian Spy',
 	
@@ -118,7 +114,6 @@ module.exports = {
 	
 	sanjay: '/ME resigns',
 	
-	micro: '==microwavable',
 	microwavable: '*GGGHHHH*....beep beep bepp....beep beep beep...beep bee-',
 	
 	henka: 'H E N K A B O Y S',
@@ -182,6 +177,12 @@ module.exports = {
 	orionssign: 'orion',
 	orion: ':pepecry:',
 	
+	micro: '==micromorphic',
+	micromorphic: 'what',
 	
+	es: '==epicsnorlax',
+	epicsnorlax: 'good username',
+	eoth: '==easyonthehills',
+	easyonthehills: 'bad name change',
 }
 	
