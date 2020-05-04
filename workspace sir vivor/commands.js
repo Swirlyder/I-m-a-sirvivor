@@ -1289,22 +1289,6 @@ exports.commands = {
 		if (arg) text += arg;
 		this.say(room, text);
 	},
-	pointsystem: 'point',
-	points: 'point',
-	point: function(arg, user, room)
-	{
-		var text = '';
-		if (user.hasRank(room.id, '+'))
-		{
-			text = '';
-		}
-		else if (room.id !== user.id)
-		{
-			text = '/pm ' + user.id + ', ';
-		}
-		text += 'Survivor has changed its leaderboard system! Check this page out for more details: https://survivor-ps.weebly.com/points-system.html';
-		this.say(room, text);
-	},
 	attackersimmunity: 'ai',
 	ai: function(arg, user, room)
 	{
@@ -2566,7 +2550,7 @@ exports.commands = {
 		dd.exportData()
 		return room.say("The dd leaderboard has been reset.");
 	},
-	position: function (target, user, room) {
+	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
 		if (!target) target = user.id;
