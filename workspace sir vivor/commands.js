@@ -2456,7 +2456,7 @@ exports.commands = {
 		if (!num || num < 1) num = 50;
 		if (num > sorted.length) num = sorted.length;
 		if (room.id === user.id) {
-			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < 3; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
@@ -2475,10 +2475,10 @@ exports.commands = {
 				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
-			str += "</table></body></html></div></div>";
+			str += "</table></div></div>";
 			Parse.say(Rooms.get('survivor'), '/pminfobox ' + user.id + ", " + str);
 		} else {
-			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div><html><body><table align=\"center\" border=\"2\"><tr>";
+			let str = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div><table align=\"center\" border=\"2\"><tr>";
 			let indices = ["Rank", "Name", "Points"];
 			for (let i = 0; i < indices.length; i++) {
 				str +=  "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
@@ -2505,7 +2505,7 @@ exports.commands = {
 				strs.push(strx + "</tr>");
 			}
 			str += strs.join("");
-			str += "</table></body></html></div></div>";
+			str += "</table></div></div>";
 			if (room.id === 'survivor') {
 				Parse.say(room, "/addhtmlbox " + str);
 			} else {
