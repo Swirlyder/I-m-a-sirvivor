@@ -24,7 +24,7 @@ var _ = require('lodash');
 var hostQueue = [];
 var queueText = '';
 var ids = [];
-
+let roasts = JSON.parse(require('fs').readFileSync('./commands/roasts.json'));
 let millisToTime = function(millis){
 	let seconds = millis/1000;
 	let hours = Math.floor(seconds/3600);
@@ -1909,8 +1909,7 @@ exports.commands = {
 
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
-		let roasts = ["If I wanted to die, I would climb to the top of " + target + "'s ego and jump to their IQ", target + ", I was going to give you a nasty look but I see that you’ve already got one.", target + ", you always bring me so much joy. As soon as you leave the room.", target + ", some day you'll go far - and i really hope you stay there.", "To call " + target + " a donkey would be an insult to the donkey.", target + ", You're the reason the gene pool needs a lifeguard", target + "'s breath is so bad, their dentist treats them over the phone.", "I tried making " + target + " my password but my computer said it was too weak.", "If laughter is the best medicine, " + target + "'s face must be curing the world.", target + ", you remind me of Kurt Angle. You suck!", target + ', your presence here is as bad as __OM Room__\'s theme', target + ", you remind me of gold. You weigh a fuck ton.", target + ", your body looks like a kindergartners attempt to make a person out of playdoh", target + ", my mom asked me to take out the trash so what time should I pick you up?", "No, those __pants__ don't make " + target + " look fatter - how could they?", "If " + target + " is gonna be two-faced, why can't at least one of them be attractive?", "Accidents happen. LIKE YOU!", target + " is proof god has a sense of humor.", target + ", you put the fun in dysfunctional."];
-		let msg = Tools.sample(roasts);
+		let msg = Tools.sample(roasts).replace(`[USER]`, target.trim());
 		if (msg.startsWith("/")) {
 			msg = "/" + msg;
 		}
@@ -1919,7 +1918,14 @@ exports.commands = {
 		}
 		this.say(room, msg);
 	},
-
+	addroast: function(target, user, room) {
+		if (!user.hasRank(room.id, '%')) return;
+		if (!toId(target)) return this.say(user, "Usage: ``.addroast [text]``");
+		if (roasts.includes(target.trim())) return this.say(user, "Roast already exists.");
+		roasts.push(target.trim());
+		require('fs').writeFileSync('./commands/roasts.json', JSON.stringify(roasts, null, 4));
+		return this.say(user, 'Roast added.');
+	},
 	use: function (target, user, room) {
 	    if (!room.game) return;
 	    if (typeof room.game.use === 'function') room.game.use(target, user);
