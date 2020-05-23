@@ -1924,6 +1924,7 @@ exports.commands = {
 		if (roasts.includes(target.trim())) return this.say(user, "Roast already exists.");
 		roasts.push(target.trim());
 		require('fs').writeFileSync('./commands/roasts.json', JSON.stringify(roasts, null, 4));
+		this.say(Rooms.get('survivor'), '/modnote roast added by ' + user.id + ': ' + target.trim());
 		return this.say(user, 'Roast added.');
 	},
 	use: function (target, user, room) {
