@@ -1583,6 +1583,23 @@ exports.commands = {
 
 	pick: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		function shuffle(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+				[array[i], array[j]] = [array[j], array[i]]; // swap elements
+			}
+		}
+		let stuff = target.split(",");
+		let str = "<em>We randomly picked:</em> " + shuffle(stuff).join(',').replace(/>/g, "&gt;").replace(/</g, "&lt;").trim();
+		if (room.id === 'survivor') {
+			this.say(room, "/addhtmlbox " + str);
+		} else {
+			this.say(room, "!htmlbox " + str);
+		}
+	},
+
+	shuffle: function(target, user, room) {
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
 		let stuff = target.split(",");
 		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff).replace(/>/g, "&gt;").replace(/</g, "&lt;").trim();
 		if (room.id === 'survivor') {
