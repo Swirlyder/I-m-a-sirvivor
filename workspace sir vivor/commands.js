@@ -1602,7 +1602,7 @@ exports.commands = {
 		}
 		let stuff = target.split(",");
 		shuffle(stuff)
-		let str = stuff.join(',').replace(/>/g, "&gt;").replace(/</g, "&lt;").trim();
+		let str = "<i>" + stuff.join(', ').replace(/>/g, "&gt;").replace(/</g, "&lt;").trim() + "</i>";
 		if (room.id === 'survivor') {
 			this.say(room, "/addhtmlbox " + str);
 		} else {
