@@ -2266,8 +2266,8 @@ exports.commands = {
     	let full = toId(args[0]) === "full";
     	if (!full && args.length > 1) full = toId(args[1]) === "full";
     	let search = false;
-    	if (args[0] && args[0] !== "full") search = toId(args[0]);
-    	else if (args[1] && args[1] !== "full") search = toId(args[1]);
+    	if (args[0] && args[0] !== "full") search = args.map(x => toId(x));
+    	else if (args[1] && args[1] !== "full") search = args.slice(1).map(x => toId(x));
     	let units = [];
     	let conv = {
 			"adduser": "User",
@@ -2290,7 +2290,14 @@ exports.commands = {
     			if (i.second) searchstr += ` ${toId(i.second[1])}`;
     			if (i.part) for (let nom of i.part.slice(1)) searchstr += ` ${toId(nom)}`;
     		}
-    		if (search && !searchstr.includes(search)) continue;
+    		if (search) {
+			let found = false;
+			for (let cue of search) { 
+				 if (!searchstr.includes(cue)) found = true;
+			}
+			if (found) continue;
+		}
+
     		let date = new Date(i.date);
     		date = `[${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}]`;
 
