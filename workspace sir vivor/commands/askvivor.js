@@ -281,7 +281,7 @@ module.exports = {
             },
             {
                 username: true,
-                before: "No, but I heard that ",
+                before: "No, but I've heard that ",
                 after: " is.",
             },
         ]
