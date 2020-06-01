@@ -60,7 +60,7 @@ class Poles extends Games.Game {
 			this.say("**Players (" + names.length + "):** " + names.join(", "));
 			if (maxPoints >= 5) {
 				this.say("Somebody has reached 5 points! We will now begin finals.");
-				this.timeout = setTimeout(() => this.finalAttackee(), 5 * 1000);
+				this.timeout = setTimeout(() => this.finalAttackee(), 1 * 1000);
 			} else {
 				this.expectingSpore = true;
 				this.expectingWow = false;
@@ -108,11 +108,11 @@ class Poles extends Games.Game {
 				this.say(names[0] + " has the most points and advances to the finals!");
 				this.curPlayer = this.bestplayers[0];
 				this.finalAttacker = false;
-				this.timeout = setTimeout(() => this.finalDefend(), 5 * 1000);
+				this.timeout = setTimeout(() => this.finalDefend(), 0.5 * 1000);
 			} else {
 				this.say(names.join(", ") + " are all tied for the most points and will have a roll battle to see who advances to the finals!");
 				this.length = names.length;
-				this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+				this.timeout = setTimeout(() => this.sayMultiRolls(), 0.5 * 1000);
 			}
 		} catch (e) {
 			this.mailbreak(e);
@@ -142,11 +142,11 @@ class Poles extends Games.Game {
 				this.say(names[0] + " has the least points and advances to the finals!");
 				this.oplayer = this.bestplayers[0];
 				this.finalDefender = false;
-				this.timeout = setTimeout(() => this.finalAttack(), 5 * 1000);
+				this.timeout = setTimeout(() => this.finalAttack(), 0.5 * 1000);
 			} else {
 				this.say(names.join(", ") + " are all tied for the least points and will have a roll battle to see who advances to the finals!");
 				this.length = names.length;
-				this.timeout = setTimeout(() => this.sayMultiRolls(), 5 * 1000);
+				this.timeout = setTimeout(() => this.sayMultiRolls(), 0.5 * 1000);
 			}
 		} catch (e) {
 			this.mailbreak(e);
@@ -221,7 +221,7 @@ class Poles extends Games.Game {
 				let attacker = pair[0], attacked = pair[1];
 				this.say("**" + attacker.name + "** spores **" + attacked.name + "**!");
 				this.isSpored.set(attacked, true);
-				this.timeout = setTimeout(() => this.saySpores(), 5 * 1000);
+				this.timeout = setTimeout(() => this.saySpores(), .5 * 1000);
 			}
 		} catch (e) {
 			this.mailbreak(e);
@@ -306,7 +306,7 @@ class Poles extends Games.Game {
 			if ((this.defenseHelps.length + this.attackHelps.length + this.defenseWows.length + this.attackWows.length) === 0) {
 				this.say("No actions were made!");
 			}
-			this.timeout = setTimeout(() => this.doAttack(), 10 * 1000);
+			this.timeout = setTimeout(() => this.doAttack(), .5 * 1000);
 		} catch (e) {
 			this.mailbreak(e);
 		}
@@ -344,7 +344,7 @@ class Poles extends Games.Game {
 			points += 1;
 			this.points.set(this.oplayer, points);
 		}
-		this.timeout = setTimeout(() => this.handleAttacks(), 5 * 1000);
+		this.timeout = setTimeout(() => this.handleAttacks(), .5 * 1000);
 	}
 
 	handleRolls(rolls) {
@@ -366,10 +366,10 @@ class Poles extends Games.Game {
 			this.say(names[0] + " has the highest roll and advances to the finals!");
 			if (this.finalAttacker) {
 				this.curPlayer = bestPlayers[0];
-				this.timeout = setTimeout(() => this.finalDefend(), 5 * 1000);
+				this.timeout = setTimeout(() => this.finalDefend(), .5 * 1000);
 			} else {
 				this.oplayer = bestPlayers[0];
-				this.timeout = setTimeout(() => this.finalAttack(), 5 * 1000);
+				this.timeout = setTimeout(() => this.finalAttack(), .5 * 1000);
 			}
 		} else {
 			this.say(names.join(", ") + " tied for the highest roll and will have a reroll!");
