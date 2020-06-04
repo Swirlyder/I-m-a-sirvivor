@@ -228,7 +228,7 @@ global.parse = exports.parse = {
 
 				spl = spl.slice(3).join('|');
 				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
-				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`);
+				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
 			case 'c:':
@@ -240,7 +240,7 @@ global.parse = exports.parse = {
 
 				spl = spl.slice(4).join('|');
 				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
-				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`);
+				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
 			case 'popup':
@@ -277,6 +277,7 @@ global.parse = exports.parse = {
 				var user = room.onRename(username, oldid);
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 				this.updateSeen(oldid, spl[1], user.id);
+				console.log(`[${room.id.blue}] ${"rename: ".grey} ${oldid} to ${username.trim()}`);
 				break;
 			case 'J': case 'j':
 				var username = spl[2];
@@ -284,6 +285,7 @@ global.parse = exports.parse = {
 				if (user === Users.self) return false;
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 				this.updateSeen(user.id, spl[1], room.id);
+				console.log(`[${room.id.blue}] ${"join: ".grey} ${username.trim()}`);
 				break;
 			case 'l': case 'L':
 				var username = spl[2];
@@ -294,6 +296,7 @@ global.parse = exports.parse = {
 				} else {
 					this.updateSeen(toId(username), spl[1], room.id);
 				}
+				console.log(`[${room.id.blue}] ${"leave: ".grey} ${username.trim()}`);
 				break;
 		}
 	},
