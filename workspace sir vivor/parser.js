@@ -228,7 +228,7 @@ global.parse = exports.parse = {
 
 				spl = spl.slice(3).join('|');
 				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
-				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`;
+				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
 			case 'c:':
@@ -240,7 +240,7 @@ global.parse = exports.parse = {
 
 				spl = spl.slice(4).join('|');
 				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
-				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`;
+				console.log(`[${room.id.blue}] ${username.yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
 			case 'popup':
