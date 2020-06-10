@@ -399,16 +399,17 @@ global.parse = exports.parse = {
 		}
         else if (!!Commands.Replies[cmd]) {
             let c = Commands.Replies[cmd]
-			if (c.startsWith("==")) {
-				cmd = c.substring(2);
-			}
-			let target = user.hasRank(room.id, '+') ? room : user;
-			if (cmd === user.id && (!user.lastSelfCommand || user.lastSelfCommand - Date.now() >= 4*60*60*1000)) {
-				target = room;
-				user.lastSelfCommand = Date.now();
-			}
+            if (c.startsWith("==")) {
+                cmd = c.substring(2);
+            }
+            let target = user.hasRank(room.id, '+') ? room : user;
+            if (cmd === user.id && (!user.lastSelfCommand || user.lastSelfCommand - Date.now() >= 4*60*60*1000)) {
+                target = room;
+                user.lastSelfCommand = Date.now();
+            }
             let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
-            text += Commands.Replies[cmd];
+            if (typeof Commands.Replies[cmd] === "string") text += Commands.Replies[cmd];
+            else text += Tools.sample(Commands.Replies[cmd]);
             text = text.replace(/\[user\]/g, user.name);
             text = text.replace(/\[target\]/g, arg);
             this.say(room, text);
