@@ -190,6 +190,6 @@ module.exports = {
 		"Survivor Album song 2: https://www.youtube.com/watch?v=kfVsfOSbJY0",
 		"Survivor Album song 3: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 	],
-	abd: '===abd1710',
+	abd: '==abd1710',
 }
 	
