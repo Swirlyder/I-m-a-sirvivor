@@ -184,5 +184,12 @@ module.exports = {
 	epicsnorlax: 'good username',
 	eoth: '==easyonthehills',
 	easyonthehills: 'bad name change',
+	
+	abd1710: [
+		"Survivor Album song 1: https://www.youtube.com/watch?v=9M_FlkAiTSo",
+		"Survivor Album song 2: https://www.youtube.com/watch?v=kfVsfOSbJY0",
+		"Survivor Album song 3: https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+	],
+	abd: '===abd1710',
 }
 	
