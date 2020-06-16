@@ -165,6 +165,8 @@ module.exports = {
 	
 	toss: 'The egg was passed on to [target].',
 	
+	explode: '**BOOOOOOOOOOOOOM THE EGG EXPLODED ON [target] !!!***', 
+	
 	dywy: '胖吉胖吉胖吉猫',
 	
 	pisxel: 'LOL cringe',
