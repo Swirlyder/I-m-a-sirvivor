@@ -257,13 +257,13 @@ module.exports = {
             },
             {
                 username: true,
-                before: "Sup ",
-                after: "",
+                before: "Konichiwa ",
+                after: "chan~",
             },
             {
-                username: true,
-                before: "It's always a pleasure seeing you ",
-                after: "! ^_^"
+                username: false,
+                before: "**CONGRATULATIONS, YOU'VE WON** ",
+     
             }
         ],
     },
