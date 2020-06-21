@@ -248,7 +248,7 @@ module.exports = {
         responses: [
             {
                 username: false,
-                before: "Hey <3",
+                before: "Uh... hello o///o",
             },
             {
                 username: true,
@@ -258,7 +258,7 @@ module.exports = {
             {
                 username: true,
                 before: "Konichiwa ",
-                after: "chan~",
+                after: " chan~",
             },
             {
                 username: false,
