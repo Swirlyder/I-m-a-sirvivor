@@ -165,7 +165,7 @@ module.exports = {
 	
 	toss: 'The egg was passed on to [target].',
 	
-	explode: '**BOOOOOOOOOOOOOM THE EGG EXPLODED ON [target] !!!***', 
+	explode: 'BOOOOOOOOOOOOOM THE EGG EXPLODED ON [target] !!! HAHAHA GET EGGED', 
 	
 	dywy: '胖吉胖吉胖吉猫',
 	
