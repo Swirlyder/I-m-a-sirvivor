@@ -211,7 +211,7 @@ global.connect = function (retry) {
 		info('retrying...');
 	}
 
-	var ws = new WebSocketClient();
+	var ws = new WebSocketClient({maxReceivedFrameSize: 0x400000});
 
 	ws.on('connectFailed', function (err) {
 		error('Could not connect to server ' + Config.server + ': ' + err.stack);
