@@ -2479,7 +2479,7 @@ exports.commands = {
 			else user.say('Error connecting to hastebin.');
         });
 	},
-	leaderboard: 'lb',
+	
 	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
     let isempty = true;
