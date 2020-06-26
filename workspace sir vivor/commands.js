@@ -2479,8 +2479,8 @@ exports.commands = {
 			else user.say('Error connecting to hastebin.');
         });
 	},
-	toppoints: 'top',
-	top: function (target, user, room) {
+	leaderboard: 'lb',
+	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
     let isempty = true;
 		let sorted = dd.getSorted();
