@@ -2500,7 +2500,7 @@ exports.commands = {
 				for (let j = 0; j < 3; j++) {
 					let stuff;
 					if (j === 0) stuff = i + 1;
-					else if (j === 1) stuff = sorted[i][1].replace(/</gi, '&lt').replace(/>/gi, '&gt');
+					else if (j === 1) stuff = sorted[i][1].replace(/</gi, '&lt;').replace(/>/gi, '&gt;');
 					else stuff = dd.getPoints(sorted[i]);
 					strx += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + stuff + "</font></b></td>";
 				}
@@ -2530,7 +2530,7 @@ exports.commands = {
 						stuff = dd.getPoints(sorted[i]);
 					} else {
             console.log(sorted[i][j-1]);
-						stuff = sorted[i][real[j - 1]].replace(/</gi, '&lt').replace(/>/gi, '&gt');
+						stuff = sorted[i][real[j - 1]].replace(/</gi, '&lt;').replace(/>/gi, '&gt;');
 					}
 					strx += "<td style=background-color:" + bgcolor + "; height=\"30px\"; align=\"center\"><b><font color=" + textcolor + ">" + stuff + "</font></b></td>";
 				}
