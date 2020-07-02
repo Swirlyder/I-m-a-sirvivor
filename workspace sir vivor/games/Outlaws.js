@@ -1,7 +1,7 @@
 'use strict';
 
 const name = "Outlaws";
-const description = "__[Insert \"high noon\" meme here]__ Game rules: http://survivor-ps.weebly.com/outlaws.html";
+const description = "__[Insert \"high noon\" meme here]__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/outlaws";
 const id = toId(name);
 
 class Outlaws extends Games.Game {
