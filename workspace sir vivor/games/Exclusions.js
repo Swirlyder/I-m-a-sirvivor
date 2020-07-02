@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Exclusions';
-const description = '__The theme where even you don\'t wanna know who you are...__ Game rules: http://survivor-ps.weebly.com/exclusions.html';
+const description = '__The theme where even you don\'t wanna know who you are...__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/exclusions';
 const id = Tools.toId(name);
 
 class EXC extends Games.Game {
