@@ -1,7 +1,7 @@
 'use strict';
 
 const name = "Risk";
-const description = "__Pssh, who needs an army when you have a hulk__? Game rules: http://survivor-ps.weebly.com/risk.html";
+const description = "__Pssh, who needs an army when you have a hulk__? Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk";
 const id = Tools.toId(name);
 const nations = {
 	pt: {name: "the Primitive Tribe", aliases: ["pt", "primitivetribe", "theprimitivetribe"], armies: 25, gain: 10},
