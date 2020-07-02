@@ -2,7 +2,7 @@
 
 const name = "Killer in the Dark";
 const id = Tools.toId(name);
-const description = '__"Local serial killer escapes again. Citizens riot as bodies pile up."__ Game rules: http://survivor-ps.weebly.com/killer-in-the-dark.html';
+const description = '__"Local serial killer escapes again. Citizens riot as bodies pile up."__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/killer-in-the-dark';
 class KITD extends Games.Game {
 	constructor(room) {
 		super(room);
