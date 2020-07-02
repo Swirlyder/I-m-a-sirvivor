@@ -1,6 +1,6 @@
 'use strict';
 const name = "Minefield";
-const description = "__Watch your step!__ Game rules: https://survivor-ps.weebly.com/minefield.html";
+const description = "__Watch your step!__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/minefield";
 const id = Tools.toId(name);
 
 class Minefield extends Games.Game {
