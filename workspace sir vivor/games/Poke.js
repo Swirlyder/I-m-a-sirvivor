@@ -2,7 +2,7 @@
 
 const name = "Pokemon Survivor";
 const id = "pokesurvivor";
-const description = "__Let the dice decide your partner! A true test of battling skill!__ Game rules: http://survivor-ps.weebly.com/pokemon-survivor.html";
+const description = "__Let the dice decide your partner! A true test of battling skill!__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/pokemon-survivor";
 
 class Poke extends Games.Game {
 	constructor(room) {
