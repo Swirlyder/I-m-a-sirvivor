@@ -2,7 +2,7 @@
 
 const name = "Russian Roulette";
 const id = Tools.toId(name);
-const description = '__"Pass like a puss or Pull like a pro."__ Game rules: http://survivor-ps.weebly.com/russian_roulette.html';
+const description = '__"Pass like a puss or Pull like a pro."__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/russian_roulette';
 class RR extends Games.Game {
     constructor(room) {
         super(room);
