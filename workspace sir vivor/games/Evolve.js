@@ -20,7 +20,7 @@ for (let s0 in dex) {
 
 
 const name = "Evolve";
-const description = "__This isn\'t even my final form!__ Game Rules: https://survivor-ps.weebly.com/evolve.html";
+const description = "__This isn\'t even my final form!__ Game Rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/evolve";
 const id = Tools.toId(name);
 
 class Evolve extends Games.Game {
