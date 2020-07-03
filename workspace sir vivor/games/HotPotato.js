@@ -1,7 +1,7 @@
 'use strict';
 
 const name = "Hot Potato";
-const description = "__This be a real hot potato.__ Game rules: https://survivor-ps.weebly.com/hot-potato.html";
+const description = "__This be a real hot potato.__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hot-potato";
 const id = Tools.toId(name);
 
 class HotPotato extends Games.Game {
