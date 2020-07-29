@@ -191,6 +191,7 @@ let gameTypes = {
 	pm: 'puppetmaster',
 	puppet: 'puppetmaster',
 	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk', 'Pssh, who needs an army when you have a hulk?', 2],
+	robbery: ['Robbery', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/robbery', 'Innocent until proven guilty?', 1],
 	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/rock-paper-scissors', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 1],
 	rps: 'rockpaperscissors',
 	rockpaperscissorslizardspock: ['Rock, Paper, Scissors, Lizard, Spock', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/rock-paper-scissors/rock-paper-scissors-lizard-spock', 'Modification of Rock, Paper, Scissors. Includes Lizard and Spock!', 1],
