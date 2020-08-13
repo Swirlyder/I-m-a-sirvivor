@@ -183,7 +183,7 @@ let gameTypes = {
 	toptrumps: 'toptrumpspokebattle',
 	longtoptrumpspokebattle: ['Long Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/top-trumps-pokebattle', 'Where your partners\' lesser strengths can become their **greatest heroes.**', 1],
 	longttp: 'longtoptrumpspokebattle',
-	legotowerdefense: ['Lego Tower Defense', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tower-defeense/lego-tower-defense', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
+	legotowerdefense: ['Lego Tower Defense', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tower-defense/lego-tower-defense', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
 	legotd: 'legotowerdefense',
 	lego: 'legotowerdefense',
 	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 2],
