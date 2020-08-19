@@ -1457,7 +1457,12 @@ exports.commands = {
 		text += '**Alliance:** __Players can team up with other players and when attacking, they all roll at the same time.__';
 		this.say(room, text);
 	},
-	
+	highfive: function(arg, user, room)
+	{
+		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let text = toId(arg) ? '/me high-fives ' + arg.trim() : 'Usage: ``.highfive [name]``';
+		room.say(prefix + text);
+	},
 	disadvantage: function(arg, user, room)
 	{
 		var text = '';
