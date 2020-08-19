@@ -7,6 +7,7 @@ class DD {
 	constructor() {
 		this.dd = {};
 		this.modlog = {};
+		this.authbattle = {};
 		this.numSkips = 0;
 	}
 
@@ -21,6 +22,10 @@ class DD {
 			file = fs.readFileSync('./databases/modlog.json').toString();
 		} catch (e) {}
 		this.modlog = JSON.parse(file);
+		try {
+			file = fs.readFileSync('./databases/authbattle.json').toString();
+		} catch (e) {}
+		this.authbattle = JSON.parse(file);
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
 		}
@@ -29,6 +34,7 @@ class DD {
 	exportData() {
 		fs.writeFileSync('./databases/dd.json', JSON.stringify(this.dd));
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
+		fs.writeFileSync('./databases/authbattle.json', JSON.stringify(this.authbattle));
 	}
 
 	addpoints (user, numPoints) {
@@ -142,6 +148,74 @@ class DD {
 
 	updateModlog(message) {
 		this.modlog.data.push(message);
+		this.exportData();
+	}
+	
+	
+	authhunt_battle(user, challenger, winner) {
+		if (!(challenger in this.authbattle)) {
+			this.authbattle[challenger] = {}
+		}
+		if (!(user in this.authbattle[challenger])) {
+			let result = winner == challenger;
+			this.authbattle[challenger][user] = result;
+		} else {
+			return false;
+		}
+		this.exportData();
+		return true;
+	}
+
+	wins_losses(user) {
+		if (!(user in this.authbattle) || this.authbattle.length<1) {
+			return [[],[]];
+		}
+		let di = this.authbattle[user];
+		let wins = [];
+		let losses = [];
+		for (var key in di) {
+			if (di[key] == true) wins.push(key);
+			else losses.push(key)
+		}
+		return [wins,losses]
+	}
+
+	authhunt_status(user) {
+		let battles = this.wins_losses(user)
+		let wins = battles[0];
+		let losses = battles[1];
+		if (wins.length <1 && losses.length<1) return "You have 0 battles recorded.";
+		let message = '';
+		if (wins.length > 0) {
+			message = '**Wins:**';
+			for (var v of wins) message = message + ' ' + v;
+			message = message + '\n';
+		}
+		if (losses.length > 0) {
+			message = '**Losses:**'
+			for (var v of losses) message = message + ' ' + v;
+		}
+		return message;
+	}
+
+	authhunt_getlist(auth) {
+		let fights = [];
+		for (var user in this.authbattle) {
+			if (auth in this.authbattle[user]) fights.push(user);
+		}
+		if (fights.length<1) return "Empty :/";
+		return "**LIST:** "+fights.join(', ');
+	}
+
+	add_authunt_points() {
+		for (var user in this.authbattle) {
+			let points_to_be_added = 5*(this.wins_losses(user)[0].length);
+			this.addpoints(user,points_to_be_added);
+		}
+	}
+
+	clear_authhunt_records() {
+		this.authbattle = {};
 		this.exportData();
 	}
 }
