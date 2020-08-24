@@ -267,6 +267,17 @@ module.exports = {
             }
         ],
     },
+    dosomething: {
+        priority: 4,
+        placement: "suffix",
+        responses: [
+            {
+                username: true,
+                before: "why do I have to do what you want me to do ",
+                after: "? Who do you think you are? You should be happy with what I am doing for you right now. I can't believe you want me to do even more for you. Ha! What a joke. Can you believe this is what I have to work with?",
+            },
+        ],
+    },
     areyou: {
         priority: 3,
         placement: "suffix",
