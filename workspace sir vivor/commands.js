@@ -2518,6 +2518,51 @@ exports.commands = {
   	dd.remPoints(username, numPoints);
   	return user.say("**" + numPoints + "** have been removed from **" + username.trim() + "** on the leaderboard.");
   },
+	
+  authhunt: function (target, user, room) {
+    let split = target.split(",");
+    if (split[0].toLowerCase() == 'status') {
+      // return status of past battles won/lost
+      return user.say(dd.authhunt_status(user.id));
+    }
+    if (split[0].toLowerCase() == 'help') {
+      // return available commands
+      user.say("``.authhunt status``: See status of battles recorded");
+      if (!user.hasRank('survivor','+')) return user.say("and ``.authhunt help``:To see a list of available commands.");
+      user.say("``.authhunt list``: List of challengers fought");
+      if (user.hasRank('survivor','@')) {
+        user.say("``.authhunt clearallrecords``: To clear all records for a new event.");
+        user.say("``.authhunt addpoints``: To add points to LB and clear the auth hunt records after adding them.")
+      }
+      return user.say("``.authhunt <challenger>, <winner>``: To record the result of a battle.");
+    }
+    if (!user.hasRank('survivor','+')) return;
+    if (split[0].toLowerCase() == 'list') {
+      // return list of battle challenges completed
+      return user.say(dd.authhunt_getlist(user.id));
+    }
+    if (split[0].toLowerCase() == 'clearallrecords' && user.hasRank('survivor','@')) {
+      // clear records for new authhunt event
+      dd.clear_authhunt_records();
+      return user.say('successful!');
+    }
+    if (split[0].toLowerCase() == 'addpoints' && user.hasRank('survivor','@')) {
+      // clear records for new authhunt event
+      dd.add_authunt_points();
+      dd.clear_authhunt_records();
+      return user.say('successful!');
+    }
+    if (split.length < 2) return user.say("Use ``.authhunt help`` to see available commands.")
+    if (split.length != 2) return user.say("Please use the command as: ``.authunt challenger, winner`` or use ``.authhunt help``");
+    let challenger = Tools.toId(split[0]);
+    let winner = Tools.toId(split[1]);
+    if (challenger == user.id) return user.say("You can't challenge yourself!");
+    if (winner != challenger && winner != user.id) return user.say("Winner must be either yourself or the challenger!");
+    let success = dd.authhunt_battle(user.id, challenger, winner);
+    if (success) return user.say("Recorded successfully!");
+    else return user.say("Already recorded, can't overright");
+  },
+
 	ddlog: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		if (!("data" in dd.modlog)) return;
