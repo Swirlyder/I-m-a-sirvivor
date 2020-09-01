@@ -158,7 +158,7 @@ let gameTypes = {
 	prisonersdilemma: ['Prisoner\'s Dilemma', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/prisoners-dilemma', 'Cooperate or Betray... which one benefits you more?', 1],
 	pd: 'prisonersdilemma',
 	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk', 'Pssh, who needs an army when you have a hulk?', 2],
-	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 0],
+	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 0],
 	fish: 'fishing',
 	robbery: ['Robbery', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/robbery', 'Innocent until proven guilty?', 1],
 	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/rock-paper-scissors', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 1],
