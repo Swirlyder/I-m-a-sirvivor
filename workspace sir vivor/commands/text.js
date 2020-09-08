@@ -32,7 +32,13 @@ module.exports = {
 	azuuli: '/me explodes',
 
 	lssghost: '==ls',
-	ls: '/me throws a gold coin at [target]',
+	sothis: '==ls',
+	ls: [
+		"Atone at once!",
+		"Prepare yourself!",
+		"I will cut through!",
+		"Revenge, it lives!"
+	],
 
 	sciencepanda: '==rach',
 	rach: 'The future is now thanks to sciencepanda!',
@@ -159,7 +165,8 @@ module.exports = {
 	myster: '==myster17',
 	bugbuzzing: '==myster17',
 	bug: '==myster17',
-	myster17: 'Bugbuzz off, [target]!',
+	bb: '==myster17',
+	myster17: 'D-don\'t bug me, please... UwU',
 	
 	egg: '[target] has been egged!',
 	
