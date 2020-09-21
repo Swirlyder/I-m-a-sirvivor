@@ -2634,7 +2634,7 @@ exports.commands = {
 	},
 
 	chatlines: function (target, user, room) {
-		if (!user.hasRank('%')) return;
+		if (!user.hasRank('survivor', '%')) return;
 		let split = target.split(',');
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 7;
