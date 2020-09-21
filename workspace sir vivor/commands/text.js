@@ -203,5 +203,15 @@ module.exports = {
 	
 	mrtoastd: '==toast',
 	toast: '/me toasts to [target]',
+	
+	centi: 'GOOOOOOOOOOOLAZO DE DYBALA in my YT Channel Dybala Jr (?)',
+	idybalajrenyt: '==centi',
+	
+	calemdpu: [ "Support the Black Eagles: Home of champions!"
+		"Down with the Blue Lions!"
+		"Down with the Golden Deer!"
+		"Down with the Ashen Wolves!"
+	     ],
+	calemdpu: '==calem',
 }
 	
