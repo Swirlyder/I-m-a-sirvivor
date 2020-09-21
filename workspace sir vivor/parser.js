@@ -303,7 +303,8 @@ global.parse = exports.parse = {
 	chatMessage: function (message, user, room) {
 		if (!room) return;
 		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
-		if (room.id === 'survivor') {
+		//if (room.id === 'survivor') 
+		{
 			addChatMessage(message, user);
 		}
 		if (message.substr(0, 6) === '/me in' && room.game) {
