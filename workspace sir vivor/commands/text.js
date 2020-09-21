@@ -207,13 +207,8 @@ module.exports = {
 	centi: '==idybalajrenyt',
 	idybalajrenyt: 'GOOOOOOOOOOOLAZO DE DYBALA in my YT Channel Dybala Jr (?)',
 	
-	
-	calemdpu: [ 
-		"Support the Black Eagles: Home of champions!",
-		"Down with the Blue Lions!",
-		"Down with the Golden Deer!",
-		"Down with the Ashen Wolves!"
-	     ],
 	calemdpu: '==calem',
+	calemdpu: 'Support the Black Eagles: Home of champions!',
+	
 }
 	
