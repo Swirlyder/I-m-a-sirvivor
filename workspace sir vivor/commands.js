@@ -1204,8 +1204,8 @@ exports.commands = {
 	para: function(arg, user, room)
 	{
 		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo, Snap, Hawkie';
-		let text2 = 'Toni XY, Henka, OM room, Zeonth, Zyx14, phable, deetah, Hurl, Abd1710, cleo, Ls\'s Ghost, ptoad, Rainshaft, phantom genius, wob, Ceteris, Gimm1ck, Shadecession, Rach, Harambeween';
-                let text3 = 'geene, inactive, mitsuki, Tushavi, Zyg-ten, Santa Vivor, and Guishark; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text2 = 'Toni XY, Henka, OM, Zeonth, Zyx14, phable, deetah, Hurl, Abd1710, cleo, Ls\'s Ghost, ptoad, Rainshaft, pants, wob, Ceteris, Gimmick, Shadecession, Rach, Harambeween';
+                let text3 = 'geene, inactive, mitsuki, Tushavi, Zyg, Santa Vivor, Guishark, TheBluestEye, ProfSapling, hasumi kisaragi, Megagr, iDybalaJRenYT!~, and Calem DPU; and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
