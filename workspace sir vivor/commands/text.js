@@ -183,8 +183,8 @@ module.exports = {
 	sapling: '==prof',
 	prof: 'Welcome [target] to the Survivor region! Are you a boy, or a girl?',
 	
-	orionssign: 'orion',
-	orion: ':pepecry:',
+	hasumikisaragi: 'hasumi',
+	hasumi: 'Next Stop: きさらぎ鉄道駅',
 	
 	micro: '==micromorphic',
 	micromorphic: 'what',
