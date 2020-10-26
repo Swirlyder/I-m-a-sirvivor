@@ -1,6 +1,6 @@
 'use strict';
 const name = "Dragon Orbs";
-const description = "__Get your power level over 9000 by collecting getting the right balls or whatever..__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/dragon-orbs";
+const description = "__Get your power level over 9000 by collecting getting the right balls or whatever..__ Game rules: https://sites.google.com/view/survivor-ps/themes/dragon-orbs";
 const id = Tools.toId(name);
 class DragonOrbs extends Games.Game {
 	constructor(room) {
