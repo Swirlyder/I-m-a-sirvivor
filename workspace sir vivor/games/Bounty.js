@@ -2,7 +2,7 @@
 
 const name = "Bounty";
 const id = Tools.toId(name);
-const description = '__Who is the bounty? Thats your mission to find out and capture them to win this game mode!__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/bounty'
+const description = '__Who is the bounty? Thats your mission to find out and capture them to win this game mode!__ Game rules: https://sites.google.com/view/survivor-ps/themes/bounty'
 class Bounty extends Games.Game {
 	constructor(room) {
 		super(room);
