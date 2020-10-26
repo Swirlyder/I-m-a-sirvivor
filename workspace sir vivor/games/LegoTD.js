@@ -2,7 +2,7 @@
 
 const name = "Lego Tower Defense";
 const id = Tools.toId(name);
-const description = '__Now defending your tower is fun for the whole family!__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/lego-tower-defense';
+const description = '__Now defending your tower is fun for the whole family!__ Game rules: https://sites.google.com/view/survivor-ps/themes/lego-td';
 
 class LegoTD extends Games.Game {
 	constructor(room) {

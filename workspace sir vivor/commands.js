@@ -83,133 +83,133 @@ function isPM(roomid, userid)
 function lbuild()
 {}
 let gameTypes = {
-	avoidance: ['Avoidance', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/avoidance', 'The trick is to pick the number that makes you not lose.', 0],
-	bounty: ['Bounty', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/bounty', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
-	casino: ['Casino', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino', 'Place your bets and hope for the best!', 1, 1],
-	bank: ['Bank', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/bank', 'Sometimes greed is good... but only sometimes.', 1, 1],
-	blackjack: ['Blackjack', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/blackjack', 'A Survivor themed game of blackjack.', 1, 1],
-	highlow: ['High Low', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/high-low', 'Above and beyond or low and below?', 1, 1],
-	lucky7: ['Lucky 7', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/lucky-7', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
-	roulette: ['Roulette', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/roulette', 'The roulette wheel is spinning, place your bets now!', 1, 1],
-	slots: ['Slots', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/slots', 'Insert X coin(s) to play!', 1, 1],
-	yahtzee: ['Yahtzee', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/casino/yahtzee', 'A classic game of 5 dice with a Survivor twist!', 1, 1],
-	chasetheace: ['Chase the Ace', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/chase-the-ace', 'Can you catch the best card?... Winner of NBT #8!', 1],
+	avoidance: ['Avoidance', 'https://sites.google.com/view/survivor-ps/themes/avoidance', 'The trick is to pick the number that makes you not lose.', 0],
+	bounty: ['Bounty', 'https://sites.google.com/view/survivor-ps/themes/bounty', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
+	casino: ['Casino', 'https://sites.google.com/view/survivor-ps/themes/casino', 'Place your bets and hope for the best!', 1, 1],
+	bank: ['Bank', 'https://sites.google.com/view/survivor-ps/themes/casino/bank', 'Sometimes greed is good... but only sometimes.', 1, 1],
+	blackjack: ['Blackjack', 'https://sites.google.com/view/survivor-ps/themes/casino/blackjack', 'A Survivor themed game of blackjack.', 1, 1],
+	highlow: ['High Low', 'https://sites.google.com/view/survivor-ps/themes/casino/high-low', 'Above and beyond or low and below?', 1, 1],
+	lucky7: ['Lucky 7', 'https://sites.google.com/view/survivor-ps/themes/casino/lucky-7', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
+	roulette: ['Roulette', 'https://sites.google.com/view/survivor-ps/themes/casino/roulette', 'The roulette wheel is spinning, place your bets now!', 1, 1],
+	slots: ['Slots', 'https://sites.google.com/view/survivor-ps/themes/casino/slots', 'Insert X coin(s) to play!', 1, 1],
+	yahtzee: ['Yahtzee', 'https://sites.google.com/view/survivor-ps/themes/casino/yahtzee', 'A classic game of 5 dice with a Survivor twist!', 1, 1],
+	chasetheace: ['Chase the Ace', 'https://sites.google.com/view/survivor-ps/themes/cta', 'Can you catch the best card?... Winner of NBT #8!', 1],
 	cta: 'chasetheace',
-	chooseyourroll: ['Choose Your Roll', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/choose-your-roll', 'Will you reap the rewards of taking the path less traveled by?', 1],
+	chooseyourroll: ['Choose Your Roll', 'https://sites.google.com/view/survivor-ps/themes/cyr', 'Will you reap the rewards of taking the path less traveled by?', 1],
 	cyr: 'chooseyourroll',
-	dexterity: ['Dexterity', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/dexterity', 'Where accuracy can give you the advantage or just make you fail...', 1],
+	dexterity: ['Dexterity', 'https://sites.google.com/view/survivor-ps/themes/dexterity', 'Where accuracy can give you the advantage or just make you fail...', 1],
 	dex: 'dexterity',
-	dodgeball: ['Dodgeball', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/dodgeball', 'When gym class gets a little too real.', 1],
-	dragonorbs: ['Dragon Orbs', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/dragon-orbs', 'Get your power level over 9000 by collecting getting the right balls or whatever.', 0],
+	dodgeball: ['Dodgeball', 'https://sites.google.com/view/survivor-ps/themes/dodgeball', 'When gym class gets a little too real.', 1],
+	dragonorbs: ['Dragon Orbs', 'https://sites.google.com/view/survivor-ps/themes/dragon-orbs', 'Get your power level over 9000 by collecting getting the right balls or whatever.', 0],
 	do: 'dragonorbs',
-	exclusions: ['Exclusions', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/exclusions', 'The theme where even you don\'t wanna know who you are...', 1],
+	exclusions: ['Exclusions', 'https://sites.google.com/view/survivor-ps/themes/exclusions', 'The theme where even you don\'t wanna know who you are...', 1],
 	ex: 'exclusions',
-	evolve: ['Evolve', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/evolve', 'This isn\'t even my final form!', 2],
+	evolve: ['Evolve', 'https://sites.google.com/view/survivor-ps/themes/evolve', 'This isn\'t even my final form!', 2],
 	evo: 'evolve',
-	followtheleader: ['Follow the Leader', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/follow-the-leader', 'Be with or against. Your choice... Winner of NBT #7!', 1],
+	followtheleader: ['Follow the Leader', 'https://sites.google.com/view/survivor-ps/themes/ftl', 'Be with or against. Your choice... Winner of NBT #7!', 1],
 	ftl: 'followtheleader',
-	gottacatchemall: ['Gotta Catch \'Em All', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/gotta-catch-em-all', 'Are you the greatest there ever was? Prove it!', 1],
+	gottacatchemall: ['Gotta Catch \'Em All', 'https://sites.google.com/view/survivor-ps/themes/gcea', 'Are you the greatest there ever was? Prove it!', 1],
 	gcea: 'gottacatchemall',
-	hiddentype: ['Hidden Type', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hidden-type', 'Where everyone can pretend that they\'re not a steel type... Winner of NBT #1!', 1],
+	hiddentype: ['Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type', 'Where everyone can pretend that they\'re not a steel type... Winner of NBT #1!', 1],
 	hidden: 'hiddentype',
 	ht: 'hiddentype',
-	dualhiddentype: ['Dual Hidden Type', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hidden-type/dual-hidden-type', 'Modification of Hidden Type. Wow, now they can have TWO different types? So cool.', 1],
+	dualhiddentype: ['Dual Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/dual-ht', 'Modification of Hidden Type. Wow, now they can have TWO different types? So cool.', 1],
 	dualtype: 'dualhiddentype',
 	dual: 'dualhiddentype',
 	htdt: 'dualhiddentype',
 	htdual: 'dualhiddentype',
 	dualht: 'dualhiddentype',
-	eeveelutions: ['Eeveelutions', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hidden-type/eeveelutions', 'More than one kind? I can\'t beleevee this!', 1],
+	eeveelutions: ['Eeveelutions', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/eeveelutions', 'More than one kind? I can\'t beleevee this!', 1],
 	eevee: 'eeveelutions',
-	hideandseektag: ['Hide and Seek Tag', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hide-and-seek-tag', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+	hideandseektag: ['Hide and Seek Tag', 'https://sites.google.com/view/survivor-ps/themes/hst', 'Stop being so damn edgy and just play a childhood game for once.', 1],
 	hst: 'hideandseektag',
 	hideandseek: 'hideandseektag',
-	holeinone: ['Hole in One', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hole-in-one', 'It\'s golf, but the sport, not Survivor\'s golf.', 1],
+	holeinone: ['Hole in One', 'https://sites.google.com/view/survivor-ps/themes/hole-in-one', 'It\'s golf, but the sport, not Survivor\'s golf.', 1],
 	hio: 'holeinone',
-	horse: ['HORSE', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/horse', 'Street rules.', 1],
-	hotpotato: ['Hot Potato', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hot-potato', 'This be a real hot potato.', 0],
-	hungergames: ['Hunger Games', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hunger-games', 'Classic but with a twist: No alliances.', 0],
+	horse: ['HORSE', 'https://sites.google.com/view/survivor-ps/themes/horse', 'Street rules.', 1],
+	hotpotato: ['Hot Potato', 'https://sites.google.com/view/survivor-ps/themes/hot-potato', 'This be a real hot potato.', 0],
+	hungergames: ['Hunger Games', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Classic but with a twist: No alliances.', 0],
 	hg: 'hungergames',
-	hungergamesanonymous: ['Hunger Games Anonymous', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hunger-games', 'Hunger Games but you don\'t know who is who...', 0],
+	hungergamesanonymous: ['Hunger Games Anonymous', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Hunger Games but you don\'t know who is who...', 0],
 	hungergamesanon: 'hungergamesanonymous',
 	hga: 'hungergamesanonymous',
-	hungergamesspotlight: ['Hunger Games Spotlight', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hunger-games', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
+	hungergamesspotlight: ['Hunger Games Spotlight', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Hunger games but with the spotlight variant (.spotlight for more info)', 0],
 	hgs: 'hungergamesspotlight',
-	jenga: ['Jenga', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/jenga', 'The classic game! But it\'s... Survivor...?', 2],
-	kabaddi: ['Kabaddi', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/kabaddi', 'Captain, we have received contact.', 1],
-	keysarekey: ['Keys Are Key', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/keys-are-key', 'I got the keys keys keys.', 2],
+	jenga: ['Jenga', 'https://sites.google.com/view/survivor-ps/themes/jenga', 'The classic game! But it\'s... Survivor...?', 2],
+	kabaddi: ['Kabaddi', 'https://sites.google.com/view/survivor-ps/themes/kabaddi', 'Captain, we have received contact.', 1],
+	keysarekey: ['Keys Are Key', 'https://sites.google.com/view/survivor-ps/themes/keys-are-key', 'I got the keys keys keys.', 2],
 	keys: 'keysarekey',
 	key: 'keysarekey',
 	kak: 'keysarekey',
-	killerinthedark: ['Killer in the Dark', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/killer-in-the-dark', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
+	killerinthedark: ['Killer in the Dark', 'https://sites.google.com/view/survivor-ps/themes/kitd', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
 	kitd: 'killerinthedark',
 	killer: 'killerinthedark',
-	killstreak: ['Kill Streak', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/kill-streak', 'The more you eliminations you get, the better you\'ll become.', 1],
-	legotowerdefense: ['Lego Tower Defense', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tower-defense/lego-tower-defense', 'Modification of Tower Defense. Now defending your tower is fun for the whole family!', 1],
+	killstreak: ['Kill Streak', 'https://sites.google.com/view/survivor-ps/themes/kill-streak', 'The more you eliminations you get, the better you\'ll become.', 1],
+	legotowerdefense: ['Lego Tower Defense', 'https://sites.google.com/view/survivor-ps/themes/lego-td', 'Now defending your tower is fun for the whole family!', 1],
 	legotd: 'legotowerdefense',
 	lego: 'legotowerdefense',
 	towerdefense: 'legotowerdefense',
 	td: 'legotowerdefense',
-	pokemonsurvivor: ['Pokemon Survivor', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/pokemon-survivor', 'Let the dice decide your partner! A true test of battling skill!', 0],
+	pokemonsurvivor: ['Pokemon Survivor', 'https://sites.google.com/view/survivor-ps/themes/pokesurv', 'Let the dice decide your partner! A true test of battling skill!', 0],
 	pokesurv: 'pokemonsurvivor',
 	pokemon: 'pokemonsurvivor',
 	pokesurvivor: 'pokemonsurvivor',
 	poke: 'pokemonsurvivor',
-	poles: ['Poles', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/poles', 'Your power is within the cards, can you use them wisely?', 2],
+	poles: ['Poles', 'https://sites.google.com/view/survivor-ps/themes/poles', 'Your power is within the cards, can you use them wisely?', 2],
 	pole: 'poles',
-	prisonersdilemma: ['Prisoner\'s Dilemma', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/prisoners-dilemma', 'Cooperate or Betray... which one benefits you more?', 1],
+	prisonersdilemma: ['Prisoner\'s Dilemma', 'https://sites.google.com/view/survivor-ps/themes/prisoners-dilemma', 'Cooperate or Betray... which one benefits you more?', 1],
 	pd: 'prisonersdilemma',
-	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk', 'Pssh, who needs an army when you have a hulk?', 2],
-	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/risk/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 0],
+	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes/risk', 'Pssh, who needs an army when you have a hulk?', 2],
+	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes/risk/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 0],
 	fish: 'fishing',
-	robbery: ['Robbery', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/robbery', 'Innocent until proven guilty?', 1],
-	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/rock-paper-scissors', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 1],
+	robbery: ['Robbery', 'https://sites.google.com/view/survivor-ps/themes/robbery', 'Innocent until proven guilty?', 1],
+	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes/rps', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 1],
 	rps: 'rockpaperscissors',
-	rockpaperscissorslizardspock: ['Rock, Paper, Scissors, Lizard, Spock', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/rock-paper-scissors/rock-paper-scissors-lizard-spock', 'Modification of Rock, Paper, Scissors. Includes Lizard and Spock!', 1],
+	rockpaperscissorslizardspock: ['Rock, Paper, Scissors, Lizard, Spock', 'https://sites.google.com/view/survivor-ps/themes/rps/rpsls', 'Modification of Rock, Paper, Scissors. Includes Lizard and Spock!', 1],
 	rpsls: 'rockpaperscissorslizardspock',
 	rpslsp: 'rockpaperscissorslizardspock',
-	russianroulette: ['Russian Roulette', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/russian-roulette', 'Pass like a puss or Pull like a pro.', 1],
+	russianroulette: ['Russian Roulette', 'https://sites.google.com/view/survivor-ps/themes/russian-roulette', 'Pass like a puss or Pull like a pro.', 1],
 	rr: 'russianroulette',
-	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/super-survivor-bros', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
+	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes/ssb', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
 	ssb: 'supersurvivorbros',
-	tagteamsurvivor: ['Tag Team Survivor', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tag-team-survivor', 'Will you become the world\'s greatest tag team?', 1],
+	tagteamsurvivor: ['Tag Team Survivor', 'https://sites.google.com/view/survivor-ps/themes/tag-team', 'Will you become the world\'s greatest tag team?', 1],
 	tagteam: 'tagteamsurvivor',
-	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 0],
+	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 0],
 	bridge: 'thebridge',
-	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
+	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
 	tokens: 'tokensoflife',
 	tol: 'tokensoflife',
-	toptrumpspokebattle: ['Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/top-trumps-pokebattle', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
+	toptrumpspokebattle: ['Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes/ttp', 'Where your partners\' lesser strengths can become their greatest assets. **Note: Hosts can !randpoke 3 to players in PMs.**', 1],
 	ttp: 'toptrumpspokebattle',
 	trumps: 'toptrumpspokebattle',
 	toptrumps: 'toptrumpspokebattle',
-	longtoptrumpspokebattle: ['Long Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/top-trumps-pokebattle', 'Where your partners\' lesser strengths can become their **greatest heroes.**', 1],
+	longtoptrumpspokebattle: ['Long Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes/ttp', 'Where your partners\' lesser strengths can become their **greatest heroes.**', 1],
 	longttp: 'longtoptrumpspokebattle',
-	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 2],
+	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 2],
 	tc: 'tribalcouncil',
 	
 };
 
 let eventTypes = {
-	twentyfourhoursurvivor: ['24 Hour Survivor', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/24-hour-survivor', 'ALL DAY ROLL BATTLES EVERY DAY.'],
+	twentyfourhoursurvivor: ['24 Hour Survivor', 'https://sites.google.com/view/survivor-ps/events/24-hour-survivor', 'ALL DAY ROLL BATTLES EVERY DAY.'],
 	twentyfour: 'twentyfourhoursurvivor',
 	tfhs: 'twentyfourhoursurvivor',
-	achievements: ['Achievements', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/achievements', 'Try to do more than just win the game!'],
+	achievements: ['Achievements', 'https://sites.google.com/view/survivor-ps/events/achievements', 'Try to do more than just win the game!'],
 	chieves: 'achievements',
-	authhunt: ['Auth Hunt', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/auth-hunt', 'You\'ve played their games, but now they play yours... hunt them down.'],
+	authhunt: ['Auth Hunt', 'https://sites.google.com/view/survivor-ps/events/auth-hunt', 'You\'ve played their games, but now they play yours... hunt them down.'],
 	authbattle: 'authhunt',
-	freeforall: ['Free for All', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/free-for-all', 'Take out as many opponents as you can!'],
+	freeforall: ['Free for All', 'https://sites.google.com/view/survivor-ps/events/ffa', 'Take out as many opponents as you can!'],
 	ffa: 'freeforall',
-	gamblingroyale: ['Gambling Royale', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/gambling-royale', 'Weekend gambling, lifetime debt.'],
+	gamblingroyale: ['Gambling Royale', 'https://sites.google.com/view/survivor-ps/events/gambling-royale', 'Weekend gambling, lifetime debt.'],
 	gr: 'gamblingroyale',
 	royale: 'gamblingroyale',
-	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/minigames', 'A mini spin on Survivor games.'],
+	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/events/minigames', 'A mini spin on Survivor games.'],
 	minigame: 'minigames',
-	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/missing-alias', 'True identities are not given.'],
-	survivorolympics: ['Survivor Olympics', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/survivor-olympics', 'Use your points wisely.'],
+	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/events/missing-alias', 'True identities are not given.'],
+	survivorolympics: ['Survivor Olympics', 'https://sites.google.com/view/survivor-ps/events/survivor-olympics', 'Use your points wisely.'],
 	olympics: 'survivorolympics',
 	survlympics: 'survivorolympics',
-	survivorshowdown: ['Survivor Showdown', 'https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events/survivor-showdown', 'Use your points wisely.'],
+	survivorshowdown: ['Survivor Showdown', 'https://sites.google.com/view/survivor-ps/events/survivor-showdown', 'Use your points wisely.'],
 	ss: 'survivorshowdown',
 	
 };
@@ -699,7 +699,7 @@ exports.commands = {
 		if (split.length > 1) {
 			let targThemeID = Tools.toId(split[1]);
 			if (!(targThemeID in gameTypes)) {
-				return room.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes-and-events");
+				return room.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
 			} else {
 				if (typeof gameTypes[targThemeID] === 'string') targThemeID = gameTypes[targThemeID];
 				targTheme = gameTypes[targThemeID][0];
@@ -768,8 +768,8 @@ exports.commands = {
 		if (!Games.canTheme) return;
 		let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
 		arg = toId(arg);
-		if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes");
-		if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes");
+		if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
+		if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
 		let data = gameTypes[arg];
 		if (typeof data === 'string') data = gameTypes[data];
 
@@ -790,8 +790,8 @@ exports.commands = {
 	{
 		let target = user.hasRank(room.id, '+') ? room : user;
 		arg = toId(arg);
-		if (!arg) return target.say("Link to the Survivor events page: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events");
-		if (!eventTypes[arg]) return target.say("Invalid event type. The events can be found here: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-events");
+		if (!arg) return target.say("Link to the Survivor events page: https://sites.google.com/view/survivor-ps/events");
+		if (!eventTypes[arg]) return target.say("Invalid event type. The events can be found here: https://sites.google.com/view/survivor-ps/events");
 		let data = eventTypes[arg];
 		if (typeof data === 'string') data = eventTypes[data];
 
@@ -1075,7 +1075,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/about/next-big-theme';
+		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/about/nbt';
 		this.say(room, text);
 	},
 	nbtsubmissions: 'nbtsubs',
@@ -1091,7 +1091,7 @@ exports.commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**NBT XII** is currently in session through July 2020! Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hall-of-fame/nbt-hall-of-fame';
+		text += '**NBT XII** is currently in session through July 2020! Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hof/nbt-hof';
 		this.say(room, text);
 	},
 	rankings: function(arg, user, room)
@@ -1165,7 +1165,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Survivor Themes and How to Play Them: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes';
+		text += 'Survivor Themes and How to Play Them: https://sites.google.com/view/survivor-ps/themes';
 		this.say(room, text);
 	},
 
@@ -1313,7 +1313,7 @@ exports.commands = {
 		{
 			text = '/pm ' + user.id + ', ';
 		}
-		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://sites.google.com/view/survivor-ps/extra-information/current-auth';
+		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://sites.google.com/view/survivor-ps/extras/current-auth';
 		this.say(room, text);
 	},
 	meme: function(arg, user, room)
@@ -1693,7 +1693,7 @@ exports.commands = {
 
 	modifications: 'mods',
 	mods: function (arg,user, room) {
-		var text = 'Host it your way, with these theme modifications: https://sites.google.com/view/survivor-ps/themes-and-events/theme-modifications';
+		var text = 'Host it your way, with these theme modifications: https://sites.google.com/view/survivor-ps/themes/modifications';
 		if (user.hasRank(room.id, '+')) {
 			this.say(room, text);
 		} else {

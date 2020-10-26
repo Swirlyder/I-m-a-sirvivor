@@ -1,7 +1,7 @@
 'use strict';
 
 const name = 'Hunger Games Anon';
-const description = '__Hunger Games but you don\'t know who is who...__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/hunger-games';
+const description = '__Hunger Games but you don\'t know who is who...__ Game rules: https://sites.google.com/view/survivor-ps/themes/hunger-games';
 const id = Tools.toId(name);
 
 class HGA extends Games.Game {

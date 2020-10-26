@@ -1,6 +1,6 @@
 'use strict';
 const name = "Avoidance";
-const description = "__The trick is to pick the number that makes you not lose.__ Game rules: https://sites.google.com/view/survivor-ps/themes-and-events/survivor-themes/avoidance";
+const description = "__The trick is to pick the number that makes you not lose.__ Game rules: https://sites.google.com/view/survivor-ps/themes/avoidance";
 const id = Tools.toId(name);
 class Avoidance extends Games.Game {
 	constructor(room) {
