@@ -214,7 +214,8 @@ let eventTypes = {
 	
 };
 
-exports.commands = {
+
+let commands = {
 	/**
 	 * Help commands
 	 *
@@ -2822,4 +2823,14 @@ exports.commands = {
 	}
 };
 
-/* globals toId */
+require('fs').readdirSync('./modules').forEach(function (file) {
+	if (file.substr(-3) === '.js') {
+		try {
+			Object.merge(commands, require('./modules/' + file).commands);
+		} catch (e) {
+			error("Could not load commands file: ./modules/" + file + " | " + e.stack);
+		}
+	}
+});
+
+module.exports = commands;
