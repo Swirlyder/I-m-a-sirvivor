@@ -166,7 +166,7 @@ module.exports = {
 	bugbuzzing: '==myster17',
 	bug: '==myster17',
 	bb: '==myster17',
-	myster17: 'D-don\'t bug me, please... UwU',
+	myster17: 'D-don\'t bug me, please... u_u',
 	
 	egg: '[target] has been egged!',
 	
@@ -209,6 +209,10 @@ module.exports = {
 	
 	calemdpu: '==calem',
 	calemdpu: 'Support the Black Eagles: Home of champions!',
+	
+	mega: '==megagr',
+	gr: '==megagr',
+	megagr: 'GRRRRRRR',
 	
 }
 	
