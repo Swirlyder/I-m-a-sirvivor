@@ -172,7 +172,7 @@ let gameTypes = {
 	rr: 'russianroulette',
 	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes/ssb', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
 	ssb: 'supersurvivorbros',
-	tagteamsurvivor: ['Tag Team Survivor', 'https://sites.google.com/view/survivor-ps/themes/tag-team', 'Will you become the world\'s greatest tag team?', 1],
+	tagteamsurvivor: ['Tag Team Survivor', 'https://sites.google.com/view/survivor-ps/themes/tag-team-survivor', 'Will you become the world\'s greatest tag team?', 1],
 	tagteam: 'tagteamsurvivor',
 	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 0],
 	bridge: 'thebridge',
