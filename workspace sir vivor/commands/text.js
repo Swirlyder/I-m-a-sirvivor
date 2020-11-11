@@ -69,7 +69,7 @@ module.exports = {
 	shadecession: '==shade',
 	shade: 'Better put on my Shadecessions ⌐■_■',
 
-	pq: '==ppq',
+	pq: '==penquin',
 	ppq: '==penquin',
 	penquin: 'S-S-Senpai!',
 	
@@ -109,8 +109,8 @@ module.exports = {
 	wob: '==dbw',
 	dbw: '/me wobs',
 	
-	electra: '==electrasheart',
-	electrasheart: '==summmer',
+	electra: '==moq',
+	electrasheart: '==moq',
 	summer: '==moq',
 	moq: 'Don\'t moq me for all my name changes ;_;',
 	
@@ -145,6 +145,7 @@ module.exports = {
 	deeznuts: '[target]? More like deez nuts :^)',
 	
 	gim: '==gimm1ck',
+	gimmick: '==gimm1ck',
 	gimm1ck: '/me squats',
 	
 	toni: '==tonixy',
