@@ -2479,7 +2479,7 @@ let commands = {
 			let n = gamecount.count[toId(cur)];
 			if (!n) n = "Error";
 
-			points = 100 * (points/n) * ((n*n)/(n*n+30)) + ((h*h+300)/300);
+			points = Math.floor(100 * (points/n) * ((n*n)/(n*n+30)) + ((h*h+300)/300));
 
 			for (let j = 0; j < indices.length; j++) {
 				let stuff;
@@ -2610,7 +2610,11 @@ let commands = {
 		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
 		dd.dd = {};
 		dd.numSkips = 0;
-		dd.exportData()
+		dd.exportData();
+		hostcount.count = {};
+		gamecount.count = {};
+		hostcount.save();
+		gamecount.save();
 		return room.say("The dd leaderboard has been reset.");
 	},
 	points: function (target, user, room) {
