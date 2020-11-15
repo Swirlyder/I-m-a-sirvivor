@@ -2473,10 +2473,10 @@ let commands = {
 			let bgcolor = "white"
 			let textcolor = "black";
 
-			let user = sorted[1];
+			let cur = sorted[1];
 			let points = dd.getPoints(sorted[i]);
-			let h = hostcount.count[toId(user)] ? hostcount.count[toId(user)] : 0;
-			let n = gamecount.count[toId(user)];
+			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
+			let n = gamecount.count[toId(cur)];
 			if (!n) n = "Error";
 
 			points = 100 * (points/n) * ((n*n)/(n*n+30)) + ((h*h+300)/300);
