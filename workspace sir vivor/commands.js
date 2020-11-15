@@ -2473,7 +2473,7 @@ let commands = {
 			let bgcolor = "white"
 			let textcolor = "black";
 
-			let cur = sorted[1];
+			let cur = sorted[i][1];
 			let points = dd.getPoints(sorted[i]);
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
