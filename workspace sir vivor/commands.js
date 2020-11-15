@@ -2667,4 +2667,4 @@ require('fs').readdirSync('./modules').forEach(function (file) {
 	}
 });
 
-module.exports = commands;
+exports.commands = commands;
