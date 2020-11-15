@@ -2654,9 +2654,10 @@ let commands = {
 };
 
 require('fs').readdirSync('./modules').forEach(function (file) {
+	console.log(file);
 	if (file.substr(-3) === '.js') {
 		try {
-			Object.merge(commands, require('./modules/' + file).commands);
+			Object.extend(commands, require('./modules/' + file).commands);
 		} catch (e) {
 			error("Could not load commands file: ./modules/" + file + " | " + e.stack);
 		}
