@@ -2465,14 +2465,10 @@ let commands = {
 		for (let i = 0; i < indices.length; i++) {
 			str += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
 		}
-		str += "</tr>"
-		let real = [1, 0];
-		let strs = [];
-		for (let i = Math.max(0, num - 50); i < num; i++) {
-			let strx = "<tr>";
-			let bgcolor = "white"
-			let textcolor = "black";
+		str += "</tr>";
 
+		let res = [];
+		for (let i = 0; i < sorted.length; i++) {
 			let cur = sorted[i][1];
 			let points = dd.getPoints(sorted[i]);
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
@@ -2481,20 +2477,24 @@ let commands = {
 
 			points = Math.floor(100 * (points/n) * ((n*n)/(n*n+30)) + ((h*h+300)/300));
 
-			for (let j = 0; j < indices.length; j++) {
-				let stuff;
-				if (j === 0) {
-					stuff = i + 1;
-				} else if (j === 1) {
-					stuff = sorted[i][real[j - 1]].replace(/</gi, '&lt;').replace(/>/gi, '&gt;');
-				} else if (j === 2) {
-					stuff = points;
-				} else if (j === 3) {
-					stuff = n;
-				} else {
-					stuff = h;
-				}
-				strx += "<td height=\"30px\"; align=\"center\"><b>" + stuff + "</b></td>";
+			res.push([
+				cur,
+				points,
+				n,
+				h
+			]);
+		}
+
+		res.sort((a, b) => {
+			return b[1] - a[1];
+		})
+
+		let strs = [];
+		for (let i = Math.max(0, num - 50); i < num; i++) {
+			let strx = "<tr>";
+			strx += "<td height=\"30px\"; align=\"center\"><b>" + (i+1) + "</b></td>";
+			for (let j of res[i]) {
+				strx += "<td height=\"30px\"; align=\"center\"><b>" + j + "</b></td>";
 			}
 			strs.push(strx + "</tr>");
 		}
