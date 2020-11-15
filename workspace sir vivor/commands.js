@@ -2657,7 +2657,10 @@ require('fs').readdirSync('./modules').forEach(function (file) {
 	console.log(file);
 	if (file.substr(-3) === '.js') {
 		try {
-			Object.extend(commands, require('./modules/' + file).commands);
+			let cmds = require('./modules/' + file).commands;
+			for (let i in cmds) {
+				commands[i] = cmds[i];
+			}
 		} catch (e) {
 			error("Could not load commands file: ./modules/" + file + " | " + e.stack);
 		}
