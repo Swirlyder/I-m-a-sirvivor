@@ -140,17 +140,11 @@ let gameTypes = {
 	killerinthedark: ['Killer in the Dark', 'https://sites.google.com/view/survivor-ps/themes/kitd', '"Local serial killer escapes again. Citizens riot as bodies pile up."', 2],
 	kitd: 'killerinthedark',
 	killer: 'killerinthedark',
-	killstreak: ['Kill Streak', 'https://sites.google.com/view/survivor-ps/themes/kill-streak', 'The more you eliminations you get, the better you\'ll become.', 1],
 	legotowerdefense: ['Lego Tower Defense', 'https://sites.google.com/view/survivor-ps/themes/lego-td', 'Now defending your tower is fun for the whole family!', 1],
 	legotd: 'legotowerdefense',
 	lego: 'legotowerdefense',
 	towerdefense: 'legotowerdefense',
 	td: 'legotowerdefense',
-	pokemonsurvivor: ['Pokemon Survivor', 'https://sites.google.com/view/survivor-ps/themes/pokesurv', 'Let the dice decide your partner! A true test of battling skill!', 0],
-	pokesurv: 'pokemonsurvivor',
-	pokemon: 'pokemonsurvivor',
-	pokesurvivor: 'pokemonsurvivor',
-	poke: 'pokemonsurvivor',
 	poles: ['Poles', 'https://sites.google.com/view/survivor-ps/themes/poles', 'Your power is within the cards, can you use them wisely?', 2],
 	pole: 'poles',
 	prisonersdilemma: ['Prisoner\'s Dilemma', 'https://sites.google.com/view/survivor-ps/themes/prisoners-dilemma', 'Cooperate or Betray... which one benefits you more?', 1],
@@ -168,8 +162,6 @@ let gameTypes = {
 	rr: 'russianroulette',
 	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes/ssb', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
 	ssb: 'supersurvivorbros',
-	tagteamsurvivor: ['Tag Team Survivor', 'https://sites.google.com/view/survivor-ps/themes/tag-team-survivor', 'Will you become the world\'s greatest tag team?', 1],
-	tagteam: 'tagteamsurvivor',
 	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 0],
 	bridge: 'thebridge',
 	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
@@ -1410,6 +1402,28 @@ let commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 		text += '**Dissolve:** __Any time the attacker fails to do damage or eliminate their opponent, the attacker loses -10 to their roll for the remainder of the game.__';
+		this.say(room, text);
+	},
+	
+	killstreak: function (arg, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
+			text = '';
+		} else if (room.id !== user.id) {
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '**Kill Streak:** __Players are not eliminated when they lose a roll battle, but players must win by getting a certain number of roll battle victories or having the most victories in a certain number of rounds.__';
+		this.say(room, text);
+	},
+	
+	tagteam: function (arg, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
+			text = '';
+		} else if (room.id !== user.id) {
+			text = '/pm ' + user.id + ', ';
+		}
+		text += '**Tag Team:** __Players are in teams of 2, one member represents the team in battle. Each round, teams can switch their representative by tagging, and they attack a member of an opposing team, whichever member they believe will be tagged in for the attack.__';
 		this.say(room, text);
 	},
 
