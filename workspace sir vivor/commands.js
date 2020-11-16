@@ -2488,6 +2488,7 @@ let commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			let cur = sorted[i][1];
 			let points = dd.getPoints(sorted[i]);
+			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
 			if (!n) n = "Error";
