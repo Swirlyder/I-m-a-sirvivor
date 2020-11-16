@@ -209,7 +209,7 @@ module.exports = {
 	idybalajrenyt: 'GOOOOOOOOOOOLAZO DE DYBALA in my YT Channel Dybala Jr (?)',
 	
 	calemdpu: '==calem',
-	calemdpu: 'Support the Black Eagles: Home of champions!',
+	calemdpu: 'Survivor Kingpin',
 	
 	mega: '==megagr',
 	gr: '==megagr',
