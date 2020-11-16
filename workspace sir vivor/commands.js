@@ -2027,6 +2027,9 @@ let commands = {
 				date: Date.now()
 			};
 			dd.updateModlog(modlogEntry);
+			for (let i = 1; i < split.length; i++) {
+				gamecount.add(split[i], 1);
+			}
 			user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
 			return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
 		} else if (numPlayers < 10) {
