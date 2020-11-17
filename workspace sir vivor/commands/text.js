@@ -208,8 +208,8 @@ module.exports = {
 	centi: '==idybalajrenyt',
 	idybalajrenyt: 'GOOOOOOOOOOOLAZO DE DYBALA in my YT Channel Dybala Jr (?)',
 	
-	calemdpu: '==calem',
-	calemdpu: 'Survivor Kingpin',
+	bea: '==beautifications',
+	beautifications: 'Survivor Queenpin',
 	
 	mega: '==megagr',
 	gr: '==megagr',
