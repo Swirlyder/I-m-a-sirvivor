@@ -2509,6 +2509,7 @@ let commands = {
 
 		let strs = [];
 		for (let i = Math.max(0, num - 50); i < num; i++) {
+			if (!res[i]) continue;
 			let strx = "<tr>";
 			strx += "<td height=\"30px\"; align=\"center\"><b>" + (i+1) + "</b></td>";
 			for (let j of res[i]) {
