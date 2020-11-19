@@ -818,7 +818,7 @@ let commands = {
 		var data = [];
 		for (let i in Tools.data.pokedex) {
 			let mon = Tools.data.pokedex[i];
-			data.push(mon.species);
+			data.push(mon.name);
 		}
 		target = toId(target);
 		for (let i = 0; i < data.length; i++) {
@@ -832,7 +832,7 @@ let commands = {
 	randpoke: 'poke',
 	poke: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
-		room.say("!dt " + Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))].species);
+		room.say("!dt " + Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))].name);
 	},
 
 	autostart: function (target, user, room) {

@@ -60,7 +60,7 @@ class Evolve extends Games.Game {
 			this.mons.set(player, mon);
 			this.paths.set(player, path);
 			if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[mon].baseStats.hp);
-			player.say("Your mon is **" + Tools.data.pokedex[mon].species + "**!");
+			player.say("Your mon is **" + Tools.data.pokedex[mon].name + "**!");
 			this.timeout = setTimeout(() => this.handoutmon(), 0.2 * 1000);
 		}
 	}
@@ -202,7 +202,7 @@ class Evolve extends Games.Game {
 		}
 		if (this.variation === "shade") this.hp.set(player, Tools.data.pokedex[evo].baseStats.hp);
 		this.hasEvolved.set(player, true);
-		player.say("You have evolved into **" + Tools.data.pokedex[evo].species + "**!");
+		player.say("You have evolved into **" + Tools.data.pokedex[evo].name + "**!");
 		this.numAttacks++;
 		if (this.numAttacks === this.getRemainingPlayerCount()) {
 			clearTimeout(this.timeout);

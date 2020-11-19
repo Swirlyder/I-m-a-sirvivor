@@ -75,7 +75,7 @@ class Poke extends Games.Game {
 				if (Games.aprilFools) {
 					mon = Tools.data.pokedex['wobbuffet'];
 				}
-				player.say("Your pokemon is **" + mon.species + "**!");
+				player.say("Your pokemon is **" + mon.name + "**!");
 				this.mons.set(player, mon);
 				this.hasAdvanced.set(player, true);
 				this.timeout = setTimeout(() => this.handoutmon(), 0.2 * 1000);
@@ -155,11 +155,11 @@ class Poke extends Games.Game {
 
 	isValidMon(mon, player) {
 		let playerMon = this.mons.get(player);
-		if (playerMon.species === mon.species) return true;
+		if (playerMon.name === mon.name) return true;
 		if (!playerMon.otherFormes) return false;
 		for (let i = 0; i < playerMon.otherFormes.length; i++) {
 			let curMon = Tools.data.pokedex[playerMon.otherFormes[i]];
-			if (curMon.species === mon.species) return true;
+			if (curMon.name === mon.name) return true;
 		}
 		return false;
 	}
@@ -242,14 +242,14 @@ class Poke extends Games.Game {
 					p1.eliminated = true;
 					p2.say("You're opponent used Focus Sash, so you advance!");
 					this.say("RIP **" + p1.name + "** and their");
-					this.say("!dt " + this.mons.get(p1).species);
+					this.say("!dt " + this.mons.get(p1).name);
 					this.hasAdvanced.set(p2, true);
 				} else {
 					p2.say("You have illegally used Focus Sash and have been disqualified!");
 					p2.eliminated = true;
 					p1.say("You're opponent used Focus Sash, so you advance!");
 					this.say("RIP **" + p2.name + "** and their");
-					this.say("!dt " + this.mons.get(p2).species);
+					this.say("!dt " + this.mons.get(p2).name);
 					this.hasAdvanced.set(p1, true);
 				}
 			} else {
@@ -259,7 +259,7 @@ class Poke extends Games.Game {
 				this.say("/w " + winp.id + ", You have eliminated **" + losep.name + "**!");;
 				this.say("/w " + losep.id + ", You have been eliminated by **" + winp.name + "**.");
 				this.say("RIP **" + losep.name + "** and their");
-				this.say("!dt " + this.mons.get(losep).species);
+				this.say("!dt " + this.mons.get(losep).name);
 				losep.eliminated = true;
 				this.hasAdvanced.set(winp, true);
 			}
@@ -276,7 +276,7 @@ class Poke extends Games.Game {
 	onEnd() {
 		if (this.getRemainingPlayerCount() === 1) {
 			let lastPlayer = this.getLastPlayer();
-			this.say("!dt " + this.mons.get(lastPlayer).species);
+			this.say("!dt " + this.mons.get(lastPlayer).name);
 		}
 	}
 	
@@ -313,7 +313,7 @@ class Poke extends Games.Game {
 	hand(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
-		return player.say("Your mon is **" + this.mons.get(player).species + "**!");
+		return player.say("Your mon is **" + this.mons.get(player).name + "**!");
 	}
 }
 

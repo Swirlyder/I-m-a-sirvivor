@@ -36,7 +36,7 @@ class TTP extends Games.Game {
 		this.data = [];
 		for (let i = 0; i < data.length; i++) {
 			let mon = Tools.data.pokedex[data[i]];
-			if (mon.num > 0 && mon.species.length < 12) this.data.push(data[i]);
+			if (mon.num > 0 && mon.name.length < 12) this.data.push(data[i]);
 		}
 		this.index = 0;
 		for (let userID in this.players) {
@@ -68,7 +68,7 @@ class TTP extends Games.Game {
 				let mons = this.mons.get(player);
 				let names = [];
 				for (let i = 0; i < 3; i++) {
-					names.push("**" + mons[i].species + "**");
+					names.push("**" + mons[i].name + "**");
 				}
 				this.sayHand(player);
 				this.timeout = setTimeout(() => this.handoutMon(), 0.2 * 1000);
@@ -166,7 +166,7 @@ class TTP extends Games.Game {
 		let strs = [];
 		for (let i = 0, len = cards.length; i < len; i++) {
 			let card = cards[i];
-			let mon = Tools.data.pokedex[Tools.toId(card.species)];
+			let mon = Tools.data.pokedex[Tools.toId(card.name)];
 			let num;
 			if (mon.num < 10) {
 				num = '00' + mon.num.toString();
@@ -175,7 +175,7 @@ class TTP extends Games.Game {
 			} else {
 				num = mon.num.toString();
 			}
-			let str = '<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.species + "</u></b><br><ul>";
+			let str = '<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.name + "</u></b><br><ul>";
 			for (let j in mon.baseStats) {
 				str += "<li><b>" + Tools.turnFirstUpper(j) + "</b>: " + mon.baseStats[j] + "</li>";
 			}
@@ -198,9 +198,9 @@ class TTP extends Games.Game {
 	doPlayerAttack() {
 		let mon1 = this.attackMons.get(this.curPlayer);
 		let mon2 = this.attackMons.get(this.oplayer);
-		this.say("!dt " + mon1.species);
+		this.say("!dt " + mon1.name);
 		this.say("vs");
-		this.say("!dt " + mon2.species);
+		this.say("!dt " + mon2.name);
 		this.timeout = setTimeout(() => this.doRolls(), 10 * 1000);
 	}
 
@@ -229,7 +229,7 @@ class TTP extends Games.Game {
 		} else {
 			let mons = this.mons.get(losePlayer);
 			let index = this.indices.get(losePlayer);
-			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "'s** " + mons[index].species + "!" + (mons.length === 1 ? " It was their last mon and they are eliminated!" : ""));
+			this.say("**" + winPlayer.name + "** " + Tools.sample(Games.destroyMsg) + " **" + losePlayer.name + "'s** " + mons[index].name + "!" + (mons.length === 1 ? " It was their last mon and they are eliminated!" : ""));
 			if (mons.length === 1) {
 				losePlayer.eliminated = true;
 			} else {
@@ -245,7 +245,7 @@ class TTP extends Games.Game {
 				} else {
 					mons.push(Tools.data.pokedex[this.data[this.index + i]]);
 				}
-				names.push("**" + mons[i + 1].species + "**");
+				names.push("**" + mons[i + 1].name + "**");
 			}
 			this.mons.set(winPlayer, mons);
 			this.sayHand(winPlayer);
@@ -318,13 +318,13 @@ class TTP extends Games.Game {
 		let mons = this.mons.get(player);
 		for (let i = 0; i < mons.length; i++) {
 			let curMon = mons[i];
-			if (Tools.toId(curMon.species) === Tools.toId(target)) {
+			if (Tools.toId(curMon.name) === Tools.toId(target)) {
 				index = i + 1;
 				break;
 			}
 		}
-		if (!index) return user.say("You don't have [" + mon.species + "].");
-		user.say("You have played **" + mon.species + "**!");
+		if (!index) return user.say("You don't have [" + mon.name + "].");
+		user.say("You have played **" + mon.name + "**!");
 		this.attackMons.set(player, mon);
 		this.indices.set(player, index - 1);
 		this.mons.set(player, mons);
