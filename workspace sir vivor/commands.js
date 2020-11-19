@@ -2027,6 +2027,9 @@ let commands = {
 				date: Date.now()
 			};
 			dd.updateModlog(modlogEntry);
+			for (let i = 1; i < split.length; i++) {
+				gamecount.add(split[i], 1);
+			}
 			user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
 			return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
 		} else if (numPlayers < 10) {
@@ -2485,6 +2488,7 @@ let commands = {
 		for (let i = 0; i < sorted.length; i++) {
 			let cur = sorted[i][1];
 			let points = dd.getPoints(sorted[i]);
+			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
 			if (!n) n = "Error";
@@ -2505,6 +2509,7 @@ let commands = {
 
 		let strs = [];
 		for (let i = Math.max(0, num - 50); i < num; i++) {
+			if (!res[i]) continue;
 			let strx = "<tr>";
 			strx += "<td height=\"30px\"; align=\"center\"><b>" + (i+1) + "</b></td>";
 			for (let j of res[i]) {
