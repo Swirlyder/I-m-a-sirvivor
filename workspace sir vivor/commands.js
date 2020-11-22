@@ -1981,12 +1981,25 @@ let commands = {
 	rpoints: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let last = dd.modlog.data.pop();
-		if (last.first) dd.remPoints(last.first[1], last.first[0]);
-		if (last.second) dd.remPoints(last.second[1], last.second[0]);
-		if (last.host) dd.remPoints(last.host[1], last.host[0]);
+		if (last.first) {
+			dd.remPoints(last.first[1], last.first[0]);
+			gamecount.add(last.first[1], -1);
+		}
+		if (last.second) {
+			dd.remPoints(last.second[1], last.second[0]);
+			gamecount.add(last.second[1], -1);
+		}
+		if (last.host) {
+			dd.remPoints(last.host[1], last.host[0]);
+			hostcount.add(last.host[1], -1);
+			gamecount.add(last.host[1], -1);
+		}
 		if (last.part) {
 			let points = last.part.shift();
-			for (let i of last.part) dd.remPoints(i, points);
+			for (let i of last.part) {
+				dd.remPoints(i, points);
+				gamecount.add(i, -1);
+			}
 		}
 		if (last.special) dd.remPoints(last.special[1], last.special[0]);
 		user.say('Point award reverted.');
@@ -2472,6 +2485,7 @@ let commands = {
 
 	testlb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
+		if (!user.hasRank('survivor', '%')) return user.say('Access denied for staff only command.');
 		let isempty = true;
 		let sorted = dd.getSorted();
 		let num = parseInt(target);
