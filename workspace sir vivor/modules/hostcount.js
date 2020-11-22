@@ -51,7 +51,7 @@ exports.commands = {
                 hostcount.count[i]
             ]);
         }
-        points.sort((a, b) -> {
+        points.sort((a, b) => {
            return b[1] - a[1]; 
         });
         let ret = `<center><div style="padding:80px"><b>Host count</b>`;
