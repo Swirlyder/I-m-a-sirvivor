@@ -42,5 +42,23 @@ gamecount.load();
 
 
 exports.commands = {
-    
+    hostcount: function (arg, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+        let points = [];
+        for (let i in hostcount.count) {
+            points.push([
+                i,
+                hostcount.count[i]
+            ]);
+        }
+        points.sort((a, b) -> {
+           return b[1] - a[1]; 
+        });
+        let ret = `<center><div style="padding:80px"><b>Host count</b>`;
+        for (let i in points) {
+            ret += "<br>" + (i+1) + ". " + points[i][0] + ": " + points[i][1];
+        }
+        ret += "</div>"
+        return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret}`);
+    }
 }
