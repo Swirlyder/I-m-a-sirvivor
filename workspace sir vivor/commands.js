@@ -790,7 +790,7 @@ let commands = {
 		let target = user.hasRank(room.id, '+') ? room : user;
 		arg = toId(arg);
 		if (!arg) return target.say("Link to the Survivor theme modifications: https://sites.google.com/view/survivor-ps/themes/modifications");
-		if (!eventTypes[arg]) return target.say("Invalid modification type. The modifications can be found here: https://sites.google.com/view/survivor-ps/themes/modifications");
+		if (!modTypes[arg]) return target.say("Invalid modification type. The modifications can be found here: https://sites.google.com/view/survivor-ps/themes/modifications");
 		let data = modTypes[arg];
 		if (typeof data === 'string') data = modTypes[data];
 
