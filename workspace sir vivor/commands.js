@@ -79,26 +79,27 @@ function isPM(roomid, userid) {
 
 function lbuild() {}
 let gameTypes = {
+	
 	avoidance: ['Avoidance', 'https://sites.google.com/view/survivor-ps/themes/avoidance', 'The trick is to pick the number that makes you not lose.', 0],
 	bounty: ['Bounty', 'https://sites.google.com/view/survivor-ps/themes/bounty', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
-	casino: ['Casino', 'https://sites.google.com/view/survivor-ps/themes/casino', 'Place your bets and hope for the best!', 1, 1],
-	bank: ['Bank', 'https://sites.google.com/view/survivor-ps/themes/casino/bank', 'Sometimes greed is good... but only sometimes.', 1, 1],
-	blackjack: ['Blackjack', 'https://sites.google.com/view/survivor-ps/themes/casino/blackjack', 'A Survivor themed game of blackjack.', 1, 1],
-	highlow: ['High Low', 'https://sites.google.com/view/survivor-ps/themes/casino/high-low', 'Above and beyond or low and below?', 1, 1],
-	lucky7: ['Lucky 7', 'https://sites.google.com/view/survivor-ps/themes/casino/lucky-7', 'You think you are lucky? Sir Vivor thinks otherwise.', 1, 1],
-	roulette: ['Roulette', 'https://sites.google.com/view/survivor-ps/themes/casino/roulette', 'The roulette wheel is spinning, place your bets now!', 1, 1],
-	slots: ['Slots', 'https://sites.google.com/view/survivor-ps/themes/casino/slots', 'Insert X coin(s) to play!', 1, 1],
-	yahtzee: ['Yahtzee', 'https://sites.google.com/view/survivor-ps/themes/casino/yahtzee', 'A classic game of 5 dice with a Survivor twist!', 1, 1],
+	casino: ['Casino', 'https://sites.google.com/view/survivor-ps/themes/casino', 'Place your bets and hope for the best!', 2],
+	bank: ['Bank', 'https://sites.google.com/view/survivor-ps/themes/casino/bank', 'Sometimes greed is good... but only sometimes.', 2, 1],
+	blackjack: ['Blackjack', 'https://sites.google.com/view/survivor-ps/themes/casino/blackjack', 'A Survivor themed game of blackjack.', 2, 1],
+	highlow: ['High Low', 'https://sites.google.com/view/survivor-ps/themes/casino/high-low', 'Above and beyond or low and below?', 2, 1],
+	lucky7: ['Lucky 7', 'https://sites.google.com/view/survivor-ps/themes/casino/lucky-7', 'You think you are lucky? Sir Vivor thinks otherwise.', 2, 1],
+	roulette: ['Roulette', 'https://sites.google.com/view/survivor-ps/themes/casino/roulette', 'The roulette wheel is spinning, place your bets now!', 2, 1],
+	slots: ['Slots', 'https://sites.google.com/view/survivor-ps/themes/casino/slots', 'Insert X coin(s) to play!', 2, 1],
+	yahtzee: ['Yahtzee', 'https://sites.google.com/view/survivor-ps/themes/casino/yahtzee', 'A classic game of 5 dice with a Survivor twist!', 2, 1],
 	chasetheace: ['Chase the Ace', 'https://sites.google.com/view/survivor-ps/themes/cta', 'Can you catch the best card?... Winner of NBT #8!', 1],
 	cta: 'chasetheace',
-	chooseyourroll: ['Choose Your Roll', 'https://sites.google.com/view/survivor-ps/themes/cyr', 'Will you reap the rewards of taking the path less traveled by?', 1],
+	chooseyourroll: ['Choose Your Roll', 'https://sites.google.com/view/survivor-ps/themes/cyr', 'Will you reap the rewards of taking the path less traveled by?', 0],
 	cyr: 'chooseyourroll',
 	dexterity: ['Dexterity', 'https://sites.google.com/view/survivor-ps/themes/dexterity', 'Where accuracy can give you the advantage or just make you fail...', 1],
 	dex: 'dexterity',
-	dodgeball: ['Dodgeball', 'https://sites.google.com/view/survivor-ps/themes/dodgeball', 'When gym class gets a little too real.', 1],
+	dodgeball: ['Dodgeball', 'https://sites.google.com/view/survivor-ps/themes/dodgeball', 'When gym class gets a little too real.', 2],
 	dragonorbs: ['Dragon Orbs', 'https://sites.google.com/view/survivor-ps/themes/dragon-orbs', 'Get your power level over 9000 by collecting getting the right balls or whatever.', 0],
 	do: 'dragonorbs',
-	exclusions: ['Exclusions', 'https://sites.google.com/view/survivor-ps/themes/exclusions', 'The theme where even you don\'t wanna know who you are...', 1],
+	exclusions: ['Exclusions', 'https://sites.google.com/view/survivor-ps/themes/exclusions', 'The theme where even you don\'t wanna know who you are...', 2],
 	ex: 'exclusions',
 	evolve: ['Evolve', 'https://sites.google.com/view/survivor-ps/themes/evolve', 'This isn\'t even my final form!', 2],
 	evo: 'evolve',
@@ -109,20 +110,19 @@ let gameTypes = {
 	hiddentype: ['Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type', 'Where everyone can pretend that they\'re not a steel type... Winner of NBT #1!', 1],
 	hidden: 'hiddentype',
 	ht: 'hiddentype',
-	dualhiddentype: ['Dual Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/dual-ht', 'Modification of Hidden Type. Wow, now they can have TWO different types? So cool.', 1],
+	dualhiddentype: ['Dual Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/dual-ht', 'Modification of Hidden Type. Wow, now they can have TWO different types? So cool.', 1, 2],
 	dualtype: 'dualhiddentype',
 	dual: 'dualhiddentype',
 	htdt: 'dualhiddentype',
 	htdual: 'dualhiddentype',
 	dualht: 'dualhiddentype',
-	eeveelutions: ['Eeveelutions', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/eeveelutions', 'More than one kind? I can\'t beleevee this!', 1],
+	eeveelutions: ['Eeveelutions', 'https://sites.google.com/view/survivor-ps/themes/hidden-type/eeveelutions', 'More than one kind? I can\'t beleevee this!', 1, 1],
 	eevee: 'eeveelutions',
-	hideandseektag: ['Hide and Seek Tag', 'https://sites.google.com/view/survivor-ps/themes/hst', 'Stop being so damn edgy and just play a childhood game for once.', 1],
+	hideandseektag: ['Hide and Seek Tag', 'https://sites.google.com/view/survivor-ps/themes/hst', 'Stop being so damn edgy and just play a childhood game for once.', 2],
 	hst: 'hideandseektag',
 	hideandseek: 'hideandseektag',
 	holeinone: ['Hole in One', 'https://sites.google.com/view/survivor-ps/themes/hole-in-one', 'It\'s golf, but the sport, not Survivor\'s golf.', 1],
 	hio: 'holeinone',
-	horse: ['HORSE', 'https://sites.google.com/view/survivor-ps/themes/horse', 'Street rules.', 1],
 	hotpotato: ['Hot Potato', 'https://sites.google.com/view/survivor-ps/themes/hot-potato', 'This be a real hot potato.', 0],
 	hungergames: ['Hunger Games', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Classic but with a twist: No alliances.', 0],
 	hg: 'hungergames',
@@ -149,20 +149,19 @@ let gameTypes = {
 	pole: 'poles',
 	prisonersdilemma: ['Prisoner\'s Dilemma', 'https://sites.google.com/view/survivor-ps/themes/prisoners-dilemma', 'Cooperate or Betray... which one benefits you more?', 1],
 	pd: 'prisonersdilemma',
-	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes/risk', 'Pssh, who needs an army when you have a hulk?', 2],
-	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes/risk/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 0],
+	risk: ['Risk', 'https://sites.google.com/view/survivor-ps/themes/risk', 'Pssh, who needs an army when you have a hulk?', 1],
+	fishing: ['Fishing', 'https://sites.google.com/view/survivor-ps/themes/risk/fishing', 'Only the greatest fishermen win after catching two Poké Balls. Are you one of them?', 2, 2],
 	fish: 'fishing',
-	robbery: ['Robbery', 'https://sites.google.com/view/survivor-ps/themes/robbery', 'Innocent until proven guilty?', 1],
-	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes/rps', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 1],
+	rockpaperscissors: ['Rock, Paper, Scissors', 'https://sites.google.com/view/survivor-ps/themes/rps', 'Sorry, no Lizard or Spock involved... Winner of NBT #2!', 0],
 	rps: 'rockpaperscissors',
-	rockpaperscissorslizardspock: ['Rock, Paper, Scissors, Lizard, Spock', 'https://sites.google.com/view/survivor-ps/themes/rps/rpsls', 'Modification of Rock, Paper, Scissors. Includes Lizard and Spock!', 1],
+	rockpaperscissorslizardspock: ['Rock, Paper, Scissors, Lizard, Spock', 'https://sites.google.com/view/survivor-ps/themes/rps/rpsls', 'Modification of Rock, Paper, Scissors. Includes Lizard and Spock!', 0, 1],
 	rpsls: 'rockpaperscissorslizardspock',
 	rpslsp: 'rockpaperscissorslizardspock',
 	russianroulette: ['Russian Roulette', 'https://sites.google.com/view/survivor-ps/themes/russian-roulette', 'Pass like a puss or Pull like a pro.', 1],
 	rr: 'russianroulette',
 	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes/ssb', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
 	ssb: 'supersurvivorbros',
-	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 0],
+	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 1],
 	bridge: 'thebridge',
 	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
 	tokens: 'tokensoflife',
@@ -173,12 +172,13 @@ let gameTypes = {
 	toptrumps: 'toptrumpspokebattle',
 	longtoptrumpspokebattle: ['Long Top Trumps Pokebattle', 'https://sites.google.com/view/survivor-ps/themes/ttp', 'Where your partners\' lesser strengths can become their **greatest heroes.**', 1],
 	longttp: 'longtoptrumpspokebattle',
-	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 2],
+	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 1],
 	tc: 'tribalcouncil',
 
 };
 
 let eventTypes = {
+	
 	twentyfourhoursurvivor: ['24 Hour Survivor', 'https://sites.google.com/view/survivor-ps/events/24-hour-survivor', 'ALL DAY ROLL BATTLES EVERY DAY.'],
 	twentyfour: 'twentyfourhoursurvivor',
 	tfhs: 'twentyfourhoursurvivor',
@@ -202,6 +202,38 @@ let eventTypes = {
 
 };
 
+let modTypes = {
+	
+	advantage: ['Advantage', 'When a player is successful with an attack, they gain an extra roll when attacking and defending. Host takes the higher roll.'],
+	alliance: ['Alliance', 'Players can team up with other players and when attacking, they all roll at the same time.'],
+	anonymous: ['Anonymous', 'The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames.'],
+	ai: ['AI', 'Attacker\'s Immunity, if the attacker loses the roll, they are not eliminated.'],
+	bomb: ['Bomb', 'The host picks one or more players to be a bomb. A player who kills a bomb dies too.'],
+	counterattack: ['Counter Attack', 'If an attacker fails to kill their defending target, then their defending target will attack them right back.'],
+	disadvantage: ['Disadvantage', 'When a player is successful with an attack, they gain an extra roll when attacking and defending. Host takes the lower roll.'],
+	dissolve: ['Dissolve', 'Any time the attacker fails to do damage or eliminate their opponent, the attacker loses -10 to their roll for the remainder of the game.'],
+	empire: ['Empire', 'Before the game starts, players pick between two empires. The host then makes two PLs based on the players\' choices, and carries out the game as if it were two games, one per empire. The winners of each empire make it to finals.'],
+	golf: ['Golf', 'The lower roll wins.'],
+	hp: ['HP', 'Hit Points, players start the game with HP. The loser of an attack loses HP equal to the higher roll minus the lower roll. A player is eliminated when their HP reaches 0 or below.'],
+	berserk: ['Berserk (HP)', 'As you lose HP, your roll increases for every hit point you lose. (use with HP modification)'],
+	sturdy: ['Sturdy (HP)', 'If a player is one-shot by an opponent while they are at full HP, instead of dying, they remain alive with 1 HP remaining. (use with HP modification)'],
+	killstreak: ['Kill Streak', 'Players are not eliminated when they lose a roll battle, but players must win by getting a certain number of roll battle victories or having the most victories in a certain number of rounds.'],
+	minefield: ['Minefield', 'The host does .roll 10 followed by .pick beginning, end to decide the mines. If a player rolls a mine, they automatically die.'],
+	overkill: ['Overkill', 'If a player wins a roll by 50 or more, they get to attack another player with a roll bonus of +25.'],
+	pileon: ['Pile On', 'The player who was attacked the most times in a given round must roll against extra attacks if they are still alive at the end of the round.'],
+	resistance: ['Resistance', 'Host rolls a number which becomes the resistance number. The winner of any roll battle must beat their opponent by the resistance number or higher in order for their attack to be successful.'],
+	rollboost: ['Roll Boost', 'Players have points that they can distribute throughout the game to raise their max roll for a round.'],
+	rollswitch: ['Roll Switch', 'Hosts use .pick golf, reg before rolling each attack.'],
+	secondwind: ['Second Wind', 'Players have 2 lives each.'],
+	simultaneous: ['Simultaneous', 'When a player is attacked by multiple people in the same round, the attacks are carried out at the same time and the player rolls once to defend against all attacks.'],
+	soullink: ['Soul Link', 'At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)'],
+	spotlight: ['Spotlight', 'Instead of sending the host your attacks in PMs the host uses !pick or .pick to choose a person who shall attack and say it in the chat.'],
+	triplethreat: ['Triple Threat (Spotlight)', 'When selected, players will attack 2 other players instead of just 1, and all 3 players will roll, with the player that rolls the lowest being eliminated, and the other 2 being safe. (use with Spotlight modification)'],
+	tagteam: ['Tag Team', 'Players are in teams of 2, one member represents the team in battle. Each round, teams can switch their representative by tagging, and they attack a member of an opposing team, whichever member they believe will be tagged in for the attack.'],
+	weardown: ['Wear Down', 'Whatever the player rolls last will become their new max roll. If they get to 1, they are eliminated.'],
+	
+};
+
 
 let commands = {
 	/**
@@ -215,21 +247,25 @@ let commands = {
 		let text = !Config.fork ? "No source code link found." : "The source code for this bot can be found here: " + Config.fork;
 		room.say(prefix + text);
 	},
+	
 	credits: 'about',
 	about: function (arg, user, room) {
 		user.say(`I am a bot made for the Survivor room. Please contact Survivor room auth for any questions regarding me!`)
 	},
+	
 	site: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
 		let text = "https://sites.google.com/view/survivor-ps/home";
 		room.say(prefix + text);
 	},
+	
 	help: 'guide',
 	guide: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
 		let text = !Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "A guide on how to use this bot can be found here: " + Config.botguide;
 		room.say(prefix + text);
 	},
+	
 	reconnect: 'off',
 	disconnect: 'off',
 	crash: 'off',
@@ -239,12 +275,14 @@ let commands = {
 		room.say("/logout");
 		connect();
 	},
+	
 	kill: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%') || room !== user) return false;
 		if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
 		room.say("/logout");
 		process.exit();
 	},
+	
 	/**
 	 * Dev commands
 	 *
@@ -256,10 +294,12 @@ let commands = {
 		if (!user.isExcepted()) return false;
 		return user.say("Encrypted message: " + Tools.encrypt(target));
 	},
+	
 	decrypt: function (target, user, room) {
 		if (!user.isExcepted()) return false;
 		return user.say("Decrypted message: " + Tools.decrypt(target));
 	},
+	
 	reload: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		try {
@@ -270,6 +310,7 @@ let commands = {
 			error('failed to reload: ' + e.stack);
 		}
 	},
+	
 	reloadvoice: 'reloadvoices',
 	reloadvoices: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
@@ -284,15 +325,18 @@ let commands = {
 		Games.loadGames();
 		room.say('Games reloaded.');
 	},
+	
 	shutdownmode: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		Config.allowGames = false;
 		room.say("Shutdown mode enabled");
 	},
+	
 	join: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		send('|/join ' + arg);
 	},
+	
 	custom: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		// Custom commands can be executed in an arbitrary room using the syntax
@@ -320,6 +364,7 @@ let commands = {
 			this.say(room, e.name + ": " + e.message);
 		}
 	},
+	
 	uptime: function (arg, user, room) {
 		var text = ((room === user || user.isExcepted()) ? '' : '/pm ' + user.id + ', ') + '**Uptime:** ';
 		var divisors = [52, 7, 24, 60, 60];
@@ -435,6 +480,7 @@ let commands = {
 			(CONFIGURABLE_COMMAND_LEVELS[setting] === setting ? ' available for users of rank ' + setting + ' and above.' :
 				(this.settings[cmd][roomid] ? 'available for all users in this room.' : 'unavailable for use in this room.')));
 	},
+	
 	blacklist: 'autoban',
 	ban: 'autoban',
 	ab: 'autoban',
@@ -471,6 +517,7 @@ let commands = {
 		if (illegalNick.length) text += (text ? ' All other' : 'All') + ' users had illegal nicks and were not blacklisted.';
 		this.say(room, text);
 	},
+	
 	unblacklist: 'unautoban',
 	unban: 'unautoban',
 	unab: 'unautoban',
@@ -503,6 +550,7 @@ let commands = {
 		if (notRemoved.length) text += (text.length ? ' No other' : 'No') + ' specified users were present in the blacklist.';
 		this.say(room, text);
 	},
+	
 	rab: 'regexautoban',
 	regexautoban: function (arg, user, room) {
 		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
@@ -538,6 +586,7 @@ let commands = {
 		this.say(room, '/modnote Regular expression ' + regex + ' was added to the blacklist user user ' + user.name + '.');
 		this.say(room, 'Regular expression ' + regex + ' was added to the blacklist.');
 	},
+	
 	unrab: 'unregexautoban',
 	unregexautoban: function (arg, user, room) {
 		if (room === user || !user.isRegexWhitelisted() || !user.canUse('autoban', room.id)) return false;
@@ -551,6 +600,7 @@ let commands = {
 		this.say(room, '/modnote Regular expression ' + arg + ' was removed from the blacklist user user ' + user.name + '.');
 		this.say(room, 'Regular expression ' + arg + ' was removed from the blacklist.');
 	},
+	
 	viewbans: 'viewblacklist',
 	vab: 'viewblacklist',
 	viewautobans: 'viewblacklist',
@@ -581,6 +631,8 @@ let commands = {
 		}
 		this.say(room, text);
 	},
+	
+	
 	/**
 	 * General commands
 	 *
@@ -716,7 +768,22 @@ let commands = {
 		let text = '**' + data[0] + '**: __' + data[2] + '__ Event rules: ' + data[1];
 		target.say(text);
 	},
+	
+	modifications: 'mod',
+	modification: 'mod',
+	mods: 'mod',
+	mod: function (arg, user, room) {
+		let target = user.hasRank(room.id, '+') ? room : user;
+		arg = toId(arg);
+		if (!arg) return target.say("Link to the Survivor theme modifications: https://sites.google.com/view/survivor-ps/themes/modifications");
+		if (!eventTypes[arg]) return target.say("Invalid modification type. The modifications can be found here: https://sites.google.com/view/survivor-ps/themes/modifications");
+		let data = modTypes[arg];
+		if (typeof data === 'string') data = modTypes[data];
 
+		let text = '**' + data[0] + '**: __' + data[1] + '__';
+		target.say(text);
+	},
+	
 	sethost: function (target, user, room) {
 		if (!user.hasRank('survivor', '%') && Config.canHost.indexOf(user.id) === -1) return;
 		if (Games.host) return room.say("__" + Games.host.name + "__ is currently hosting");
@@ -771,6 +838,7 @@ let commands = {
 		if (!user.hasRank('survivor', '+')) return;
 		return room.say(Games.banTime(target));
 	},
+	
 	subhost: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		if (!Games.host) return room.say("No host is currently active.");
@@ -779,12 +847,6 @@ let commands = {
 		Games.host = user;
 		room.say("**" + Games.host.name + "** has subbed in as the host!");
 		room.say("/modnote " + Games.host.name + " has subhosted");
-	},
-	pants: function (target, user, room) {
-		let text = '';
-		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
-		text += '.done with life';
-		this.say(room, text);
 	},
 
 	userhosts: function (target, user, room) {
@@ -844,6 +906,7 @@ let commands = {
 		if (!user.hasRank(room.id, '+')) return;
 		if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
 	},
+	
 	pl: 'players',
 	players: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -855,6 +918,8 @@ let commands = {
 		Games.host = null;
 		this.say(room, "Thanks for playing!");
 	},
+	
+	
 	// Informational Commands:
 
 	dehost: function (target, user, room) {
@@ -900,11 +965,13 @@ let commands = {
 			return room.say("No game is in progress.");
 		}
 	},
+	
 	tester: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		this.say(room, room.id)
 		this.say(room, user.id)
 	},
+	
 	win: function (target, user, room) {
 		if (!Games.host || Games.host.id !== user.id || room === user) return;
 		/*let split = target.split(",");
@@ -949,6 +1016,7 @@ let commands = {
 			Games.canIntro = true;
 		}, 5 * 1000);
 	},
+	
 	plug: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -959,6 +1027,7 @@ let commands = {
 		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
 		this.say(room, text);
 	},
+	
 	smogon: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -969,6 +1038,7 @@ let commands = {
 		text += 'Survivor\'s DD records can be found on Smogon! https://www.smogon.com/forums/threads/daily-deathmatch-2019-survivor-leaderboards.3645594/';
 		this.say(room, text);
 	},
+	
 	nbt: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -980,6 +1050,7 @@ let commands = {
 		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/about/nbt';
 		this.say(room, text);
 	},
+	
 	nbtsubmissions: 'nbtsubs',
 	nbtsubs: function (arg, user, room) {
 		var text = '';
@@ -992,6 +1063,7 @@ let commands = {
 		text += '**NBT XII** is currently in session through July 2020! Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hof/nbt-hof';
 		this.say(room, text);
 	},
+	
 	rankings: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -1002,6 +1074,7 @@ let commands = {
 		text += 'This has been discontinued but what\'s left of the **Survivor Rankings** can be found here: http://goo.gl/jAucyT';
 		this.say(room, text);
 	},
+	
 	howtohost: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -1012,6 +1085,7 @@ let commands = {
 		text += 'How To Host: https://sites.google.com/view/survivor-ps/guides/how-to-host';
 		this.say(room, text);
 	},
+	
 	summary: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '%')) {
@@ -1035,6 +1109,7 @@ let commands = {
 		text += 'Today is currently **' + days[day] + "**!";
 		this.say(room, text);
 	},
+	
 	htp: 'howtoplay',
 	howtoplay: function (arg, user, room) {
 		var text = '';
@@ -1094,6 +1169,7 @@ let commands = {
 			room.say(text3);
 		}
 	},
+	
 	hirl123: 'hurl',
 	hurl: function (arg, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
@@ -1106,62 +1182,33 @@ let commands = {
 		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
 		this.say(room, text);
 	},
+	
+	pants: function (target, user, room) {
+		let text = '';
+		if (!user.hasRank(room.id, '+') && room.id !== user.id) text = '/pm ' + user.id + ', ';
+		text += '.done with life';
+		this.say(room, text);
+	},
+	
+	moo: function (target, user, room) {
+		if (!user.hasRank(room.id, '+')) return;
+		this.say(room, '/me MOOs');
+	},
+	
 	dominate: function (arg, user, room) {
 		let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
 		text += "/me T-Poses";
 		if (arg) text += " on " + arg;
 		this.say(room, text);
 	},
+	
 	hug: function (arg, user, room) {
 		let text = user.hasRank(room.id, '+') ? '' : '/pm ' + user + ', ';
 		text += "/me hugs ";
 		if (arg) text += arg;
 		this.say(room, text);
 	},
-	attackersimmunity: 'ai',
-	ai: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Attacker\'s Immunity:** __The attacker doesn\'t die if they lose the dice battle. Only the defender can die if they lose the dice battle.__';
-		this.say(room, text);
-	},
-	sl: 'soullink',
-	soullink: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Soul Link:** __At the beginning of the game, you\'re paired up with another player. You know who they are, and they know who you are. When one of you dies, the other one dies as well. (even amount of players required)__';
-		this.say(room, text);
-	},
-	resistance: 'res',
-	res: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Resistance:** __The host will do a roll. Whatever number the host gets, that number is now the resistance number. The winner of any roll battle must win by a margin of the resistance number or higher in order for their attack to be successful.__';
-		this.say(room, text);
-	},
-	anonymous: 'anon',
-	anon: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Anonymous:** __The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames.__';
-		this.say(room, text);
-	},
+	
 	interviews: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
@@ -1172,6 +1219,7 @@ let commands = {
 		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u2ePdxjysVeMZw/viewform || Interviews: https://sites.google.com/view/survivor-ps/extras/current-auth';
 		this.say(room, text);
 	},
+	
 	meme: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
@@ -1180,251 +1228,11 @@ let commands = {
 		text += '/addhtmlbox <center><a href="https://youtu.be/DLzxrzFCyOs"><button title="Dot Not Click Me">Click Me</button></a></center>';
 		this.say(room, text);
 	},
-	spotlight: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Spotlight:** __An attacker is randomly chosen by using the !pick command, rather than sending a message to the host. The chosen user then gets to choose who they want to attack. Spotlight can be used for most themes, but not all themes.__';
-		this.say(room, text);
-	},
-	secondwind: 'sw',
-	sw: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Second Wind:** __Players have 2 lives each.__';
-		this.say(room, text);
-	},
 
-	golf: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Golf:** __Lower rolls win. Opposite of normal survivor.__';
-		this.say(room, text);
-	},
-	counterattack: 'ca',
-	ca: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Counter Attack:** __If an attacker fails to kill their defending target, then their defending target will attack them right back.__';
-		this.say(room, text);
-	},
-	rollswitch: 'rs',
-	rs: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Roll Switch:** __Randomly pick between Golf and Normal rules before each attack.__';
-		this.say(room, text);
-	},
-	empire: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Empire:** __Before the game starts, players pick between two empires. The host then makes two PLs based on the players\' choices, and carries out the game as if it were two games, one per empire. The winners of each empire then make it to finals.__';
-		this.say(room, text);
-	},
-
-	triplethreat: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Triple Threat:** __When selected, players will attack 2 other players instead of just 1, and all 3 players will roll, with the player that rolls the lowest being eliminated, and the other 2 being safe. (use with Spotlight modification)__';
-		this.say(room, text);
-	},
-
-	advantage: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Advantage:** __When a player is successful with an attack, they gain an extra roll when attacking and defending. Host takes the higher roll.__';
-		this.say(room, text);
-	},
-
-	alliance: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Alliance:** __Players can team up with other players and when attacking, they all roll at the same time.__';
-		this.say(room, text);
-	},
 	highfive: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
 		let text = toId(arg) ? '/me high-fives ' + arg.trim() : 'Usage: ``.highfive [name]``';
 		room.say(prefix + text);
-	},
-	disadvantage: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Disadvantage:** __When a player is successful with an attack, they gain an extra roll when attacking and defending. Host takes the lower roll.__';
-		this.say(room, text);
-	},
-	hitpoints: 'hp',
-	hp: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Hit Points (HP):** __Players start the game with HP. The loser of an attack loses HP equal to the higher roll minus the lower roll. A player is eliminated when their HP reaches 0 or below.__';
-		this.say(room, text);
-	},
-
-	berserk: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Berserk:** __As you lose HP, your roll increases for every hit point you lose. (use with HP modification)__';
-		this.say(room, text);
-	},
-
-	sturdy: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Sturdy:** __If a player is one-shot by an opponent while they are at full HP, instead of dying, they remain alive with 1 HP remaining. (use with HP modification)__';
-		this.say(room, text);
-	},
-
-	minefield: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Minefield:** __The host does .roll 10 followed by .pick beginning, end to decide the mines. If a player lands on a mine, they automatically die.__';
-		this.say(room, text);
-	},
-
-	overkill: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Overkill:** __If a player wins a roll by 50 or more, they get to attack another player with a roll bonus of +25.__';
-		this.say(room, text);
-	},
-
-	pileon: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Pile On:** __The player who was attacked the most times in a given round must roll against extra attacks if they are still alive at the end of the round.__';
-		this.say(room, text);
-	},
-
-	rollboost: 'rb',
-	rb: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Roll Boost:** __Players have points that they can distribute throughout the game to raise their max roll for a round.__';
-		this.say(room, text);
-	},
-
-	simultaneous: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Simultaneous:** __When a player is attacked by multiple people in the same round, the attacks are carried out at the same time and the player rolls once to defend against all attacks.__';
-		this.say(room, text);
-	},
-
-	weardown: 'wd',
-	wd: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Wear Down:** __Whatever the player rolls last will become their new max roll. If they get to 1, they are eliminated.__';
-		this.say(room, text);
-	},
-
-	dissolve: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Dissolve:** __Any time the attacker fails to do damage or eliminate their opponent, the attacker loses -10 to their roll for the remainder of the game.__';
-		this.say(room, text);
-	},
-	
-	killstreak: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Kill Streak:** __Players are not eliminated when they lose a roll battle, but players must win by getting a certain number of roll battle victories or having the most victories in a certain number of rounds.__';
-		this.say(room, text);
-	},
-	
-	tagteam: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-		text += '**Tag Team:** __Players are in teams of 2, one member represents the team in battle. Each round, teams can switch their representative by tagging, and they attack a member of an opposing team, whichever member they believe will be tagged in for the attack.__';
-		this.say(room, text);
 	},
 
 	joke: function (arg, user, room) {
@@ -1462,6 +1270,7 @@ let commands = {
 			}
 		}
 	},
+	
 	gift: 'present',
 	present: function (arg, user, room) {
 		var text = '';
@@ -1473,16 +1282,6 @@ let commands = {
 		}
 		if (!user.hasRank(room.id, '+')) {
 			this.say(room, '/w ' + user.id + ', ' + text);
-		}
-	},
-
-	modifications: 'mods',
-	mods: function (arg, user, room) {
-		var text = 'Host it your way, with these theme modifications: https://sites.google.com/view/survivor-ps/themes/modifications';
-		if (user.hasRank(room.id, '+')) {
-			this.say(room, text);
-		} else {
-			user.say(text);
 		}
 	},
 
@@ -1622,12 +1421,14 @@ let commands = {
 			this.say(room, alreadynames.join(", ") + " could not be given a roll, since they already have access to the command.");
 		}
 	},
+	
 	clearallowrolls: 'clearallowroll',
 	clearallowroll: function (target, user, room) {
 		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id)) return;
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
 	},
+	
 	oldroll: function (target, user, room) {
 		let realtarget = target;
 		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) {
@@ -1680,6 +1481,7 @@ let commands = {
 			}
 		}
 	},
+	
 	r: 'dice',
 	roll: 'dice',
 	dice: function (arg, user, room) {
@@ -1789,6 +1591,7 @@ let commands = {
 		room.game.signups();
 		room.say("/modnote HOST: " + user.name + " started signups of " + room.game.name + ".");
 	},
+	
 	forcesignups: function (target, user, room) {
 		if (!user.hasRank(room.id, '#')) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
@@ -1800,6 +1603,7 @@ let commands = {
 		room.game.signups();
 		room.say("/modnote " + user.name + " forcibly started signups of " + room.game.name + ".");
 	},
+	
 	randgame: "randomgame",
 	randomgame: function (arg, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
@@ -1838,28 +1642,15 @@ let commands = {
 		this.say(room, 'Visit  https://goo.gl/forms/1hqFg6tR41VxVCSK2 to submit any gift, gifs, roasts or jokes! Add as many as you like!');
 	},
 
-	moo: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		this.say(room, '/me MOOs');
-	},
-
 	startgame: 'start',
 	start: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') || !room.game) return;
 		if (typeof room.game.start === 'function') room.game.start();
 	},
+	
 	mk: 'modkill',
 	modkill: function (target, user, room) {
 		let text = "A modkill (or mk) occurs when a player does not provide an action and so they are eliminated";
-		if (user.hasRank(room.id, '+')) {
-			room.say(text);
-		} else {
-			user.say(text);
-		}
-	},
-
-	bomb: function (target, user, room) {
-		let text = "**Bomb:** __A bomb is a player that, when eliminated, \"explodes\" and eliminates the player that eliminated them.__";
 		if (user.hasRank(room.id, '+')) {
 			room.say(text);
 		} else {
@@ -1878,6 +1669,7 @@ let commands = {
 		}
 		this.say(room, msg);
 	},
+	
 	addroast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
 		if (!toId(target)) return this.say(user, "Usage: ``.addroast [text]``");
@@ -1887,6 +1679,7 @@ let commands = {
 		this.say(Rooms.get('survivor'), '/modnote roast added by ' + user.id + ': ' + target.trim());
 		return this.say(user, 'Roast added.');
 	},
+	
 	use: function (target, user, room) {
 		if (!room.game) return;
 		if (typeof room.game.use === 'function') room.game.use(target, user);
@@ -2004,6 +1797,7 @@ let commands = {
 		if (last.special) dd.remPoints(last.special[1], last.special[0]);
 		user.say('Point award reverted.');
 	},
+	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
@@ -2170,6 +1964,7 @@ let commands = {
 		dd.updateModlog(modlogEntry);
 		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
 	},
+	
 	addpointssurvivorshowdown: 'addss',
 	addss: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
@@ -2218,6 +2013,7 @@ let commands = {
 		dd.updateModlog(modlogEntry);
 		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
 	},
+	
 	pointlog: function (arg, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		let data = dd.modlog.data.reverse();
@@ -2386,6 +2182,7 @@ let commands = {
 		Rooms.get('survivor').say("/join groupchat-survivor-testing");
 		room.say("<<groupchat-survivor-testing>> to test stuff!");
 	},
+	
 	psevent: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		let args = arg.split(',');
@@ -2395,6 +2192,7 @@ let commands = {
 			Rooms.get('survivor').say('/events remove ' + args.slice(1).join(','));
 		} else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)');
 	},
+	
 	ddoverall: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		let sorted = dd.getSorted();
@@ -2544,6 +2342,7 @@ let commands = {
 			numFirsts += sorted[i][1];
 		}
 	},
+	
 	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let isempty = true;
@@ -2650,6 +2449,7 @@ let commands = {
 		gamecount.save();
 		return room.say("The dd leaderboard has been reset.");
 	},
+	
 	points: function (target, user, room) {
 		if (room.id !== user.id) return;
 		target = Tools.toId(target);
