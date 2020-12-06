@@ -747,6 +747,27 @@ let commands = {
 		}
 
 	},
+	
+	randmod: function (arg, user, room) {
+		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
+		let avail = [];
+		for (let i in modTypes) {
+			if (typeof modTypes[i] === "string") continue;
+			let name = modTypes[i][0];
+			if (avail.includes(name) || modTypes[i][4]) {
+				continue;
+			}
+			avail.push(name);
+		}
+		let mod = Tools.sample(avail);
+		for (let i in modTypes) {
+			if (modTypes[i][0] == mod) {
+				var data = modTypes[i];
+				return target.say('**' + data[0] + '**: __' + data[1] + '__');
+			}
+		}
+
+	},
 
 	theme: 'themes',
 	themes: function (arg, user, room) {
@@ -787,7 +808,7 @@ let commands = {
 	modification: 'mod',
 	mods: 'mod',
 	mod: function (arg, user, room) {
-		let target = user.hasRank(room.id, '+') ? room : user;
+		let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
 		arg = toId(arg);
 		if (!arg) return target.say("Link to the Survivor theme modifications: https://sites.google.com/view/survivor-ps/themes/modifications");
 		if (!modTypes[arg]) return target.say("Invalid modification type. The modifications can be found here: https://sites.google.com/view/survivor-ps/themes/modifications");
@@ -824,8 +845,6 @@ let commands = {
 		Rooms.get('survivor').say("/modnote " + target + " has been hostbanned for " + numDays + " days by " + user.name + ".");
 		return room.say(Games.hostBan(targUser, numDays));
 	},
-
-
 
 	hostbanned: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
