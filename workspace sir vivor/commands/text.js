@@ -147,5 +147,30 @@ module.exports = {
 	
 	workshop: '<<survivorworkshop>>',
 	
+	tomjones: [
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'It\'s Not Unusual,
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+		'What\'s New Pussycat?',
+	],
+	
 }
 	
