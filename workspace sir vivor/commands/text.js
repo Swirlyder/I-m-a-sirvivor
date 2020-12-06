@@ -155,7 +155,7 @@ module.exports = {
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
-		'It\'s Not Unusual,
+		'It\'s Not Unusual',
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
