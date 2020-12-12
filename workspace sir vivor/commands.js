@@ -77,8 +77,15 @@ function isPM(roomid, userid) {
 	else return false;
 }
 
+
 function lbuild() {}
 let gameTypes = {
+	/**
+	 * Theme list
+	 *
+	 * These key-value pairs represent themes that can be accessed
+	 * using the .theme command.
+	 */
 	
 	avoidance: ['Avoidance', 'https://sites.google.com/view/survivor-ps/themes/avoidance', 'The trick is to pick the number that makes you not lose.', 0],
 	bounty: ['Bounty', 'https://sites.google.com/view/survivor-ps/themes/bounty', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
@@ -178,6 +185,12 @@ let gameTypes = {
 };
 
 let eventTypes = {
+	/**
+	 * Event list
+	 *
+	 * These key-value pairs represent themes that can be accessed
+	 * using the .event command.
+	 */
 	
 	twentyfourhoursurvivor: ['24 Hour Survivor', 'https://sites.google.com/view/survivor-ps/events/24-hour-survivor', 'ALL DAY ROLL BATTLES EVERY DAY.'],
 	twentyfour: 'twentyfourhoursurvivor',
@@ -186,6 +199,10 @@ let eventTypes = {
 	chieves: 'achievements',
 	authhunt: ['Auth Hunt', 'https://sites.google.com/view/survivor-ps/events/auth-hunt', 'You\'ve played their games, but now they play yours... hunt them down.'],
 	authbattle: 'authhunt',
+	capturetheflag: ['Capture the Flag', 'https://sites.google.com/view/survivor-ps/events/ctf', 'Can your trio take the most flags?'],
+	ctf: 'capturetheflag',
+	daysoftheweek: ['Days of the Week', 'https://sites.google.com/view/survivor-ps/events/dotw', 'Something new every day of the week!'],
+	dotw: 'daysoftheweek',
 	freeforall: ['Free for All', 'https://sites.google.com/view/survivor-ps/events/ffa', 'Take out as many opponents as you can!'],
 	ffa: 'freeforall',
 	gamblingroyale: ['Gambling Royale', 'https://sites.google.com/view/survivor-ps/events/gambling-royale', 'Weekend gambling, lifetime debt.'],
@@ -203,6 +220,12 @@ let eventTypes = {
 };
 
 let modTypes = {
+	/**
+	 * Modification list
+	 *
+	 * These key-value pairs represent themes that can be accessed 
+	 * using the .mod command.
+	 */
 	
 	advantage: ['Advantage', 'When a player is successful with an attack, they gain an extra roll when attacking and defending. Host takes the higher roll.'],
 	alliance: ['Alliance', 'Players can team up with other players and when attacking, they all roll at the same time.'],
