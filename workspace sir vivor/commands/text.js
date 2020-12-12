@@ -169,7 +169,7 @@ module.exports = {
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
 		'What\'s New Pussycat?',
-		'What\'s New Pussycat?',
+		'What\'s New Pussycat?'
 	],
 	
 }
