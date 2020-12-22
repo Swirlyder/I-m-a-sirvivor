@@ -1106,7 +1106,7 @@ let commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/about/nbt';
+		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/events/nbt';
 		this.say(room, text);
 	},
 	
@@ -1119,7 +1119,7 @@ let commands = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**NBT XII** is currently in session through July 2020! Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hof/nbt-hof';
+		text += 'NBT is currently not in session. Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hof/nbt-hof';
 		this.say(room, text);
 	},
 	
