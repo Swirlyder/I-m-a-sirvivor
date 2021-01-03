@@ -40,6 +40,25 @@ global.gamecount = {
 
 gamecount.load();
 
+global.eventcount = {
+    count: {},
+    load: function() {
+        let obj = JSON.parse(FS.readFileSync('./databases/eventcount.json'));
+        if (obj) this.count = obj;
+    },
+    save: function() {
+        FS.writeFileSync('./databases/eventcount.json', JSON.stringify(this.count, null, 2));
+    },
+    add(user, amount) {
+        if (user.id) user = user.id;
+        user = toId(user);
+        if (!this.count[user]) this.count[user] = 0;
+        this.count[user] += amount;
+        this.save();
+    }
+};
+
+eventcount.load();
 
 exports.commands = {
     hostcount: function (arg, user, room) {
