@@ -2399,7 +2399,7 @@ let commands = {
 			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${str}`);
 		}
 		else {
-			Parse.say(room, `/addhtmlbox ${str}`);
+			Parse.say(room, `/addhtmlbox <div style="max-height:300px">${str}</div>`);
 		}
 		let numFirsts = 0;
 		for (let i = 0; i < sorted.length; i++) {
