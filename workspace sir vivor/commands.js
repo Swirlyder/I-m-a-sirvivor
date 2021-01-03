@@ -1800,6 +1800,7 @@ let commands = {
 		if (split.length < 2) return user.say("You must specify the number of players, followed by the winner and runner-up.");
 		let numPlayers = parseInt(split[0]);
 		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+		if (split.length != numPlayers + 1 && !user.hasRank('survivor', '#')) return user.say("You must supply all players as arguments. ROs can bypass this if it's really necessary");
 		if (split.length < 3 && numPlayers > 6) return user.say("Please also specify the runner up for games with 7+ players.");
 		let first = split[1].trim();
 		let firstpoints = 0;
@@ -1807,10 +1808,10 @@ let commands = {
 		if (numPlayers < 7) {
 			return user.say("Bot hosted games with at least 7 players are worth points.");
 		} else if (numPlayers < 10) {
-			firstpoints = 3;
+			firstpoints = 2;
 			secondpoints = 1;
 		} else if (numPlayers >= 10) {
-			firstpoints = 5;
+			firstpoints = 4;
 			secondpoints = 2;
 		}
 		dd.addpoints(first, firstpoints);
@@ -1870,7 +1871,8 @@ let commands = {
 		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
 		if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up and participants for games with 6+ players.");
 		if (split.length < 5 && numPlayers >= 6) return user.say("Please mention all players who took part for games with 7+ players.")
-		if (numPlayers >= 6 && split.length != numPlayers + 2) return user.say("Please check the number of players.")
+		if (numPlayers >= 6 && split.length != numPlayers + 2) return user.say("Please check the number of players.");
+		if (split.length != numPlayers + 2 && !user.hasRank('survivor', '#')) return user.say("You must supply all players as arguments. ROs can bypass this if it's really necessary");
 		let host = split[1].trim();
 		if (numPlayers >= 4) hostcount.add(host, 1);
 		let first = split[2].trim();
@@ -1881,7 +1883,7 @@ let commands = {
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else if (numPlayers < 6) {
-			hostpoints = 2;
+			hostpoints = 1;
 			firstpoints = 2;
 			dd.addpoints(host, hostpoints);
 			
@@ -1902,24 +1904,24 @@ let commands = {
 			user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
 			return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
 		} else if (numPlayers < 10) {
-			hostpoints = 3;
+			hostpoints = 2;
 			firstpoints = 5;
-			secondpoints = 2;
+			secondpoints = 3;
 			partpoints = 1;
 		} else if (numPlayers < 13) {
-			hostpoints = 6;
-			firstpoints = 9;
-			secondpoints = 5;
+			hostpoints = 3;
+			firstpoints = 7;
+			secondpoints = 3;
 			partpoints = 2;
 		} else if (numPlayers < 16) {
-			hostpoints = 8;
-			firstpoints = 12;
+			hostpoints = 5;
+			firstpoints = 10;
 			secondpoints = 7;
 			partpoints = 3;
 		} else if (numPlayers >= 16) {
-			hostpoints = 11;
-			firstpoints = 15;
-			secondpoints = 10;
+			hostpoints = 6;
+			firstpoints = 13;
+			secondpoints = 9;
 			partpoints = 4;
 		}
 		let partlist = '';
@@ -1963,7 +1965,7 @@ let commands = {
 		if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
 		let numPlayers = parseInt(split[0]);
 		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
-		if (split.length != numPlayers + 2) return user.say("Please check the number of players.");
+		if (split.length != numPlayers + 2 && !user.hasRank('survivor', '#')) return user.say("You must supply all players as arguments. ROs can bypass this if it's really necessary");
 		let host = split[1].trim();
 		if (numPlayers >= 6) hostcount.add(host, 1);
 		let first = split[2].trim();
@@ -1975,23 +1977,23 @@ let commands = {
 		if (numPlayers < 6) {
 			return user.say("Official games with at least 6 players are worth points.");
 		} else if (numPlayers < 10) {
-			hostpoints = 6;
+			hostpoints = 5;
 			firstpoints = 10;
 			secondpoints = 6;
 			partpoints = 3;
 		} else if (numPlayers < 13) {
-			hostpoints = 8;
-			firstpoints = 13;
+			hostpoints = 6;
+			firstpoints = 12;
 			secondpoints = 8;
 			partpoints = 4;
 		} else if (numPlayers < 16) {
-			hostpoints = 10;
-			firstpoints = 16;
+			hostpoints = 8;
+			firstpoints = 14;
 			secondpoints = 10;
 			partpoints = 5;
 		} else if (numPlayers >= 16) {
-			hostpoints = 12;
-			firstpoints = 20;
+			hostpoints = 10;
+			firstpoints = 16;
 			secondpoints = 12;
 			partpoints = 6;
 		}
