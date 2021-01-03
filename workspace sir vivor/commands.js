@@ -2345,9 +2345,8 @@ let commands = {
 		});
 	},
 
-	testlb: function (target, user, room) {
+	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
-		if (!user.hasRank('survivor', '%')) return user.say('Access denied for staff only command.');
 		let isempty = true;
 		let sorted = dd.getSorted();
 		let num = parseInt(target);
@@ -2367,9 +2366,10 @@ let commands = {
 			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
+			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
 			if (!n) n = "Error";
 
-			points = Math.floor(100 * (points/n) * ((n*n)/(n*n+30)) + ((h*h+300)/300));
+			points = Math.floor(50 * (points/n) * ((n*n)/(n*n+50)) + ((h*h+300)/300)) + e;
 
 			res.push([
 				cur,
@@ -2407,7 +2407,7 @@ let commands = {
 		}
 	},
 	
-	lb: function (target, user, room) {
+	pointrank: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let isempty = true;
 		let sorted = dd.getSorted();
