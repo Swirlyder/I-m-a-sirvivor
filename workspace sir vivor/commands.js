@@ -2396,7 +2396,9 @@ let commands = {
 			if (!res[i]) continue;
 			let strx = "<tr>";
 			strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + (i+1) + "</b></td>";
-			for (let j of res[i]) {
+			for (let ln in res[i]) {
+				let j = res[i][ln];
+				if (ln > 3) continue;
 				strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + j + "</b></td>";
 			}
 			strs.push(strx + "</tr>");
