@@ -2386,14 +2386,18 @@ let commands = {
 		res.sort((a, b) => {
 			return b[1] - a[1];
 		})
-
+		
+		let colours = res.map(x => [x[4], x[5]]);
+		res.splice(4, 1);
+		res.splice(4, 1);
+		
 		let strs = [];
 		for (let i = Math.max(0, num - 50); i < num; i++) {
 			if (!res[i]) continue;
 			let strx = "<tr>";
-			strx += `<td height="30px"; align="center" style="background:${res[i][4]};color:${res[i][5]}"><b>` + (i+1) + "</b></td>";
+			strx += `<td height="30px"; align="center" style="background:${colours[i][1]};color:${colours[i][2]}"><b>` + (i+1) + "</b></td>";
 			for (let j of res[i]) {
-				strx += `<td height="30px"; align="center" style="background:${res[i][4]};color:${res[i][5]}"><b>` + j + "</b></td>";
+				strx += `<td height="30px"; align="center" style="background:${colours[i][1]};color:${colours[i][2]}"><b>` + j + "</b></td>";
 			}
 			strs.push(strx + "</tr>");
 		}
