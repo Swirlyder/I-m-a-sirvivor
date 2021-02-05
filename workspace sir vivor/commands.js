@@ -2388,8 +2388,10 @@ let commands = {
 		})
 		
 		let colours = res.map(x => [x[4], x[5]]);
-		res.splice(4, 1);
-		res.splice(4, 1);
+		for (let x of res) {
+			x.splice(4, 1);
+			x.splice(4, 1);
+		}
 		
 		let strs = [];
 		for (let i = Math.max(0, num - 50); i < num; i++) {
@@ -2398,7 +2400,6 @@ let commands = {
 			strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + (i+1) + "</b></td>";
 			for (let ln in res[i]) {
 				let j = res[i][ln];
-				if (ln > 3) continue;
 				strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + j + "</b></td>";
 			}
 			strs.push(strx + "</tr>");
