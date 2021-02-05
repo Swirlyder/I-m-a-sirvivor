@@ -2515,6 +2515,8 @@ let commands = {
 		dd.exportData();
 		hostcount.count = {};
 		gamecount.count = {};
+		eventcount.count = {};
+		eventcount.save();
 		hostcount.save();
 		gamecount.save();
 		return room.say("The dd leaderboard has been reset.");
