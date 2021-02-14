@@ -262,7 +262,12 @@ module.exports = {
             },
             {
                 username: false,
-                before: "**CONGRATULATIONS, YOU'VE WON** ",
+                before: "**GUESS WHAT TIME IT IS??? YEP, TIME FOR A BEATDOWN!!!** ",
+     
+            },
+            {
+                username: false,
+                before: "**CONGRATULATIONS, YOU'VE LOST** ",
      
             }
         ],
