@@ -241,7 +241,7 @@ module.exports = {
             }
         ],
     },
-    hi: 'hello',
+   /* hi: 'hello',
     hello: {
         priority: 2,
         placement: "prefix",
@@ -270,8 +270,8 @@ module.exports = {
                 before: "**CONGRATULATIONS, YOU'VE LOST** ",
      
             }
-        ],
-    },
+        ]
+    },*/
     dosomething: {
         priority: 4,
         placement: "suffix",
