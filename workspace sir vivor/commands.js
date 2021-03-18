@@ -2509,10 +2509,12 @@ let commands = {
 			dd.dd[newid].name = split[1].trim();
 			gamecount.count[newid] = gamecount.count[toId(realt)];
 			hostcount.count[newid] = hostcount.count[toId(realt)];
+			eventcount.count[newid] = eventcount.count[toId(realt)];
 			if (realt !== newid) {
 				delete dd.dd[realt];
 				delete hostcount.count[toId(realt)];
 				delete gamecount.count[toId(realt)];
+				delete eventcount.count[toId(realt)];
 			}
 			return user.say("**" + oldname + "** has been renamed to **" + split[1].trim() + "**.");
 		}
