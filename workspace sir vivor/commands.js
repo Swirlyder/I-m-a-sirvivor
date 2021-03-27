@@ -211,6 +211,8 @@ let eventTypes = {
 	gamblingroyale: ['Gambling Royale', 'https://sites.google.com/view/survivor-ps/events/gambling-royale', 'Weekend gambling, lifetime debt.'],
 	gr: 'gamblingroyale',
 	royale: 'gamblingroyale',
+	kingofthehill: ['King of the Hill', 'https://sites.google.com/view/survivor-ps/events/koth', 'Can you stand above the rest?'],
+	koth: 'kingofthehill',
 	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/events/minigames', 'A mini spin on Survivor games.'],
 	minigame: 'minigames',
 	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/events/missing-alias', 'True identities are not given.'],
