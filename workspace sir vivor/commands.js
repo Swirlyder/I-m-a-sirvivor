@@ -1216,10 +1216,10 @@ let commands = {
 	// Special staff commands (all the other staff commands are in commands/text.js)
 	paradise: 'para',
 	para: function (arg, user, room) {
-		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo, Snap, Hawkie';
-		let text2 = 'Toni XY, Henka, OM, Zeonth, Zyx14, Shadecession, phable, deetah, Hurl, abd1710, cleo, LS\'s Ghost, ptoad, Rainshaft, pants, wob, Ceteris, Gimmick, Rach, Harambeween';
-		let text3 = 'Geene, inactive, Mitsuki, Tushavi, Zyg, Santa Vivor, Guishark, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D'; 
-		let text4 = 'ProfSapling, hasumi kisaragi, iDybalaJRenYT!~, ClaudioINK58, and beautifications, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo,';
+		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, abd1710, cleo, LS\'s Ghost, ptoad, Rainshaft, pants, wob, Ceteris, Gimmick, Rach,';
+		let text3 = 'Harambeween, inactive, Mitsuki, Tushavi, Zyg, Guishark, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D,'; 
+		let text4 = 'ClaudioINK58, and lfolfo, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
