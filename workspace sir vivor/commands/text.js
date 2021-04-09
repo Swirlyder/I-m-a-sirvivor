@@ -21,19 +21,11 @@ module.exports = {
 	shadecession: '==shade',
 	shade: 'Better put on my Shadecessions ⌐■_■',
 	
-	zygten: '==zyg',
-	zyg: '/me sighs... what is there to say?',
-	
 	myster: '==myster17',
 	bugbuzzing: '==myster17',
 	bug: '==myster17',
 	bb: '==myster17',
 	myster17: 'D-don\'t bug me, please... u_u',
-	
-	es: '==epicsnorlax',
-	epicsnorlax: 'good username',
-	eoth: '==easyonthehills',
-	easyonthehills: 'bad name change',
 	
 	unleashourpassion: '==mez',
 	uop: '==mez',
@@ -46,8 +38,7 @@ module.exports = {
 	gimmick: '==gimm1ck',
 	gimm1ck: '/me squats',
 	
-	inac: '==inactive',
-	inactive: 'My Art is an explosion!!',
+	henka: 'H E N K A B O Y S',
 	
 	mega: '==megagr',
 	gr: '==megagr',
@@ -58,9 +49,6 @@ module.exports = {
 	
 	mit: '==mitsuki',
 	mitsuki: 'isso significa algo em português',
-	
-	tush: '==tushavi',
-	tushavi: '>noob luck',
 	
 	ptoad: 'teehee',
 	
@@ -83,11 +71,12 @@ module.exports = {
 	centi: '==idybalajrenyt',
 	idybalajrenyt: 'GOOOOOOOOOOOLAZO DE DYBALA in my YT Channel Dybala Jr (?)',
 	
+	inac: '==inactive',
+	inactive: 'My Art is an explosion!!',
+	
 	orion: 'hasumi',
 	hasumikisaragi: 'hasumi',
 	hasumi: 'Next Stop: きさらぎ鉄道駅',
-	
-	henka: 'H E N K A B O Y S',
 	
 	mrtoastd: '==toast',
 	toast: '/me toasts to [target]',
@@ -98,19 +87,14 @@ module.exports = {
 	
 	spieky: 'Global Roomowner, Administrator and all around Good Guy!',
 	
+	zygten: '==zyg',
+	zyg: '/me sighs... what is there to say?',
+	
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
 	
-	sanjay: '/ME resigns',
-	
-	snapeasy: '==snap',
-	snap: '/me snaps fingers',
-	
 	tikitik: '==tiki',
 	tiki: 'Survivor\'s Resident Russian Spy',
-	
-	zeo: '==zeonth',
-	zeonth: 'A friendly reminder that Zeonth shamelessly advertises the <<cap>> metagame here',
 	
 	bobo: '==bobochan',
 	bobochan: '妮可妮可妮[target]，波波酱在此！',
