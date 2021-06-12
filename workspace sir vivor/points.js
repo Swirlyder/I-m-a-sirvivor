@@ -82,6 +82,12 @@ class DD {
 	getDisplayPoints(item) {
 		return item[4];
 	}
+	
+	updateDisplayPoints(user, newvalue) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		this.dd[id].displaypoints = newvalue;
+	}
 
 	settextcolor(user, hexcolor) {
 		let name = user.trim();
