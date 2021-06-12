@@ -2375,6 +2375,12 @@ let commands = {
 			if (!n) n = "Error";
 
 			points = Math.floor(50 * (points/n) * ((n*n)/(n*n+50)) + ((h*h+300)/300)) + e;
+			
+			if (displaypoints >= points) {
+				points = displaypoints;	
+			} else {
+				dd.updateDisplayPoints(cur, points);
+			}
 
 			res.push([
 				cur,
