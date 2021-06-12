@@ -45,7 +45,9 @@ class DD {
 				points: numPoints,
 				name: user,
 				color: "000000",
-				bgcolor: "ffffff"
+				bgcolor: "ffffff",
+				displaypoints: numPoints
+				/*add extra displaypoints variable*/
 			}
 		} else {
 			if (this.dd[id].points) {
