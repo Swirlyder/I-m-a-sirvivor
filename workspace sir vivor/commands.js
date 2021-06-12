@@ -2367,6 +2367,7 @@ let commands = {
 			let points = dd.getPoints(sorted[i]);
 			let bgcolor = dd.getBgColor(sorted[i]);
 			let textcolor = dd.getTextColor(sorted[i]);
+			let displaypoints = dd.getDisplayPoints(sorted[i]);
 			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
