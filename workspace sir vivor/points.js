@@ -134,7 +134,6 @@ class DD {
 			let item = this.dd[id];
 			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
 		}
-		/*random comment here*/
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
 			let points2 = dd.getPoints(second);
