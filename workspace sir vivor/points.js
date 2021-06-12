@@ -78,6 +78,10 @@ class DD {
 	getPoints(item) {
 		return item[0];
 	}
+	
+	getDisplayPoints(item) {
+		return item[4];
+	}
 
 	settextcolor(user, hexcolor) {
 		let name = user.trim();
@@ -128,6 +132,7 @@ class DD {
 		else
 			return '#FFFFFF'
 	}
+
 
 
 	getSorted() {
