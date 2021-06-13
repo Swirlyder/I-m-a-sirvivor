@@ -158,6 +158,24 @@ class DD {
 		});
 		return items;
 	}
+	
+	getDisplaySorted() {
+		let items = [];
+		for (let id in this.dd) {
+			let item = this.dd[id];
+			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
+		}
+		items.sort(function(first, second) {
+			let points1 = dd.getDisplayPoints(first);
+			let points2 = dd.getDisplayPoints(second);
+			if (points1 !== points2) return points2 - points1;
+			if (first[1] !== second[1]) return second[1] - first[1];
+			if (first[2] !== second[2]) return second[2] - first[2];
+			if (first[3] !== second[3]) return second[3] - first[3];
+			return second[4] > first[4];
+		});
+		return items;
+	}
 
 	updateModlog(message) {
 		this.modlog.data.push(message);
