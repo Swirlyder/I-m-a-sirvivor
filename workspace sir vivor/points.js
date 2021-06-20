@@ -45,7 +45,9 @@ class DD {
 				points: numPoints,
 				name: user,
 				color: "000000",
-				bgcolor: "ffffff"
+				bgcolor: "ffffff",
+				displaypoints: numPoints
+				/*add extra displaypoints variable*/
 			}
 		} else {
 			if (this.dd[id].points) {
@@ -75,6 +77,16 @@ class DD {
 
 	getPoints(item) {
 		return item[0];
+	}
+	
+	getDisplayPoints(item) {
+		return item[4];
+	}
+	
+	updateDisplayPoints(user, newvalue) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		this.dd[id].displaypoints = newvalue;
 	}
 
 	settextcolor(user, hexcolor) {
@@ -128,6 +140,7 @@ class DD {
 	}
 
 
+
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
@@ -137,6 +150,24 @@ class DD {
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
 			let points2 = dd.getPoints(second);
+			if (points1 !== points2) return points2 - points1;
+			if (first[1] !== second[1]) return second[1] - first[1];
+			if (first[2] !== second[2]) return second[2] - first[2];
+			if (first[3] !== second[3]) return second[3] - first[3];
+			return second[4] > first[4];
+		});
+		return items;
+	}
+	
+	getDisplaySorted() {
+		let items = [];
+		for (let id in this.dd) {
+			let item = this.dd[id];
+			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
+		}
+		items.sort(function(first, second) {
+			let points1 = dd.getDisplayPoints(first);
+			let points2 = dd.getDisplayPoints(second);
 			if (points1 !== points2) return points2 - points1;
 			if (first[1] !== second[1]) return second[1] - first[1];
 			if (first[2] !== second[2]) return second[2] - first[2];

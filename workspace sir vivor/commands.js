@@ -2367,6 +2367,7 @@ let commands = {
 			let points = dd.getPoints(sorted[i]);
 			let bgcolor = dd.getBgColor(sorted[i]);
 			let textcolor = dd.getTextColor(sorted[i]);
+			let displaypoints = dd.getDisplayPoints(sorted[i]);
 			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
@@ -2374,6 +2375,12 @@ let commands = {
 			if (!n) n = "Error";
 
 			points = Math.floor(50 * (points/n) * ((n*n)/(n*n+50)) + ((h*h+300)/300)) + e;
+			
+			if (displaypoints >= points) {
+				points = displaypoints;	
+			} else {
+				dd.updateDisplayPoints(cur, points);
+			}
 
 			res.push([
 				cur,
@@ -2544,12 +2551,12 @@ let commands = {
 		if (!(target in dd.dd)) {
 			return user.say("**" + target + "** does not have any points.");
 		}
-		let sorted = dd.getSorted();
+		let sorted = dd.getDisplaySorted();
 
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
 			if (Tools.toId(stuff[1]) === target) {
-				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + dd.getPoints(stuff) + " points");
+				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + dd.getDisplayPoints(stuff) + " points");
 			}
 
 		}
