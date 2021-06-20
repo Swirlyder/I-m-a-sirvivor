@@ -163,7 +163,7 @@ class DD {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
+			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.displaypoints || 0]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getDisplayPoints(first);
