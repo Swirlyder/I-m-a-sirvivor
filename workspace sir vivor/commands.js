@@ -2350,7 +2350,7 @@ let commands = {
 	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let isempty = true;
-		let sorted = dd.getSorted();
+		let sorted = dd.getDisplaySorted();
 		let num = parseInt(target);
 		if (!num || num < 1) num = 50;
 		if (num > sorted.length) num = sorted.length;
