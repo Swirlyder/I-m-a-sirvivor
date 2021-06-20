@@ -2384,7 +2384,7 @@ let commands = {
 
 			res.push([
 				cur,
-				displaypoints,
+				points,
 				n,
 				h,
 				bgcolor,
