@@ -1885,8 +1885,8 @@ let commands = {
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else if (numPlayers < 6) {
-			hostpoints = 1;
-			firstpoints = 2;
+			hostpoints = 2;
+			firstpoints = 4;
 			dd.addpoints(host, hostpoints);
 			
 			dd.addpoints(first, firstpoints);
@@ -1906,24 +1906,24 @@ let commands = {
 			user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
 			return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
 		} else if (numPlayers < 10) {
-			hostpoints = 2;
-			firstpoints = 5;
-			secondpoints = 3;
+			hostpoints = 3;
+			firstpoints = 6;
+			secondpoints = 4;
 			partpoints = 1;
 		} else if (numPlayers < 13) {
-			hostpoints = 3;
-			firstpoints = 7;
-			secondpoints = 3;
+			hostpoints = 4;
+			firstpoints = 8;
+			secondpoints = 5;
 			partpoints = 2;
 		} else if (numPlayers < 16) {
 			hostpoints = 5;
-			firstpoints = 10;
+			firstpoints = 11;
 			secondpoints = 7;
 			partpoints = 3;
 		} else if (numPlayers >= 16) {
-			hostpoints = 6;
-			firstpoints = 13;
-			secondpoints = 9;
+			hostpoints = 7;
+			firstpoints = 14;
+			secondpoints = 10;
 			partpoints = 4;
 		}
 		let partlist = '';
@@ -1980,24 +1980,24 @@ let commands = {
 			return user.say("Official games with at least 6 players are worth points.");
 		} else if (numPlayers < 10) {
 			hostpoints = 5;
-			firstpoints = 10;
-			secondpoints = 6;
-			partpoints = 3;
+			firstpoints = 11;
+			secondpoints = 7;
+			partpoints = 2;
 		} else if (numPlayers < 13) {
 			hostpoints = 6;
-			firstpoints = 12;
-			secondpoints = 8;
-			partpoints = 4;
+			firstpoints = 13;
+			secondpoints = 9;
+			partpoints = 3;
 		} else if (numPlayers < 16) {
 			hostpoints = 8;
-			firstpoints = 14;
-			secondpoints = 10;
-			partpoints = 5;
+			firstpoints = 15;
+			secondpoints = 11;
+			partpoints = 4;
 		} else if (numPlayers >= 16) {
 			hostpoints = 10;
-			firstpoints = 16;
-			secondpoints = 12;
-			partpoints = 6;
+			firstpoints = 17;
+			secondpoints = 13;
+			partpoints = 5;
 		}
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
