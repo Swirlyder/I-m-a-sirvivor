@@ -2374,7 +2374,7 @@ let commands = {
 			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
 			if (!n) n = "Error";
 
-			points = Math.floor(50 * (points/n) * ((n*n)/(n*n+50)) + ((h*h+300)/300)) + e;
+			points = Math.floor((50 * (points/n) * ((1.1*n*n)/(n*n+80) + (n/225)) + ((h*h+100)/50)) + e);
 			
 			if (displaypoints >= points) {
 				points = displaypoints;	
