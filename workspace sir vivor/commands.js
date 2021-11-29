@@ -2374,14 +2374,15 @@ let commands = {
 			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
 			if (!n) n = "Error";
 
-			points = Math.floor((50 * (points/n) * ((1.1*n*n)/(n*n+80) + (n/225)) + ((h*h+100)/50)) + e);
+			points = Math.floor((50 * (points/n) * ((1.1*n*n)/(n*n+80) + (n/225)) + ((h*h+100)/50)));
 			
 			if (displaypoints >= points) {
 				points = displaypoints;	
 			} else {
 				dd.updateDisplayPoints(cur, points);
 			}
-
+			
+			points += e;
 			res.push([
 				cur,
 				points,
