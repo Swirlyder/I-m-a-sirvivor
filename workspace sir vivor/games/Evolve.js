@@ -11,7 +11,7 @@ for (let s0 in dex) {
 			if (b1.evos) {
 				for (let s2 of b1.evos) {
 					if (!goodmons[s0]) goodmons[s0] = [];
-					goodmons[s0].push(`${s0},${s1},${s2}`);
+					goodmons[s0].push(`${toId(s0)},${toId(s1)},${toId(s2)}`);
 				}
 			}
 		}
