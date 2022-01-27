@@ -1217,9 +1217,9 @@ let commands = {
 	paradise: 'para',
 	para: function (arg, user, room) {
 		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo,';
-		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, abd1710, cleo, LS\'s Ghost, ptoad, Rainshaft, pants, wob, Ceteris, Gimmick, Rach,';
-		let text3 = 'Harambeween, inactive, Mitsuki, Tushavi, Zyg, Guishark, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D,'; 
-		let text4 = 'ClaudioINK58, and lfolfo, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, zyg, Guishark, Mitsuki, Tushavi, abd1710, cleo, ptoad, Rainshaft, pants, wob, Ceteris,';
+		let text3 = 'Gimmick, Rach, Harambeween, inactive, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D, ClaudioINK58, lfolfo, confix,'; 
+		let text4 = 'beautifications, 2guhde4u, and Gary The Savage, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
@@ -1240,12 +1240,6 @@ let commands = {
 		let text = '/addhtmlbox <img src="https://i.vgy.me/ip3Fc9.png" width="0" height="0" style="height:135px;width:auto">';
 		this.say(room, text);
 	},
-
-	deetah: function (arg, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
-		this.say(room, text);
-	},
 	
 	pants: function (target, user, room) {
 		let text = '';
@@ -1254,6 +1248,7 @@ let commands = {
 		this.say(room, text);
 	},
 	
+	cheese: 'moo',
 	moo: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		this.say(room, '/me MOOs');
