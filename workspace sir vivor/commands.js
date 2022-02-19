@@ -89,6 +89,7 @@ let gameTypes = {
 	
 	avoidance: ['Avoidance', 'https://sites.google.com/view/survivor-ps/themes/avoidance', 'The trick is to pick the number that makes you not lose.', 0],
 	bounty: ['Bounty', 'https://sites.google.com/view/survivor-ps/themes/bounty', 'Who is the bounty? Thats your mission to find out and capture them to win this game mode!', 2],
+	bullseye: ['Bullseye', 'https://sites.google.com/view/survivor-ps/themes/bullseye', 'Draw your bow and arrow and take aim at the target!', 1],
 	casino: ['Casino', 'https://sites.google.com/view/survivor-ps/themes/casino', 'Place your bets and hope for the best!', 2],
 	bank: ['Bank', 'https://sites.google.com/view/survivor-ps/themes/casino/bank', 'Sometimes greed is good... but only sometimes.', 2, 1],
 	blackjack: ['Blackjack', 'https://sites.google.com/view/survivor-ps/themes/casino/blackjack', 'A Survivor themed game of blackjack.', 2, 1],
@@ -213,6 +214,9 @@ let eventTypes = {
 	royale: 'gamblingroyale',
 	kingofthehill: ['King of the Hill', 'https://sites.google.com/view/survivor-ps/events/koth', 'Can you stand above the rest?'],
 	koth: 'kingofthehill',
+	metronomebattletour: ['Metronome Battle Tour', 'https://sites.google.com/view/survivor-ps/events/metronome-battle-tour', 'We\'re on a Pokemon battle simulator, after all.'],
+	metronometour: 'metronomebattletour',
+	metronome: 'metronomebattletour',
 	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/events/minigames', 'A mini spin on Survivor games.'],
 	minigame: 'minigames',
 	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/events/missing-alias', 'True identities are not given.'],
@@ -236,7 +240,8 @@ let modTypes = {
 	alliance: ['Alliance', 'Players can team up with other players and when attacking, they all roll at the same time.'],
 	anonymous: ['Anonymous', 'The host will ask players for nicknames before the game begins and players will attack nicknames rather than usernames.'],
 	anon: 'anonymous',
-	ai: ['AI', 'Attacker\'s Immunity, if the attacker loses the roll, they are not eliminated.'],
+	archery: ['Archery', 'The player that rolls closest to the middle of the rolling range wins the battle. (e.g. if the range is 1-99 the best roll is 50, odd numbered roll recommended)'],
+	ai: ['Attacker\'s Immunity (AI)', 'If the attacker loses the roll, they are not eliminated.'],
 	attackersimmunity: 'ai',
 	bomb: ['Bomb', 'The host picks one or more players to be a bomb. A player who kills a bomb dies too.'],
 	counterattack: ['Counter Attack', 'If an attacker fails to kill their defending target, then their defending target will attack them right back.'],
@@ -246,7 +251,7 @@ let modTypes = {
 	dissolve: ['Dissolve', 'Any time the attacker fails to do damage or eliminate their opponent, the attacker loses -10 to their roll for the remainder of the game.'],
 	empire: ['Empire', 'Before the game starts, players pick between two empires. The host then makes two PLs based on the players\' choices, and carries out the game as if it were two games, one per empire. The winners of each empire make it to finals.'],
 	golf: ['Golf', 'The lower roll wins.'],
-	hp: ['HP', 'Hit Points, players start the game with HP. The loser of an attack loses HP equal to the higher roll minus the lower roll. A player is eliminated when their HP reaches 0 or below.'],
+	hp: ['Hit Points (HP)', 'Players start the game with HP. The loser of an attack loses HP equal to the higher roll minus the lower roll. A player is eliminated when their HP reaches 0 or below.'],
 	hitpoints: 'hp',
 	berserk: ['Berserk (HP)', 'As you lose HP, your roll increases for every hit point you lose. (use with HP modification)'],
 	sturdy: ['Sturdy (HP)', 'If a player is one-shot by an opponent while they are at full HP, instead of dying, they remain alive with 1 HP remaining. (use with HP modification)'],
@@ -1217,9 +1222,9 @@ let commands = {
 	paradise: 'para',
 	para: function (arg, user, room) {
 		let text1 = 'I\'m Paradise and this is my Anime club. I work here with my friends and fellow weebs: Spieky, Bon Dance, Don’t Lose, Aknolan, PenQuin, Swirlyder, Aknolan, Moo,';
-		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, abd1710, cleo, LS\'s Ghost, ptoad, Rainshaft, pants, wob, Ceteris, Gimmick, Rach,';
-		let text3 = 'Harambeween, inactive, Mitsuki, Tushavi, Zyg, Guishark, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D,'; 
-		let text4 = 'ClaudioINK58, and lfolfo, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, zyg, Guishark, Mitsuki, Tushavi, abd1710, cleo, ptoad, Rainshaft, pants, wob, Ceteris,';
+		let text3 = 'Gimmick, Rach, Harambeween, inactive, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D, ClaudioINK58, lfolfo, confix,'; 
+		let text4 = 'beautifications, 2guhde4u, and Gary The Savage, and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
@@ -1240,12 +1245,6 @@ let commands = {
 		let text = '/addhtmlbox <img src="https://i.vgy.me/ip3Fc9.png" width="0" height="0" style="height:135px;width:auto">';
 		this.say(room, text);
 	},
-
-	deetah: function (arg, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		let text = '/addhtmlbox <img src="https://media1.tenor.com/images/c446b973ea91717531d747b17d48ad99/tenor.gif?itemid=4884715" height="225" width="400">';
-		this.say(room, text);
-	},
 	
 	pants: function (target, user, room) {
 		let text = '';
@@ -1254,6 +1253,7 @@ let commands = {
 		this.say(room, text);
 	},
 	
+	cheese: 'moo',
 	moo: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		this.say(room, '/me MOOs');
