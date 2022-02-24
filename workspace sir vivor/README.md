@@ -155,8 +155,20 @@ Requires: + % @ #
 `.remspecial <Player>, <numPoints>` - Removes `<numPoints>` points to `<Player>` on the leaderboard.
 Requires: + % @ #
 
-`.rename [old-name], [new-name]` - Removes DD points from `[old-name]` and gives them to `[new-name]`.
+`.rename [old-name], [new-name]` - Removes points from `[old-name]` and gives them to `[new-name]`.
 Requires: + % @ #
+
+`.pointlog` - Displays the last 100 games hosted that were added to the leaderboard.
+Requires: + % @ #
+
+`.rpoints` - Removes all points from the last host that was added to the leaderboard. (Should only be used if mistake was made when adding points, handle with care)
+Requires: % @ #
+
+`.settextcolor [hexcode]` - Sets the text color for a user on the leaderboard to color `[hexcode]`.
+Requires: % @ #
+
+`.setbgcolor [hexcode]` - Sets the background color for a user on the leaderboard to color `[hexcode]`.
+Requires: % @ #
 
 
 Leaderboard Commands (All Users):
