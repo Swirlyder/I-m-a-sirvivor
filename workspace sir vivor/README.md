@@ -1,6 +1,7 @@
 Sir Vivor Commands Guide!
 =========================
 
+
 Administrative Commands
 ---------------------
 
@@ -68,6 +69,7 @@ Requires: % @ #
 `.unhostban [user]` - Unhostbans `[user]`
 Requires: % @ #
 
+
 Bothosted Games Commands:
 -------------------------
 
@@ -86,13 +88,17 @@ Requires: + % @ #
 `.pl` - Lists the players in the current bothosted game.
 Requires: + % @ #
 
+
 Hosting Commands
 ------------------
 
 `.roll [number]` - Rolls a random number between 1 and `[number]`. You can also specify multiple die, or a number to add, with something like .roll 3d100+50
 Requires: + % @ # or current host.
 
- `.pick [a,b,c,...]` - Picks a random item from the comma separated list. 
+`.pick [a,b,c,...]` - Picks a random item from the comma separated list.
+Requires: + % @ # or current host.
+
+`.shuffle [a,b,c,...]` - Shuffles the items in the comma separated list.
 Requires: + % @ # or current host.
 
 `.dt [mon]` - Displays the information for `[mon]`.
@@ -110,98 +116,76 @@ Requires: current host.
 `.themes` - Posts a link in chat displaying all the themes available in Survivor. 
 Requires: + % @ # or current host.
 
-`.theme [name]` - List more details about theme name. 
+`.theme [name]` - List more details about theme `[name]`. 
 Requires: + % @ # or current host.
 
-`.spotlight` - Displays the rules for spotlight games. 
+`.events` - Posts a link in chat displaying all the themes available in Survivor. 
 Requires: + % @ # or current host.
 
-`.sw `- Displays the rules for Second Wind Modification.
-Requires: + % @ # or current host
-
-`.ai` - Displays rules for Attack's Immunity Modification.
+`.event [name]` - List more details about event `[name]`. 
 Requires: + % @ # or current host.
 
-`.golf` - Displays rules for Golf Modification.
+`.mods` - Posts a link in chat displaying all the events available in Survivor. 
 Requires: + % @ # or current host.
 
- `.rs` - Displays rules for Roll Switch Modification.
+`.mod [name]` - List more details about mod `[name]`. 
 Requires: + % @ # or current host.
 
 `.timer [seconds]` - Starts a timer for `[seconds]` seconds. When the timer ends, it will alert the user who started it.
 Requires: + % @ # or current host.
 
 
-Daily Deathmatch Commands (Roomauth):
+Leaderboard Commands (Roomauth):
 ------------------------------------
-`.first [user]` - Adds first place points (aka 10 points) to `[user]` in the DD leaderboard.
+`.adduser <numPlayers>, <Host>, <First>, [Second], [remaining players]` - Adds points for a user-hosted game.
 Requires: + % @ #
 
-`.second [user]` - Adds second place points (aka 5 points) to `[user]` in the DD leaderboard.
+`.addbot <numPlayers>, <First>, [Second]` - Adds points for a bot-hosted game.
 Requires: + % @ #
 
-`.part [user1], [user2], …` - Adds participations points (aka 2 points) to the specified users in the DD leaderboard.
+`.addfish <numPlayers>, <Host>, <First>, [Second], <remaining players>` - Adds points for an official game.
 Requires: + % @ #
 
-`.hostpoints [user]` - Adds host points (aka 3 points) to `[user]` in the dd leaderboard.
+`.addss <numPlayers>, <Host>, <First>, <Second>, <remaining players>` - Adds points for a Survivor Showdown game.
 Requires: + % @ #
 
-`.rmfirst [user]` - Removes a first place from `[user]` on the dd leaderboard, if possible.
+`.addspecial <Player>, <numPoints>` - Adds `<numPoints>` points to `<Player>` on the leaderboard.
 Requires: + % @ #
 
-`.rmsecond [user]` - Removes a second place from `[user]` on the dd leaderboard, if possible.
-Requires: + % @ #
-
-`.rmhost [user]` - Removes a host from `[user]` on the dd leaderboard, if possible.
-Requires: + % @ #
-
-`.rmparts [user1], [user2], …` - Removes participations from `[user1], [user2], ....`, if possible.
-Requires: + % @ #
-
-`.lastgame` - Checks when the leaderboard was last updated.
-Requires: + % @ #
-
-`.next` - Says when the next DD game is happening. 
-Requires: + % @ #
-
-`.addpoints [host], [first], [second], [user1], [user2], …` - Adds all the dd points in one command.
+`.remspecial <Player>, <numPoints>` - Removes `<numPoints>` points to `<Player>` on the leaderboard.
 Requires: + % @ #
 
 `.rename [old-name], [new-name]` - Removes DD points from `[old-name]` and gives them to `[new-name]`.
 Requires: + % @ #
 
-`.skipdd` - Skips a DD. Used whenever DDs are cancelled for events. NOTE: This command can bug Sir Vivor's date tracking
-Requires: % @ #
 
-Daily Deathmatch Commands (All Users):
+Leaderboard Commands (All Users):
 -------------------------------------
-`.top [number]`  - Displays ranks `[number]`-4 to n on the dd leaderboard. If `[number]` is omitted or invalid, defaults to displaying the top 5.
-Requires: Nothing
+`.lb [number]`  - Displays ranks `[number]`-4 to n on the leaderboard. If `[number]` is omitted or invalid, defaults to displaying the top 50.
+Requires: + % @ # (for chat only, can be performed by any user in PMs)
 
-`.points [user]` - Displays `[user]`’s points and ranking on the DD leaderboard.
-Requires: Nothing
+`.points [user]` - Displays `[user]`’s points and ranking on the leaderboard.
+Requires: + % @ # (for chat only, can be performed by any user in PMs)
+
 
 Other Commands:
 ---------------
 NOTE: All of these commands (except `.agif`, `.roast`, `.repeat`) will work in PMs for regular users 
 
 `.git` - Sends a link to Sir Vivor's github repository in PMs. All contributions are welcome!
+Requires:  + % @ #
 
 `.guide` - Sends a link to this guide.
+Requires:  + % @ #
 
-`.rof` - Displays the Roll of Fame page. 
-Requires: + % @ # or current host
-
-`.repeat [message], [time], [number of times]` - Makes Sir Vivor repeat a `[message]` every `[number of times]` every `[time]` minutes.   e.g. `.repeat hello world, 60, 10` (10 times every 60 minutes)
+`.repeat [message], [time], [number of times]` - Makes Sir Vivor repeat a `[message]` every `[number of times]` every `[time]` minutes. 
+e.g. `.repeat hello world, 60, 10` (10 times every 60 minutes)
 Requires: % @ #
 
 `.intro` - Displays a welcome page for new users.
 Requires:  + % @ #
 
-`.plug` - Displays the Survivor plug.dj room.
-Requires: + % @ #
-
- `.nbt` - Displays information on Next Big Theme.
+`.nbt` - Displays information on Next Big Theme.
 Requires: + % @ #
 
 `.howtohost` - Displays hosting information.
@@ -211,9 +195,6 @@ Requires: + % @ #
 Requires: + % @ #
 
 `.howtoplay` - Displays playing information.
-Requires: + % @ #
-
-`.submit` - Sends a link where users can submit jokes, roasts, agifs, gifs and more.
 Requires: + % @ #
 
 `.meme` - Displays a button. Clicking it will lead to a rickroll.
@@ -234,7 +215,4 @@ Requires: #
 `.roast [user]` - Roasts the given `[user]`.
 Requires: % @ #
 
-`.smogon` - Displays a link to the Survivor leaderboard thread on Smogon forums.
-Requires: + % @ #
-
-Roomauth and former roomauth have their own custom commands which can be seen by doing `.[username]`. These commands display a message as so desired by the user.
+Roomauth and some former roomauth have their own custom commands which can be seen by doing `.[username]`. These commands display a message as so desired by the user.
