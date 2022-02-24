@@ -168,8 +168,6 @@ let gameTypes = {
 	rpslsp: 'rockpaperscissorslizardspock',
 	russianroulette: ['Russian Roulette', 'https://sites.google.com/view/survivor-ps/themes/russian-roulette', 'Pass like a puss or Pull like a pro.', 1],
 	rr: 'russianroulette',
-	supersurvivorbros: ['Super Survivor Bros', 'https://sites.google.com/view/survivor-ps/themes/ssb', 'Destroy your hated roomauth with your favourite roomauth!... Winner of NBT #4!', 2],
-	ssb: 'supersurvivorbros',
 	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 1],
 	bridge: 'thebridge',
 	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
@@ -220,6 +218,8 @@ let eventTypes = {
 	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/events/minigames', 'A mini spin on Survivor games.'],
 	minigame: 'minigames',
 	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/events/missing-alias', 'True identities are not given.'],
+	supersurvivorbros: ['Super Survivor Bros Tour', 'https://sites.google.com/view/survivor-ps/events/ssb', 'Destroy your hated roomauth with your favourite roomauth!'],
+	ssb: 'supersurvivorbros',
 	survivorolympics: ['Survivor Olympics', 'https://sites.google.com/view/survivor-ps/events/survivor-olympics', 'Use your points wisely.'],
 	olympics: 'survivorolympics',
 	survlympics: 'survivorolympics',
@@ -1083,28 +1083,6 @@ let commands = {
 		}, 5 * 1000);
 	},
 	
-	plug: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+')) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user + ', ';
-		}
-		text += 'Join us and listen to some tunes :J https://plug.dj/survivoranimeclub';
-		this.say(room, text);
-	},
-	
-	smogon: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+')) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user + ', ';
-		}
-		text += 'Survivor\'s DD records can be found on Smogon! https://www.smogon.com/forums/threads/daily-deathmatch-2019-survivor-leaderboards.3645594/';
-		this.say(room, text);
-	},
-	
 	nbt: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+')) {
@@ -1114,19 +1092,6 @@ let commands = {
 		}
 
 		text += '**Next Big Theme** is not currently in session. More info on NBT here: https://sites.google.com/view/survivor-ps/events/nbt';
-		this.say(room, text);
-	},
-	
-	nbtsubmissions: 'nbtsubs',
-	nbtsubs: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+')) {
-			text = '';
-		} else if (room.id !== user.id) {
-			text = '/pm ' + user.id + ', ';
-		}
-
-		text += 'NBT is currently not in session. Check out previous NBT winners here: https://sites.google.com/view/survivor-ps/hof/nbt-hof';
 		this.say(room, text);
 	},
 	
@@ -1701,11 +1666,6 @@ let commands = {
 		room.game.forceEnd();
 	},
 
-	submit: function (target, user, room) {
-		if (!user.hasRank(room.id, '+') && room.id !== user.id) return;
-		this.say(room, 'Visit  https://goo.gl/forms/1hqFg6tR41VxVCSK2 to submit any gift, gifs, roasts or jokes! Add as many as you like!');
-	},
-
 	startgame: 'start',
 	start: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') || !room.game) return;
@@ -2229,19 +2189,6 @@ let commands = {
 		else return user.say("Already recorded, can't overright");
 	},
 
-	ddlog: function (target, user, room) {
-		if (!user.hasRank('survivor', '+')) return;
-		if (!("data" in dd.modlog)) return;
-		let buffer = '';
-		for (let i = 0; i < dd.modlog.data.length; i++) {
-			buffer += dd.modlog.data[i] + '\n';
-		}
-		Tools.uploadToHastebin(buffer, (success, link) => {
-			if (success) user.say(link);
-			else user.say('Error connecting to hastebin.');
-		});
-	},
-
 	testroom: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		Rooms.get('survivor').say("/subroomgroupchat testing");
@@ -2257,46 +2204,6 @@ let commands = {
 		} else if (toId(args[0]) === "remove") {
 			Rooms.get('survivor').say('/events remove ' + args.slice(1).join(','));
 		} else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)');
-	},
-	
-	ddoverall: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
-		let sorted = dd.getSorted();
-		let longestLength = 0;
-		let numTabsSpaces = 8.0;
-		for (let i = 0; i < sorted.length; i++) {
-			let length = sorted[i][5].length;
-			if (length > longestLength) longestLength = length;
-		}
-		let numTabs = Math.ceil(longestLength / numTabsSpaces);
-		let sep = "";
-		for (let i = 0; i < longestLength; i += numTabsSpaces) {
-			sep += "\t";
-		}
-		let buffer = "Rank\tName" + sep + "Firsts\tSeconds\tParts\tHosts\tSpecial\tPoints\t\n";
-		let real = [5, 1, 2, 3, 0, 4];
-		for (let i = 0; i < sorted.length; i++) {
-			for (let j = 0; j < 8; j++) {
-				let stuff;
-				if (j === 0) stuff = i + 1;
-				else if (j === 7) stuff = dd.getPoints(sorted[i]);
-				else stuff = sorted[i][real[j - 1]];
-				buffer += stuff;
-				if (j === 1) {
-					let numCursTabs = numTabs - Math.ceil(sorted[i][real[j - 1]].length / numTabsSpaces);
-					for (let l = 0; l < numCursTabs + (sorted[i][5].length % 8 === 0 ? 0 : 1); l++) {
-						buffer += "\t";
-					}
-				} else {
-					buffer += "\t";
-				}
-			}
-			buffer += "\n";
-		}
-		Tools.uploadToHastebin(buffer, (success, link) => {
-			if (success) room.say(link);
-			else user.say('Error connecting to hastebin.');
-		});
 	},
 
 	chatlines: function (target, user, room) {
@@ -2561,22 +2468,6 @@ let commands = {
 			}
 
 		}
-	},
-
-	lastgame: function (target, user, room) {
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		let numFirsts = 0;
-		let sorted = dd.getSorted();
-		for (let i = 0; i < sorted.length; i++) {
-			numFirsts += sorted[i][1];
-		}
-		let month = new Date().getMonth();
-		let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		if (numFirsts === 0) {
-			return room.say("No games have been updated yet this month!");
-		}
-		let times = ['6pm EST', '12pm EST']
-		return room.say("The last Daily Deathmatch to be updated was the " + times[numFirsts % 3] + " game on " + months[month] + " " + (Math.floor((numFirsts + 1) / 3)) + ".");
 	},
 
 	repeat: function (target, user, room) {
