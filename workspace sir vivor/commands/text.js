@@ -27,19 +27,27 @@ module.exports = {
 	rain: '==rainshaft',
 	rainshaft: ':P',
 	
-	spieky: 'Global Roomowner, Administrator and all around Good Guy!',
-	
-	monkey: '==henka',
-	henka: 'H E N K A B O Y S',
-	
-	mit: '==mitsuki',
-	mitsuki: 'isso significa algo em português',
-	
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
 	
 	tikitik: '==tiki',
 	tiki: 'Survivor\'s Resident Russian Spy',
+	
+	deetah: 'Survivor\'s Resident Cheetah',
+	
+	spieky: 'Global Roomowner, Administrator and all around Good Guy!',
+	
+	inac: '==inactive',
+	inactive: 'My Art is an explosion!!',
+	
+	monkey: '==henka',
+	henka: 'H E N K A B O Y S',
+	
+	guishark: '==gui',
+	gui: 'Hi [target],  I\'m Gui♥Shark!',
+	
+	mit: '==mitsuki',
+	mitsuki: 'isso significa algo em português',
 	
 	myster: '==bugbuzzing',
 	myster17: '==bugbuzzing',
@@ -53,39 +61,17 @@ module.exports = {
 	felu: '==mez',
 	mez: 'Consistency is boring.',
 	
-	inac: '==inactive',
-	inactive: 'My Art is an explosion!!',
+	micro: '==micromorphic',
+	micromorphic: 'what',
 	
 	mega: '==megagr',
 	gr: '==megagr',
 	megagr: 'GRRRRRRR',
 	
-	micro: '==micromorphic',
-	micromorphic: 'what',
-	
 	ptoad: 'teehee',
 	
 	bea: '==beautifications',
 	beautifications: 'Survivor Queenpin',
-	
-	bon: '==bondance',
-	bondance: 'Lol, more like can\'t dance',
-	
-	deetah: 'Survivor\'s Resident Cheetah',
-	
-	gim: '==gimm1ck',
-	gimmick: '==gimm1ck',
-	gimm1ck: '/me squats',
-	
-	guishark: '==gui',
-	gui: 'Hi [target],  I\'m Gui♥Shark!',
-	
-	mrtoastd: '==toast',
-	toast: '/me toasts to [target]',
-	
-	profsapling: '==prof',
-	sapling: '==prof',
-	prof: 'Welcome [target] to the Survivor region! Are you a boy, or a girl?',
 	
 	bobo: '==bobochan',
 	bobochan: '妮可妮可妮[target]，波波酱在此！',
