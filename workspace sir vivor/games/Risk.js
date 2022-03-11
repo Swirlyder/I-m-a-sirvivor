@@ -8,7 +8,7 @@ const nations = {
 	in: {name: "the Island Nation", aliases: ["in", "islandnation", "theislandnation"], armies: 50, gain: 20},
 	pr: {name: "the Populous Republic", aliases: ["pr", "populousrepublic", "thepopulousrepublic", "poprep"], armies: 100, gain: 50},
 	nwca: {name: "the Nuclear-War Crazed Autocracy", aliases: ["nwca", "nuclearwarcrazedautocracy", "thenuclearwarcrazedautocracy"], armies: 150, gain: 70},
-	russia: {name: "Russia", aliases: ["russia"], armies: 200, gain: 100},
+	saw: {name: "Santa\'s Automated Workshop", aliases: ["saw, santasautomatedworkshop"], armies: 200, gain: 100},
 };
 class Risk extends Games.Game {
 	constructor(room) {
