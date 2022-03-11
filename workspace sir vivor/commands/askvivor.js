@@ -17,7 +17,7 @@ module.exports = {
             },
             {
                 username: false,
-                before: "Blame snap tbh",
+                before: "Blame OM tbh",
             },
         ],
     },
@@ -53,28 +53,18 @@ module.exports = {
             },
         ],
     },
+    
     owo: {
         priority: 4,
         placement: "suffix",
         responses: [
-            {
-                username: false,
-                before: "OwO What's this???",
-            },
-            {
-                username: false,
-                before: "oWo",
-            },
-            {
-                username: false,
-                before: "UwU",
-            },
              {
                 username: false,
                 before: "Stop being a weeb.",
             },
         ],
     },
+    
     when: {
         priority: 3,
         placement: "suffix",
@@ -197,6 +187,7 @@ module.exports = {
             },
         ],
     },
+    
     where: {
         priority: 3,
         placement: "suffix",
@@ -237,28 +228,28 @@ module.exports = {
             },
             {
                 username: false,
+                before: "Shadecession",
+            },
+            {
+                username: false,
                 before: "Not you."
             }
         ],
     },
-   /* hi: 'hello',
+    
+    hi: 'hello',
     hello: {
         priority: 2,
         placement: "prefix",
         responses: [
             {
                 username: false,
-                before: "Uh... hello o///o",
+                before: "Uh... hello",
             },
             {
                 username: true,
                 before: "Go away ",
                 after: ".",
-            },
-            {
-                username: true,
-                before: "Konichiwa ",
-                after: " chan~",
             },
             {
                 username: false,
@@ -271,7 +262,8 @@ module.exports = {
      
             }
         ]
-    },*/
+    },
+    
     dosomething: {
         priority: 4,
         placement: "suffix",
@@ -283,6 +275,7 @@ module.exports = {
             },
         ],
     },
+    
     areyou: {
         priority: 3,
         placement: "suffix",
