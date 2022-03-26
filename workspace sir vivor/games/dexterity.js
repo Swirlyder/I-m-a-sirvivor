@@ -1,6 +1,6 @@
 'use strict';
 
-const name = 'Dexterity';
+/*const name = 'Dexterity';
 const description = '__Where accuracy can give you the advantage or just make you fail...__ Game rules: https://sites.google.com/view/survivor-ps/themes/dexterity';
 const id = Tools.toId(name);
 
@@ -252,4 +252,5 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true,
 	weapons: true,
-}
+}*/
+
