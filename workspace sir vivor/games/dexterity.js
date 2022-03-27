@@ -1,6 +1,6 @@
 'use strict';
 
-/*const name = 'Dexterity';
+const name = 'Dexterity';
 const description = '__Where accuracy can give you the advantage or just make you fail...__ Game rules: https://sites.google.com/view/survivor-ps/themes/dexterity';
 const id = Tools.toId(name);
 
@@ -229,12 +229,11 @@ class Dexterity extends Games.Game {
 	}
 
 	weapons(target, user) {
-		let start = "<div class = \"infobox\"><html>";
+		let start = "";
 		for (let i in data) {
 			let weapon = data[i];
 			start += "<b><u>" + weapon.name + "</u></b><ul><li>Damage: " + weapon.atk + " </li><li>Accuracy: " + weapon.acc + "</li></ul>";
 		}
-		start += "</html></div>";
 		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
 	}
 }
@@ -252,5 +251,5 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true,
 	weapons: true,
-}*/
+}
 
