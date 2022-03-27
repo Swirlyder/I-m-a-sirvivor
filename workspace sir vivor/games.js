@@ -773,7 +773,6 @@ class GamesManager {
 
 		if (this.lastGameTime) {
 			let curTime = new Date().getTime();
-			return true;
 			/*if ((curTime - this.lastGameTime) < this.timeBetweenGames) {
 				room.say("You must wait another " + this.formatTime(this.lastGameTime + this.timeBetweenGames - curTime) + " before starting another game.");
 				return false;
