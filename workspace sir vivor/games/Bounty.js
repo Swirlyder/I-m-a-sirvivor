@@ -268,11 +268,10 @@ class Bounty extends Games.Game {
 			"Misinformer": "Once per game, at the beginning of a turn, they can choose a player and a role to say in chat. Usage: <code>" + Config.commandCharacter + "action [user], [role]</code>",
 			"The Medium": "At the start of the game they choose one person. If that person dies, the medium will roll 120 for the rest of the game. [Cannot Attack Turn 1]. Usage: <code>" + Config.commandCharacter + "action [player]</code>",
 		}
-		let start = "<div class = \"infobox\"><html>";
+		let start = "";
 		for (let name in actions) {
 			start += "<b><u>" + name + "</u></b>: " + actions[name] + "<br><br>";
 		}
-		start += "</html></div>";
 		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
 	}
 
