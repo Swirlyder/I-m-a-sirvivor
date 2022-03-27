@@ -259,12 +259,11 @@ class Risk extends Games.Game {
 	countries(target, user) {
 		let player = this.players[user.id];
 		if (!player || player.eliminated) return;
-		let start = "<div class = \"infobox\"><html>";
+		let start = "";
 		for (let countryID in nations) {
 			let country = nations[countryID];
 			start += "<b><u>" + (country.name.startsWith("the") ? country.name.substr(4, country.name.length) : country.name) + "</u></b><ul><li>Country Army: " + country.armies + "</li><li>Troops gained: " + country.gain + "</li></ul>";
 		}
-		start += "</html></div>";
 		Rooms.get('survivor').say("/pminfobox " + user.id + "," + start);
 	}
 }
