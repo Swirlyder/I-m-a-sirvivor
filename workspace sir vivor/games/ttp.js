@@ -1,6 +1,6 @@
 'use strict';
 
-/*const name = 'Top Trumps Pokebattle';
+const name = 'Top Trumps Pokebattle';
 const description = '__Where your partners\' lesser strengths can become their greatest assets.__ Game rules: https://sites.google.com/view/survivor-ps/themes/ttp';
 const id = Tools.toId(name);
 const names = {
@@ -175,7 +175,7 @@ class TTP extends Games.Game {
 			} else {
 				num = mon.num.toString();
 			}
-			let str = '<div style="float: left; width: 50%"><img src="http://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.name + "</u></b><br><ul>";
+			let str = '<div style="float: left; width: 50%"><img src="https://www.serebii.net/pokedex-sm/icon/' + num + '.png" width="32" height="32" /><b><u>' + mon.name + "</u></b><br><ul>";
 			for (let j in mon.baseStats) {
 				str += "<li><b>" + Tools.turnFirstUpper(j) + "</b>: " + mon.baseStats[j] + "</li>";
 			}
@@ -366,5 +366,5 @@ exports.commands = {
 
 exports.pmCommands = {
 	hand: true,
-}*/
+}
 
