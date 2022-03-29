@@ -89,5 +89,15 @@ exports.commands = {
         let target = toId(args[0]);
         eventcount.add(target, amount);
         return this.say(room, "Given **" + amount + "** points to **" + target + "**.");
-    }
+    },
+    remevent: function (arg, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+        let args = arg.split(',');
+        if (args.length !== 2) return this.say(room, "Usage: ``.remevent [user], [points]``");
+        let amount = parseInt(args[1]);
+        if (isNaN(amount)) return this.say(room, "Usage: ``.remevent [user], [points]``");
+        let target = toId(args[0]);
+        eventcount.add(target, -amount);
+        return this.say(room, "Removed **" + amount + "** points from **" + target + "**.");
+    },
 }
