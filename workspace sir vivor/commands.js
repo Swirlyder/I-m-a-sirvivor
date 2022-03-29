@@ -1823,6 +1823,58 @@ let commands = {
 		user.say('Point award reverted.');
 	},
 	
+	addgame: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of games and the user to add them to.");
+		let username = split[0];
+		let numGames = parseInt(split[1]);
+		if (!numGames) return user.say("'" + split[1] + "' is not a valid number of games to add.");
+		gamecount.add(username, numGames);
+		return user.say("**" + numGames + "** games have been added to **" + username.trim() + "** on the leaderboard.");
+	},
+	
+	removegame: 'remgame',
+	remgame: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of games and the user to remove them from.");
+		let username = split[0];
+		let numGames = parseInt(split[1]);
+		if (!numGames) return user.say("'" + split[1] + "' is not a valid number of games to remove.");
+		gamecount.add(username, -numGames);
+		return user.say("**" + numGames + "** games have been removed from **" + username.trim() + "** on the leaderboard.");
+	},
+	
+	addhostcount: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of hosts and the user to add them to.");
+		let username = split[0];
+		let numHosts = parseInt(split[1]);
+		if (!numHosts) return user.say("'" + split[1] + "' is not a valid number of hosts to add.");
+		hostcount.add(username, numHosts);
+		gamecount.add(username, numHosts);
+		return user.say("**" + numHosts + "** hosts have been added to **" + username.trim() + "** on the leaderboard.");
+	},
+	
+	removehostcount: 'remhostcount',
+	remhostcount: function (target, user, room) {
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of hosts and the user to remove them from.");
+		let username = split[0];
+		let numHosts = parseInt(split[1]);
+		if (!numHosts) return user.say("'" + split[1] + "' is not a valid number of hosts to remove.");
+		hostcount.add(username, -numHosts);
+		gamecount.add(username, -numHosts);
+		return user.say("**" + numHosts + "** hosts have been removed from **" + username.trim() + "** on the leaderboard.");
+	},
+	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
