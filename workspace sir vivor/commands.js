@@ -1894,6 +1894,8 @@ let commands = {
 		let firstpoints = 0;
 		let secondpoints = 0;
 		let partpoints = 0;
+		
+		/*
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else if (numPlayers < 6) {
@@ -1938,6 +1940,31 @@ let commands = {
 			secondpoints = 10;
 			partpoints = 4;
 		}
+		*/
+		
+		/*Attempt at writing systematic code to assign point values*/
+		if (numPlayers < 4) {
+			return user.say("User hosted games with at least 4 players are worth points.");
+		} else {
+			partpoints = numPlayers - 3;
+			hostpoints = partpoints * 3;
+			
+			/*probability of getting participation points in a game*/
+			probOfLosing = (numPlayers - 2)/numPlayers;
+			/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
+			sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * numPlayers;
+			
+			if (numPlayers < 6) {
+				secondpoints = partpoints;
+				firstpoints = sumFirstAndSecond - secondpoints;
+			} else {
+				/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
+				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
+				secondpoints = sumFirstAndSecond - first points;
+			}
+		}
+		/*attempt over*/
+		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
