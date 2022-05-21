@@ -46,7 +46,7 @@ class DD {
 				name: user,
 				color: "000000",
 				bgcolor: "ffffff",
-				displaypoints: numPoints
+				/*displaypoints: numPoints*/
 				/*add extra displaypoints variable*/
 			}
 		} else {
@@ -78,7 +78,7 @@ class DD {
 	getPoints(item) {
 		return item[0];
 	}
-	
+	/*
 	getDisplayPoints(item) {
 		return item[4];
 	}
@@ -88,7 +88,7 @@ class DD {
 		let id = Tools.toId(name);
 		this.dd[id].displaypoints = newvalue;
 	}
-
+	*/
 	settextcolor(user, hexcolor) {
 		let name = user.trim();
 		let id = Tools.toId(name);
@@ -158,7 +158,7 @@ class DD {
 		});
 		return items;
 	}
-	
+	/*
 	getDisplaySorted() {
 		let items = [];
 		for (let id in this.dd) {
@@ -176,7 +176,7 @@ class DD {
 		});
 		return items;
 	}
-
+	*/
 	updateModlog(message) {
 		this.modlog.data.push(message);
 		this.exportData();
