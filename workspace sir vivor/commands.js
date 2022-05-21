@@ -1960,7 +1960,7 @@ let commands = {
 			} else {
 				/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
-				secondpoints = sumFirstAndSecond - first points;
+				secondpoints = sumFirstAndSecond - firstpoints;
 			}
 		}
 		/*attempt over*/
