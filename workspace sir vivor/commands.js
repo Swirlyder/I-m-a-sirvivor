@@ -1987,16 +1987,13 @@ let commands = {
 			partpoints = numPlayers - 3;
 			hostpoints = partpoints * 3;
 			
-			/*probability of getting participation points in a game*/
 			let probOfLosing = (numPlayers - 2)/numPlayers;
-			/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
 			let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * numPlayers;
 			
 			if (numPlayers < 6) {
 				secondpoints = partpoints;
 				firstpoints = sumFirstAndSecond - secondpoints;
 			} else {
-				/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
 				secondpoints = sumFirstAndSecond - firstpoints;
 			}
