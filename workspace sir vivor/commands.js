@@ -1875,6 +1875,39 @@ let commands = {
 		return user.say("**" + numHosts + "** hosts have been removed from **" + username.trim() + "** on the leaderboard.");
 	},
 	
+	calculateUserHostedPoints: function (plSize, position) {
+		let partpoints = plSize - 3;
+		let hostpoints = partpoints * 3;
+
+		/*probability of getting participation points in a game*/
+		let probOfLosing = (plSize - 2)/plSize;
+		
+		/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
+		let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * plSize;
+		
+		let secondpoints = 0;
+		let firstpoints = 0;
+		
+		if (plSize < 6) {
+			secondpoints = partpoints;
+			firstpoints = sumFirstAndSecond - secondpoints;
+		} else {
+			/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
+			firstpoints = (sumFirstAndSecond + plSize*4)/2;
+			secondpoints = sumFirstAndSecond - firstpoints;
+		}
+		
+		if (position == "first"){
+			return firstpoints;
+		} else if (position == "second") {
+			return secondpoints;
+		} else if (position == "host") {
+			return hostpoints;
+		} else if (position == "part") {
+			return partpoints;
+		}
+	}
+	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
@@ -1942,17 +1975,22 @@ let commands = {
 		}
 		*/
 		
-		/*Attempt at writing systematic code to assign point values*/
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else {
+			partpoints = calculateUserHostedPoints (numPlayers, "part");
+			hostpoints = calculateUserHostedPoints (numPlayers, "host");
+			firstpoints = calculateUserHostedPoints (numPlayers, "first");
+			secondpoints = calculateUserHostedPoints (numPlayers, "second");
+			
+			/* previous attempt, moved into function calculateUserHostedPoints
 			partpoints = numPlayers - 3;
 			hostpoints = partpoints * 3;
 			
 			/*probability of getting participation points in a game*/
-			probOfLosing = (numPlayers - 2)/numPlayers;
+			let probOfLosing = (numPlayers - 2)/numPlayers;
 			/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
-			sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * numPlayers;
+			let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * numPlayers;
 			
 			if (numPlayers < 6) {
 				secondpoints = partpoints;
@@ -1962,8 +2000,8 @@ let commands = {
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
 				secondpoints = sumFirstAndSecond - firstpoints;
 			}
+			*/
 		}
-		/*attempt over*/
 		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
@@ -2015,6 +2053,23 @@ let commands = {
 		let firstpoints = 0;
 		let secondpoints = 0;
 		let partpoints = 0;
+
+		if (numPlayers < 6) {
+			return user.say("Official games with at least 6 players are worth points.");
+		} else {
+			let priorPLWin = calculateUserHostedPoints(numPlayers - 1, "first");
+			firstpoints = priorPLWin * 2;
+			
+			secondpoints = calculateUserHostedPoints (numPlayers, "first");
+			
+			let userPLPart = calculateUserHostedPoints(numPlayers, "part");
+			partpoints = Math.ceil(userPLPart * 1.5);
+			
+			/*set hostpoints to expected points on average based on the above values */
+			hostpoints = Math.ceil (firstpoints/numPlayers + secondpoints/numPlayers + partpoints * ((numPlayers-2)/numPlayers));
+		}
+		
+		/*
 		if (numPlayers < 6) {
 			return user.say("Official games with at least 6 players are worth points.");
 		} else if (numPlayers < 10) {
@@ -2038,6 +2093,10 @@ let commands = {
 			secondpoints = 13;
 			partpoints = 5;
 		}
+		*/
+		
+		
+		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
