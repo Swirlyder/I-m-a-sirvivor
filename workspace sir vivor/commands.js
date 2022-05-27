@@ -1770,11 +1770,11 @@ let commands = {
 		if (numPlayers < 7) {
 			return user.say("Bot hosted games with at least 7 players are worth points.");
 		} else if (numPlayers < 10) {
-			firstpoints = 2;
-			secondpoints = 1;
-		} else if (numPlayers >= 10) {
-			firstpoints = 4;
+			firstpoints = 7;
 			secondpoints = 2;
+		} else if (numPlayers >= 10) {
+			firstpoints = 9;
+			secondpoints = 4;
 		}
 		dd.addpoints(first, firstpoints);
 		let second = split[2].trim();
