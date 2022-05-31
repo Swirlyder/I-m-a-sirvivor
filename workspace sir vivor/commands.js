@@ -2573,6 +2573,22 @@ let commands = {
 			return user.say("**" + oldname + "** has been renamed to **" + split[1].trim() + "**.");
 		}
 	},
+		
+	removeuser: function (target, user, room){
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let userToRemove = Tools.toId(target);
+		if (!(userToRemove in dd.dd)) {
+			return user.say("**" + split[0] + "** is not on the leaderboard.");
+		} else {
+			let name = dd.dd[userToRemove].name;
+			delete dd.dd[userToRemove];
+			delete hostcount.count[toId(userToRemove)];
+			delete gamecount.count[toId(userToRemove)];
+			delete eventcount.count[toId(userToRemove)];
+			return user.say("**" + name + "** has been removed from the leaderboard.")
+		}
+	}
 
 	clearlb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
