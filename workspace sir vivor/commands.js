@@ -1977,7 +1977,7 @@ let commands = {
 		
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
-		} else if (numPlayers >= 4) {
+		} else {
 			partpoints = calculateUserHostedPoints (numPlayers, "part");
 			hostpoints = calculateUserHostedPoints (numPlayers, "host");
 			firstpoints = calculateUserHostedPoints (numPlayers, "first");
