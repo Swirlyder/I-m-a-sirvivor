@@ -177,15 +177,15 @@ class DD {
 		return items;
 	}
 	*/
-	
+	/*
 	calculateUserHostedPoints(plSize, position) {
 		let partpoints = plSize - 3;
 		let hostpoints = partpoints * 3;
 
-		/*probability of getting participation points in a game*/
+		probability of getting participation points in a game
 		let probOfLosing = (plSize - 2)/plSize;
 		
-		/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
+		what the sum of first and second needs to be to get the expectation equal to hostpoints
 		let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * plSize;
 		
 		let secondpoints = 0;
@@ -195,7 +195,7 @@ class DD {
 			secondpoints = partpoints;
 			firstpoints = sumFirstAndSecond - secondpoints;
 		} else {
-			/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
+			set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL
 			firstpoints = (sumFirstAndSecond + plSize*4)/2;
 			secondpoints = sumFirstAndSecond - firstpoints;
 		}
@@ -210,6 +210,7 @@ class DD {
 			return partpoints;
 		}
 	}
+	*/
 	
 	updateModlog(message) {
 		this.modlog.data.push(message);
