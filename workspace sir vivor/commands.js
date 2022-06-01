@@ -1906,7 +1906,7 @@ let commands = {
 		} else if (position == "part") {
 			return partpoints;
 		}
-	}
+	},
 	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
@@ -2588,7 +2588,7 @@ let commands = {
 			delete eventcount.count[toId(userToRemove)];
 			return user.say("**" + name + "** has been removed from the leaderboard.")
 		}
-	}
+	},
 
 	clearlb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
