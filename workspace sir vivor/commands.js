@@ -1920,7 +1920,7 @@ let commands = {
 		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
 		if (split.length < 4 && numPlayers >= 6) return user.say("Please specify the runner-up and participants.");
 		if (split.length < 5 && numPlayers >= 6) return user.say("Please specify all players who took part.")
-		if (numPlayers >= 6 && split.length != numPlayers + 2) return user.say("Please check the number of players.");
+		if (numPlayers >= 4 && split.length != numPlayers + 2) return user.say("Please check the number of players.");
 		if (split.length != numPlayers + 2 && !user.hasRank('survivor', '#')) return user.say("You must supply all players as arguments. ROs can bypass this if it's really necessary");
 		let host = split[1].trim();
 		if (numPlayers >= 4) hostcount.add(host, 1);
