@@ -1977,15 +1977,18 @@ let commands = {
 		}
 		*/
 		
+		
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else {
+			/*
 			partpoints = calculateUserHostedPoints (numPlayers, "part");
 			hostpoints = calculateUserHostedPoints (numPlayers, "host");
 			firstpoints = calculateUserHostedPoints (numPlayers, "first");
 			secondpoints = calculateUserHostedPoints (numPlayers, "second");
+			*/
 			
-			/* previous attempt, moved into function calculateUserHostedPoints
+			
 			partpoints = numPlayers - 3;
 			hostpoints = partpoints * 3;
 			
@@ -1999,7 +2002,7 @@ let commands = {
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
 				secondpoints = sumFirstAndSecond - firstpoints;
 			}
-			*/
+			
 		}
 		
 		let partlist = '';
