@@ -1875,14 +1875,15 @@ let commands = {
 		return user.say("**" + numHosts + "** hosts have been removed from **" + username.trim() + "** on the leaderboard.");
 	},
 	
+	/*
 	calculateUserHostedPoints: function (plSize, position) {
 		let partpoints = plSize - 3;
 		let hostpoints = partpoints * 3;
 
-		/*probability of getting participation points in a game*/
+		probability of getting participation points in a game
 		let probOfLosing = (plSize - 2)/plSize;
 		
-		/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
+		what the sum of first and second needs to be to get the expectation equal to hostpoints
 		let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * plSize;
 		
 		let secondpoints = 0;
@@ -1892,7 +1893,7 @@ let commands = {
 			secondpoints = partpoints;
 			firstpoints = sumFirstAndSecond - secondpoints;
 		} else {
-			/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
+			set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL
 			firstpoints = (sumFirstAndSecond + plSize*4)/2;
 			secondpoints = sumFirstAndSecond - firstpoints;
 		}
@@ -1907,7 +1908,8 @@ let commands = {
 			return partpoints;
 		}
 	},
-	
+	*/
+		
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return; //user.say("No target found :" + target);
@@ -1975,15 +1977,18 @@ let commands = {
 		}
 		*/
 		
+		
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else {
+			/*
 			partpoints = calculateUserHostedPoints (numPlayers, "part");
 			hostpoints = calculateUserHostedPoints (numPlayers, "host");
 			firstpoints = calculateUserHostedPoints (numPlayers, "first");
 			secondpoints = calculateUserHostedPoints (numPlayers, "second");
+			*/
 			
-			/* previous attempt, moved into function calculateUserHostedPoints
+			
 			partpoints = numPlayers - 3;
 			hostpoints = partpoints * 3;
 			
@@ -1997,7 +2002,7 @@ let commands = {
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
 				secondpoints = sumFirstAndSecond - firstpoints;
 			}
-			*/
+			
 		}
 		
 		let partlist = '';
