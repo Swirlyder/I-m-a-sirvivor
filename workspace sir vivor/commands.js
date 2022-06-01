@@ -1770,11 +1770,11 @@ let commands = {
 		if (numPlayers < 7) {
 			return user.say("Bot hosted games with at least 7 players are worth points.");
 		} else if (numPlayers < 10) {
-			firstpoints = 2;
-			secondpoints = 1;
-		} else if (numPlayers >= 10) {
-			firstpoints = 4;
+			firstpoints = 7;
 			secondpoints = 2;
+		} else if (numPlayers >= 10) {
+			firstpoints = 9;
+			secondpoints = 4;
 		}
 		dd.addpoints(first, firstpoints);
 		let second = split[2].trim();
@@ -1875,6 +1875,39 @@ let commands = {
 		return user.say("**" + numHosts + "** hosts have been removed from **" + username.trim() + "** on the leaderboard.");
 	},
 	
+	calculateUserHostedPoints: function (plSize, position) {
+		let partpoints = plSize - 3;
+		let hostpoints = partpoints * 3;
+
+		/*probability of getting participation points in a game*/
+		let probOfLosing = (plSize - 2)/plSize;
+		
+		/*what the sum of first and second needs to be to get the expectation equal to hostpoints*/
+		let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * plSize;
+		
+		let secondpoints = 0;
+		let firstpoints = 0;
+		
+		if (plSize < 6) {
+			secondpoints = partpoints;
+			firstpoints = sumFirstAndSecond - secondpoints;
+		} else {
+			/*set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL*/
+			firstpoints = (sumFirstAndSecond + plSize*4)/2;
+			secondpoints = sumFirstAndSecond - firstpoints;
+		}
+		
+		if (position == "first"){
+			return firstpoints;
+		} else if (position == "second") {
+			return secondpoints;
+		} else if (position == "host") {
+			return hostpoints;
+		} else if (position == "part") {
+			return partpoints;
+		}
+	}
+	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
@@ -1894,6 +1927,8 @@ let commands = {
 		let firstpoints = 0;
 		let secondpoints = 0;
 		let partpoints = 0;
+		
+		/*
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else if (numPlayers < 6) {
@@ -1938,6 +1973,33 @@ let commands = {
 			secondpoints = 10;
 			partpoints = 4;
 		}
+		*/
+		
+		if (numPlayers < 4) {
+			return user.say("User hosted games with at least 4 players are worth points.");
+		} else {
+			partpoints = calculateUserHostedPoints (numPlayers, "part");
+			hostpoints = calculateUserHostedPoints (numPlayers, "host");
+			firstpoints = calculateUserHostedPoints (numPlayers, "first");
+			secondpoints = calculateUserHostedPoints (numPlayers, "second");
+			
+			/* previous attempt, moved into function calculateUserHostedPoints
+			partpoints = numPlayers - 3;
+			hostpoints = partpoints * 3;
+			
+			let probOfLosing = (numPlayers - 2)/numPlayers;
+			let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * numPlayers;
+			
+			if (numPlayers < 6) {
+				secondpoints = partpoints;
+				firstpoints = sumFirstAndSecond - secondpoints;
+			} else {
+				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
+				secondpoints = sumFirstAndSecond - firstpoints;
+			}
+			*/
+		}
+		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
@@ -1988,6 +2050,23 @@ let commands = {
 		let firstpoints = 0;
 		let secondpoints = 0;
 		let partpoints = 0;
+
+		if (numPlayers < 6) {
+			return user.say("Official games with at least 6 players are worth points.");
+		} else {
+			let priorPLWin = calculateUserHostedPoints(numPlayers - 1, "first");
+			firstpoints = priorPLWin * 2;
+			
+			secondpoints = calculateUserHostedPoints (numPlayers, "first");
+			
+			let userPLPart = calculateUserHostedPoints(numPlayers, "part");
+			partpoints = Math.ceil(userPLPart * 1.5);
+			
+			/*set hostpoints to expected points on average based on the above values */
+			hostpoints = Math.ceil (firstpoints/numPlayers + secondpoints/numPlayers + partpoints * ((numPlayers-2)/numPlayers));
+		}
+		
+		/*
 		if (numPlayers < 6) {
 			return user.say("Official games with at least 6 players are worth points.");
 		} else if (numPlayers < 10) {
@@ -2011,6 +2090,10 @@ let commands = {
 			secondpoints = 13;
 			partpoints = 5;
 		}
+		*/
+		
+		
+		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
@@ -2309,7 +2392,7 @@ let commands = {
 	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let isempty = true;
-		let sorted = dd.getDisplaySorted();
+		let sorted = dd.getSorted();
 		let num = parseInt(target);
 		if (!num || num < 1) num = 50;
 		if (num > sorted.length) num = sorted.length;
@@ -2326,13 +2409,14 @@ let commands = {
 			let points = dd.getPoints(sorted[i]);
 			let bgcolor = dd.getBgColor(sorted[i]);
 			let textcolor = dd.getTextColor(sorted[i]);
-			let displaypoints = dd.getDisplayPoints(sorted[i]);
+			/*let displaypoints = dd.getDisplayPoints(sorted[i]);*/
+			
 			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)];
 			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
 			if (!n) n = "Error";
-
+			/*
 			points = Math.floor((50 * (points/n) * ((1.1*n*n)/(n*n+80) + (n/225)) + ((h*h+100)/50)));
 			
 			if (displaypoints >= points) {
@@ -2342,6 +2426,7 @@ let commands = {
 			}
 			
 			points += e;
+			*/
 			res.push([
 				cur,
 				points,
@@ -2488,6 +2573,22 @@ let commands = {
 			return user.say("**" + oldname + "** has been renamed to **" + split[1].trim() + "**.");
 		}
 	},
+		
+	removeuser: function (target, user, room){
+		if (!target) return;
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let userToRemove = Tools.toId(target);
+		if (!(userToRemove in dd.dd)) {
+			return user.say("**" + split[0] + "** is not on the leaderboard.");
+		} else {
+			let name = dd.dd[userToRemove].name;
+			delete dd.dd[userToRemove];
+			delete hostcount.count[toId(userToRemove)];
+			delete gamecount.count[toId(userToRemove)];
+			delete eventcount.count[toId(userToRemove)];
+			return user.say("**" + name + "** has been removed from the leaderboard.")
+		}
+	}
 
 	clearlb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
