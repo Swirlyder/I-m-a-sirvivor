@@ -2059,13 +2059,48 @@ let commands = {
 		if (numPlayers < 6) {
 			return user.say("Official games with at least 6 players are worth points.");
 		} else {
-			let priorPLWin = calculateUserHostedPoints(numPlayers - 1, "first");
-			firstpoints = priorPLWin * 2;
+			//dummy variables!!!
+			let minus = numPlayers - 1;
+			let partpointsUserMinus = minus - 3;
+			let hostpointsUserMinus = partpointsUserMinus * 3;
 			
-			secondpoints = calculateUserHostedPoints (numPlayers, "first");
+			let probOfLosingUserMinus = (minus - 2)/minus;
+			let sumFirstAndSecondUserMinus = (hostpointsUserMinus - partpointsUserMinus * probOfLosingUserMinus) * minus;
 			
-			let userPLPart = calculateUserHostedPoints(numPlayers, "part");
-			partpoints = Math.ceil(userPLPart * 1.5);
+			let secondpointsUserMinus = 0;
+			let firstpointsUserMinus = 0;
+			if (numPlayers < 6) {
+				secondpointsUserMinus = partpointsUserMinus;
+				firstpointsUserMinus = sumFirstAndSecondUserMinus - secondpointsUserMinus;
+			} else {
+				firstpointsUserMinus = (sumFirstAndSecondUserMinus + minus*4)/2;
+				secondpointsUserMinus = sumFirstAndSecondUserMinus - firstpointsUserMinus;
+			}
+			//above calculates for numPlayers-1 (minus)
+			
+			let partpointsUser = numPlayers - 3;
+			let hostpointsUser = partpointsUser * 3;
+			
+			let probOfLosingUser = (numPlayers - 2)/numPlayers;
+			let sumFirstAndSecondUser = (hostpointsUser - partpointsUser * probOfLosingUser) * numPlayers;
+			
+			let secondpointsUser = 0;
+			let firstpointsUser = 0;
+			if (numPlayers < 6) {
+				secondpointsUser = partpointsUser;
+				firstpointsUser = sumFirstAndSecondUser - secondpointsUser;
+			} else {
+				firstpointsUser = (sumFirstAndSecondUser + numPlayers*4)/2;
+				secondpointsUser = sumFirstAndSecondUser - firstpointsUser;
+			}
+			
+			//above calculates for numPlayers
+			
+			firstpoints = firstpointsUserMinus * 2;
+			
+			secondpoints = firstpointsUser;
+			
+			partpoints = Math.ceil(partpointsUser * 1.5);
 			
 			/*set hostpoints to expected points on average based on the above values */
 			hostpoints = Math.ceil (firstpoints/numPlayers + secondpoints/numPlayers + partpoints * ((numPlayers-2)/numPlayers));
