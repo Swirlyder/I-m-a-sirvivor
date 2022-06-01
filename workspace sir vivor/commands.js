@@ -1910,14 +1910,14 @@ let commands = {
 	
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
-		if (!target) return user.say("No target found :" + target);
+		if (!target) return; //user.say("No target found :" + target);
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the rest of the players.");
 		let numPlayers = parseInt(split[0]);
 		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
-		if (split.length < 4 && numPlayers >= 6) return user.say("Please also specify the runner up and participants for games with 6+ players.");
-		if (split.length < 5 && numPlayers >= 6) return user.say("Please mention all players who took part for games with 7+ players.")
+		if (split.length < 4 && numPlayers >= 6) return user.say("Please specify the runner-up and participants.");
+		if (split.length < 5 && numPlayers >= 6) return user.say("Please specify all players who took part.")
 		if (numPlayers >= 6 && split.length != numPlayers + 2) return user.say("Please check the number of players.");
 		if (split.length != numPlayers + 2 && !user.hasRank('survivor', '#')) return user.say("You must supply all players as arguments. ROs can bypass this if it's really necessary");
 		let host = split[1].trim();
@@ -1977,7 +1977,7 @@ let commands = {
 		
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
-		} else {
+		} else if {
 			partpoints = calculateUserHostedPoints (numPlayers, "part");
 			hostpoints = calculateUserHostedPoints (numPlayers, "host");
 			firstpoints = calculateUserHostedPoints (numPlayers, "first");
