@@ -2017,8 +2017,8 @@ let commands = {
 			let part = split[i];
 			dd.addpoints(part, partpoints);
 			if (i == 4) {
-				if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
-				else partlist = part.trim()
+				//if (numPlayers < 6) partlist = second.trim() + ", " + part.trim(); else
+				partlist = part.trim()
 			} else if (i == split.length - 1) partlist += " and " + part.trim();
 			else partlist += ", " + part.trim();
 		}
