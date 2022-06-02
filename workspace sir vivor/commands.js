@@ -2567,9 +2567,17 @@ let commands = {
 				}
 			}
 			dd.dd[newid].name = split[1].trim();
-			gamecount.count[newid] = gamecount.count[toId(realt)];
-			hostcount.count[newid] = hostcount.count[toId(realt)];
-			eventcount.count[newid] = eventcount.count[toId(realt)];
+			
+			if (newid in dd.dd){
+				gamecount.count[newid] += gamecount.count[toId(realt)];
+				hostcount.count[newid] += hostcount.count[toId(realt)];
+				eventcount.count[newid] += eventcount.count[toId(realt)];
+			} else {
+				gamecount.count[newid] = gamecount.count[toId(realt)];
+				hostcount.count[newid] = hostcount.count[toId(realt)];
+				eventcount.count[newid] = eventcount.count[toId(realt)];
+			}
+			
 			if (realt !== newid) {
 				delete dd.dd[realt];
 				delete hostcount.count[toId(realt)];
