@@ -80,6 +80,7 @@ exports.commands = {
         ret += "</div>"
         return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret}`);
     },
+	/*
     addevent: function (arg, user, room) {
         if (!user.hasRank('survivor', '%')) return;
         let args = arg.split(',');
@@ -100,4 +101,5 @@ exports.commands = {
         eventcount.add(target, -amount);
         return this.say(room, "Removed **" + amount + "** points from **" + target + "**.");
     },
+    */
 }

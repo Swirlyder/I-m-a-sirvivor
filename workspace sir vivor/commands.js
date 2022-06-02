@@ -1874,41 +1874,6 @@ let commands = {
 		gamecount.add(username, -numHosts);
 		return user.say("**" + numHosts + "** hosts have been removed from **" + username.trim() + "** on the leaderboard.");
 	},
-	
-	/*
-	calculateUserHostedPoints: function (plSize, position) {
-		let partpoints = plSize - 3;
-		let hostpoints = partpoints * 3;
-
-		probability of getting participation points in a game
-		let probOfLosing = (plSize - 2)/plSize;
-		
-		what the sum of first and second needs to be to get the expectation equal to hostpoints
-		let sumFirstAndSecond = (hostpoints - partpoints * probOfLosing) * plSize;
-		
-		let secondpoints = 0;
-		let firstpoints = 0;
-		
-		if (plSize < 6) {
-			secondpoints = partpoints;
-			firstpoints = sumFirstAndSecond - secondpoints;
-		} else {
-			set firstpoints equal to the number such that first and second add to the sumFirstAndSecond, and the difference of first and second is 4 times the PL
-			firstpoints = (sumFirstAndSecond + plSize*4)/2;
-			secondpoints = sumFirstAndSecond - firstpoints;
-		}
-		
-		if (position == "first"){
-			return firstpoints;
-		} else if (position == "second") {
-			return secondpoints;
-		} else if (position == "host") {
-			return hostpoints;
-		} else if (position == "part") {
-			return partpoints;
-		}
-	},
-	*/
 		
 	addpointsuser: 'adduser',
 	adduser: function (target, user, room) {
@@ -1930,64 +1895,9 @@ let commands = {
 		let secondpoints = 0;
 		let partpoints = 0;
 		
-		/*
-		if (numPlayers < 4) {
-			return user.say("User hosted games with at least 4 players are worth points.");
-		} else if (numPlayers < 6) {
-			hostpoints = 2;
-			firstpoints = 4;
-			dd.addpoints(host, hostpoints);
-			
-			dd.addpoints(first, firstpoints);
-			let modlogEntry = {
-				command: "adduser",
-				user: user.id,
-				first: [firstpoints, first],
-				second: false,
-				host: [hostpoints, host],
-				part: false,
-				date: Date.now()
-			};
-			dd.updateModlog(modlogEntry);
-			for (let i = 1; i < split.length; i++) {
-				gamecount.add(split[i], 1);
-			}
-			user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
-			return user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
-		} else if (numPlayers < 10) {
-			hostpoints = 3;
-			firstpoints = 6;
-			secondpoints = 4;
-			partpoints = 1;
-		} else if (numPlayers < 13) {
-			hostpoints = 4;
-			firstpoints = 8;
-			secondpoints = 5;
-			partpoints = 2;
-		} else if (numPlayers < 16) {
-			hostpoints = 5;
-			firstpoints = 11;
-			secondpoints = 7;
-			partpoints = 3;
-		} else if (numPlayers >= 16) {
-			hostpoints = 7;
-			firstpoints = 14;
-			secondpoints = 10;
-			partpoints = 4;
-		}
-		*/
-		
-		
 		if (numPlayers < 4) {
 			return user.say("User hosted games with at least 4 players are worth points.");
 		} else {
-			/*
-			partpoints = calculateUserHostedPoints (numPlayers, "part");
-			hostpoints = calculateUserHostedPoints (numPlayers, "host");
-			firstpoints = calculateUserHostedPoints (numPlayers, "first");
-			secondpoints = calculateUserHostedPoints (numPlayers, "second");
-			*/
-			
 			
 			partpoints = numPlayers - 3;
 			hostpoints = partpoints * 3;
@@ -2106,34 +2016,6 @@ let commands = {
 			/*set hostpoints to expected points on average based on the above values */
 			hostpoints = Math.ceil (firstpoints/numPlayers + secondpoints/numPlayers + partpoints * ((numPlayers-2)/numPlayers));
 		}
-		
-		/*
-		if (numPlayers < 6) {
-			return user.say("Official games with at least 6 players are worth points.");
-		} else if (numPlayers < 10) {
-			hostpoints = 5;
-			firstpoints = 11;
-			secondpoints = 7;
-			partpoints = 2;
-		} else if (numPlayers < 13) {
-			hostpoints = 6;
-			firstpoints = 13;
-			secondpoints = 9;
-			partpoints = 3;
-		} else if (numPlayers < 16) {
-			hostpoints = 8;
-			firstpoints = 15;
-			secondpoints = 11;
-			partpoints = 4;
-		} else if (numPlayers >= 16) {
-			hostpoints = 10;
-			firstpoints = 17;
-			secondpoints = 13;
-			partpoints = 5;
-		}
-		*/
-		
-		
 		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
@@ -2602,9 +2484,17 @@ let commands = {
 				}
 			}
 			dd.dd[newid].name = split[1].trim();
-			gamecount.count[newid] = gamecount.count[toId(realt)];
-			hostcount.count[newid] = hostcount.count[toId(realt)];
-			eventcount.count[newid] = eventcount.count[toId(realt)];
+			
+			if (newid in dd.dd){
+				gamecount.count[newid] += gamecount.count[toId(realt)];
+				hostcount.count[newid] += hostcount.count[toId(realt)];
+				eventcount.count[newid] += eventcount.count[toId(realt)];
+			} else {
+				gamecount.count[newid] = gamecount.count[toId(realt)];
+				hostcount.count[newid] = hostcount.count[toId(realt)];
+				eventcount.count[newid] = eventcount.count[toId(realt)];
+			}
+			
 			if (realt !== newid) {
 				delete dd.dd[realt];
 				delete hostcount.count[toId(realt)];
