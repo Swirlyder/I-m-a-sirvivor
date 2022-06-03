@@ -2487,8 +2487,10 @@ let commands = {
 			
 			if (newid in dd.dd){
 				gamecount.count[newid] += gamecount.count[toId(realt)];
-				hostcount.count[newid] += hostcount.count[toId(realt)];
-				eventcount.count[newid] += eventcount.count[toId(realt)];
+				let h = hostcount.count[toId(realt)] ? hostcount.count[toId(realt)] : 0;
+				let e = eventcount.count[toId(realt)] ? eventcount.count[toId(realt)] : 0;
+				hostcount.count[newid] += h;
+				eventcount.count[newid] += e;
 			} else {
 				gamecount.count[newid] = gamecount.count[toId(realt)];
 				hostcount.count[newid] = hostcount.count[toId(realt)];
