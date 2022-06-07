@@ -1740,6 +1740,8 @@ let commands = {
 		let numPoints = parseInt(split[1]);
 		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
 		dd.addpoints(username, numPoints);
+		gamecount.add(username, 1);
+		gamecount.add(username, -1);
 		let modlogEntry = {
 			command: "addspecial",
 			user: user.id,
