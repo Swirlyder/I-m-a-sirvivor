@@ -1740,8 +1740,8 @@ let commands = {
 		let numPoints = parseInt(split[1]);
 		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
 		dd.addpoints(username, numPoints);
-		gamecount.add(username, 1);
-		gamecount.add(username, -1);
+		//gamecount.add(username, 1);
+		//gamecount.add(username, -1);
 		let modlogEntry = {
 			command: "addspecial",
 			user: user.id,
@@ -2338,7 +2338,7 @@ let commands = {
 			
 			if (points === 0) continue;
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
-			let n = gamecount.count[toId(cur)];
+			let n = gamecount.count[toId(cur)] ? gamecount.count[toId(cur)] : 0;
 			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
 			if (!n) n = "Error";
 			/*
@@ -2491,8 +2491,8 @@ let commands = {
 				gamecount.count[newid] += gamecount.count[toId(realt)];
 				let h = hostcount.count[toId(realt)] ? hostcount.count[toId(realt)] : 0;
 				let e = eventcount.count[toId(realt)] ? eventcount.count[toId(realt)] : 0;
-				hostcount.count[newid] += h;
-				eventcount.count[newid] += e;
+				hostcount.add(newid, h);
+				eventcount.add(newid, e);
 			} else {
 				gamecount.count[newid] = gamecount.count[toId(realt)];
 				hostcount.count[newid] = hostcount.count[toId(realt)];
