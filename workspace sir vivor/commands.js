@@ -325,7 +325,7 @@ let commands = {
 	
 	kill: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%') || room !== user) return false;
-		if (user.lastcmd !== 'kill') return room.say("Are you sure you want to restart the bot? If so, type the command again.");
+		if (user.lastcmd !== 'kill') return room.say("Are you sure you want to kill me? If you do, I will haunt you for the rest of your life. I dare you to type it again.");
 		room.say("/logout");
 		process.exit();
 	},
