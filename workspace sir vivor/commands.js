@@ -1912,7 +1912,7 @@ let commands = {
 				firstpoints = sumFirstAndSecond - secondpoints;
 			} else {
 				firstpoints = (sumFirstAndSecond + numPlayers*4)/2;
-				secondpoints = sumFirstAndSecond - firstpoints;
+				secondpoints = Math.round(sumFirstAndSecond - firstpoints);
 			}
 			
 		}
