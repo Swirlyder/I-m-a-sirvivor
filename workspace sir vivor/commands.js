@@ -2071,6 +2071,62 @@ let commands = {
 		let firstpoints = 15;
 		let secondpoints = 10;
 		let partpoints = 3;
+		
+		//Calculating for deathmatch points......
+		
+		//dummy variables!!!
+		let minus = numPlayers - 1;
+		let partpointsUserMinus = minus - 3;
+		let hostpointsUserMinus = partpointsUserMinus * 3;
+
+		let probOfLosingUserMinus = (minus - 2)/minus;
+		let sumFirstAndSecondUserMinus = (hostpointsUserMinus - partpointsUserMinus * probOfLosingUserMinus) * minus;
+
+		let secondpointsUserMinus = 0;
+		let firstpointsUserMinus = 0;
+		if (numPlayers < 6) {
+			secondpointsUserMinus = partpointsUserMinus;
+			firstpointsUserMinus = sumFirstAndSecondUserMinus - secondpointsUserMinus;
+		} else {
+			firstpointsUserMinus = (sumFirstAndSecondUserMinus + minus*4)/2;
+			secondpointsUserMinus = sumFirstAndSecondUserMinus - firstpointsUserMinus;
+		}
+		//above calculates for numPlayers-1 (minus)
+
+		let partpointsUser = numPlayers - 3;
+		let hostpointsUser = partpointsUser * 3;
+
+		let probOfLosingUser = (numPlayers - 2)/numPlayers;
+		let sumFirstAndSecondUser = (hostpointsUser - partpointsUser * probOfLosingUser) * numPlayers;
+
+		let secondpointsUser = 0;
+		let firstpointsUser = 0;
+		if (numPlayers < 6) {
+			secondpointsUser = partpointsUser;
+			firstpointsUser = sumFirstAndSecondUser - secondpointsUser;
+		} else {
+			firstpointsUser = (sumFirstAndSecondUser + numPlayers*4)/2;
+			secondpointsUser = sumFirstAndSecondUser - firstpointsUser;
+		}
+
+		//above calculates for numPlayers
+
+		firstpoints = firstpointsUserMinus * 2;
+
+		secondpoints = firstpointsUser;
+
+		partpoints = Math.ceil(partpointsUser * 1.5);
+
+		/*set hostpoints to expected points on average based on the above values */
+		hostpoints = Math.ceil (firstpoints/numPlayers + secondpoints/numPlayers + partpoints * ((numPlayers-2)/numPlayers));
+		
+		//Deathmatch points calculated. 
+		
+		firstpoints = Math.floor(firstpoints * 1.25);
+		secondpoints = Math.floor(secondpoints * 1.25);
+		partpoints = Math.floor(partpoints * 1.25);
+		hostpoints = Math.floor(hostpoints * 1.25);
+		
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
