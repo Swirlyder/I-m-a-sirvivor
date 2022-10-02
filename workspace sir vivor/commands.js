@@ -313,6 +313,11 @@ let commands = {
 		if (!user.hasRank('survivor', '+')) return false;
 		room.say("/modchat +");
 	},
+	ac: 'autoconfirm',
+	autoconfirm: function (arg, user, room) {
+		if (!user.hasRank('survivor', '+')) return false;
+		room.say("/modchat ac");
+	},
 	
 	help: 'guide',
 	guide: function (arg, user, room) {
