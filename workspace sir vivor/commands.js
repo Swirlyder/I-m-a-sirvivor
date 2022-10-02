@@ -311,7 +311,7 @@ let commands = {
 	
 	modchat: function (arg, user, room) {
 		if (!user.hasRank('survivor', '+')) return false;
-		room.say(/modchat +);
+		room.say("/modchat +");
 	},
 	
 	help: 'guide',
