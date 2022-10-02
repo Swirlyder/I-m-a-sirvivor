@@ -308,6 +308,11 @@ let commands = {
 		let text = "https://sites.google.com/view/survivor-ps/home";
 		room.say(prefix + text);
 	},
+		modchat: function (arg, user, room) {
+		let prefix = user.hasRank(room, '+') ? '' :, ';
+		let text = "/modchat +";
+		room.say(prefix + text);
+	},
 	
 	help: 'guide',
 	guide: function (arg, user, room) {
