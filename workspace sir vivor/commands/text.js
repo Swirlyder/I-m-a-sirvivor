@@ -78,7 +78,7 @@ module.exports = {
 	
 	pq: '==penquin',
 	ppq: '==penquin',
-	penquin: 'For the last time, it\'s a Q',
+	penquin: 'S-S-Senpai!',
 	
 	ptoad: 'Congratulations to ptoad on getting into Washington University!',
 	
