@@ -5,78 +5,108 @@
  */
 
 module.exports = {
-
-	swirl: '==swirlyder',
-	swirlyder: 'I swear, he\'s not my real dad',
 	
-	pq: '==penquin',
-	ppq: '==penquin',
-	penquin: 'S-S-Senpai!',
+	'2g': '==2guhde4u',
+	'2g4u': '==2guhde4u',
+	'2guhde': '==2guhde4u',
+	'2guhde4u': 'hey guys welcome back to my game of casino',
 	
-	cheese: 'Muffinss',
+	ii: '==audiino',
+	ii88: '==audiino',
+	audiino: 'You don’t need to tell me that, I audiino',
 	
-	omroom: '==om',
-	om: '"OM Goodness! Leave OM Room alone..." ;~;',
+	bea: '==beautifications',
+	beautifications: 'brb changing my username and pfp',
 	
-	shadecession: '==shade',
-	shade: 'Better put on my Shadecessions ⌐■_■',
+	bon: '==bondance',
+	bondance: 'Lol, more like can\'t dance',
 	
-	zygten: '==zyg',
-	zyg: '/me sighs... what is there to say?',
-	
-	rain: '==rainshaft',
-	rainshaft: ':P',
-	
-	soccer: '==soccerz12',
-	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
-	
-	tikitik: '==tiki',
-	tiki: 'Survivor\'s Resident Russian Spy',
-	
-	deetah: 'Survivor\'s Resident Cheetah',
-	
-	spieky: 'Global Roomowner, Administrator and all around Good Guy!',
-	
-	inac: '==inactive',
-	inactive: 'My Art is an explosion!!',
-	
-	monkey: '==henka',
-	henka: 'H E N K A B O Y S',
-	
-	guishark: '==gui',
-	gui: 'Hi [target],  I\'m Gui♥Shark!',
-	
-	mit: '==mitsuki',
-	mitsuki: 'isso significa algo em português',
+	bread: '==breadloeuf',
+	breadloeuf: 'Yes I like bread move on already',
 	
 	myster: '==bugbuzzing',
 	myster17: '==bugbuzzing',
 	bb: '==bugbuzzing',
-	bugbuzzing: 'D-don\'t bug me, please... u_u',
+	bugbuzzing: 'buzz buzz',
+	
+	pak: '==ceteris',
+	cet: '==ceteris',
+	ceterisparibus: '==ceteris',
+	ceteris: 'CHOO CHOO ALL ABOARD THE PARTYBUS TRAIN',
+	
+	cheese: 'Muffinss',
+	
+	crab: '==crabachillable',
+	crabachillable: '/me crabwalks',
+	
+	deetah: 'Survivor\'s Resident Cheetah',
+	
+	dl: '==dontlose',
+	dontlose: 'dont lose? HA! More like dont win :^)',
 	
 	unleashourpassion: '==mez',
 	uop: '==mez',
 	akasianse: '==mez',
 	felucia: '==mez',
 	felu: '==mez',
-	mez: 'Consistency is boring.',
+	mez: 'Sleep? Never heard of it.',
 	
-	micro: '==micromorphic',
-	micromorphic: 'what',
+	guishark: '==gui',
+	gui: 'Hi [target],  I\'m Gui♥Shark!',
+	
+	monkey: '==henka',
+	henka: 'H E N K A B O Y S',
+	
+	inac: '==inactive',
+	inactive: 'My Art is an explosion!!',
+	
+	lfo: '==lfolfo',
+	lfolfo: 'It\’s loaf-o loaf-o thank you very much',
 	
 	mega: '==megagr',
 	gr: '==megagr',
-	megagr: 'GRRRRRRR',
+	megagr: 'Mega GRRRRRRR',
 	
-	ptoad: 'teehee',
+	micro: '==micromorphic',
+	micromorphic: 'Hello everyone, unfortunately I have some very sudden news.',
 	
-	bea: '==beautifications',
-	beautifications: 'Survivor Queenpin',
+	mit: '==mitsuki',
+	mitsuki: 'isso significa algo em português',
 	
-	bobo: '==bobochan',
-	bobochan: '妮可妮可妮[target]，波波酱在此！',
+	omroom: '==om',
+	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 	
-	dywy: '胖吉胖吉胖吉猫',
+	pq: '==penquin',
+	ppq: '==penquin',
+	penquin: 'For the last time, it\'s a Q',
+	
+	ptoad: 'Congratulations to ptoad on getting into Washington University!',
+	
+	rain: '==rainshaft',
+	rainshaft: ':P',
+	
+	shadecession: '==shade',
+	shade: 'Better put on my Shadecessions ⌐■_■',
+	
+	soccer: '==soccerz12',
+	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
+	
+	spieky: 'Global Roomowner, Administrator and all around Good Guy!',
+	
+	swirl: '==swirlyder',
+	swirlyder: 'I swear, he\'s not my real dad',
+	
+	vex: '==thevexinator',
+	thevexinator: 'vox',
+	
+	tikitik: '==tiki',
+	tiki: 'Survivor\'s Resident Russian Spy',
+	
+	tush: '==tushavi',
+	tushavi: 'THEME GOD',
+	
+	zygten: '==zyg',
+	zyg: '/me sighs... what is there to say?',
 	
 	anime: '==weeb',
 	weeb: 'Anime was a mistake',
@@ -93,12 +123,7 @@ module.exports = {
 	
 	woof: 'woof!',
 	
-	egg: '[target] has been egged!',
-	
-	toss: 'The egg was passed on to [target].',
-	
-	explode: 'BOOOOOOOOOOOOOM THE EGG EXPLODED ON [target] !!! HAHAHA GET EGGED',
-	
+	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
 	
 }
