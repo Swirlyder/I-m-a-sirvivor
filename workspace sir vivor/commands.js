@@ -100,7 +100,7 @@ let gameTypes = {
 	lucky7: ['Lucky 7', 'https://sites.google.com/view/survivor-ps/themes/casino/lucky-7', 'You think you are lucky? Sir Vivor thinks otherwise.', 2, 1],
 	roulette: ['Roulette', 'https://sites.google.com/view/survivor-ps/themes/casino/roulette', 'The roulette wheel is spinning, place your bets now!', 2, 1],
 	slots: ['Slots', 'https://sites.google.com/view/survivor-ps/themes/casino/slots', 'Insert X coin(s) to play!', 2, 1],
-	yahtzee: ['Yahtzee', 'https://sites.google.com/view/survivor-ps/themes/casino/yahtzee', 'A classic game of 5 dice with a Survivor twist!', 2, 1],
+	yacht: ['Yacht', 'https://sites.google.com/view/survivor-ps/themes/casino/yacht', 'A classic game of 5 dice with a Survivor twist!', 2, 1],
 	chasetheace: ['Chase the Ace', 'https://sites.google.com/view/survivor-ps/themes/cta', 'Can you catch the best card?... Winner of NBT #8!', 1],
 	cta: 'chasetheace',
 	chooseyourroll: ['Choose Your Roll', 'https://sites.google.com/view/survivor-ps/themes/cyr', 'Will you reap the rewards of taking the path less traveled by?', 0],
@@ -888,7 +888,7 @@ let commands = {
 		}
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 7;
-		Rooms.get('survivor').say("/modnote " + target + " has been hostbanned for " + numDays + " days by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote " + targUser + " has been hostbanned for " + numDays + " days by " + user.name + ".");
 		return room.say(Games.hostBan(targUser, numDays));
 	},
 
