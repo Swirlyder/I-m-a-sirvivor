@@ -15,6 +15,10 @@ module.exports = {
 	ii88: '==audiino',
 	audiino: 'You don’t need to tell me that, I audiino',
 	
+	ashleemaster: '==ashlee',
+	am: '==ashlee',
+	ashlee: 'you will regret thsi',
+	
 	bea: '==beautifications',
 	beautifications: 'brb changing my username and pfp',
 	
@@ -63,9 +67,8 @@ module.exports = {
 	lfo: '==lfolfo',
 	lfolfo: 'It\’s loaf-o loaf-o thank you very much',
 	
-	mega: '==megagr',
-	gr: '==megagr',
-	megagr: 'Mega GRRRRRRR',
+	lunarixis: '==lunar',
+	lunar: '/me sips tea',
 	
 	micro: '==micromorphic',
 	micromorphic: 'Hello everyone, unfortunately I have some very sudden news.',
