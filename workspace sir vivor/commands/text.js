@@ -76,6 +76,9 @@ module.exports = {
 	mit: '==mitsuki',
 	mitsuki: 'isso significa algo em português',
 	
+	neon: '==neonalphaa',
+	neonalphaa: 'i\'m going to bully someone',
+	
 	omroom: '==om',
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 	
