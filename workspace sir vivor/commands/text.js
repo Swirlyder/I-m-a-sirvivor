@@ -11,6 +11,11 @@ module.exports = {
 	'2guhde': '==2guhde4u',
 	'2guhde4u': 'hey guys welcome back to my game of casino',
 	
+	aud: '==audiino',
+	audi: '==audiino',
+	audii: '==audiino',
+	dino: '==audiino',
+	diino: '==audiino',
 	ii: '==audiino',
 	ii88: '==audiino',
 	audiino: 'You don’t need to tell me that, I audiino',
@@ -47,6 +52,9 @@ module.exports = {
 	
 	dl: '==dontlose',
 	dontlose: 'dont lose? HA! More like dont win :^)',
+	
+	eoth: '==easyonthehills',
+	easyonthehills: '/me resigns',
 	
 	unleashourpassion: '==mez',
 	uop: '==mez',
@@ -91,8 +99,15 @@ module.exports = {
 	rain: '==rainshaft',
 	rainshaft: ':P',
 	
+	sc: '==saltiestcactus43',
+	salti: 'saltiestcactus43',
+	saltiestcactus43: 'Salti plays connect 5 while the rest play connect four...',
+	
 	shadecession: '==shade',
 	shade: 'Better put on my Shadecessions ⌐■_■',
+	
+	sifi: '==sificon',
+	sifion: 'If you tabfail my name for Sir.Vivor, you owe me a dollar :>',
 	
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
