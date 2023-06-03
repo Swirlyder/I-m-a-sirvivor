@@ -1300,6 +1300,20 @@ let commands = {
 			this.say(room, text);
 		}
 	},
+	
+	yuni: 'yuninokata',
+	yuninokata: function (arg, user, room) {
+		{
+			var text = '';
+			var gifs = ['/addhtmlbox <center><img src="https://media0.giphy.com/media/ND6xkVPaj8tHO/200.webp?c0id=ecf05e476u6njyeynen20n8zeq3vyf25c7vkmfpp3gfxigb3&ep=v1_gifs_search&rid=200.webp&ct=g" width=216 height=200/> <br>Yuni after playing yacht</center>',];
+
+			text += gifs[Math.floor(Math.random() * gifs.length)];
+			if (user.hasRank(room.id, '+')) {
+				this.say(room, text);
+			}
+		}
+	},
+	
 
 	agif: 'animegif',
 	animegif: function (arg, user, room) {
@@ -1312,6 +1326,7 @@ let commands = {
 				this.say(room, text);
 			}
 		}
+	
 	},
 	
 	gift: 'present',
