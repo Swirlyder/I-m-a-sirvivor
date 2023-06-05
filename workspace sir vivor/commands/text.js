@@ -101,7 +101,7 @@ module.exports = {
 	
 	sc: '==saltiestcactus43',
 	salti: 'saltiestcactus43',
-	saltiestcactus43: 'Salti plays connect 5 while the rest play connect four...',
+	saltiestcactus43: 'Salti plays connect 5 while the rest play connect 4...',
 	
 	shadecession: '==shade',
 	shade: 'Better put on my Shadecessions ⌐■_■',
