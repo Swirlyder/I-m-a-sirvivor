@@ -107,7 +107,7 @@ module.exports = {
 	shade: 'Better put on my Shadecessions ⌐■_■',
 	
 	sifi: '==sificon',
-	sifion: 'If you tabfail my name for Sir.Vivor, you owe me a dollar :>',
+	sifion: 'If you tabfail my name for Sir.Vivor - you owe me a dollar :>',
 	
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
