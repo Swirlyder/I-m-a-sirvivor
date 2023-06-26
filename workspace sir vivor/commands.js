@@ -113,6 +113,7 @@ let gameTypes = {
 	ftl: 'followtheleader',
 	hauntfest: ['Haunt Fest', 'https://sites.google.com/view/survivor-ps/themes/haunt-fest', 'Your decisions may come back to haunt you.', 1],
 	haunt: 'hauntfest',
+	hf: 'hauntfest',
 	ghosts: 'hauntfest',
 	hiddentype: ['Hidden Type', 'https://sites.google.com/view/survivor-ps/themes/hidden-type', 'Where everyone can pretend that they\'re not a steel type... Winner of NBT #1!', 1],
 	hidden: 'hiddentype',
