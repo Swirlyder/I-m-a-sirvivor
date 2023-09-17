@@ -89,6 +89,9 @@ module.exports = {
 	
 	omroom: '==om',
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
+
+	pacificmarill: '==pm',
+	pm: '(¬_¬) My Huge Power is my terrible rolls',
 	
 	pq: '==penquin',
 	ppq: '==penquin',
