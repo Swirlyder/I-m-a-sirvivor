@@ -20,10 +20,6 @@ module.exports = {
 	ii88: '==audiino',
 	audiino: 'You don’t need to tell me that, I audiino',
 	
-	ashleemaster: '==ashlee',
-	am: '==ashlee',
-	ashlee: 'you will regret thsi',
-	
 	bea: '==beautifications',
 	beautifications: 'brb changing my username and pfp',
 	
