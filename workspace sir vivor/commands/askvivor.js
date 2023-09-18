@@ -1,4 +1,4 @@
-/*
+
 module.exports = {
     why: {
         priority: 3,
@@ -297,4 +297,4 @@ module.exports = {
         ]
     },
 }
-*/
+
