@@ -5,7 +5,7 @@ module.exports = {
         placement: "suffix",
         responses: [
             {
-                usesname: false,
+                username: false,
                 before: "Because PenQuin said so.",
             },
             {
