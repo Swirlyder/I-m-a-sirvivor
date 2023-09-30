@@ -310,14 +310,18 @@ global.parse = exports.parse = {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
-		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
-			if (!waiting["swirl"]) {
+		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) 
+		{
+			if (!user.hasRank('survivor', '+')) return false {
+			else if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
 				waiting["swirl"] = true;
 				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
 			}
+			}
 		}
 		let messageID = Tools.toId(message);
+		if (!user.hasRank('survivor', '+')) return false;
 		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"]) {
 			let actResponse;
 			for (let responseID in responses) {
