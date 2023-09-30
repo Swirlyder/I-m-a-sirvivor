@@ -68,11 +68,17 @@ module.exports = {
 	inac: '==inactive',
 	inactive: 'My Art is an explosion!!',
 	
+	ledepression: '==depress',
+	depress: 'if this had the golf mod it\'d be a different story...',
+	
 	lfo: '==lfolfo',
 	lfolfo: 'It\’s loaf-o loaf-o thank you very much',
 	
 	lunarixis: '==lunar',
 	lunar: '/me sips tea',
+	
+	opple: '==flopple',
+	flopple: 'Who\'s the floppling? Opple? AGAIN?',
 	
 	micro: '==micromorphic',
 	micromorphic: 'Hello everyone, unfortunately I have some very sudden news.',
