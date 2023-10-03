@@ -310,7 +310,7 @@ global.parse = exports.parse = {
 		    room.game.join(user);
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
-		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
+		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
 			if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
 				waiting["swirl"] = true;
@@ -318,7 +318,7 @@ global.parse = exports.parse = {
 			}
 		}
 		let messageID = Tools.toId(message);
-		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"]) {
+		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"] && user.hasRank('survivor', '+')) {
 			let actResponse;
 			for (let responseID in responses) {
 				let response = responses[responseID];
