@@ -10,7 +10,7 @@ class DD {
 		this.authbattle = {};
 		this.numSkips = 0;
 	}
-
+	/*
 	importData() {
 		let file = '{}';
 		try {
@@ -30,7 +30,7 @@ class DD {
 			this.modlog.data = [];
 		}
 	}
-
+	*/
 	exportData() {
 		fs.writeFileSync('./databases/dd.json', JSON.stringify(this.dd));
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
