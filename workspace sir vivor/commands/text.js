@@ -27,7 +27,7 @@ module.exports = {
 	bondance: 'Lol, more like can\'t dance',
 	
 	bread: '==breadloeuf',
-	breadloeuf: 'Yes I like bread move on already',
+	breadloeuf: 'You\'re toast *explodes u with mind power*',
 	
 	myster: '==bugbuzzing',
 	myster17: '==bugbuzzing',
@@ -73,6 +73,8 @@ module.exports = {
 	
 	lfo: '==lfolfo',
 	lfolfo: 'It\’s loaf-o loaf-o thank you very much',
+
+	ljb: 'hi frens :3',
 	
 	lunarixis: '==lunar',
 	lunar: '/me sips tea',
