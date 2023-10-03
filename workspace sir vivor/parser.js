@@ -311,10 +311,10 @@ global.parse = exports.parse = {
 		} else if (message.substr(0, 7) === '/me out' && room.game) {
 		    room.game.leave(user);
 		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
-			if (!waiting["swirl"]) {
+			//if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
-				waiting["swirl"] = true;
-				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
+				//waiting["swirl"] = true;
+				//var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
 			}
 		}
 		let messageID = Tools.toId(message);
@@ -346,8 +346,8 @@ global.parse = exports.parse = {
 					respmessage = response.before;
 				}
 				Parse.say(room, respmessage);
-				waiting["response"] = true;
-				var timeout = setTimeout(() => setWaiting("response"), 5 * 60 * 1000);
+				//waiting["response"] = true;
+				//var timeout = setTimeout(() => setWaiting("response"), 5 * 60 * 1000);
 			}
 		}
 		if (message.substr(0, Config.commandcharacter.length) !== Config.commandcharacter) return false;
