@@ -35,20 +35,25 @@ If any of your commands rely on information normally sent to the Pokémon Showdo
 
 Development
 -----------
-
-Everyone is more than welcome to contribute to the bot.
+Everyone is more than welcome to contribute to the bot. 
+If you would like to help, contact on of the developers listed below!
 However, please refrain from adding more example commands.
 
-Credits:
- - Morfent/TalkTakesTime/Quinella/Rival Nick (Original Bot)
- - Swirlyder (Bot Owner and Repo Owner)
- - CheeseMuffin (Major Development, Bot Owner and Maintainer)
+Credits
+-------
+Current Developers:
+- Felucia (Bot Owner, Major Development, Maintainer)
+- inactive (Bot Owner, Maintainer)
+- Rainshaft (Development)
+- Shadecession (Major Development)
+- Swirlyder (Bot Owner, Repo Owner)
+   
+ Past Developers:
  - Hawkie (First customization for survivor, Major Development)
- - inactive (Development, Maintainer)
- - Felucia (Development)
- - Tushavi (Development)
- - Shadecession (Development)
- 
+ - CheeseMuffin/Cheese/Moo (Major Development, Bot Owner and Former Maintainer)
+- Tushavi (Created and Updated current Leaderboard system, Major Development)
+   
+ Sir Vivor is based on the original BoTTT devloped by Morfent/TalkTakesTime/Quinella/Rival Nick
 
 License
 -------
