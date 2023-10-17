@@ -310,7 +310,7 @@ let commands = {
 	guide: 'commands'
 	commands: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
-		let text = !Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "The guide for my commands is here: https://docs.google.com/document/d/e/2PACX-1vSkPg4Wao_p7WB2q1FIrBZuRYydluHgg0OYoC3sDoooWvy6IqOdQ5zn3-SjrSfKz60RQm33M9Ekbqzj/pub";
+		let text = "The guide for my commands is here: https://docs.google.com/document/d/e/2PACX-1vSkPg4Wao_p7WB2q1FIrBZuRYydluHgg0OYoC3sDoooWvy6IqOdQ5zn3-SjrSfKz60RQm33M9Ekbqzj/pub";
 		room.say(prefix + text);
 	},
 	
