@@ -81,7 +81,7 @@ exports.regexautobanwhitelist = [];
  
 // Add a link to the help for the bot here. When there is a link here, .help and .guide
 // will link to it.
-exports.botguide = 'https://github.com/Swirlyder/I-m-a-sirvivor/blob/master/workspace%20sir%20vivor/README.md';
+exports.botguide = 'https://github.com/Swirlyder/I-m-a-sirvivor/blob/master/README.md';
  
 // Add a link to the git repository for the bot here for .git to link to.
 exports.fork = 'http://github.com/Swirlyder/I-m-a-sirvivor';
