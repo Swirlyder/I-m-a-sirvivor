@@ -307,7 +307,7 @@ let commands = {
 		room.say(prefix + text);
 	},
 
-	guide: 'commands'
+	guide: 'commands',
 	commands: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
 		let text = "The guide for my commands is here: https://docs.google.com/document/d/e/2PACX-1vSkPg4Wao_p7WB2q1FIrBZuRYydluHgg0OYoC3sDoooWvy6IqOdQ5zn3-SjrSfKz60RQm33M9Ekbqzj/pub";
