@@ -315,7 +315,7 @@ global.parse = exports.parse = {
 				Parse.say(room, "/me swirls");
 				//waiting["swirl"] = true;
 				//var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
-			}
+			//}
 		}
 		let messageID = Tools.toId(message);
 		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"] && user.hasRank('survivor', '+')) {
