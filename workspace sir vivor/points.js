@@ -10,27 +10,26 @@ class DD {
 		this.authbattle = {};
 		this.numSkips = 0;
 	}
-	/*
+	
 	importData() {
-		let file = '{}';
-		try {
-			file  = fs.readFileSync('./databases/dd.json').toString();
-		} catch (e) {}
-		this.dd = JSON.parse(file);
-		file = '{}';
-		try {
-			file = fs.readFileSync('./databases/modlog.json').toString();
-		} catch (e) {}
-		this.modlog = JSON.parse(file);
-		try {
-			file = fs.readFileSync('./databases/authbattle.json').toString();
-		} catch (e) {}
-		this.authbattle = JSON.parse(file);
+		const readJSONOrDefault = function(path) {
+			try {
+				return JSON.parse(fs.readFileSync(path));
+			}
+			catch (e) {}
+
+			return {};
+		}
+
+		this.dd = readJSONOrDefault('./databases/dd.json');
+		this.modlog = readJSONOrDefault('./databases/modlog.json');
+		this.authbattle = readJSONOrDefault('./databases/authbattle.json');
+
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
 		}
 	}
-	*/
+	
 	exportData() {
 		fs.writeFileSync('./databases/dd.json', JSON.stringify(this.dd));
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
