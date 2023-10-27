@@ -18,28 +18,24 @@ var async = require('async');
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
 
-var http = require('http');
-var cb = require('origindb')('lb');
-var _ = require('lodash');
-var hostQueue = [];
-var queueText = '';
-var ids = [];
-let roasts = JSON.parse(require('fs').readFileSync('./commands/roasts.json'));
-let millisToTime = function (millis) {
-	let seconds = millis / 1000;
-	let hours = Math.floor(seconds / 3600);
-	let minutes = Math.floor((seconds - hours * 3600) / 60);
-	let response;
-	if (hours > 0) {
-		response = hours + " hour" + (hours === 1 ? "" : "s") + " and " + minutes + " minute" + (minutes === 1 ? "" : "s");
-	} else {
-		response = minutes + " minute" + (minutes === 1 ? "" : "s");
-	}
-	return response;
-};
-if (Config.serverid === 'showdown') {
-	var https = require('https');
-	var csv = require('csv-parse');
+const https = require('https');
+const http = require('http');
+const csv = require('csv-parse');
+const cb = require('origindb')('lb');
+const _ = require('lodash');
+
+const roasts = JSON.parse(require('fs').readFileSync('./commands/roasts.json'));
+
+const millisToTime = function (millis) {
+    const seconds = millis / 1000;
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds - hours * 3600) / 60);
+
+    if (hours > 0) {
+        return `${hours} hour${hours === 1 ? '' : 's'} and ${minutes} minute${minutes === 1 ? '' : 's'}`;
+    } else {
+		return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+    }
 }
 
 // .set constants
@@ -54,7 +50,7 @@ const CONFIGURABLE_MODERATION_OPTIONS = {
 	flooding: true,
 	caps: true,
 	stretching: true,
-	bannedwords: true
+	bannedwords: true,
 };
 
 const CONFIGURABLE_COMMAND_LEVELS = {
@@ -63,22 +59,15 @@ const CONFIGURABLE_COMMAND_LEVELS = {
 	'false': false,
 	on: true,
 	enable: true,
-	'true': true
+	'true': true,
 };
 
 for (let i in Config.groups) {
-	if (i !== ' ') CONFIGURABLE_COMMAND_LEVELS[i] = i;
-}
-var host = '';
-var hostId = '';
-
-function isPM(roomid, userid) {
-	if (roomid === userid) return true;
-	else return false;
+	if (i !== ' ') {
+		CONFIGURABLE_COMMAND_LEVELS[i] = i;
+	}
 }
 
-
-function lbuild() {}
 let gameTypes = {
 	/**
 	 * Theme list
@@ -173,7 +162,6 @@ let gameTypes = {
 	longttp: 'longtoptrumpspokebattle',
 	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 1],
 	tc: 'tribalcouncil',
-
 };
 
 let eventTypes = {
@@ -274,9 +262,9 @@ let commands = {
 	 */
 
 	git: function (arg, user, room) {
-		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let target = user.hasRank(room, '+') ? room : user;
 		let text = !Config.fork ? "No source code link found." : "The source code for this bot can be found here: " + Config.fork;
-		room.say(prefix + text);
+		target.say(text);
 	},
 	
 	credits: 'about',
@@ -285,9 +273,9 @@ let commands = {
 	},
 	
 	site: function (arg, user, room) {
-		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let target = user.hasRank(room, '+') ? room : user;
 		let text = "https://sites.google.com/view/survivor-ps/home";
-		room.say(prefix + text);
+		target.say(text);
 	},
 	
 	modchat: function (arg, user, room) {
@@ -302,16 +290,16 @@ let commands = {
 	},
 	
 	help: function (arg, user, room) {
-		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let target = user.hasRank(room, '+') ? room : user;
 		let text = !Config.botguide ? "There is no guide for this bot. PM the owner with any questions." : "For help on how to use this bot, check here: " + Config.botguide;
-		room.say(prefix + text);
+		room.say(text);
 	},
 
 	guide: 'commands',
 	commands: function (arg, user, room) {
-		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
+		let target = user.hasRank(room, '+') ? room : user;
 		let text = "The guide for my commands is here: https://docs.google.com/document/d/e/2PACX-1vSkPg4Wao_p7WB2q1FIrBZuRYydluHgg0OYoC3sDoooWvy6IqOdQ5zn3-SjrSfKz60RQm33M9Ekbqzj/pub";
-		room.say(prefix + text);
+		room.say(text);
 	},
 	
 	reconnect: 'off',
@@ -414,39 +402,27 @@ let commands = {
 	},
 	
 	uptime: function (arg, user, room) {
-		var text = ((room === user || user.isExcepted()) ? '' : '/pm ' + user.id + ', ') + '**Uptime:** ';
-		var divisors = [52, 7, 24, 60, 60];
-		var units = ['week', 'day', 'hour', 'minute', 'second'];
-		var buffer = [];
-		var uptime = ~~(process.uptime());
-		do {
-			let divisor = divisors.pop();
-			let unit = uptime % divisor;
-			buffer.push(unit > 1 ? unit + ' ' + units.pop() + 's' : unit + ' ' + units.pop());
+		const target = user.can('+') ? room : user;
+		let text = "**Uptime:** ";
+		const divisors = [60, 60, 24, 7, 52]; // Reversed order
+		const units = ["second", "minute", "hour", "day", "week"]; // Reversed order
+		let buffer = [];
+		let uptime = ~~process.uptime();
+	
+		for (let i = 0; i < divisors.length; i++) {
+			const divisor = divisors[i];
+			const unit = uptime % divisor;
 			uptime = ~~(uptime / divisor);
-		} while (uptime);
-
-		switch (buffer.length) {
-			case 5:
-				text += buffer[4] + ', ';
-				/* falls through */
-			case 4:
-				text += buffer[3] + ', ';
-				/* falls through */
-			case 3:
-				text += buffer[2] + ', ' + buffer[1] + ', and ' + buffer[0];
-				break;
-			case 2:
-				text += buffer[1] + ' and ' + buffer[0];
-				break;
-			case 1:
-				text += buffer[0];
-				break;
+			
+			if (unit !== 0) {
+				const unitText = unit > 1 ? unit + " " + units[i] + "s" : unit + " " + units[i];
+				buffer.push(unitText);
+			}
 		}
-
-		room.say(text);
+	
+		text += buffer.join(', ');
+		this.say(target, text);
 	},
-
 
 	/**
 	 * Room Owner commands
