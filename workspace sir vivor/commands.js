@@ -873,7 +873,7 @@ let commands = {
 
 	unhostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		Rooms.get('survivor').say("/modnote " + target + " has been unhostbanned by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote [" + target + "] has been unhostbanned by " + user.name + ".");
 		return room.say(Games.unHostBan(target));
 	},
 
