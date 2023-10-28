@@ -853,7 +853,7 @@ let commands = {
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 3;
 		Rooms.get('survivor').say("/modnote [" + target + "] has been hostbanned for " + numDays + " days by " + user.name + ".");
-		return room.say(Games.hostBan(targUser, numDays));
+		//return room.say(Games.hostBan(targUser, numDays));
 	},
 
 	hostbanned: function (target, user, room) {
