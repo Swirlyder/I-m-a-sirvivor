@@ -710,7 +710,7 @@ let commands = {
 				}
 			}
 			if (Games.host && Games.host.id === realuser.id) {
-				return room.say(realuser.name + " is already hosting somebody probably sniped you haha");
+				return room.say(realuser.name + " is already hosting. Somebody probably sniped you haha~");
 			} else if (i !== len) {
 				this.say(room, realuser.name + " is already on the hostqueue.");
 			} else {
@@ -723,15 +723,15 @@ let commands = {
 			let info = Games.hosts.shift();
 			Games.hosts.push([realuser.name, targTheme]);
 			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
-			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote HOST: " + info[0] + " hosted");
+			this.say(room, "Survgame. " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join NOW~");
+			this.say(room, "/modnote HOST: [" + info[0] + "] hosted.");
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
 		} else {
 			Games.host = realuser;
-			this.say(room, "survgame! " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote HOST: " + realuser.name + " hosted");
+			this.say(room, "Survgame. " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + "! Type ``/me in`` to join NOW");
+			this.say(room, "/modnote HOST: [" + realuser.name + "] hosted.");
 			Games.addHost(realuser);
 			Games.exportData();
 		}
@@ -2317,7 +2317,7 @@ let commands = {
 		} else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)');
 	},
 
-	chatlines: function (target, user, room) {
+	/*chatlines: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
 		let split = target.split(',');
 		let numDays = parseInt(split[1]);
@@ -2363,6 +2363,7 @@ let commands = {
 			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
 			else user.say('Error connecting to hastebin.');
 		});
+  */
 	},
 
 	lb: function (target, user, room) {
