@@ -2363,8 +2363,8 @@ let commands = {
 			if (success) room.say("**" + targetName + "'s** chat line count:" + link);
 			else user.say('Error connecting to hastebin.');
 		});
-  */
-	},
+  
+	},*/
 
 	lb: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
