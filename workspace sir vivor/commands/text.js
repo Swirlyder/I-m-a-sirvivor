@@ -66,7 +66,7 @@ module.exports = {
 	henka: 'H E N K A B O Y S',
 	
 	inac: '==inactive',
-	inactive: 'My Art is an explosion!!',
+	inactive: 'NOW',
 	
 	ledepression: '==depress',
 	depress: 'if this had the golf mod it\'d be a different story...',
