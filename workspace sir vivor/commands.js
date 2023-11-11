@@ -714,7 +714,7 @@ let commands = {
 			} else if (i !== len) {
 				this.say(room, realuser.name + " is already on the hostqueue.");
 			} else {
-				this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
+				this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + ".");
 				Games.hosts.push([realuser.name, targTheme]);
 			}
 			return;
@@ -722,15 +722,15 @@ let commands = {
 		if (Games.hosts.length > 0) {
 			let info = Games.hosts.shift();
 			Games.hosts.push([realuser.name, targTheme]);
-			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + "!");
-			this.say(room, "Survgame. " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join NOW~");
+			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + ".");
+			this.say(room, "/wall **Survgame.** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join. NOW");
 			this.say(room, "/modnote HOST: [" + info[0] + "] hosted.");
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
 		} else {
 			Games.host = realuser;
-			this.say(room, "Survgame. " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + "! Type ``/me in`` to join NOW");
+			this.say(room, "/wall **Survgame.** " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + ". Type ``/me in`` to join. NOW");
 			this.say(room, "/modnote HOST: [" + realuser.name + "] hosted.");
 			Games.addHost(realuser);
 			Games.exportData();
