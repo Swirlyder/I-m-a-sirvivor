@@ -58,6 +58,9 @@ module.exports = {
 	felucia: '==mez',
 	felu: '==mez',
 	mez: 'Sleep? Never heard of it.',
+
+	gts: '==gary',
+	gary: 'shits rigged',
 	
 	guishark: '==gui',
 	gui: 'Hi [target],  I\'m Gui♥Shark!',
@@ -135,6 +138,9 @@ module.exports = {
 	
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
+
+	yoshman: '==yosh',
+	yosh: 'Yoshing mode activated, set to full power!',
 	
 	anime: '==weeb',
 	weeb: 'Anime was a mistake',
