@@ -10,6 +10,10 @@ module.exports = {
 	'2g4u': '==2guhde4u',
 	'2guhde': '==2guhde4u',
 	'2guhde4u': 'hey guys welcome back to my game of casino',
+
+	ahr: '==ahelpfulrayquaza',
+	ray: '==ahelpfulrayquaza',
+	ahelpfulrayquaza: 'Skill issue',
 	
 	aud: '==audiino',
 	audi: '==audiino',
@@ -97,8 +101,9 @@ module.exports = {
 	omroom: '==om',
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 
+	marill: '==pm',
 	pacificmarill: '==pm',
-	pm: '(¬_¬) My Huge Power is my terrible rolls',
+	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
 	
 	pq: '==penquin',
 	ppq: '==penquin',
