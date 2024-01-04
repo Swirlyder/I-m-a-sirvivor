@@ -24,6 +24,8 @@ const csv = require('csv-parse');
 const cb = require('origindb')('lb');
 const _ = require('lodash');
 
+const ALLOW_ROLL_LIMIT = 2;
+
 const roasts = JSON.parse(require('fs').readFileSync('./commands/roasts.json'));
 const presents = require('./commands/presents.js');
 const gameTypes = require('./commands/gameTypes.js');
@@ -1229,42 +1231,40 @@ let commands = {
 
 	ar: 'allowroll',
 	allowroll: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1) && (!Games.host || Games.host.id !== user.id)) return;
-		if (!target) return;
-		let split = target.split(",");
-		let goodnames = [],
-			badnames = [],
-			alreadynames = [];
-		let i;
-		for (i = 0; i < split.length && Games.excepted.length < 2; i++) {
-			let user = Users.get(Tools.toId(split[i]));
-			if (!user) continue;
-			if (user.hasRank(room.id, '+')) {
-				alreadynames.push(user.name);
-				continue;
+		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id) || !target) return;
+
+		const listOfUsers = target.split(",");
+		const numOfUsers = listOfUsers.length;
+		let goodnames = [], badnames = [];
+
+		for (let i = 0; i < numOfUsers; i++) {
+			let targetUser = Users.get(Tools.toId(listOfUsers[i]));
+			let numOfAllowedUsers = Games.excepted.length;
+
+			if (!targetUser) continue;
+
+			if (numOfAllowedUsers < ALLOW_ROLL_LIMIT) {
+				goodnames.push(targetUser.name);
+				Games.excepted.push(targetUser.id);
 			}
-			goodnames.push(user.name);
-			Games.excepted.push(user.id);
+			else {
+				badnames.push(targetUser.name);
+			}
 		}
-		for (; i < split.length; i++) {
-			let user = Users.get(Tools.toId(split[i]));
-			if (!user);
-			badnames.push(user.name);
-		}
+
 		if (goodnames.length > 0 && badnames.length > 0) {
 			this.say(room, goodnames.join(", ") + " " + (goodnames.length > 1 ? 'were' : 'was') + " allowed a roll! Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
-		} else if (goodnames.length > 0) {
-			this.say(room, goodnames.join(", ") + " " + (goodnames.length > 1 ? 'were' : 'was') + " allowed a roll!");
-		} else if (badnames.length > 0) {
-			this.say(room, "Unfortunately, " + badnames.join(", ") + " could not be added, since only 2 users can be allowed at a time.");
 		}
-		if (alreadynames.length > 0) {
-			this.say(room, alreadynames.join(", ") + " could not be given a roll, since they already have access to the command.");
+		else if (goodnames.length > 0) {
+			this.say(room, `${goodnames.join(", ")} ${goodnames.length > 1 ? 'were' : 'was'} allowed a roll!`);
+		}
+		else if (badnames.length > 0) {
+			this.say(room, `Unfortunately, ${badnames.join(", ")} could not be added, since only 2 users can be allowed at a time.`);
 		}
 	},
 	
 	clearallowrolls: 'clearallowroll',
-	clearallowroll: function (target, user, room) {
+	clearallowroll: function (target, user, room) { 
 		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id)) return;
 		Games.excepted = [];
 		room.say("Rolls have been cleared");
