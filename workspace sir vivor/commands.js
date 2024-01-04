@@ -26,11 +26,11 @@ const _ = require('lodash');
 
 const ALLOW_ROLL_LIMIT = 2;
 
-const roasts = JSON.parse(require('fs').readFileSync('./commands/roasts.json'));
-const presents = require('./commands/presents.js');
-const gameTypes = require('./commands/gameTypes.js');
-const eventTypes = require('./commands/eventTypes.js');
-const modTypes = require('./commands/modTypes.js');
+const roasts = JSON.parse(require('fs').readFileSync('./data/roasts.json'));
+const presents = require('./data/presents.js');
+const gameTypes = require('./data/themes.js');
+const eventTypes = require('./data/events.js');
+const modTypes = require('./data/theme_mods.js');
 
 const millisToTime = function (millis) {
     const seconds = millis / 1000;
@@ -244,6 +244,12 @@ let commands = {
 		this.say(target, text);
 	},
 
+	testroomdev: function (target, user, room) {
+		if (!user.hasRank('survivorworkshop', '#')) return;
+		Rooms.get('survivorworkshop').say("/join groupchat-survivorworkshop-testing");
+		Rooms.get('survivorworkshop').say("/leave");
+	},
+
 	/**
 	 * Room Owner commands
 	 *
@@ -324,8 +330,9 @@ let commands = {
 			(CONFIGURABLE_COMMAND_LEVELS[setting] === setting ? ' available for users of rank ' + setting + ' and above.' :
 				(this.settings[cmd][roomid] ? 'available for all users in this room.' : 'unavailable for use in this room.')));
 	},
+
 	
-	blacklist: 'autoban',
+/*	blacklist: 'autoban',
 	ban: 'autoban',
 	ab: 'autoban',
 	autoban: function (arg, user, room) {
@@ -475,6 +482,7 @@ let commands = {
 		}
 		this.say(room, text);
 	},
+	*/
 	
 	
 	/**
@@ -1505,16 +1513,18 @@ let commands = {
 		}
 		this.say(room, msg);
 	},
-	
+
+	/*
 	addroast: function (target, user, room) {
 		if (!user.hasRank(room.id, '%')) return;
 		if (!toId(target)) return this.say(user, "Usage: ``.addroast [text]``");
 		if (roasts.includes(target.trim())) return this.say(user, "Roast already exists.");
 		roasts.push(target.trim());
-		require('fs').writeFileSync('./commands/roasts.json', JSON.stringify(roasts, null, 4));
+		require('fs').writeFileSync('./data/roasts.json', JSON.stringify(roasts, null, 4));
 		this.say(Rooms.get('survivor'), '/modnote roast added by ' + user.id + ': ' + target.trim());
 		return this.say(user, 'Roast added.');
 	},
+	*/
 	
 	use: function (target, user, room) {
 		if (!room.game) return;
@@ -2265,7 +2275,8 @@ let commands = {
 			numFirsts += sorted[i][1];
 		}
 	},
-	
+
+	/*
 	pointrank: function (target, user, room) {
 		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		let isempty = true;
@@ -2335,6 +2346,7 @@ let commands = {
 			numFirsts += sorted[i][1];
 		}
 	},
+	*/
 
 	rename: function (target, user, room) {
 		if (!target) return;

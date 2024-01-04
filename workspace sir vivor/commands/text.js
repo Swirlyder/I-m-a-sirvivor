@@ -164,6 +164,5 @@ module.exports = {
 	
 	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
-	
 }
 	
