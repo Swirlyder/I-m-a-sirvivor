@@ -777,7 +777,7 @@ let commands = {
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 3;
 		Rooms.get('survivor').say("/modnote [" + targUser.id + "] has been hostbanned for " + numDays + " days by " + user.name + ".");
-		//return room.say(Games.hostBan(targUser, numDays));
+		return room.say(Games.hostBan(targUser, numDays));
 	},
 
 	hostbanned: function (target, user, room) {
@@ -785,11 +785,11 @@ let commands = {
 		if (Object.keys(Games.hostbans).length === 0) {
 			return user.say("No users are currently hostbanned");
 		} else {
-			let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><html><body><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
+			let msg = "<div style=\"overflow-y: scroll; max-height: 250px;\"><div class = \"infobox\"><table align=\"center\" border=\"2\"><th>Name</th><th>Ban time</th>";
 			msg += Object.keys(Games.hostbans).map(key => {
 				return "<tr><td>" + Games.hostbans[key].name + "</td><td>" + Games.banTime(key) + "</td></tr>";
 			}).join("");
-			return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></body></html></div></div>");
+			return Rooms.get('survivor').say("/pminfobox " + user.id + ", " + msg + "</table></div></div>");
 		}
 
 		//return room.say("Hostbanned users: " + Object.keys(Games.hostbans).map(t => Games.hostbans[t].name).join(", "));
