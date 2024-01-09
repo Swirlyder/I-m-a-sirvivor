@@ -52,11 +52,13 @@ function checkHost() {
 	if (Games.hostid) {
 		Games.host = Users.get(Games.hostid);
 	}
+	/*
 	let stuff = fs.readFileSync("../../ddlog.txt").toString().split("\n");
 	for (let i = 0; i < stuff.length; i++) {
 		let realline = stuff[i];
 		parse.chatMessage(realline, Users.get('santavivor'), Users.get('santavivor'));
 	}
+	*/
 }
 global.parse = exports.parse = {
 	actionUrl: url.parse('https://play.pokemonshowdown.com/~~' + Config.serverid + '/action.php'),
