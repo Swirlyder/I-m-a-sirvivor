@@ -122,7 +122,8 @@ let commands = {
 		if (!user.isExcepted()) return false;
 		return user.say("Decrypted message: " + Tools.decrypt(target));
 	},
-	
+
+	/*
 	reload: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		try {
@@ -133,6 +134,7 @@ let commands = {
 			error('failed to reload: ' + e.stack);
 		}
 	},
+	*/
 	
 	reloadvoice: 'reloadvoices',
 	reloadvoices: function (target, user, room) {
