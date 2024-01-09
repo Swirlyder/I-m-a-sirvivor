@@ -2138,12 +2138,12 @@ let commands = {
 		if (!(target in dd.dd)) {
 			return user.say("**" + target + "** does not have any points.");
 		}
-		let sorted = dd.getSorted();
+		let sorted = dd.getDisplaySorted();
 
 		for (let i = 0; i < sorted.length; i++) {
 			let stuff = sorted[i];
 			if (Tools.toId(stuff[1]) === target) {
-				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + (dd.getPoints(stuff)) + " points");
+				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + (dd.getDisplayPoints(stuff) + (eventcount.count[target] || 0)) + " points");
 			}
 
 		}
