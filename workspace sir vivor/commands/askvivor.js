@@ -22,7 +22,7 @@ module.exports = {
             },
         ],
     },
-    
+
     howmuch: {
         priority: 4,
         placement: "suffix",
@@ -38,7 +38,7 @@ module.exports = {
             },
         ],
     },
-    
+
     howbad: {
         priority: 4,
         placement: "suffix",
@@ -54,18 +54,18 @@ module.exports = {
             },
         ],
     },
-    
+
     owo: {
         priority: 4,
         placement: "suffix",
         responses: [
-             {
+            {
                 username: false,
                 before: "Stop being a weeb.",
             },
         ],
     },
-    
+
     when: {
         priority: 3,
         placement: "suffix",
@@ -101,7 +101,7 @@ module.exports = {
             },
         ],
     },
-    
+
     can: {
         priority: 3,
         placement: "suffix",
@@ -165,7 +165,7 @@ module.exports = {
             },
         ],
     },
-    
+
     will: {
         priority: 3,
         placement: "suffix",
@@ -188,7 +188,7 @@ module.exports = {
             },
         ],
     },
-    
+
     where: {
         priority: 3,
         placement: "suffix",
@@ -208,7 +208,7 @@ module.exports = {
             }
         ],
     },
-    
+
     who: {
         priority: 3,
         placement: "suffix",
@@ -218,7 +218,7 @@ module.exports = {
                 before: "",
                 after: "",
             },
-            
+
             {
                 username: false,
                 before: "Sir Vivor",
@@ -237,7 +237,7 @@ module.exports = {
             }
         ],
     },
-    
+
     hi: 'hello',
     hello: {
         priority: 2,
@@ -255,16 +255,16 @@ module.exports = {
             {
                 username: false,
                 before: "**GUESS WHAT TIME IT IS??? YEP, TIME FOR A BEATDOWN!!!** ",
-     
+
             },
             {
                 username: false,
                 before: "**CONGRATULATIONS, YOU'VE LOST** ",
-     
+
             }
         ]
     },
-    
+
     dosomething: {
         priority: 4,
         placement: "suffix",
@@ -276,7 +276,7 @@ module.exports = {
             },
         ],
     },
-    
+
     areyou: {
         priority: 3,
         placement: "suffix",
@@ -296,5 +296,5 @@ module.exports = {
             },
         ]
     },
-}
+};
 
