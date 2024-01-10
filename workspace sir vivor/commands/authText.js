@@ -102,7 +102,7 @@ module.exports = {
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 
 	marill: '==pm',
-	pacificmarill: '==pm',
+	marillvibes: '==pm',
 	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
 
 	pq: '==penquin',
