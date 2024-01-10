@@ -75,10 +75,10 @@ exports.commands = {
         });
         let ret = `<center><div style="padding:80px"><b>Host count</b>`;
         for (let i in points) {
-            ret += "<br>" + (i+1) + ". " + points[i][0] + ": " + points[i][1];
+            ret += "<br>" + (i) + ". " + points[i][0] + ": " + points[i][1];
         }
         ret += "</div>"
-        return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret}`);
+        return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
     },
 	/*
     addevent: function (arg, user, room) {
