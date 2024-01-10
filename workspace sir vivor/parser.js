@@ -12,7 +12,7 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 var url = require('url');
-Commands.Replies = require('./commands/text.js');
+Commands.Replies = require('./commands/authText.js');
 
 const ACTION_COOLDOWN = 3 * 1000;
 const FLOOD_MESSAGE_NUM = 7;
@@ -367,12 +367,12 @@ global.parse = exports.parse = {
             if (room.id !== 'survivor') return;
             if (!user.isExcepted()) return;
             let rt = arg === "text";
-            delete require.cache[require.resolve('./commands/text.js')];
+            delete require.cache[require.resolve('./commands/authText.js')];
             if (!rt) {
                 delete require.cache[require.resolve('./commands.js')];
                 Commands = require('./commands.js');
             }
-            Commands.Replies = require('./commands/text.js');
+            Commands.Replies = require('./commands/authText.js');
             let text = (rt ? 'text ' : '') + "commands reloaded.";
             this.say(room, text);
         }
