@@ -120,16 +120,16 @@ if (Config.commandCharacter === '.') {
 // And now comes the real stuff...
 info('starting server');
 var WebSocketClient = require('websocket').client;
-global.Tools = require('./tools.js');
+global.Tools = require('./classes/Tools.js');
 console.log(Tools.mod(912673, 688165, 1032247));
-global.Battles = require('./Battles.js');
-global.dd = require('./points.js');
+global.Battles = require('./classes/Battles.js');
+global.dd = require('./classes/points.js');
 dd.importData();
 global.Commands = require('./commands.js').commands;
-global.Users = require('./users.js');
-global.Rooms = require('./rooms.js');
+global.Users = require('./classes/User.js');
+global.Rooms = require('./classes/Room.js');
 global.Parse = require('./parser.js').parse;
-global.Games = require('./games.js');
+global.Games = require('./Games.js');
 Games.loadGames();
 try {
 	global.chatmes = JSON.parse(fs.readFileSync('./databases/chat.json').toString());
@@ -150,8 +150,8 @@ fs.watchFile('./commands.js', function (curr, prev) {
 });
 var watcher = chokidar.watch('./games', {ignored: /^\./, persistent: true});
 function reloadGames () {
-	delete require.cache[require.resolve('./games.js')];
-	Games = require('./games.js');
+	delete require.cache[require.resolve('./Games.js')];
+	Games = require('./Games.js');
 	Games.loadGames();
 	info('Games reloaded.');
 }
@@ -162,11 +162,11 @@ watcher
   .on('change', function(path) {
 	  reloadGames();
   });
-fs.watchFile('./games.js', function (curr, prev) {
+fs.watchFile('./Games.js', function (curr, prev) {
 	if (curr.mtime <= prev.mtime) return;
 	try {
-		delete require.cache[require.resolve('./games.js')];
-		Games = require('./games.js');
+		delete require.cache[require.resolve('./Games.js')];
+		Games = require('./Games.js');
 		Games.loadGames();
 		info('Games reloaded.');
 	} catch (e) {}

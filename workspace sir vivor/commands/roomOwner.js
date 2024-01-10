@@ -1,6 +1,36 @@
 	/***********************************************
 	 *             ROOM OWNER COMMANDS             *
 	 ***********************************************/
+
+const CONFIGURABLE_COMMANDS = {
+	autoban: true,
+	banword: true,
+	say: true,
+	guia: true,
+};
+
+const CONFIGURABLE_MODERATION_OPTIONS = {
+	flooding: true,
+	caps: true,
+	stretching: true,
+	bannedwords: true,
+};
+
+const CONFIGURABLE_COMMAND_LEVELS = {
+	off: false,
+	disable: false,
+	'false': false,
+	on: true,
+	enable: true,
+	'true': true,
+};
+
+for (let i in Config.groups) {
+	if (i !== ' ') {
+		CONFIGURABLE_COMMAND_LEVELS[i] = i;
+	}
+}
+
 module.exports = {
 
 	settings: 'set',
