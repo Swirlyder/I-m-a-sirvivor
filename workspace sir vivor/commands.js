@@ -19,48 +19,8 @@ var async = require('async');
  */
 
 
-/* //Dont delete these constants yet
-const https = require('https');
-const http = require('http');
-const csv = require('csv-parse');
-const cb = require('origindb')('lb');
-const _ = require('lodash'); */
 
 const fs = require('fs');
-const path = require('path');
-
-/*
-// .set constants
-const CONFIGURABLE_COMMANDS = {
-	autoban: true,
-	banword: true,
-	say: true,
-	guia: true,
-};
-
-const CONFIGURABLE_MODERATION_OPTIONS = {
-	flooding: true,
-	caps: true,
-	stretching: true,
-	bannedwords: true,
-};
-*/
-
-const CONFIGURABLE_COMMAND_LEVELS = {
-	off: false,
-	disable: false,
-	'false': false,
-	on: true,
-	enable: true,
-	'true': true,
-};
-
-for (let i in Config.groups) {
-	if (i !== ' ') {
-		CONFIGURABLE_COMMAND_LEVELS[i] = i;
-	}
-}
-
 let commands = {};
 
 function loadCommands(directory, targetObject) {
@@ -75,12 +35,10 @@ function loadCommands(directory, targetObject) {
 			delete require.cache[require.resolve(filePath)];
 		}
 
-		let moduleExports = require(filePath);
+		const moduleExports = require(filePath);
 		Object.assign(targetObject, moduleExports);
 	}
 }
-
-loadCommands('commands', commands);
 
 fs.readdirSync('./modules').forEach(function (file) {
 	console.log(file);
@@ -95,5 +53,7 @@ fs.readdirSync('./modules').forEach(function (file) {
 		}
 	}
 });
+
+loadCommands('commands', commands);
 
 exports.commands = commands;
