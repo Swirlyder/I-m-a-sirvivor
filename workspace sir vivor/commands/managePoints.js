@@ -1,3 +1,6 @@
+hostcount = require('../modules/hostcount.js');
+hostcount.load();
+
 module.exports = {
 
 	apts: 'addpoints',
@@ -544,5 +547,33 @@ module.exports = {
 				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + (dd.getPoints(stuff)) + " points");
 			}
 		}
+	},
+
+	hostcount: function (arg, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let points = [];
+
+		for (let i in hostcount.count) {
+			points.push([
+				i,
+				hostcount.count[i]
+			]);
+		}
+
+		points.sort((a, b) => {
+			return b[1] - a[1];
+		});
+
+		let ret = `<center><div style="padding:80px"><b>Host count</b>`;
+		for (let i in points) {
+			let place = Number(i) + 1;
+			let username = points[i][0];
+			let count = points[i][1]
+
+			ret += "<br>" + place + ". " + username + ": " + count;
+		}
+		ret += "</div>"
+
+		return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
 	}
 };
