@@ -19,7 +19,7 @@ module.exports = {
 		return user.say("Decrypted message: " + Tools.decrypt(target));
 	},
 
-	/*
+	/* broken clashes with .reload from parser.js
 	reload: function (arg, user, room) {
 		if (!user.isExcepted()) return false;
 		try {
