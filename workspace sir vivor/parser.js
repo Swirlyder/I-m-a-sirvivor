@@ -13,6 +13,7 @@ var http = require('http');
 var https = require('https');
 var url = require('url');
 Commands.Replies = require('./commands/authText.js');
+const logging = require('./utilities/logging.js');
 
 const ACTION_COOLDOWN = 3 * 1000;
 const FLOOD_MESSAGE_NUM = 7;
@@ -101,7 +102,7 @@ global.parse = exports.parse = {
 					Parse.say(room, '/roomauth survivor');
 					setTimeout(() => checkHost(), 5 * 1000);
 				}
-				return ok('joined ' + room.id);					
+				return logging.ok('joined ' + room.id);					
 			}
 		}
 		if (roomid in Battles.battles) {
@@ -117,7 +118,7 @@ global.parse = exports.parse = {
 		if (message.includes("added a roomevent titled") || message.includes("edited the roomevent titled")) this.say(room, "/events sortby date | asc");
 		switch (spl[1]) {
 			case 'challstr':
-				info('received challstr, logging in...');
+				logging.info('received challstr, logging in...');
 				var id = spl[2];
 				var str = spl[3];
 
@@ -207,7 +208,7 @@ global.parse = exports.parse = {
 					process.exit(-1);
 				}
 
-				ok('logged in as ' + spl[2]);
+				logging.ok('logged in as ' + spl[2]);
 				send('|/blockchallenges');
 
 				// Now join the rooms
@@ -382,7 +383,7 @@ global.parse = exports.parse = {
 				cmd = Commands[cmd];
 			}
 			if (typeof Commands[cmd] === "function") {
-				cmdr(cmdrMessage);
+				logging.cmdr(cmdrMessage);
 				try {
 					Commands[cmd].call(this, arg, user, room);
 					user.lastcmd = cmd;
