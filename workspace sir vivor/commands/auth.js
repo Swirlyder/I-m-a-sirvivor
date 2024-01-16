@@ -68,6 +68,8 @@ module.exports = {
 		} else return room.say('Usage: ``.psevent [add/remove], [details]`` (check ``/events help`` for more info)');
 	},
 
+	//Broken, planned to fix
+	/*
 	reconnect: 'off',
 	disconnect: 'off',
 	crash: 'off',
@@ -77,6 +79,7 @@ module.exports = {
 		room.say("/logout");
 		connect();
 	},
+	*/
 
 	kill: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%') || room !== user) return false;

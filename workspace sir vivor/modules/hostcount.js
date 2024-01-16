@@ -1,6 +1,6 @@
 
 const FS = require('fs');
-global.hostcount = {
+module.exports = global.hostcount = {
     count: {},
     load: function() {
         let obj = JSON.parse(FS.readFileSync('./databases/hostcount.json'));
@@ -17,8 +17,6 @@ global.hostcount = {
         this.save();
     }
 };
-
-hostcount.load();
 
 global.gamecount = {
     count: {},
@@ -60,6 +58,7 @@ global.eventcount = {
 
 eventcount.load();
 
+/*
 exports.commands = {
     hostcount: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
@@ -79,7 +78,7 @@ exports.commands = {
         }
         ret += "</div>"
         return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
-    },
+    },*/
 	/*
     addevent: function (arg, user, room) {
         if (!user.hasRank('survivor', '%')) return;
@@ -102,4 +101,4 @@ exports.commands = {
         return this.say(room, "Removed **" + amount + "** points from **" + target + "**.");
     },
     */
-}
+//}

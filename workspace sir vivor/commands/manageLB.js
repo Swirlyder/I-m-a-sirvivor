@@ -1,4 +1,4 @@
-/***********************************************
+   /***********************************************
 	*          LEADERBOARD MANAGEMENT             *
 	***********************************************/
 
@@ -166,21 +166,6 @@ module.exports = {
 			delete gamecount.count[toId(userToRemove)];
 			delete eventcount.count[toId(userToRemove)];
 			return user.say("**" + name + "** has been removed from the leaderboard.")
-		}
-	},
-
-	//note from Swirl: not sure if this works, im guessing it removes
-	//one host from the .lb, but .removehostcount accesses hostcount
-	//differently not sure if its a different variable or not, might
-	//comment this out later
-	removehost: function (target, user, room) {
-		if (!user.hasRank('survivor', '%') || room !== user) return;
-		if (!target) return user.say("Please specify a user.");
-		if (Games.removeHost(target)) {
-			user.say("One host has been removed from " + target);
-			this.say(Rooms.get('survivor'), '/modnote ' + user.name + " removed a host from " + target);
-		} else {
-			user.say("That user hasn't hosted recently.");
 		}
 	},
 

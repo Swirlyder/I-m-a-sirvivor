@@ -1,27 +1,7 @@
+const hostcount = require('../modules/hostcount.js');
+hostcount.load();
+
 module.exports = {
-
-	apts: 'addpoints',
-	apt: 'addpoints',
-	addpoints: function (target, user, room) {
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		return user.say('.addpoints is no longer used.');
-		let split = (target.indexOf(',') === -1 ? target.split("|") : target.split(","));
-		if (split.length < 4) return room.say("You have to specify the host, winner, second place, and at least one participant");
-		dd.addHost(split[0]);
-		dd.addFirst(split[1]);
-		dd.addSecond(split[2]);
-		let names = []
-		for (let i = 3; i < split.length; i++) {
-			dd.addPart(split[i]);
-			names.push(split[i].trim());
-		}
-		room.say("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
-		room.say("Participation points awarded to: **" + names.join(", ") + "**.");
-		dd.updateModlog(user.name + " did .addpoints " + target);
-		dd.updateModlog("First place awarded to: **" + split[1].trim() + "**. Second place awarded to: **" + split[2].trim() + "**. Host points awarded to: **" + split[0].trim() + "**.");
-		dd.updateModlog("Participation points awarded to: **" + names.join(", ") + "**.");
-	},
-
 	addspecial: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -31,8 +11,6 @@ module.exports = {
 		let numPoints = parseInt(split[1]);
 		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
 		dd.addpoints(username, numPoints);
-		//gamecount.add(username, 1);
-		//gamecount.add(username, -1);
 		let modlogEntry = {
 			command: "addspecial",
 			user: user.id,
@@ -46,7 +24,6 @@ module.exports = {
 		dd.updateModlog(modlogEntry);
 		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the leaderboard.");
 	},
-
 
 	addpointsbot: 'addbot',
 	addbot: function (target, user, room) {
@@ -90,6 +67,8 @@ module.exports = {
 		return user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
 	},
 
+	revertpoints: 'rpoints',
+	undopoints: 'rpoints',
 	rpoints: function (arg, user, room) {
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let last = dd.modlog.data.pop();
@@ -118,6 +97,7 @@ module.exports = {
 	},
 
 	remspecial: 'removespecial',
+	remspec: 'removespecial',
 	removespecial: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -155,6 +135,7 @@ module.exports = {
 		return user.say("**" + numGames + "** games have been removed from **" + username.trim() + "** on the leaderboard.");
 	},
 
+	addhostlb: 'addhostcount',
 	addhostcount: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -169,6 +150,7 @@ module.exports = {
 	},
 
 	removehostcount: 'remhostcount',
+	removehostlb: 'remhostcount',
 	remhostcount: function (target, user, room) {
 		if (!target) return;
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -183,6 +165,7 @@ module.exports = {
 	},
 
 	addpointsuser: 'adduser',
+	addpoints: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return; //user.say("No target found :" + target);
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
@@ -544,5 +527,33 @@ module.exports = {
 				return user.say("**" + stuff[1].trim() + "** is #" + (i + 1) + " on the leaderboard with " + (dd.getPoints(stuff)) + " points");
 			}
 		}
+	},
+
+	hostcount: function (arg, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let points = [];
+
+		for (let i in hostcount.count) {
+			points.push([
+				i,
+				hostcount.count[i]
+			]);
+		}
+
+		points.sort((a, b) => {
+			return b[1] - a[1];
+		});
+
+		let ret = `<center><div style="padding:80px"><b>Host count</b>`;
+		for (let i in points) {
+			let place = Number(i) + 1;
+			let username = points[i][0];
+			let count = points[i][1]
+
+			ret += "<br>" + place + ". " + username + ": " + count;
+		}
+		ret += "</div>"
+
+		return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
 	}
 };

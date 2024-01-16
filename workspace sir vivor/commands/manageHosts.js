@@ -148,7 +148,7 @@ module.exports = {
 			}
 		}
 		if (Users.get(info[0])) {
-			this.say(room, "survgame! " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
+			this.say(room, "/wall **Survgame.** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
 			this.say(room, "/modnote HOST: " + info[0] + " hosted");
 			Games.host = Users.get(info[0]);
 			Games.addHost(info[0]);
@@ -250,5 +250,4 @@ module.exports = {
 		if (!user.hasRank('survivor', '+')) return;
 		return room.say(Games.banTime(target));
 	}
-
 };
