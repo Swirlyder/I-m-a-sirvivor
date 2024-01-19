@@ -106,3 +106,6 @@ exports.punishvals = {
  
 //This key is used to deliver requests from Google Spreadsheets. Used by the wifi room.
 exports.googleapikey = '';
+
+// Used for identifying the google doc to make requests to. Used as a dd.json backup
+exports.backupLBDocID = '';

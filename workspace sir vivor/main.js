@@ -29,6 +29,7 @@ require('sugar');
 global.colors = require('colors');
 const logging = require('./utilities/logging.js');
 const fs = require('fs');
+const path = require('path');
 
 global.toId = function(text) {
 	return ('' + text).toLowerCase().replace(/[^a-z0-9]+/g, '');
@@ -217,5 +218,20 @@ global.connect = function (retry) {
 	ws.connect(conStr, Config.secprotocols);
 };
 
-global.connect();
+//Set up back up a backup for LB points
+const ExternalDoc = require('./classes/ExternalDoc.js');
+const LbFilePath = path.join(__dirname, './databases/dd.json');
+const Backup = new ExternalDoc();
+const interval = 30 * 60 * 1000; // 30 mins in miliseconds
 
+//Initial backup
+Backup.copyToBackup(LbFilePath, Config.backupLBDocID);
+
+//Copies dd.json to backup doc every 30 minutes
+setInterval(() => {
+	Backup.copyToBackup(LbFilePath, Config.backupLBDocID);
+}, interval);
+
+
+//Connect to PS
+global.connect();
