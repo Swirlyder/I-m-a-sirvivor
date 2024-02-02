@@ -12,7 +12,7 @@ module.exports = {
 		let text2 = 'Snap, Hawkie, Henka, OM, Zeonth, Zyx14, Shadecession, deetah, Hurl, zyg, Guishark, Mitsuki, Tushavi, inactive, cleo, ptoad, Rainshaft, pants, wob, Audiino, Ceteris,';
 		let text3 = 'Gimmick, Harambeween, abd1710, TheBluestEye, BugBuzzing, EasyOnTheHills, Felucia, micromorphic, Megagr, Penguin D, ClaudioINK58, lfolfo, BreadLoeuf,';
 		let text4 = 'beautifications, 2guhde4u, Gary The Savage, marillvibes, Opple, Le\'Depression, SaltiestCactus43, Sificon, crabachillable,';
-		let text5 = 'a helpful rayquaza and in 23 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
+		let text5 = 'a helpful rayquaza and in 31 years, I\'ve learned one thing. You never know WHAT anime is going to be good.';
 		if (room !== user && !user.hasRank(room, '+')) {
 			user.say(text1);
 			user.say(text2);
