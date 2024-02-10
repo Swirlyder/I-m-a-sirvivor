@@ -30,6 +30,9 @@ module.exports = {
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
 
+	bt: 'gg thanks for hosting',
+	brotorterra: '==bt',
+
 	bread: '==breadloeuf',
 	breadloeuf: 'You\'re toast *explodes u with mind power*',
 
