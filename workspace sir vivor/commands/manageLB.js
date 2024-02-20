@@ -5,109 +5,71 @@
 module.exports = {
 
 	settextcolor: function (target, user, room) {
+		//input check
 		if (!target) return user.say("No target found :" + target);
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
 		let username = split[0];
 		let hexcolor = split[1].trim();
+
+		//the meat and potatoes
 		if (hexcolor.length !== 6 || isNaN(Number('0x' + hexcolor))) return user.say("'" + split[1] + "' is not a valid hex color code.");
 		dd.settextcolor(username, hexcolor);
 		return user.say("**" + hexcolor + "** has been set as the text color of **" + username.trim() + "**, on the leaderboard.");
 	},
 
 	setbgcolor: function (target, user, room) {
+		//input check
 		if (!target) return user.say("No target found :" + target);
 		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
 		let username = split[0];
 		let hexcolor = split[1].trim();
+
+		//the meat and potatoes
 		if (hexcolor.length !== 6 || isNaN(Number('0x' + hexcolor))) return user.say("'" + split[1] + "' is not a valid hex color code.");
 		dd.setbgcolor(username, hexcolor);
 		return user.say("**" + hexcolor + "** has been set as the background color of **" + username.trim() + "**, on the leaderboard.");
 	},
 
+	setpoke: function (target, user, room) {
+		//input check
+		if (!target) return user.say("No target found :" + target);
+		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must enter the user and the Pokedex number they desire.");
+		let username = split[0];
+		let pokemonDexNum = split[1].trim();
+
+		//the meat and potatoes
+		if (pokemonDexNum > 0 && pokemonDexNum <= 1025) {
+			dd.setDexNum(username, pokemonDexNum)
+			user.say(username + "\'s LB sprite has been set to...");
+			return user.say(`!dt ${pokemonDexNum}`);
+		}
+		else return user.say("Invalid Dex number: number must be between 1 and 1025.");
+
+    },
+
 	lb: function (target, user, room) {
-		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
-		let isempty = true;
+		if (!user.hasRank('survivor', '+')) return;
+		const num = parseInt(target);
+
+		// Process data
 		let sorted = dd.getSorted();
-		let num = parseInt(target);
-		if (!num || num < 1) num = 50;
-		if (num > sorted.length) num = sorted.length;
-		let str = "<div><table align=\"center\" border=\"2\"><tr>";
-		let indices = ["Rank", "Name", "Points", "Games", "Hosts"];
-		for (let i = 0; i < indices.length; i++) {
-			str += "<td style=background-color:#FFFFFF; height=\"30px\"; align=\"center\"><b><font color=\"black\">" + indices[i] + "</font></b></td>";
-		}
-		str += "</tr>";
+		const processedData = dd.processLbData(sorted, num);
 
-		let res = [];
-		for (let i = 0; i < sorted.length; i++) {
-			let cur = sorted[i][1];
-			let points = dd.getPoints(sorted[i]);
-			let bgcolor = dd.getBgColor(sorted[i]);
-			let textcolor = dd.getTextColor(sorted[i]);
-			/*let displaypoints = dd.getDisplayPoints(sorted[i]);*/
+		// Construct HTML code
+		const lb_HTML = dd.getLbHtml(processedData);
 
-			if (points === 0) continue;
-			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
-			let n = gamecount.count[toId(cur)] ? gamecount.count[toId(cur)] : 0;
-			let e = eventcount.count[toId(cur)] ? eventcount.count[toId(cur)] : 0;
-			if (!n) n = "Error";
-			/*
-			points = Math.floor((50 * (points/n) * ((1.1*n*n)/(n*n+80) + (n/225)) + ((h*h+100)/50)));
-			
-			if (displaypoints >= points) {
-				points = displaypoints;	
-			} else {
-				dd.updateDisplayPoints(cur, points);
-			}
-			
-			points += e;
-			*/
-			res.push([
-				cur,
-				points,
-				n,
-				h,
-				bgcolor,
-				textcolor
-			]);
-		}
-
-		res.sort((a, b) => {
-			return b[1] - a[1];
-		})
-
-		let colours = res.map(x => [x[4], x[5]]);
-		for (let x of res) {
-			x.splice(4, 1);
-			x.splice(4, 1);
-		}
-
-		let strs = [];
-		for (let i = Math.max(0, num - 50); i < num; i++) {
-			if (!res[i]) continue;
-			let strx = "<tr>";
-			strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + (i + 1) + "</b></td>";
-			for (let ln in res[i]) {
-				let j = res[i][ln];
-				strx += `<td height="30px"; align="center" style="background:${colours[i][0]};color:${colours[i][1]}"><b>` + j + "</b></td>";
-			}
-			strs.push(strx + "</tr>");
-		}
-		str += strs.join("");
-		str += "</table></div>";
+		// Dislplay LB
 		if (room.id === user.id) {
-			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${str}`);
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${lb_HTML}`);
 		}
 		else {
-			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${str}</div>`);
-		}
-		let numFirsts = 0;
-		for (let i = 0; i < sorted.length; i++) {
-			numFirsts += sorted[i][1];
+			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${lb_HTML}</div>`);
 		}
 	},
 
@@ -182,5 +144,32 @@ module.exports = {
 		hostcount.save();
 		gamecount.save();
 		return room.say("The dd leaderboard has been reset.");
-	}
-};
+	},
+
+//Ignore, work in progress
+/*	eventlog: function (target, user, room) {
+		if (!user.hasRank('survivor', '%')) return;
+		let split = target.split(",");
+		if (!target) {
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, eventlog, test`);
+			//show eventlog in pm [eventlog formatting done here]
+			// retreive event log
+			// format text [date] Event: [Event] Winner: [User], use addhtml
+		}
+		else if (split.length == 2) {
+			if (split[0] == '1day' || split[0] == '2day+' || split[0] == 'showdown' || split[0] == 'bossbattle' || split[0] == 'deathmatch') {
+				parse.say(room, 'did');
+			}
+			else {
+				parse.say(room, 'Event type not available. Here are the options for envents: "1day", "2day+", "showdown", "bossbattle", or "deathmatch"');
+			}
+		}
+		//check for valid input
+		//input is valid: add to event log [date] [event] [user]
+		//eventLogEntry = {
+		//	date: currentTime,
+		//	eventType: target[0],
+		//	user: target[1]
+		//}
+	}*/
+}
