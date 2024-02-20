@@ -54,7 +54,7 @@ module.exports = {
     },
 
 	lb: function (target, user, room) {
-		if (!user.hasRank('survivor', '+')) return;
+		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
 		const num = parseInt(target);
 
 		// Process data
