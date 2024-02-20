@@ -7,6 +7,7 @@ class DD {
 	constructor() {
 		this.dd = {};
 		this.modlog = {};
+		this.eventlog = {};
 		this.authbattle = {};
 		this.numSkips = 0;
 	}
@@ -24,9 +25,14 @@ class DD {
 		this.dd = readJSONOrDefault('./databases/dd.json');
 		this.modlog = readJSONOrDefault('./databases/modlog.json');
 		this.authbattle = readJSONOrDefault('./databases/authbattle.json');
+		this.eventlog = readJSONOrDefault('./databases/eventlog.json');
 
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
+		}
+
+		if (!("data" in this.eventlog)) {
+			this.eventlog.data = [];
 		}
 	}
 	
@@ -35,6 +41,16 @@ class DD {
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
 		fs.writeFileSync('./databases/authbattle.json', JSON.stringify(this.authbattle));
 	}
+
+	updateEventLog(message) {
+		this.modlog.data.push(message);
+		this.exportData();
+	}
+
+	isInLB(name) {
+		let id = Tools.toId(name);
+		return (id in this.dd);
+    }
 
 	addpoints (user, numPoints) {
 		let name = user.trim();
@@ -45,6 +61,7 @@ class DD {
 				name: user,
 				color: "000000",
 				bgcolor: "ffffff",
+				dexnum: "",
 				/*displaypoints: numPoints*/
 				/*add extra displaypoints variable*/
 			}
@@ -73,6 +90,10 @@ class DD {
 		}
 		this.exportData();
 	}
+
+	getUserName(item) {
+		return item[1];
+    }
 
 	getPoints(item) {
 		return item[0];
@@ -124,11 +145,35 @@ class DD {
 		}
 	}
 
+	setDexNum(user, arg) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		let dex = arg.trim();
+
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				points: 0,
+				name: user,
+				poke: dex,
+			}
+		} else {
+				this.dd[id].poke = dex;
+		}
+    }
+
+
 	getTextColor(item) {
 		if (item[2])
 			return '#' + item[2];
 		else
 			return '#000000'
+	}
+
+	getDexNum(item) {
+		if (item[4]) {
+			return item[4];
+		}
+		else return 0;
 	}
 
 	getBgColor(item) {
@@ -138,13 +183,11 @@ class DD {
 			return '#FFFFFF'
 	}
 
-
-
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.points || 0, item.name, item.color, item.bgcolor]);
+			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.poke]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
@@ -157,26 +200,91 @@ class DD {
 		});
 		return items;
 	}
-	/*
-	getDisplaySorted() {
-		let items = [];
-		for (let id in this.dd) {
-			let item = this.dd[id];
-			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.displaypoints || 0]);
+
+	processLbData(items, num) {
+		let res = [];
+		let vanity = [];
+
+		if (!num || num < 1) num = 50;
+		if (num > items.length) num = items.length;
+
+		//process data from ranks [num-50] to [num]
+		for (let i = Math.max(0, num - 50); i < num; i++) {
+			let rank = i+1;
+			let cur = this.getUserName(items[i]);
+			let points = this.getPoints(items[i]);
+			let bgcolor = this.getBgColor(items[i]);
+			let textcolor = this.getTextColor(items[i]);
+			let dexNum = this.getDexNum(items[i]);
+			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
+			let n = gamecount.count[toId(cur)] ? gamecount.count[toId(cur)] : 0;
+
+			//push everything into arrays
+			res.push([rank,cur, points, n, h]);
+			vanity.push([bgcolor, textcolor, dexNum]);
 		}
-		items.sort(function(first, second) {
-			let points1 = dd.getDisplayPoints(first);
-			let points2 = dd.getDisplayPoints(second);
-			if (points1 !== points2) return points2 - points1;
-			if (first[1] !== second[1]) return second[1] - first[1];
-			if (first[2] !== second[2]) return second[2] - first[2];
-			if (first[3] !== second[3]) return second[3] - first[3];
-			return second[4] > first[4];
-		});
-		return items;
+
+		return [res, vanity];
 	}
-	*/
-	
+
+	getLbHtml(items) {
+		const ROW_HEIGHT = 30;
+		const DEFAULT_ALIGN = "center";
+		const FONT_WEIGHT = 'bold';
+		const LEFT_RIGHT_PADDING = 5;
+		const POKE_SPRITE_COLS = 12;
+		const POKEMON_SPRITE_WIDTH = 40;
+		const POKEMON_SPRITE_HEIGHT = 30;
+
+		let str, strx, strs = [];
+		let sheet_pos_x, sheet_pos_y;
+		let bgcolor, textcolor, dexNum;
+
+		const lbData = items[0];
+		const lbVanity = items[1];
+
+		// Table styles
+		str = '<div>';
+		str += `<table border="2" ; align="${DEFAULT_ALIGN}";` +
+			'style="background-color:#FFFFFF ;' +
+			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black">`;
+
+		// Column labels
+		str += `<tr style="height:15px;">` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Rank </td>` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px ; text-align:left;"> Name </td>` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Points </td>` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Games </td>` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Hosts </td>` +
+			`</tr>`;
+
+		// The rest of the Table
+		for (let i = 0; i < lbData.length; i++) {
+			if (!lbData) continue;
+			bgcolor = lbVanity[i]['0'];
+			textcolor = lbVanity[i]['1'];
+			dexNum = lbVanity[i]['2'];
+
+			// add a row
+			strx = `<tr style="background:${bgcolor} ; color:${textcolor} ; ` + `height: ${ROW_HEIGHT}px ;">`;
+			for (let ln in lbData[i]) {
+				let j = lbData[i][ln];
+
+				if (ln != '1') strx += '<td>' + j + '</td>';																		//add data
+				else if (ln == '1' && dexNum == 0) strx += '<td style="padding: 0px 5px ; text-align:left;">' + j + '</td>';		//special formatting for name column
+				else if (dexNum != 0) {																								//special formatting for name w/ pokemon sprite
+					sheet_pos_y = (Math.floor(dexNum / POKE_SPRITE_COLS)) * 30 * -1;
+					sheet_pos_x = (dexNum % POKE_SPRITE_COLS * 40) * -1;
+					strx += `<td style="position:relative; text-align:left; padding:0px ${LEFT_RIGHT_PADDING + POKEMON_SPRITE_WIDTH}px 0px ${LEFT_RIGHT_PADDING}px;">` + j + `<div style="display:inline-block; position:absolute; right:0px; bottom:0px; background-image: url(https://play.pokemonshowdown.com/sprites/pokemonicons-sheet.png?v16); background-repeat:no-repeat; background-position:${sheet_pos_x}px ${sheet_pos_y}px; width:${POKEMON_SPRITE_WIDTH}px; height:${POKEMON_SPRITE_HEIGHT}px;"></div></td>`;
+				}
+			}
+			strs.push(strx + "</tr>");
+		}
+		str += strs.join("");
+		str += "</table></div>";
+
+		return str;
+	}
 	
 	updateModlog(message) {
 		this.modlog.data.push(message);
