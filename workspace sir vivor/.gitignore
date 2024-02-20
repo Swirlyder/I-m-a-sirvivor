@@ -4,6 +4,7 @@ npm-debug.log
 config.js
 settings.json
 /databases/
+credentials.json
 .hg
 .bzr
 .svn
