@@ -44,12 +44,14 @@ module.exports = {
 		let pokemonDexNum = split[1].trim();
 
 		//the meat and potatoes
-		if (pokemonDexNum > 0 && pokemonDexNum <= 1025) {
-			dd.setDexNum(username, pokemonDexNum)
+		if (pokemonDexNum >= 0 && pokemonDexNum <= 1579) {
+			dd.setDexNum(username, pokemonDexNum);
+			if (pokemonDexNum == 0) return user.say(username + "\'s LB sprite has been removed");
+			if (pokemonDexNum > 1025) return user.say(username + "\'s LB sprite has been set to an alternate pokemon form or CAPmon.");
 			user.say(username + "\'s LB sprite has been set to...");
 			return user.say(`!dt ${pokemonDexNum}`);
 		}
-		else return user.say("Invalid Dex number: number must be between 1 and 1025.");
+		else return user.say("Invalid Dex number: input 0 to remove, 1-1025 for pokemon base form, 1026-1579 for other forms.");
 
     },
 
