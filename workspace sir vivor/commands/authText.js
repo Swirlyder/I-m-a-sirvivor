@@ -104,6 +104,9 @@ module.exports = {
 	omroom: '==om',
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 
+	pokemonvortex: '==pv',
+	pv: '[[]]',
+
 	marill: '==pm',
 	marillvibes: '==pm',
 	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
