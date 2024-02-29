@@ -30,6 +30,9 @@ module.exports = {
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
 
+	bt: 'gg thanks for hosting',
+	brotorterra: '==bt',
+
 	bread: '==breadloeuf',
 	breadloeuf: 'You\'re toast *explodes u with mind power*',
 
@@ -101,6 +104,9 @@ module.exports = {
 	omroom: '==om',
 	om: '"OM Goodness! Leave OM Room alone..." ;~;',
 
+	pokemonvortex: '==pv',
+	pv: '[[]]',
+
 	marill: '==pm',
 	marillvibes: '==pm',
 	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
@@ -143,9 +149,6 @@ module.exports = {
 
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
-
-	yoshman: '==yosh',
-	yosh: 'Yoshing mode activated, set to full power!',
 
 	anime: '==weeb',
 	weeb: 'Anime was a mistake',
