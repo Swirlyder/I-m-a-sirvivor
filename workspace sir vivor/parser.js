@@ -49,7 +49,6 @@ function addChatMessage(message, user) {
 
 global.responses = require('./commands/askvivor.js');
 global.waiting = {};
-
 function checkHost() {
 	if (Games.hostid) {
 		Games.host = Users.get(Games.hostid);
@@ -62,7 +61,6 @@ function checkHost() {
 	}
 	*/
 }
-
 global.parse = exports.parse = {
 	actionUrl: url.parse('https://play.pokemonshowdown.com/~~' + Config.serverid + '/action.php'),
 	'settings': settings,
@@ -82,7 +80,6 @@ global.parse = exports.parse = {
 			this.splitMessage(data);
 		}
 	},
-
 	splitMessage: function (message) {
 		if (!message) return;
 
@@ -116,7 +113,6 @@ global.parse = exports.parse = {
 			}
 		}
 	},
-
 	message: function (message, room) {
 		var spl = message.split('|');
 		if (message.includes("added a roomevent titled") || message.includes("edited the roomevent titled")) this.say(room, "/events sortby date | asc");
@@ -307,58 +303,54 @@ global.parse = exports.parse = {
 				break;
 		}
 	},
-
 	chatMessage: function (message, user, room) {
-		if (!room) return; // return if room is null
-
-		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]'; // var for console msg
-
-		if (['survivor', 'survivorworkshop'].includes(room.id)) { //addchat message if room is survivor or survivorworkshop
+		if (!room) return;
+		var cmdrMessage = '["' + room.id + '|' + user.name + '|' + message + '"]';
+		if (['survivor', 'survivorworkshop'].includes(room.id)) {
 			addChatMessage(message, user);
 		}
-
-		if (message.substr(0, 6) === '/me in' && room.game) { // '/me in' joins active bot game
-			room.game.join(user);
-		} else if (message.substr(0, 7) === '/me out' && room.game) { // '/me out' leaves active bot  game
-			room.game.leave(user);
-		} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) { // '/me swirls' triggers bot to do /me swirls
+		if (message.substr(0, 6) === '/me in' && room.game) {
+		    room.game.join(user);
+		} else if (message.substr(0, 7) === '/me out' && room.game) {
+		    room.game.leave(user);
+		//} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
+			} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
 			if (!waiting["swirl"]) {
 				Parse.say(room, "/me swirls");
-				waiting["swirl"] = true; // cooldown
-				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000); //unused variable
+				waiting["swirl"] = true;
+				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
 			}
 		}
-
-		let messageID = Tools.toId(message); // make user message lowercase an eliminate spaces, assign to message ID
-		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"] && user.hasRank('survivor', '+')) { // bot autoresponds to voices+ when off cooldown
+		let messageID = Tools.toId(message);
+		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"] && user.hasRank('survivor', '+')) {
 			let actResponse;
-			for (let responseID in responses) { //loop through responses AKA askvivor.js file
-				let response = responses[responseID]; // get current response from current responseID
-				while (typeof response === 'string') { // loop until response is assigned a response object: { username: arg, before: arg, after: arg(optional) }
+			for (let responseID in responses) {
+				let response = responses[responseID];
+				while (typeof response === 'string') {
 					response = responses[response];
 				}
 				let startstr;
-				if (response.placement === "suffix") { // if response placement property is suffix (assigned in "askvivor.js")
-					startstr = Tools.toId(Config.nick) + responseID; // startstr = lowerCaseBotNameNoSpaces + responseText
+				if (response.placement === "suffix") {
+					startstr = Tools.toId(Config.nick) + responseID;
 				} else {
-					startstr = responseID + Tools.toId(Config.nick); // startstr = responseText + lowerCaseBotNameNoSpaces
+					startstr = responseID + Tools.toId(Config.nick);
 				}
-				if (messageID.startsWith(startstr)) { // if user message matches a response trigger EX: "sirvivor why" "sirvivor howmuch"
-					actResponse = response; // assign autoresponse
+				if (messageID.startsWith(startstr)) {
+					
+					actResponse = response;
 					break;
 				}
 			}
-			if (actResponse) { // if autoresponse is not null
-				let response = Tools.sample(actResponse.responses); // shuffle all possible responses of the response trigger
-				let respmessage;
-				if (response.username) { // if username property is true
-					respmessage = response.before + user.name + response.after; // include username in message
+			if (actResponse) {
+				let response = Tools.sample(actResponse.responses);
+				let respmessage
+				if (response.username) {
+					respmessage = response.before + user.name + response.after;
 				} else {
-					respmessage = response.before; // else username not included in message
+					respmessage = response.before;
 				}
-				Parse.say(room, respmessage); // the bot sends the autoresponse
-
-				//waiting["response"] = true; // cooldown
+				Parse.say(room, respmessage);
+				//waiting["response"] = true;
 				//var timeout = setTimeout(() => setWaiting("response"), 5 * 60 * 1000);
 			}
 		}
