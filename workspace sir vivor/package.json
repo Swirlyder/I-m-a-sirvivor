@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
-    "babel": "5.8.23",
-    "babel-core": "5.8.24",
+    "babel": "6.23.0",
+    "babel-core": "6.26.3",
     "colors": "1.1.2",
     "csv-parse": "4.4.6",
     "edit-google-spreadsheet": "^0.2.21",
