@@ -1,7 +1,8 @@
 {
-  "name": "Pokemon-Showdown-Bot",
+  "name": "i-m-a-sirvivor",
   "version": "0.0.1",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "babel": "5.8.23",
     "babel-core": "5.8.24",
     "colors": "1.1.2",
@@ -9,11 +10,11 @@
     "edit-google-spreadsheet": "^0.2.21",
     "google-auth-library": "^0.10.0",
     "google-spreadsheet": "^2.0.3",
-    "googleapis": "^16.1.0",
+    "googleapis": "^105.0.0",
     "lodash": "^4.15.0",
     "origindb": "^2.6.1",
     "sugar": "1.4.1",
-    "websocket": "1.0.21"
+    "websocket": "^1.0.28"
   },
   "engines": {
     "node": ">= 4.0.0"
@@ -23,11 +24,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Quinella/Pokemon-Showdown-Bot.git"
+    "url": "https://github.com/Swirlyder/I-m-a-sirvivor"
   },
   "author": {
-    "name": "Robin Vandenbrande",
-    "email": "vandenbrande.robin@gmail.com"
+    "name": "",
+    "email": ""
   },
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@babel/register": "^7.23.7"
+  }
 }

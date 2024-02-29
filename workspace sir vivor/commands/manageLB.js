@@ -148,30 +148,75 @@ module.exports = {
 		return room.say("The dd leaderboard has been reset.");
 	},
 
-//Ignore, work in progress
-/*	eventlog: function (target, user, room) {
-		if (!user.hasRank('survivor', '%')) return;
-		let split = target.split(",");
-		if (!target) {
-			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, eventlog, test`);
-			//show eventlog in pm [eventlog formatting done here]
-			// retreive event log
-			// format text [date] Event: [Event] Winner: [User], use addhtml
+	//work in progress
+	/*
+	logevent: function (target, user, room) {
+		if (!target) return;
+		let args = target.split(",");
+		let action = args[0].trim();
+		let arg1 = args[1] ? args[1].trim() : null;
+		let arg2 = args[2] ? args[2].trim() : null;
+
+		if (action == 'add' && arg2) {
+			let logID = Math.floor(Math.random() * 9999);
+			const eventType = arg1;
+			const name = arg2;
+
+			dd.createEventLogEntry(logID, eventType, name);
+			return user.say("YUUUP");
 		}
-		else if (split.length == 2) {
-			if (split[0] == '1day' || split[0] == '2day+' || split[0] == 'showdown' || split[0] == 'bossbattle' || split[0] == 'deathmatch') {
-				parse.say(room, 'did');
-			}
-			else {
-				parse.say(room, 'Event type not available. Here are the options for envents: "1day", "2day+", "showdown", "bossbattle", or "deathmatch"');
-			}
+		else return user.say("add Error: bad input");
+		if (action == 'remove' & arg1) {
+			let logID = arg1;
+			dd.removelog(logID);
 		}
-		//check for valid input
-		//input is valid: add to event log [date] [event] [user]
-		//eventLogEntry = {
-		//	date: currentTime,
-		//	eventType: target[0],
-		//	user: target[1]
-		//}
-	}*/
+		else return user.say("remove Error: bad input");
+	},
+	*/
+
+	//work in progress
+	/*
+	eventlog: function (target, user, room) {
+		const data = dd.getEventLogData();
+		const eventLogHTML = dd.getEventLogHTML(data);
+		if (room.id === user.id) {
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${eventLogHTML}`);
+
+		}
+		else {
+			console.log("yo4");
+			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${eventLogHTML}</div>`);
+		}
+	},
+	*/
+
+	//work in progress, only calcs seasonal points of top ten of cycle
+	calcseasonal(target, user, room) {
+		//get top ten users
+		const sorted = dd.getSorted();
+		let res = [];
+		let str = "<table>";
+		for (let i = 0; i < 10 ; i++)
+		{
+			let item = sorted[i];
+			let username = sorted[i][1];
+			let seasonalPoints = Math.floor(item[0] / 10);
+			str += '<tr><td>' + username + '</td>' + '<td>+' + seasonalPoints + "</td></tr>";
+			res.push([username, seasonalPoints]);
+		}
+		str += '</table>';
+
+		if (room.id === user.id) {
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${str}`);
+
+		}
+		else {
+			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${str}</div>`);
+		}
+
+		//get event winners
+
+		//calc top ten seasonal
+		//cal even winners seasonal
+    }
 }
