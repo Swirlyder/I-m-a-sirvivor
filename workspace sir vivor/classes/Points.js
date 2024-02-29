@@ -30,16 +30,13 @@ class DD {
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
 		}
-
-		if (!("data" in this.eventlog)) {
-			this.eventlog.data = [];
-		}
 	}
 	
 	exportData() {
 		fs.writeFileSync('./databases/dd.json', JSON.stringify(this.dd));
 		fs.writeFileSync('./databases/modlog.json', JSON.stringify(this.modlog));
 		fs.writeFileSync('./databases/authbattle.json', JSON.stringify(this.authbattle));
+		fs.writeFileSync('./databases/eventlog.json', JSON.stringify(this.eventlog));
 	}
 
 	updateEventLog(message) {
@@ -98,6 +95,60 @@ class DD {
 	getPoints(item) {
 		return item[0];
 	}
+
+	getLogID(item) {
+		return item[0];
+	}
+
+	getEventType(item) {
+		return item[1];
+	}
+
+	getEventWinner(item) {
+		return item[2];
+	}
+
+	createEventLogEntry(logID, eventType, username) {
+		this.eventlog[logID] = {
+			logid: logID,
+			event: eventType,
+			winner: username,
+		}
+
+		this.exportData();
+	}
+
+	addlog(logEntry) {
+		this.eventlog[logEntry.logid] = logEntry;
+	}
+
+	removelog(logID) {
+		try {
+			delete this.eventlog[logID];
+		}
+		catch (Error) {
+			user.say("Entry not found");
+		}
+	}
+
+	getEventLogData() {
+		let res = [];
+
+		for (let id in this.eventlog) {
+			let item = this.eventlog[id];
+			res.push([item.logid, item.event, item.winner]);
+		}
+		return res; 
+    }
+
+	getEventLogHTML(eventLogData) {
+		let str = ' ';
+		for (let i=0 ; i < eventLogData.length ; i++) {
+			str += eventLogData[i][0] + ' ' + eventLogData[i][1] + ' ' + eventLogData[i][2] + '<br>';
+		}
+		console.log("yo2");
+		return str;
+    }
 	/*
 	getDisplayPoints(item) {
 		return item[4];
@@ -244,19 +295,19 @@ class DD {
 		const lbVanity = items[1];
 
 		// Table styles
-		str = '<div>';
-		str += `<table border="2" ; align="${DEFAULT_ALIGN}";` +
-			'style="background-color:#FFFFFF ;' +
-			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black">`;
+		str = '<div> ';
+		str += `<table border="2" ; align="${DEFAULT_ALIGN}" ` +
+			'style="background-color:#FFFFFF ; ' +
+			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black"> `;
 
 		// Column labels
-		str += `<tr style="height:15px;">` +
-			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Rank </td>` +
-			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px ; text-align:left;"> Name </td>` +
-			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Points </td>` +
-			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Games </td>` +
-			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Hosts </td>` +
-			`</tr>`;
+		str += ` <tr style="height:15px ; font-size:1.2em">` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Rank </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px ; text-align:left;"> Name </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Points </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Games </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Hosts </td> ` +
+			`</tr> `;
 
 		// The rest of the Table
 		for (let i = 0; i < lbData.length; i++) {
@@ -266,22 +317,22 @@ class DD {
 			dexNum = lbVanity[i]['2'];
 
 			// add a row
-			strx = `<tr style="background:${bgcolor} ; color:${textcolor} ; ` + `height: ${ROW_HEIGHT}px ;">`;
+			strx = `<tr style="background:${bgcolor} ; color:${textcolor} ; ` + `height: ${ROW_HEIGHT}px ;"> `;
 			for (let ln in lbData[i]) {
 				let j = lbData[i][ln];
 
-				if (ln != '1') strx += '<td>' + j + '</td>';																		//add data
-				else if (ln == '1' && dexNum == 0) strx += '<td style="padding: 0px 5px ; text-align:left;">' + j + '</td>';		//special formatting for name column
+				if (ln != '1') strx += '<td>' + j + '</td> ';																		//add data
+				else if (ln == '1') strx += '<td style="padding: 0px 5px ; text-align:left;"> ' + j + ' </td> ';		//special formatting for name column
 				else if (dexNum != 0) {																								//special formatting for name w/ pokemon sprite
 					sheet_pos_y = (Math.floor(dexNum / POKE_SPRITE_COLS)) * 30 * -1;
 					sheet_pos_x = (dexNum % POKE_SPRITE_COLS * 40) * -1;
-					strx += `<td style="position:relative; text-align:left; padding:0px ${LEFT_RIGHT_PADDING + POKEMON_SPRITE_WIDTH}px 0px ${LEFT_RIGHT_PADDING}px;">` + j + `<div style="display:inline-block; position:absolute; right:0px; bottom:0px; background-image: url(https://play.pokemonshowdown.com/sprites/pokemonicons-sheet.png?v16); background-repeat:no-repeat; background-position:${sheet_pos_x}px ${sheet_pos_y}px; width:${POKEMON_SPRITE_WIDTH}px; height:${POKEMON_SPRITE_HEIGHT}px;"></div></td>`;
+					strx += `<td style="position:relative ; text-align:left ; padding:0px ${LEFT_RIGHT_PADDING + POKEMON_SPRITE_WIDTH}px 0px ${LEFT_RIGHT_PADDING}px ;"> ` + j + ` <div style="display:inline-block ; position:absolute ; right:0px ; bottom:0px ; background-image: url(https://play.pokemonshowdown.com/sprites/pokemonicons-sheet.png?v16) ; background-repeat:no-repeat ; background-position:${sheet_pos_x}px ${sheet_pos_y}px; width:${POKEMON_SPRITE_WIDTH}px ; height:${POKEMON_SPRITE_HEIGHT}px ;"> </div> </td> `;
 				}
 			}
-			strs.push(strx + "</tr>");
+			strs.push(strx + "</tr> ");
 		}
 		str += strs.join("");
-		str += "</table></div>";
+		str += "</table> </div>";
 
 		return str;
 	}
