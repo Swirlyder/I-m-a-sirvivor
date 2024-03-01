@@ -205,10 +205,12 @@ class DD {
 			this.dd[id] = {
 				points: 0,
 				name: user,
-				poke: dex,
+				color: "000000",
+				bgcolor: "ffffff",
+				dexnum: dex,
 			}
 		} else {
-				this.dd[id].poke = dex;
+				this.dd[id].dexNum = dex;
 		}
     }
 
