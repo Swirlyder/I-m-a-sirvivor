@@ -210,7 +210,7 @@ class DD {
 				dexnum: dex,
 			}
 		} else {
-				this.dd[id].dexNum = dex;
+				this.dd[id].dexnum = dex;
 		}
     }
 
