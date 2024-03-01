@@ -58,7 +58,7 @@ class DD {
 				name: user,
 				color: "000000",
 				bgcolor: "ffffff",
-				dexnum: "",
+				dexnum: 0,
 				/*displaypoints: numPoints*/
 				/*add extra displaypoints variable*/
 			}
