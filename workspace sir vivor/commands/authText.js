@@ -165,6 +165,9 @@ module.exports = {
 
 	woof: 'woof!',
 
+	zach: '==whatazachattack',
+	whatazachattack: 'For every good thing that happens, there will be a Zach moment to counter it.',
+	
 	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
 };
