@@ -44,6 +44,7 @@ Credits
 Current Developers:
 - Felucia (Bot Owner, Major Development, Maintainer)
 - inactive (Bot Owner, Maintainer)
+- marillvibes (Development)
 - Rainshaft (Development)
 - Shadecession (Major Development)
 - Swirlyder (Bot Owner, Repo Owner)
