@@ -107,6 +107,8 @@ module.exports = {
 	pokemonvortex: '==pv',
 	pv: '[[]]',
 
+	mv: '==pm=',
+	pacmar: '==pm',
 	marill: '==pm',
 	marillvibes: '==pm',
 	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
