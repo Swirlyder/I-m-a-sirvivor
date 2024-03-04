@@ -9,7 +9,7 @@ module.exports = {
 	/* MANAGE USER HOSTS -------------------------------------------------------------------------------------------------------------*/
 
 	host: function (target, user, room) {
-		if ((!user.hasRank(room.id, '+') && (Config.canHost.indexOf(user.id) === -1)) || room === user) return;
+		if ((!user.hasRank(room.id, '+') || room === user) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
 		let split = target.split(",");
 		let realuser = Users.get(split[0]);
@@ -63,7 +63,7 @@ module.exports = {
 	},
 
 	sethost: function (target, user, room) {
-		if (!user.hasRank('survivor', '%') && Config.canHost.indexOf(user.id) === -1) return;
+		if (!user.hasRank('survivor', '+')) return;
 		if (Games.host) return room.say("__" + Games.host.name + "__ is currently hosting");
 		let targUser = Users.get(Tools.toId(target));
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
@@ -73,7 +73,7 @@ module.exports = {
 	},
 
 	dehost: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		target = Tools.toId(target);
 		if (target === "") {
 			if (Games.host) {
@@ -105,7 +105,7 @@ module.exports = {
 	},
 
 	subhost: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		if (!Games.host) return room.say("No host is currently active.");
 		user = Users.get(Tools.toId(target));
 		if (!user) return room.say("You can only host somebody currently in the room.");
@@ -130,7 +130,7 @@ module.exports = {
 	},
 
 	nexthost: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
 		if (Games.host) {
 			return this.say(room, "A game is currently in progress!");
@@ -164,7 +164,7 @@ module.exports = {
 	q: 'queue',
 	queue: function (arg, user, room) {
 		if (!Games.canQueue) return;
-		if (user.hasRank(room.id, '%') || (Config.canHost.indexOf(user.id) !== -1)) {
+		if (user.hasRank(room.id, '+')) {
 			if (Games.hosts.length === 0) {
 				this.say(room, 'There are no users in the queue.');
 			} else {
