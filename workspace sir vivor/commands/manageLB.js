@@ -95,7 +95,7 @@ module.exports = {
 			}
 			dd.dd[newid].name = split[1].trim();
 
-			if (newid in dd.dd) {
+			if (newid in dd.dd && realt !== newid) {
 				gamecount.count[newid] += gamecount.count[toId(realt)];
 				let h = hostcount.count[toId(realt)] ? hostcount.count[toId(realt)] : 0;
 				let e = eventcount.count[toId(realt)] ? eventcount.count[toId(realt)] : 0;
