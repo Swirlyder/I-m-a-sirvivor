@@ -10,11 +10,11 @@ module.exports = {
 
 	host: function (target, user, room) {
 		if (!user.hasRank(room.id, '+') || room === user) return;
-		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
+		if (!Config.allowGames) return room.say("Restart is pending, please refrain from beginning any games.");
 		let split = target.split(",");
 		let realuser = Users.get(split[0]);
 		if (!realuser) return this.say(room, "You can only host somebody currently in the room.");
-		if (realuser.id in Games.hostbans) return user.say("That user is currently hostbanned.");
+		if (realuser.id in Games.hostbans) return user.say("This user is currently hostbanned.");
 		let targTheme = "";
 		if (split.length > 1) {
 			let targThemeID = Tools.toId(split[1]);
@@ -48,14 +48,14 @@ module.exports = {
 			let info = Games.hosts.shift();
 			Games.hosts.push([realuser.name, targTheme]);
 			this.say(room, realuser.name + " was added to the hostqueue" + (targTheme.length ? " for " + targTheme : "") + ".");
-			this.say(room, "/wall **Survgame.** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join. NOW");
+			this.say(room, "/wall **SURVGAME:** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join.");
 			this.say(room, "/modnote HOST: [" + info[0] + "] hosted.");
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
 			Games.exportData();
 		} else {
 			Games.host = realuser;
-			this.say(room, "/wall **Survgame.** " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + ". Type ``/me in`` to join. NOW");
+			this.say(room, "/wall **SURVGAME:** " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + ". Type ``/me in`` to join.");
 			this.say(room, "/modnote HOST: [" + realuser.name + "] hosted.");
 			Games.addHost(realuser);
 			Games.exportData();
@@ -69,7 +69,7 @@ module.exports = {
 		if (!targUser) return room.say("**" + target + "** is not currently in the room");
 		Games.host = targUser;
 		room.say("**" + targUser.name + "** has been set as the host.");
-		room.say("/modnote " + targUser.name + " has been set as the host by " + user.name + ".");
+		room.say("/modnote SETHOST: [" + targUser.name + "] has been set as the host by " + user.name + ".");
 	},
 
 	dehost: function (target, user, room) {
@@ -110,8 +110,8 @@ module.exports = {
 		user = Users.get(Tools.toId(target));
 		if (!user) return room.say("You can only host somebody currently in the room.");
 		Games.host = user;
-		room.say("**" + Games.host.name + "** has subbed in as the host!");
-		room.say("/modnote " + Games.host.name + " has subhosted");
+		room.say("**" + Games.host.name + "** has subbed in as the host.");
+		room.say("/modnote SUBHOST: [" + Games.host.name + "] was subbed in as the host.");
 	},
 
 	userhosts: function (target, user, room) {
@@ -131,9 +131,9 @@ module.exports = {
 
 	nexthost: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
-		if (!Config.allowGames) return room.say("I will be restarting soon, please refrain from beginning any games.");
+		if (!Config.allowGames) return room.say("Restart is pending, please refrain from beginning any games.");
 		if (Games.host) {
-			return this.say(room, "A game is currently in progress!");
+			return this.say(room, "A game is currently in progress.");
 		}
 		if (Games.hosts.length === 0) {
 			return this.say(room, "The hostqueue is empty.");
@@ -144,18 +144,18 @@ module.exports = {
 			if (Users.get(info[0])) {
 				break;
 			} else {
-				this.say(room, "**" + info[0] + "** is not online and could not be hosted!");
+				this.say(room, "**" + info[0] + "** is not online and could not be hosted.");
 			}
 		}
 		if (Users.get(info[0])) {
-			this.say(room, "/wall **Survgame.** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + "! Do ``/me in`` to join!");
-			this.say(room, "/modnote HOST: " + info[0] + " hosted");
+			this.say(room, "/wall **SURVGAME:** " + info[0] + " is hosting" + (info[1].length ? " **" + info[1] + "**" : "") + ". Type ``/me in`` to join.");
+			this.say(room, "/modnote HOST: [" + info[0] + "] hosted");
 			Games.host = Users.get(info[0]);
 			Games.addHost(info[0]);
 			Games.points = null;
 			Games.exportData();
 		} else {
-			this.say(room, "Nobody in the hostqueue could be hosted!");
+			this.say(room, "Nobody in the hostqueue could be hosted.");
 		}
 	},
 
@@ -166,26 +166,26 @@ module.exports = {
 		if (!Games.canQueue) return;
 		if (user.hasRank(room.id, '+')) {
 			if (Games.hosts.length === 0) {
-				this.say(room, 'There are no users in the queue.');
+				this.say(room, 'There are no users in the hostqueue.');
 			} else {
 				var queueText = '';
 				for (var i = 0; i < Games.hosts.length; i++) {
 					let it = i == 0 ? '' : '__'
 					queueText += '**' + (i + 1) + '.** ' + it + Games.hosts[i][0] + it + (Games.hosts[i][1].length ? ", " + Games.hosts[i][1] : "") + " "; //add formatting here, down there just adds on to the end whoops
 				}
-				this.say(room, '/announce **Queue:** ' + queueText);
+				this.say(room, '/announce **HOSTQUEUE:** ' + queueText);
 			}
 		} else {
 			if (Games.hosts.length === 0 && room.id.charAt(0) !== ',') {
-				this.say(room, '/w ' + user.id + ', There are currently no users in the queue.');
+				this.say(room, '/w ' + user.id + ', There are currently no users in the hostqueue.');
 			} else {
 				var queueText = '';
 				for (var i = 0; i < Games.hosts.length; i++) {
 					let it = i == 0 ? '' : '__'
 					queueText += '**' + (i + 1) + '.** ' + it + Games.hosts[i] + it + ' ';
 				}
-				if (room.id.charAt(0) === ',') this.say(room, '/announce **Queue:** ' + queueText);
-				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **Queue:** ' + queueText);
+				if (room.id.charAt(0) === ',') this.say(room, '/announce **HOSTQUEUE:** ' + queueText);
+				if (room.id.charAt(0) !== ',') this.say(room, '/w ' + user.id + ', /announce **HOSTQUEUE:** ' + queueText);
 			}
 		}
 		Games.canQueue = false;
@@ -221,7 +221,7 @@ module.exports = {
 		}
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 3;
-		Rooms.get('survivor').say("/modnote [" + targUser.id + "] has been hostbanned for " + numDays + " days by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote HOSTBAN: [" + targUser.id + "] has been hostbanned for " + numDays + " days by " + user.name + ".");
 		return room.say(Games.hostBan(targUser, numDays));
 	},
 
@@ -242,7 +242,7 @@ module.exports = {
 
 	unhostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		Rooms.get('survivor').say("/modnote [" + target + "] has been unhostbanned by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote UNHOSTBAN: [" + target + "] has been unhostbanned by " + user.name + ".");
 		return room.say(Games.unHostBan(target));
 	},
 
