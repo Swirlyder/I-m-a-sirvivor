@@ -99,7 +99,7 @@ module.exports = {
 			text = '/pm ' + user + ', ';
 		}
 		text += 'Hello, welcome to Survivor! I\'m the room bot. "Survivor" is a luck-based game' +
-			'that uses Pokémon Showdown\'s /roll feature. For more info, go to:' +
+			'that uses PokÃ©mon Showdown\'s /roll feature. For more info, go to:' +
 			'https://sites.google.com/view/survivor-ps/home';
 		this.say(room, text);
 		Games.canIntro = false;
@@ -173,7 +173,8 @@ module.exports = {
 		text += 'Survivor Themes and How to Play Them: https://sites.google.com/view/survivor-ps/themes';
 		this.say(room, text);
 	},
-
+	
+	int: 'interviews',
 	interviews: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
@@ -182,8 +183,7 @@ module.exports = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u' +
-			'2ePdxjysVeMZw/viewform || Interviews: https://sites.google.com/view/survivor-ps/extras/current-auth';
+		text += '**SURVIVOR STAFF INTERVIEWS**: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u';
 		this.say(room, text);
 	},
 
