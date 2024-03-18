@@ -122,8 +122,8 @@ module.exports = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is not currently in session. More info on NBT here:' +
-			'https://sites.google.com/view/survivor-ps/events/nbt';
+		text += '**Next Big Theme** is currently in session! More info on NBT and the current themes in review here:' +
+			'https://docs.google.com/document/d/17_5jkdhC3P1F073NiJeuUnX_NdgZsVgzxr8mFr_WQ8s/edit';
 		this.say(room, text);
 	},
 
