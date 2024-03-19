@@ -149,6 +149,9 @@ module.exports = {
 	tush: '==tushavi',
 	tushavi: 'THEME GOD',
 
+	yakko: '==yakkosalabama',
+	yakkosalabama: 'And now, the rolls of the world, brought to you by... Yakko!',
+
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
 
