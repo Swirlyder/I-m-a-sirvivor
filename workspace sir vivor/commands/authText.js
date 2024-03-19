@@ -25,7 +25,7 @@ module.exports = {
 	audiino: 'You don’t need to tell me that, I audiino',
 
 	bea: '==beautifications',
-	beautifications: 'brb changing my username and pfp',
+	beautifications: 'winnable',
 
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
