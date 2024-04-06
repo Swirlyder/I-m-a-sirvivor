@@ -183,7 +183,7 @@ module.exports = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**SURVIVOR STAFF INTERVIEWS**: https://sites.google.com/view/survivor-ps/extras/interviews?authuser=0';
+		text += '**SURVIVOR STAFF INTERVIEWS**: https://sites.google.com/view/survivor-ps/extras/interviews?authuser=0 || **FINAL ROUND QUESTION SUBMISSIONS**: https://forms.gle/EhPsw9CaNtJD45QH8';
 		this.say(room, text);
 	},
 
