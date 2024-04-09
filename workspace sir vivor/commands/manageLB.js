@@ -42,17 +42,18 @@ module.exports = {
 		if (split.length !== 2) return user.say("You must enter the user and the Pokedex number they desire.");
 		let username = split[0];
 		let pokemonDexNum = split[1].trim();
-
+		let isBlankSpace = ['1026', '1027', '1028', '1029', '1030', '1031', '1032', '1013', '1317', '1318', '1319', '1510', '1511'].includes(pokemonDexNum);
+		
 		//the meat and potatoes
-		if (pokemonDexNum >= 0 && pokemonDexNum <= 1579) {
+		if (pokemonDexNum >= 0 && pokemonDexNum <= 1585 && !isBlankSpace) {
 			dd.setDexNum(username, pokemonDexNum);
 			if (pokemonDexNum == 0) return user.say(username + "\'s LB sprite has been removed");
 			if (pokemonDexNum > 1025) return user.say(username + "\'s LB sprite has been set to an alternate pokemon form or CAPmon.");
 			user.say(username + "\'s LB sprite has been set to...");
 			return user.say(`!dt ${pokemonDexNum}`);
 		}
+		else if (isBlankSpace) return user.say("Invalid Dex number: " + pokemonDexNum + " has no sprite"); 
 		else return user.say("Invalid Dex number: input 0 to remove, 1-1025 for pokemon base form, 1026-1579 for other forms.");
-
     },
 
 	lb: function (target, user, room) {
