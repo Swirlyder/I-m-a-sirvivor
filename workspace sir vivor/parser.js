@@ -230,7 +230,7 @@ global.parse = exports.parse = {
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 
 				spl = spl.slice(3).join('|');
-				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
+				if (!user.hasRank(room.id, '+')) this.processChatData(user.id, room.id, spl);
 				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
@@ -242,7 +242,7 @@ global.parse = exports.parse = {
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 
 				spl = spl.slice(4).join('|');
-				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
+				if (!user.hasRank(room.id, '+')) this.processChatData(user.id, room.id, spl);
 				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
