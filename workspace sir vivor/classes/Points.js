@@ -199,7 +199,7 @@ class DD {
 	setDexNum(user, arg) {
 		let name = user.trim();
 		let id = Tools.toId(name);
-		let dex = arg.trim();
+		let dex = Number(arg.trim());
 
 		if (!(id in this.dd)) {
 			this.dd[id] = {
@@ -240,7 +240,7 @@ class DD {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.poke]);
+			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.dexnum]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
@@ -324,7 +324,7 @@ class DD {
 				let j = lbData[i][ln];
 
 				if (ln != '1') strx += '<td>' + j + '</td> ';																		//add data
-				else if (ln == '1') strx += '<td style="padding: 0px 5px ; text-align:left;"> ' + j + ' </td> ';		//special formatting for name column
+				else if (ln == '1' && dexNum == "0") strx += '<td style="padding: 0px 5px ; text-align:left;"> ' + j + ' </td> ';		//special formatting for name column
 				else if (dexNum != 0) {																								//special formatting for name w/ pokemon sprite
 					sheet_pos_y = (Math.floor(dexNum / POKE_SPRITE_COLS)) * 30 * -1;
 					sheet_pos_x = (dexNum % POKE_SPRITE_COLS * 40) * -1;

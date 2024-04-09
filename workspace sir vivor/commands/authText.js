@@ -25,7 +25,7 @@ module.exports = {
 	audiino: 'You don’t need to tell me that, I audiino',
 
 	bea: '==beautifications',
-	beautifications: 'brb changing my username and pfp',
+	beautifications: 'winnable',
 
 	bon: '==bondance',
 	bondance: 'Lol, more like can\'t dance',
@@ -107,6 +107,8 @@ module.exports = {
 	pokemonvortex: '==pv',
 	pv: '[[]]',
 
+	mv: '==pm=',
+	pacmar: '==pm',
 	marill: '==pm',
 	marillvibes: '==pm',
 	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
@@ -147,6 +149,9 @@ module.exports = {
 	tush: '==tushavi',
 	tushavi: 'THEME GOD',
 
+	yakko: '==yakkosalabama',
+	yakkosalabama: 'And now, the rolls of the world, brought to you by... Yakko!',
+
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
 
@@ -165,6 +170,9 @@ module.exports = {
 
 	woof: 'woof!',
 
+	zach: '==whatazachattack',
+	whatazachattack: 'For every good thing that happens, there will be a Zach moment to counter it.',
+	
 	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
 };

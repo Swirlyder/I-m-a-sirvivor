@@ -7,7 +7,7 @@ module.exports = {
 	settextcolor: function (target, user, room) {
 		//input check
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
 		let username = split[0];
@@ -22,7 +22,7 @@ module.exports = {
 	setbgcolor: function (target, user, room) {
 		//input check
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must enter the user and the hex code of the colour you want.");
 		let username = split[0];
@@ -37,7 +37,7 @@ module.exports = {
 	setpoke: function (target, user, room) {
 		//input check
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must enter the user and the Pokedex number they desire.");
 		let username = split[0];
@@ -77,7 +77,7 @@ module.exports = {
 
 	rename: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '%')) return;
 		let split = target.split(",");
 		if (split.length < 2) return user.say("You must specify an old and new username");
 		let realt = Tools.toId(split[0])
@@ -95,7 +95,7 @@ module.exports = {
 			}
 			dd.dd[newid].name = split[1].trim();
 
-			if (newid in dd.dd) {
+			if (newid in dd.dd && realt !== newid) {
 				gamecount.count[newid] += gamecount.count[toId(realt)];
 				let h = hostcount.count[toId(realt)] ? hostcount.count[toId(realt)] : 0;
 				let e = eventcount.count[toId(realt)] ? eventcount.count[toId(realt)] : 0;
@@ -119,7 +119,7 @@ module.exports = {
 
 	removeuser: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let userToRemove = Tools.toId(target);
 		if (!(userToRemove in dd.dd)) {
 			return user.say("**" + split[0] + "** is not on the leaderboard.");

@@ -4,7 +4,7 @@ hostcount.load();
 module.exports = {
 	addspecial: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
 		let username = split[0].trim();
@@ -28,7 +28,7 @@ module.exports = {
 	addpointsbot: 'addbot',
 	addbot: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length < 2) return user.say("You must specify the number of players, followed by the winner and runner-up.");
 		let numPlayers = parseInt(split[0]);
@@ -70,7 +70,7 @@ module.exports = {
 	revertpoints: 'rpoints',
 	undopoints: 'rpoints',
 	rpoints: function (arg, user, room) {
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let last = dd.modlog.data.pop();
 		if (last.first) {
 			dd.remPoints(last.first[1], last.first[0]);
@@ -100,7 +100,7 @@ module.exports = {
 	remspec: 'removespecial',
 	removespecial: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of points and the user to remove them from.");
 		let username = split[0];
@@ -112,7 +112,7 @@ module.exports = {
 
 	addgame: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of games and the user to add them to.");
 		let username = split[0];
@@ -125,7 +125,7 @@ module.exports = {
 	removegame: 'remgame',
 	remgame: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of games and the user to remove them from.");
 		let username = split[0];
@@ -138,7 +138,7 @@ module.exports = {
 	addhostlb: 'addhostcount',
 	addhostcount: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of hosts and the user to add them to.");
 		let username = split[0];
@@ -153,7 +153,7 @@ module.exports = {
 	removehostlb: 'remhostcount',
 	remhostcount: function (target, user, room) {
 		if (!target) return;
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length !== 2) return user.say("You must specify number of hosts and the user to remove them from.");
 		let username = split[0];
@@ -168,7 +168,7 @@ module.exports = {
 	addpoints: 'adduser',
 	adduser: function (target, user, room) {
 		if (!target) return; //user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the rest of the players.");
 		let numPlayers = parseInt(split[0]);
@@ -241,7 +241,7 @@ module.exports = {
 	addpointsofficial: 'addfish',
 	addfish: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
 		let numPlayers = parseInt(split[0]);
@@ -342,7 +342,7 @@ module.exports = {
 	addpointssurvivorshowdown: 'addss',
 	addss: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
-		if (!user.hasRank('survivor', '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+		if (!user.hasRank('survivor', '+')) return;
 		let split = target.split(",");
 		if (split.length < 3) return user.say("You must specify the number of players, followed by the host, the winner, the runner-up and the remaining players");
 		let numPlayers = parseInt(split[0]);

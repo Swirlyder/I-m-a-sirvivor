@@ -19,7 +19,7 @@ const ACTION_COOLDOWN = 3 * 1000;
 const FLOOD_MESSAGE_NUM = 7;
 const FLOOD_PER_MSG_MIN = 500; // this is the minimum time between messages for legitimate spam. It's used to determine what "flooding" is caused by lag
 const FLOOD_MESSAGE_TIME = 6 * 1000;
-const MIN_CAPS_LENGTH = 12;
+const MIN_CAPS_LENGTH = 25;
 const MIN_CAPS_PROPORTION = 0.8;
 
 // TODO: move to rooms.js
@@ -230,7 +230,7 @@ global.parse = exports.parse = {
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 
 				spl = spl.slice(3).join('|');
-				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
+				if (!user.hasRank(room.id, '+')) this.processChatData(user.id, room.id, spl);
 				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
@@ -242,7 +242,7 @@ global.parse = exports.parse = {
 				if (this.isBlacklisted(user.id, room.id)) this.say(room, '/roomban ' + user.id + ', Blacklisted user');
 
 				spl = spl.slice(4).join('|');
-				if (!user.hasRank(room.id, '%')) this.processChatData(user.id, room.id, spl);
+				if (!user.hasRank(room.id, '+')) this.processChatData(user.id, room.id, spl);
 				console.log(`[${room.id.blue}] ${username.trim().yellow}: ${spl}`);
 				this.chatMessage(spl, user, room);
 				break;
@@ -553,7 +553,7 @@ global.parse = exports.parse = {
 				}
 			}
 			// moderation for stretching (over x consecutive characters in the message are the same)
-			let stretchMatch = /(.)\1{7,}/gi.test(msg) || /(..+)\1{4,}/gi.test(msg); // matches the same character (or group of characters) 8 (or 5) or more times in a row
+			let stretchMatch = /(.)\1{25,}/gi.test(msg) || /(..+)\1{4,}/gi.test(msg); // matches the same character (or group of characters) 8 (or 5) or more times in a row
 			if ((useDefault || !('stretching' in modSettings)) && stretchMatch) {
 				if (pointVal < 1) {
 					pointVal = 1;

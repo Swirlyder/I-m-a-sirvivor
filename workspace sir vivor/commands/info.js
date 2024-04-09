@@ -99,7 +99,7 @@ module.exports = {
 			text = '/pm ' + user + ', ';
 		}
 		text += 'Hello, welcome to Survivor! I\'m the room bot. "Survivor" is a luck-based game' +
-			'that uses Pokémon Showdown\'s /roll feature. For more info, go to:' +
+			'that uses PokÃ©mon Showdown\'s /roll feature. For more info, go to:' +
 			'https://sites.google.com/view/survivor-ps/home';
 		this.say(room, text);
 		Games.canIntro = false;
@@ -122,8 +122,8 @@ module.exports = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += '**Next Big Theme** is not currently in session. More info on NBT here:' +
-			'https://sites.google.com/view/survivor-ps/events/nbt';
+		text += '**Next Big Theme** is currently in session! More info on NBT and the current themes in review here:' +
+			'https://docs.google.com/document/d/17_5jkdhC3P1F073NiJeuUnX_NdgZsVgzxr8mFr_WQ8s/edit';
 		this.say(room, text);
 	},
 
@@ -173,7 +173,8 @@ module.exports = {
 		text += 'Survivor Themes and How to Play Them: https://sites.google.com/view/survivor-ps/themes';
 		this.say(room, text);
 	},
-
+	
+	int: 'interviews',
 	interviews: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
@@ -182,8 +183,7 @@ module.exports = {
 			text = '/pm ' + user.id + ', ';
 		}
 
-		text += 'Current Poll: https://docs.google.com/forms/d/e/1FAIpQLSejXxHn2ycTXn8nKYRRmYEJZMqX1rNb43A1u' +
-			'2ePdxjysVeMZw/viewform || Interviews: https://sites.google.com/view/survivor-ps/extras/current-auth';
+		text += '**SURVIVOR STAFF INTERVIEWS**: https://sites.google.com/view/survivor-ps/extras/interviews?authuser=0 || **FINAL ROUND QUESTION SUBMISSIONS**: https://forms.gle/EhPsw9CaNtJD45QH8';
 		this.say(room, text);
 	},
 
