@@ -7,7 +7,7 @@ const ALLOW_ROLL_LIMIT = 2;
 module.exports = {
 	ar: 'allowroll',
 	allowroll: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (!Games.host || Games.host.id !== user.id) || !target) return;
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id) || !target) return;
 
 		const listOfUsers = target.split(",");
 		const numOfUsers = listOfUsers.length;
