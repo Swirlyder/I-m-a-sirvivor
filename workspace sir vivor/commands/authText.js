@@ -111,7 +111,7 @@ module.exports = {
 	pacmar: '==pm',
 	marill: '==pm',
 	marillvibes: '==pm',
-	pm: 'test ᘛ⁐̤ᕐᐷ',
+	pm: 'My Huge Power is my terrible rolls... ᘛ⁐̤ᕐᐷ',
 
 	pq: '==penquin',
 	ppq: '==penquin',
