@@ -324,9 +324,9 @@ global.parse = exports.parse = {
 			}
 		}
 		else if (Config.commandCharacter === '.' && message.startsWith('/me vibes') && user.id !== Tools.toId(Config.nick)) {
-			if (!waiting["swirl"]) {
+			if (!waiting["vibes"]) {
 			Parse.say(room, "/me vibes marill-y");
-			waiting["swirl"] = true;
+			waiting["vibes"] = true;
 			var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
 			}    
 		}
