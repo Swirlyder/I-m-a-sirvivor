@@ -316,19 +316,17 @@ global.parse = exports.parse = {
 		    room.game.leave(user);
 		}
 		//} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
-		else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick)) {
-			if (!waiting["swirl"]) {
-				Parse.say(room, "/me swirls");
-				waiting["swirl"] = true;
-				var timeout = setTimeout(() => setWaiting("swirl"), 60 * 1000);
+		else if (Config.commandCharacter === '.' && (message.startsWith('/me swirls') || message.startsWith('/me vibes')) && user.id !== Tools.toId(Config.nick)) {
+			let action = message.startsWith('/me swirls') ? "swirl" : "vibes";
+			if (!waiting[action]) {
+				Parse.say(room, `/me ${action}${action === 'vibes' ? ' marill-y' : ''}`);
+				waiting[action] = true;
+				clearTimeout(timeout); // clear any existing timeout
+				timeout = setTimeout(() => {
+					waiting["swirl"] = false;
+					waiting["vibes"] = false;
+				}, 60 * 1000);
 			}
-		}
-		else if (Config.commandCharacter === '.' && message.startsWith('/me vibes') && user.id !== Tools.toId(Config.nick)) {
-			if (!waiting["vibes"]) {
-				Parse.say(room, "/me vibes marill-y");
-				waiting["vibes"] = true;
-				var timeout = setTimeout(() => setWaiting("vibes"), 60 * 1000);
-			}    
 		}
 		let messageID = Tools.toId(message);
 		if (Config.commandCharacter === '.' && user.id !== Tools.toId(Config.nick) && !waiting["response"] && user.hasRank('survivor', '+')) {
