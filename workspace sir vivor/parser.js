@@ -317,15 +317,11 @@ global.parse = exports.parse = {
 		}
 		//} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
 		else if (Config.commandCharacter === '.' && (message.startsWith('/me swirls') || message.startsWith('/me vibes')) && user.id !== Tools.toId(Config.nick)) {
-			let action = message.startsWith('/me swirls') ? "swirl" : "vibes";
-			if (!waiting[action]) {
+			let action = message.startsWith('/me swirls') ? "swirls" : "vibes";
+			if (!waiting['/me']) {
 				Parse.say(room, `/me ${action}${action === 'vibes' ? ' marill-y' : ''}`);
-				waiting[action] = true;
-				clearTimeout(timeout); // clear any existing timeout
-				timeout = setTimeout(() => {
-					waiting["swirl"] = false;
-					waiting["vibes"] = false;
-				}, 60 * 1000);
+				waiting['/me'] = true;
+				var timeout = setTimeout(() => setWaiting("/me"), 60 * 1000);
 			}
 		}
 		let messageID = Tools.toId(message);
