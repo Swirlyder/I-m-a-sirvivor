@@ -84,6 +84,8 @@ const gameTypes = {
 	santasautomatedworkshop: ['Santa\'s Automated Workshop', 'https://sites.google.com/view/survivor-ps/themes/saw', 'Deliver presents like a true good person!', 2],
 	saw: 'santasautomatedworkshop',
 	santa: 'santasautomatedworkshop',
+	sharing: 'sharingiscaring',
+	sharingiscaring: ['Sharing Is Caring', 'https://sites.google.com/view/survivor-ps/themes/sharing-is-caring', 'Pick your pickles wisely', 2],
 	thebridge: ['The Bridge', 'https://sites.google.com/view/survivor-ps/themes/the-bridge', 'Why burn the bridge when it will crumble on its own?', 1],
 	bridge: 'thebridge',
 	tokensoflife: ['Tokens of Life', 'https://sites.google.com/view/survivor-ps/themes/tokens-of-life', 'Who needs a Circle when you have Tokens?... Winner of NBT #11!', 0],
