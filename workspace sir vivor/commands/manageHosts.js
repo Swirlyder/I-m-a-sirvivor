@@ -52,12 +52,14 @@ module.exports = {
 			this.say(room, "/modnote HOST: [" + info[0] + "] hosted.");
 			Games.host = Users.get(info[0]);
 			Games.addHost(Games.host);
+			Games.enableSignups();
 			Games.exportData();
 		} else {
 			Games.host = realuser;
 			this.say(room, "/wall **SURVGAME:** " + realuser.name + " is hosting" + (targTheme.length ? " **" + targTheme + "**" : "") + ". Type ``/me in`` to join.");
 			this.say(room, "/modnote HOST: [" + realuser.name + "] hosted.");
 			Games.addHost(realuser);
+			Games.enableSignups();
 			Games.exportData();
 		}
 	},
@@ -249,5 +251,17 @@ module.exports = {
 	bantime: function (target, user, room) {
 		if (!user.hasRank('survivor', '+')) return;
 		return room.say(Games.banTime(target));
+	},
+	enabletool: function (target, user, room) {
+		if (target === 'pl' && user.hasRank('survivor', '%')) {
+			Games.enablePlTool();
+			room.say("PL tool has been enabled.");
+		}
+	},
+	disabletool: function (target, user, room) {
+		if (target === 'pl' && user.hasRank('survivor', '%')) {
+			Games.disablePlTool();
+			room.say("PL tool has been disabled	.");
+		}
 	}
 };

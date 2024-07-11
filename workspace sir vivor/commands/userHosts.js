@@ -196,6 +196,7 @@ module.exports = {
 		Games.host = null;*/
 		room.say("The winner is **" + target + "**! Thanks for playing.");
 		Games.host = null;
+		Games.clearPlayerList();
 		Games.hosttype = null;
 	},
 
@@ -258,10 +259,61 @@ module.exports = {
 		if (target.endsWith('type')) {
 			target = target.substr(0, target.length - 4);
 		}
-		if (types.indexOf(target) !== -1) {
+		if (types.indexOf(target) !== -1) {e
 			this.say(room, "!weak " + target);
 		} else {
 			this.say(room, "Please enter a valid type.");
 		}
+	},
+	ts: 'togglesignups',
+	tsignups: 'togglesignups',
+	togglesignups: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+		Games.toggleSignups();
+		if (Games.signupsOpen) {
+			room.say("/msgroom survivor, Signups are open!");
+		}
+		else{
+			room.say("/msgroom survivor, Signups are closed!");
+		}
+	},
+	elim: 'eliminate',
+	eliminate: function (target, user, room) {
+		if (!Games.playerListToolEnabled) return;
+		if ((!Games.host || Games.host.id !== user.id)) return;
+		let player = Games.players[Tools.toId(target)];
+		Games.eliminatePlayer(player);
+		const html = PL_Menu.generatePLAssistantHTML();
+		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
+	},
+	plmenu: function (target, user, room) {
+		if (!Games.playerListToolEnabled) return;
+		if (((!Games.host && Games.host.id !== user.id) || !user.isExcepted())) return;
+		const split = target.split(","), arg = split[0], playerID = split[1];
+		const parts = target.split(/,(.+)/), notes = parts[1];
+		switch (arg) {
+			case "expanduser":
+				Games.expandedUser = Games.expandedUser == playerID ? "none" : split[1];
+				break;
+			case "savenotes":
+				Games.saveNotes(notes);
+				break;
+			case "remove":
+				Games.removePlayer(Games.players[playerID], false);
+				break;
+			case "revive":
+				Games.players[playerID].eliminated = false;
+				Games.playerCount++;
+				break;
+			case "rename":
+				const  newName = split[2];
+				Games.players[playerID].name = newName;
+				break;
+			case "hidenotes":
+				Games.hideNotes = !Games.hideNotes;
+				break;
+		}
+		const html = PL_Menu.generatePLAssistantHTML();
+		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
 	}
 }

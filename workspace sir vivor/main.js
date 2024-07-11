@@ -69,7 +69,8 @@ global.Rooms = require('./classes/Room.js');
 global.Commands = require('./commands.js').commands;
 global.Parse = require('./parser.js').parse;
 
-global.Games = require('./Games.js');
+global.Games = require('./games.js');
+global.PL_Menu = require('./classes/HTMLPage.js');
 
 
 console.log(Tools.mod(912673, 688165, 1032247));
@@ -99,8 +100,8 @@ fs.watchFile('./commands.js', function (curr, prev) {
 
 var watcher = chokidar.watch('./games', {ignored: /^\./, persistent: true});
 function reloadGames () {
-	delete require.cache[require.resolve('./Games.js')];
-	Games = require('./Games.js');
+	delete require.cache[require.resolve('./games.js')];
+	Games = require('./games.js');
 	Games.loadGames();
 	logging.info('Games reloaded.');
 }
@@ -115,7 +116,7 @@ fs.watchFile('./Games.js', function (curr, prev) {
 	if (curr.mtime <= prev.mtime) return;
 	try {
 		delete require.cache[require.resolve('./Games.js')];
-		Games = require('./Games.js');
+		Games = require('./games.js');
 		Games.loadGames();
 		logging.info('Games reloaded.');
 	} catch (e) {}

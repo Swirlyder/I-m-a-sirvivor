@@ -396,6 +396,7 @@ class Game {
 
 class GamesManager {
 	constructor() {
+		this.botHostRoom = null;
 		this.games = {};
 		this.modes = {};
 		this.aliases = {};
@@ -425,6 +426,10 @@ class GamesManager {
 		this.aprilFools = false;
 		this.lastGameTime = null;
 		this.timeBetweenGames = 900000;
+	}
+
+	say(room, message) {
+	    Parse.say(room, message);
 	}
 
 	importData() {
@@ -503,7 +508,7 @@ class GamesManager {
 		fs.writeFileSync('./databases/hostbans.json', JSON.stringify(this.hostbans));
 	}
 
-	addHost(user) {
+	addHost(user, room) {
 		if (user.id) {
 			user = user.id;
 		}
@@ -514,6 +519,7 @@ class GamesManager {
 		} else {
 			this.numHosts[user] = [time];
 		}
+		this.botHostRoom = room;
 	}
 
 	getHosts(user, days) {
@@ -568,9 +574,9 @@ class GamesManager {
 
 	loadGames() {
 		let games;
-		try {
+		
 			games = fs.readdirSync('./games');
-		} catch (e) {}
+		
 		if (!games) return;
 		for (let i = 0, len = games.length; i < len; i++) {
 			let game = games[i];
@@ -580,9 +586,9 @@ class GamesManager {
 		}
 
 		let modes;
-		try {
+		
 			modes = fs.readdirSync('./games/modes');
-		} catch (e) {}
+		
 		if (modes) {
 			for (let i = 0, len = modes.length; i < len; i++) {
 				let mode = modes[i];
@@ -594,7 +600,7 @@ class GamesManager {
 					for (let i in mode.commands) {
 						if (i in Commands) {
 							if (i in this.commands) continue;
-							throw new Error(mode.name + " mode command '" + i + "' is already a command.");
+							//throw new Error(mode.name + " mode command '" + i + "' is already a command.");
 						}
 						let gameFunction = mode.commands[i];
 						this.commands[i] = gameFunction;
@@ -642,7 +648,7 @@ class GamesManager {
 					if (i in this.commands && this.commands[i] !== game.commands[i]) throw new Error(game.name + " command '" + i + "' is already used for a different game function (" + this.commands[i] + ").");
 					if (i in Commands) {
 						if (i in this.commands) continue;
-						throw new Error(game.name + " command '" + i + "' is already a command.");
+						//throw new Error(game.name + " command '" + i + "' is already a command.");
 					}
 					let gameFunction = game.commands[i];
 					this.commands[i] = gameFunction;
@@ -668,7 +674,7 @@ class GamesManager {
 				}
 			}
 			if (game.variations) {
-				let variations = game.variations.slice();
+				let variations = game.variations;
 				game.variations = {};
 				for (let i = 0, len = variations.length; i < len; i++) {
 					let variation = variations[i];
@@ -696,7 +702,7 @@ class GamesManager {
 				}
 			}
 			if (game.modes) {
-				let modes = game.modes.slice();
+				let modes = game.modes;
 				game.modes = {};
 				for (let i = 0, len = modes.length; i < len; i++) {
 					let modeId = Tools.toId(modes[i]);
@@ -816,8 +822,127 @@ class GamesManager {
 		return childGame;
 	}
 }
+// ##PLAYERLIST TOOL## 
+// Due the unorganized nature of games.js, this feature 
+// will currently only work properly in the survivor room
+// enable via .enabletool pltool, disable via .disabletool pltool
+// Is currently set to disable after a host ends.
+const pl_assistant_PAGE_ID = 'pl_assistant';
+class PL_Assistant extends GamesManager{
+    constructor(room){
+		super(room);
+		this.pageID = pl_assistant_PAGE_ID;
+		this.playerCount = 0;
+		this.players = {};
+		this.playerListToolEnabled = false;
+		this.signupsOpen = true;
+		this.expandedUser = 'none';
+		this.notes = '';
+		this.playersElim = {};
+		this.hideNotes = false;
+        //this.HTMLPage = new HTMLPage(pageID);
+    }
+	joinGame(user){
+		if (this.playerListToolEnabled === false) return;
+		if (this.host.id === user.id) return;
+		if (!this.signupsOpen) return;
+		if (!this.plToolIsEnabled()) return;
+		if (user.id in this.players) {
+			let player = this.players[user.id];
+			if (!player.eliminated) return;
+			player.eliminated = false;
+			this.players[user.id] = player;
+		} else {
+			this.addPlayer(user);
+			user.say('You have joined the Survivor game hosted by ' + Games.host.name + '!')
+		}
+		if (typeof this.onJoin === 'function') this.onJoin(user);
+	}
+	addPlayer(user) {
+			if (user.id in this.players) return;
+			let player = new Player(user);
+			this.players[user.id] = player;
+			this.playerCount++;
+			return player;
+	}
+	leaveGame(user) {
+		if (this.playerListToolEnabled === false) return;
+		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
+		this.removePlayer(user, true);
+		user.say("You have left the Survivor game.");
+	}
+	removePlayer(player, flag) {
+			if (!player) return;
+			delete this.players[player.id];
+			if (flag) this.playerCount--;
+	}
+	eliminatePlayer(player) {
+		if (!player || player.eliminated) return;
+		player.eliminated = true;
+		this.playersElim[player.id] = player;
+		this.playerCount--;
+	}
+	undoElimination(player) {
+		if (!player || !player.eliminated) return;
+		player.eliminated = false;
+	}
+	getPlayerList() {
+		let pl = "**PL: (" + this.playerCount + ")**: ";
+		let names = [];
+		for (let i in this.players) {
+			if(this.players[i].eliminated != true) names.push(this.players[i].name);
+		}
+		pl += names.join(", ");
+		return pl;
+	}
+	displayPlayerList() {
+		let pl = this.getPlayerList();
+		user.say(pl);
+	}
+	clearPlayerList() {
+		this.players= [];
+		this.playersElim = [];
+		this.playerCount = 0;
+		this.signupsOpen = true;
+		this.expandedUser = 'none';
+		this.playerListToolEnabled = false;
+		this.notes = '';
+		this.hideNotes = false;
+	}
+	dq(target, room) {
+		let player = this.players[Tools.toId(target)];
+		this.removePlayer(player);
+		this.say(room, player.name + " was removed from the game.");
+		if (typeof this.onLeave === 'function') this.onLeave(player);
+	}
+	toggleSignups() {
+		if(this.signupsOpen) this.signupsOpen = false;
+		else this.signupsOpen = true;
+	}
+	enableSignups(){
+		this.signupsOpen = true;
+	}
+	disableSignups(){
+		this.signupsOpen = false;
+	}
+	enablePlTool(){
+		this.playerListToolEnabled = true;
+	}
+	disablePlTool(){
+		this.playerListToolEnabled = false;
+	}
+	plToolIsEnabled(){
+		return this.playerListToolEnabled;
+	}
+	signupsOpen(){
+		return this.signupsOpen;
+	}
+	saveNotes(notes){
+		this.notes = notes;
+	}
+}
 
-let Games = new GamesManager();
+let Games = new PL_Assistant();
 Games.Game = Game;
 Games.Player = Player;
 Games.backupInterval = setInterval(() => Games.exportData(), 60 * 1000);
