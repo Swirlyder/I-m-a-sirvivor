@@ -2,6 +2,7 @@
 	 *             BOT GAME COMMANDS               *
 	 ***********************************************/
 
+
 module.exports = {
 
 	signups: function (target, user, room) {
@@ -40,6 +41,7 @@ module.exports = {
 		if (!room.game) {
 			if (Games.host) {
 				Games.host = null;
+				Games.clearPlayerList();
 				this.say(room, 'The game was forcibly ended.');
 				this.say(room, '/modnote ' + user.name + ' ended a game.');
 			}
@@ -117,20 +119,46 @@ module.exports = {
 	},
 
 	//Swirl note: i assume this is for bothosted
+	mk: 'dq',
+	modkill: 'dq',
 	dq: function (target, user, room) {
-		if (!user.hasRank(room.id, '+')) return;
-		if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
+		if (room.game) {
+			if (!user.hasRank(room.id, '+')) return;
+			if (room.game && typeof room.game.dq === 'function') room.game.dq(target);
+		}
+		else if(Games.host) {
+			if ((user.id == Games.host.id) || user.hasRank(room.id, '+')) {
+				Games.dq(target, room);
+			}
+		}
+		else return;
 	},
 
 	//Swirl note: I assume this is for bothosted
 	pl: 'players',
 	players: function (target, user, room) {
-		if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-		if (room.game && typeof room.game.pl === 'function') room.game.pl();
+		if (room.game) {
+			if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
+			if (room.game && typeof room.game.pl === 'function') {room.game.pl(); console.log('test4'); }
+		}
+		else if(Games.host && Games.plToolIsEnabled()) {
+			if((user.id == Games.host.id) && Games.host.id === user.id && target == 'survivor') {
+				this.say(room, "/msgroom survivor, " + Games.getPlayerList());
+				console.log('test1');
+			}
+			else if ((user.id == Games.host.id) || (room.id === user.id)) {
+				this.say(room, Games.getPlayerList());
+				console.log('test2');
+			}
+			else if ((user.id != Games.host.id) ) {
+				this.say(room, '/w ' + user.id + ", " + Games.getPlayerList());
+				console.log('test3');
+			}
+		}
 	},
 
 	autostart: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		if (room.game && typeof room.game.autostart === 'function') room.game.autostart(target);
-	}
+	},
 };

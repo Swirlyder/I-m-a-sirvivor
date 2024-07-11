@@ -15,6 +15,7 @@ var url = require('url');
 Commands.Replies = require('./commands/authText.js');
 const logging = require('./utilities/logging.js');
 
+
 const ACTION_COOLDOWN = 3 * 1000;
 const FLOOD_MESSAGE_NUM = 7;
 const FLOOD_PER_MSG_MIN = 500; // this is the minimum time between messages for legitimate spam. It's used to determine what "flooding" is caused by lag
@@ -272,6 +273,10 @@ global.parse = exports.parse = {
 						return send('|/join ' + spl.substr(8));
 					}
 				}
+				else if(spl.startsWith('/botmsg')){
+					spl = spl.substr(8);
+					console.log(spl);
+				}
 				this.chatMessage(spl, user, user);
 				break;
 			case 'N': case 'n':
@@ -309,11 +314,24 @@ global.parse = exports.parse = {
 		if (['survivor', 'survivorworkshop'].includes(room.id)) {
 			addChatMessage(message, user);
 		}
-		if (message.substr(0, 6) === '/me in' && room.game) {
-		    room.game.join(user);
+		if (message.substr(0, 6) === '/me in' && (room.game || Games.host)) {
+		    if(Games.host && room.id === 'survivor' && Games.signupsOpen && Games.playerListToolEnabled){ 
+				Games.joinGame(user);
+				const plhtml = PL_Menu.generatePLAssistantHTML();
+				Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml);
+				return;
+			}
+			else if (Games.host && room.id === 'survivor' && Games.playerListToolEnabled) Parse.say(room, '/w ' + user.id + ', Signups for this game are closed');
+			else if (room.game) room.game.join(user);
 		} 
-		else if (message.substr(0, 7) === '/me out' && room.game) {
-		    room.game.leave(user);
+		else if (message.substr(0, 7) === '/me out' && (room.game || Games.host)) {
+			if(Games.host && room.id === 'survivor' && Games.playerListToolEnabled){ 
+				Games.leaveGame(user);
+				const plhtml = PL_Menu.generatePLAssistantHTML();
+				Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
+				return;
+			}
+		    else if (room.game) room.game.leave(user);
 		}
 		//} else if (Config.commandCharacter === '.' && message.startsWith('/me swirls') && user.id !== Tools.toId(Config.nick) && user.hasRank('survivor', '+')) {
 		else if (Config.commandCharacter === '.' && (message.startsWith('/me swirls') || message.startsWith('/me vibes')) && user.id !== Tools.toId(Config.nick)) {
@@ -367,7 +385,7 @@ global.parse = exports.parse = {
 			arg = message.substr(index + 1).trim();
 		}
 		cmd = Tools.toId(cmd);
-        if (cmd === "reload") {
+        /*if (cmd === "reload") {
             if (room.id !== 'survivor') return;
             if (!user.isExcepted()) return;
             let rt = arg === "text";
@@ -379,8 +397,8 @@ global.parse = exports.parse = {
             Commands.Replies = require('./commands/authText.js');
             let text = (rt ? 'text ' : '') + "commands reloaded.";
             this.say(room, text);
-        }
-		else if (!!Commands[cmd]) {
+        }*/
+		if (!!Commands[cmd]) {
 			let failsafe = 0;
 			while (typeof Commands[cmd] !== "function" && failsafe++ < 10) {
 				cmd = Commands[cmd];
