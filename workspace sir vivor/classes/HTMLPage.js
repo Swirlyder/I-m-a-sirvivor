@@ -104,7 +104,7 @@ class PL_Assistant_Menu extends HTMLPage{
     createCloseOpenSignupsButton(style=""){
         let statusContrary = '';
         statusContrary = Games.signupsOpen ? "Close" : "Open";
-        return this.createButton("Close Signups", "ts","", style);
+        return this.createButton(statusContrary + " Signups", "plmenu ts","", style);
     }
     createSignUpTimerButton(style=''){
         return this.createButton("Signup Timer", "","", style);  

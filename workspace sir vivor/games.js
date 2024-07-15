@@ -843,10 +843,8 @@ class PL_Assistant extends GamesManager{
         //this.HTMLPage = new HTMLPage(pageID);
     }
 	joinGame(user){
-		if (this.playerListToolEnabled === false) return;
 		if (this.host.id === user.id) return;
 		if (!this.signupsOpen) return;
-		if (!this.plToolIsEnabled()) return;
 		if (user.id in this.players) {
 			let player = this.players[user.id];
 			if (!player.eliminated) return;
@@ -854,9 +852,12 @@ class PL_Assistant extends GamesManager{
 			this.players[user.id] = player;
 		} else {
 			this.addPlayer(user);
-			user.say('You have joined the Survivor game hosted by ' + Games.host.name + '!')
+			if (this.plToolIsEnabled()) user.say("/msgroom survivor, /sendprivatehtmlbox " + user.id + ", You have joined the Survivor game hosted by " + Games.host.name + "!");
 		}
 		if (typeof this.onJoin === 'function') this.onJoin(user);
+	}
+	isEnabled(){
+		return this.playerListToolEnabled;
 	}
 	addPlayer(user) {
 			if (user.id in this.players) return;
@@ -866,10 +867,9 @@ class PL_Assistant extends GamesManager{
 			return player;
 	}
 	leaveGame(user) {
-		if (this.playerListToolEnabled === false) return;
 		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
 		this.removePlayer(user, true);
-		user.say("You have left the Survivor game.");
+		if (this.plToolIsEnabled()) user.say("/msgroom survivor, /sendprivatehtmlbox " + user.id + ", You have left the Survivor game.");
 	}
 	removePlayer(player, flag) {
 			if (!player) return;

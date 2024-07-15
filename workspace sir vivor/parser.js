@@ -315,20 +315,24 @@ global.parse = exports.parse = {
 			addChatMessage(message, user);
 		}
 		if (message.substr(0, 6) === '/me in' && (room.game || Games.host)) {
-		    if(Games.host && room.id === 'survivor' && Games.signupsOpen && Games.playerListToolEnabled){ 
+		    if(Games.host && room.id === 'survivor' && Games.signupsOpen){ 
 				Games.joinGame(user);
-				const plhtml = PL_Menu.generatePLAssistantHTML();
-				Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml);
+				if(Games.playerListToolEnabled) {
+					const plhtml = PL_Menu.generatePLAssistantHTML();
+					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
+				}
 				return;
 			}
-			else if (Games.host && room.id === 'survivor' && Games.playerListToolEnabled) Parse.say(room, '/w ' + user.id + ', Signups for this game are closed');
+			else if (Games.host && room.id === 'survivor' && Games.playerListToolEnabled) Parse.say(room, '/sendprivatehtmlbox, ' + user.id + ', Signups for this game are closed');
 			else if (room.game) room.game.join(user);
 		} 
 		else if (message.substr(0, 7) === '/me out' && (room.game || Games.host)) {
-			if(Games.host && room.id === 'survivor' && Games.playerListToolEnabled){ 
+			if(Games.host && room.id === 'survivor'){ 
 				Games.leaveGame(user);
-				const plhtml = PL_Menu.generatePLAssistantHTML();
-				Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
+				if(Games.playerListToolEnabled) {
+					const plhtml = PL_Menu.generatePLAssistantHTML();
+					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
+				}
 				return;
 			}
 		    else if (room.game) room.game.leave(user);
