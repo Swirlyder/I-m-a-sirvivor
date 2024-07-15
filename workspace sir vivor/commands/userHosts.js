@@ -4,6 +4,7 @@
 
 const gameTypes = require('../data/themes.js');
 const modTypes = require('../data/theme_mods.js');
+const Games = require('../games.js');
 
 module.exports = {
 	r: 'dice',
@@ -287,8 +288,8 @@ module.exports = {
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
 	},
 	plmenu: function (target, user, room) {
-		if (!Games.playerListToolEnabled) return;
-		if (((!Games.host && Games.host.id !== user.id) || !user.isExcepted())) return;
+		if ((!Games.host || (Games.host.id !== user.id)) && !user.isExcepted() && !user.hasRank('survivor', '+')) return;
+		if (user.id == Games.host.id) Games.enablePlTool();
 		const split = target.split(","), arg = split[0], playerID = split[1];
 		const parts = target.split(/,(.+)/), notes = parts[1];
 		switch (arg) {
@@ -312,6 +313,10 @@ module.exports = {
 			case "hidenotes":
 				Games.hideNotes = !Games.hideNotes;
 				break;
+			case "ts":
+				Games.toggleSignups();
+				const msg = Games.signupsOpen ? "Signups are open!" : "Signups are closed!";
+				room.say("/msgroom survivor, " + msg);
 		}
 		const html = PL_Menu.generatePLAssistantHTML();
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
