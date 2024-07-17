@@ -323,7 +323,7 @@ global.parse = exports.parse = {
 				}
 				return;
 			}
-			else if (Games.host && room.id === 'survivor' && Games.playerListToolEnabled) Parse.say(room, '/sendprivatehtmlbox, ' + user.id + ', Signups for this game are closed');
+			else if (Games.host && room.id === 'survivor') Parse.say(room, '/sendprivatehtmlbox, ' + user.id + ', Signups for this game are closed');
 			else if (room.game) room.game.join(user);
 		} 
 		else if (message.substr(0, 7) === '/me out' && (room.game || Games.host)) {
