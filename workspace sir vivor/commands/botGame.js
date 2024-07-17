@@ -118,7 +118,6 @@ module.exports = {
 		if (typeof room.game.use === 'function') room.game.use(target, user);
 	},
 
-	//Swirl note: i assume this is for bothosted
 	mk: 'dq',
 	modkill: 'dq',
 	dq: function (target, user, room) {
@@ -139,20 +138,74 @@ module.exports = {
 	players: function (target, user, room) {
 		if (room.game) {
 			if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
-			if (room.game && typeof room.game.pl === 'function') {room.game.pl(); console.log('test4'); }
+			if (room.game && typeof room.game.pl === 'function') {room.game.pl(); }
 		}
-		else if(Games.host && Games.plToolIsEnabled()) {
-			if((user.id == Games.host.id) && Games.host.id === user.id && target == 'survivor') {
-				this.say(room, "/msgroom survivor, " + Games.getPlayerList());
-				console.log('test1');
+		else if(Games.host) {
+			if(user.id == Games.host.id && target == 'survivor') {
+				this.say(room, "/msgroom survivor, " + Games.displayPlayerList());
 			}
 			else if ((user.id == Games.host.id) || (room.id === user.id)) {
-				this.say(room, Games.getPlayerList());
-				console.log('test2');
-			}
-			else if ((user.id != Games.host.id) ) {
-				this.say(room, '/w ' + user.id + ", " + Games.getPlayerList());
-				console.log('test3');
+				const split = target.split(","), arg = split[0].trim().toLowerCase();
+				switch (arg) {
+					case 'shuffle':
+						const list = Games.shuffleList(Games.getPlayerList());
+						if (room.id === 'survivor') {
+							this.say(room, "/addhtmlbox " + list);
+						} else {
+							this.say(room, "!htmlbox " + list);
+						}
+						break;
+					case 'pick':
+						const pick = Games.pickPlayer(Games.getPlayerList());
+						if (room.id === 'survivor') {
+							this.say(room, "/addhtmlbox " + pick);
+						} else {
+							this.say(room, "!htmlbox " + pick);
+						}
+						break;
+					case 'elim':
+						const playerName = split[1];
+						const player = Games.players[Tools.toId(playerName)];
+						Games.eliminatePlayer(player);
+						break;
+					case 'close':
+						Games.disableSignups();
+						break;
+					case 'open':
+						Games.enableSignups();
+						break;
+					case 'timer':
+						const arg = split[1].trim();
+						if (arg === "end") {
+							if (Games.isTimer) {
+								clearTimeout(Games.timeout);
+								this.say(room, "The signup timer has been ended.");
+								Games.isTimer = false;
+								Games.isSignupTimer = false;
+							} else {
+								this.say(room, "There is no signup timer running!");
+							}
+							return;
+						}
+						let x = parseFloat(arg);
+						if (!x || x > 300 || (x < 10 && x > 5) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 5 minutes.");
+						if (x < 10) x *= 60;
+						let minutes = Math.floor(x / 60);
+						let seconds = x % 60;
+						clearTimeout(Games.timeout);
+						this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
+						Games.timeout = setTimeout(() => Games.signupsTimer(room), x * 1000);
+						Games.isTimer = true;
+						Games.isSignupTimer = true;
+						Games.signupsOpen = false;
+						break;
+					case 'add':
+						const newPlayer = split[1];
+						Games.addPlayer(newPlayer);
+						break;
+					default:
+						this.say(room, Games.displayPlayerList());
+				}
 			}
 		}
 	},

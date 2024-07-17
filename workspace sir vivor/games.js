@@ -839,7 +839,8 @@ class PL_Assistant extends GamesManager{
 		this.expandedUser = 'none';
 		this.notes = '';
 		this.playersElim = {};
-		this.hideNotes = false;
+		this.hideNotes = true;
+		this.isSignupTimer = false;
         //this.HTMLPage = new HTMLPage(pageID);
     }
 	joinGame(user){
@@ -852,7 +853,6 @@ class PL_Assistant extends GamesManager{
 			this.players[user.id] = player;
 		} else {
 			this.addPlayer(user);
-			if (this.plToolIsEnabled()) user.say("/msgroom survivor, /sendprivatehtmlbox " + user.id + ", You have joined the Survivor game hosted by " + Games.host.name + "!");
 		}
 		if (typeof this.onJoin === 'function') this.onJoin(user);
 	}
@@ -869,7 +869,6 @@ class PL_Assistant extends GamesManager{
 	leaveGame(user) {
 		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
 		this.removePlayer(user, true);
-		if (this.plToolIsEnabled()) user.say("/msgroom survivor, /sendprivatehtmlbox " + user.id + ", You have left the Survivor game.");
 	}
 	removePlayer(player, flag) {
 			if (!player) return;
@@ -887,17 +886,34 @@ class PL_Assistant extends GamesManager{
 		player.eliminated = false;
 	}
 	getPlayerList() {
-		let pl = "**PL: (" + this.playerCount + ")**: ";
 		let names = [];
 		for (let i in this.players) {
 			if(this.players[i].eliminated != true) names.push(this.players[i].name);
 		}
-		pl += names.join(", ");
-		return pl;
+		let result = '';
+		result += names.join(", ");
+		return result;
 	}
 	displayPlayerList() {
-		let pl = this.getPlayerList();
-		user.say(pl);
+		let pl = "**PL: (" + this.playerCount + ")**: " + this.getPlayerList();
+		return pl;
+	}
+	shuffleList(pl) {
+		let stuff = pl.split(",");
+		this.shuffle(stuff);
+		let str = "<i>" + stuff.join(', ').replace(/>/g, "&gt;").replace(/</g, "&lt;").trim() + "</i>";
+		return str;
+	}
+	shuffle(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			let j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+	}
+	pickPlayer(pl) {
+		let stuff = pl.split(",");
+		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff).replace(/>/g, "&gt;").replace(/</g, "&lt;").trim();
+		return str;
 	}
 	clearPlayerList() {
 		this.players= [];
@@ -939,6 +955,9 @@ class PL_Assistant extends GamesManager{
 	}
 	saveNotes(notes){
 		this.notes = notes;
+	}
+	signupsTimer(room){
+		this.say(room, "Signups are closed!");
 	}
 }
 
