@@ -314,9 +314,9 @@ global.parse = exports.parse = {
 		if (['survivor', 'survivorworkshop'].includes(room.id)) {
 			addChatMessage(message, user);
 		}
-		if (message.substr(0, 6) === '/me in' && (room.game || Games.host)) {
+		if (message.substr(0, 6).toLowerCase() === '/me in' && (room.game || Games.host)) {
 		    if(Games.host && room.id === 'survivor' && Games.signupsOpen){ 
-				Games.joinGame(user);
+				Games.addPlayer(user);
 				if(Games.playerListToolEnabled) {
 					const plhtml = PL_Menu.generatePLAssistantHTML();
 					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
@@ -326,9 +326,9 @@ global.parse = exports.parse = {
 			else if (Games.host && room.id === 'survivor') Parse.say(room, '/sendprivatehtmlbox, ' + user.id + ', Signups for this game are closed');
 			else if (room.game) room.game.join(user);
 		} 
-		else if (message.substr(0, 7) === '/me out' && (room.game || Games.host)) {
+		else if (message.substr(0, 7).toLowerCase() === '/me out' && (room.game || Games.host)) {
 			if(Games.host && room.id === 'survivor'){ 
-				Games.leaveGame(user);
+				Games.removePlayerAndDecrement(user);
 				if(Games.playerListToolEnabled) {
 					const plhtml = PL_Menu.generatePLAssistantHTML();
 					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 

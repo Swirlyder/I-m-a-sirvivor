@@ -841,44 +841,26 @@ class PL_Assistant extends GamesManager{
 		this.playersElim = {};
 		this.hideNotes = true;
 		this.isSignupTimer = false;
-        //this.HTMLPage = new HTMLPage(pageID);
     }
-	joinGame(user){
-		if (this.host.id === user.id) return;
-		if (!this.signupsOpen) return;
-		if (user.id in this.players) {
-			let player = this.players[user.id];
-			if (!player.eliminated) return;
-			player.eliminated = false;
-			this.players[user.id] = player;
-		} else {
-			this.addPlayer(user);
-		}
-		if (typeof this.onJoin === 'function') this.onJoin(user);
-	}
-	isEnabled(){
-		return this.playerListToolEnabled;
-	}
 	addPlayer(user) {
-			if (user.id in this.players) return;
-			let player = new Player(user);
-			this.players[user.id] = player;
-			this.playerCount++;
-			return player;
+		if (this.host.id === user.id || !this.signupsOpen || user.id in this.players) return;
+		const player = new Player(user);
+		this.players[user.id] = player;
+		this.playerCount++;
+		return player;
 	}
-	leaveGame(user) {
+	removePlayer(player) {
+		if (!player) return;
+		delete this.players[player.id];
+}
+	removePlayerAndDecrement(user) {
 		if (!(user.id in this.players) || this.players[user.id].eliminated) return;
-		this.removePlayer(user, true);
-	}
-	removePlayer(player, flag) {
-			if (!player) return;
-			delete this.players[player.id];
-			if (flag) this.playerCount--;
+		this.removePlayer(user);
+		this.playerCount--;
 	}
 	eliminatePlayer(player) {
 		if (!player || player.eliminated) return;
 		player.eliminated = true;
-		this.playersElim[player.id] = player;
 		this.playerCount--;
 	}
 	undoElimination(player) {
@@ -886,11 +868,10 @@ class PL_Assistant extends GamesManager{
 		player.eliminated = false;
 	}
 	getPlayerList() {
-		let names = [];
+		let names = [], result='';
 		for (let i in this.players) {
-			if(this.players[i].eliminated != true) names.push(this.players[i].name);
+			if(!this.players[i].eliminated) names.push(this.players[i].name);
 		}
-		let result = '';
 		result += names.join(", ");
 		return result;
 	}
@@ -915,25 +896,11 @@ class PL_Assistant extends GamesManager{
 		let str = "<em>We randomly picked:</em> " + Tools.sample(stuff).replace(/>/g, "&gt;").replace(/</g, "&lt;").trim();
 		return str;
 	}
-	clearPlayerList() {
-		this.players= [];
-		this.playersElim = [];
-		this.playerCount = 0;
-		this.signupsOpen = true;
-		this.expandedUser = 'none';
-		this.playerListToolEnabled = false;
-		this.notes = '';
-		this.hideNotes = false;
-	}
-	dq(target, room) {
-		let player = this.players[Tools.toId(target)];
-		this.removePlayer(player);
-		this.say(room, player.name + " was removed from the game.");
-		if (typeof this.onLeave === 'function') this.onLeave(player);
+	signupsOpened(){
+		return this.signupsOpen;
 	}
 	toggleSignups() {
-		if(this.signupsOpen) this.signupsOpen = false;
-		else this.signupsOpen = true;
+		this.signupsOpen = !this.signupsOpen;
 	}
 	enableSignups(){
 		this.signupsOpen = true;
@@ -950,14 +917,25 @@ class PL_Assistant extends GamesManager{
 	plToolIsEnabled(){
 		return this.playerListToolEnabled;
 	}
-	signupsOpen(){
-		return this.signupsOpen;
-	}
 	saveNotes(notes){
 		this.notes = notes;
 	}
-	signupsTimer(room){
-		this.say(room, "Signups are closed!");
+	handleSignupsTimer(room, PL_Menu, user){
+		this.say(room, "/msgroom Survivor, Signups are closed!");
+		this.signupsOpen = false;
+		this.isSignupTimer = false;
+		const html = PL_Menu.generatePLAssistantHTML();
+		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
+	}
+	resetPLData() {
+		this.players= [];
+		this.playersElim = [];
+		this.playerCount = 0;
+		this.signupsOpen = true;
+		this.expandedUser = 'none';
+		this.playerListToolEnabled = false;
+		this.notes = '';
+		this.hideNotes = false;
 	}
 }
 
