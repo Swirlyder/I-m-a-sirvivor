@@ -197,7 +197,7 @@ module.exports = {
 		Games.host = null;*/
 		room.say("The winner is **" + target + "**! Thanks for playing.");
 		Games.host = null;
-		Games.clearPlayerList();
+		Games.resetPLData();
 		Games.hosttype = null;
 	},
 
@@ -266,27 +266,6 @@ module.exports = {
 			this.say(room, "Please enter a valid type.");
 		}
 	},
-	ts: 'togglesignups',
-	tsignups: 'togglesignups',
-	togglesignups: function (target, user, room) {
-		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
-		Games.toggleSignups();
-		if (Games.signupsOpen) {
-			room.say("/msgroom survivor, Signups are open!");
-		}
-		else{
-			room.say("/msgroom survivor, Signups are closed!");
-		}
-	},
-	elim: 'eliminate',
-	eliminate: function (target, user, room) {
-		if (!Games.playerListToolEnabled) return;
-		if ((!Games.host || Games.host.id !== user.id)) return;
-		let player = Games.players[Tools.toId(target)];
-		Games.eliminatePlayer(player);
-		const html = PL_Menu.generatePLAssistantHTML();
-		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
-	},
 	plmenu: function (target, user, room) {
 		if ((!Games.host || (Games.host.id !== user.id)) && !user.isExcepted() && !user.hasRank('survivor', '+')) return;
 		if (user.id == Games.host.id) Games.enablePlTool();
@@ -307,7 +286,7 @@ module.exports = {
 				Games.playerCount++;
 				break;
 			case "rename":
-				const  newName = split[2];
+				const newName = split[2];
 				Games.players[playerID].name = newName;
 				break;
 			case "hidenotes":
@@ -317,6 +296,35 @@ module.exports = {
 				Games.toggleSignups();
 				const msg = Games.signupsOpen ? "Signups are open!" : "Signups are closed!";
 				room.say("/msgroom survivor, " + msg);
+				break;
+			case "elim":
+				const player = Games.players[Tools.toId(split[1])];
+				Games.eliminatePlayer(player);
+				break;
+			case 'timer':
+				const arg = split[1].trim();
+				if (arg === "end") {
+					if (Games.isTimer) {
+						clearTimeout(Games.timeout);
+						room.say("/msgroom survivor, The signup timer has been ended.");
+						Games.isTimer = false;
+						Games.isSignupTimer = false;
+					} else {
+						room.say("/msgroom survivor, There is no signup timer running!");
+					}
+					return;
+				}
+				let x = parseFloat(arg);
+				if (!x || x > 300 || (x < 10 && x > 5) || x <= 0) return room.say("/msgroom survivor, The timer must be between 10 seconds and 5 minutes.");
+				if (x < 10) x *= 60;
+				let minutes = Math.floor(x / 60);
+				let seconds = x % 60;
+				clearTimeout(Games.timeout);
+				room.say("/msgroom survivor, Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
+				Games.timeout = setTimeout(() => Games.handleSignupsTimer(room, PL_Menu, user), x * 1000);
+				Games.isTimer = true;
+				Games.isSignupTimer = true;
+				break;
 		}
 		const html = PL_Menu.generatePLAssistantHTML();
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);

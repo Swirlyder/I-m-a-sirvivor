@@ -41,7 +41,7 @@ module.exports = {
 		if (!room.game) {
 			if (Games.host) {
 				Games.host = null;
-				Games.clearPlayerList();
+				Games.resetPLData();
 				this.say(room, 'The game was forcibly ended.');
 				this.say(room, '/modnote ' + user.name + ' ended a game.');
 			}
@@ -194,7 +194,7 @@ module.exports = {
 						let seconds = x % 60;
 						clearTimeout(Games.timeout);
 						this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
-						Games.timeout = setTimeout(() => Games.signupsTimer(room), x * 1000);
+						Games.timeout = setTimeout(() => Games.handleSignupsTimer(room), x * 1000);
 						Games.isTimer = true;
 						Games.isSignupTimer = true;
 						Games.signupsOpen = false;

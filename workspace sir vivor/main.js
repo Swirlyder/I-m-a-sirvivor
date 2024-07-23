@@ -61,7 +61,7 @@ var WebSocketClient = require('websocket').client;
 
 //classes
 global.Tools = require('./classes/Tools.js');
-global.dd = require('./classes/points.js');
+global.dd = require('./classes/Points.js');
 global.Battles = require('./classes/Battles.js');
 global.Users = require('./classes/User.js');
 global.Rooms = require('./classes/Room.js');
