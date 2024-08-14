@@ -827,7 +827,7 @@ class GamesManager {
 // will currently only work properly in the survivor room
 // enable via .enabletool pltool, disable via .disabletool pltool
 // Is currently set to disable after a host ends.
-const pl_assistant_PAGE_ID = 'pl_assistant';
+const pl_assistant_PAGE_ID = 'playerlistassistant';
 class PL_Assistant extends GamesManager{
     constructor(room){
 		super(room);
@@ -926,6 +926,9 @@ class PL_Assistant extends GamesManager{
 		this.isSignupTimer = false;
 		const html = PL_Menu.generatePLAssistantHTML();
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
+	}
+	handlePlayerListExit(user, room){
+		this.say(room, "/msgroom survivor, /closehtmlpage + " + user.id + ", " + pl_assistant_PAGE_ID);
 	}
 	resetPLData() {
 		this.players= [];

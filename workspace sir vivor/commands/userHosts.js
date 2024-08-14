@@ -325,7 +325,12 @@ module.exports = {
 				Games.isTimer = true;
 				Games.isSignupTimer = true;
 				break;
+			case 'exit':
+				Games.handlePlayerListExit(room, user);
+				Games.disablePlTool();
+				return;
 		}
+
 		const html = PL_Menu.generatePLAssistantHTML();
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
 	}
