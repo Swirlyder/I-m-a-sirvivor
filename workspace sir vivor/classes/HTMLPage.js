@@ -1,6 +1,6 @@
 import Games from "../games";
 
-const PLAYERLIST_MENU_TITLE = "PL Menu";
+const PLAYERLIST_MENU_TITLE = "Player List Menu";
 
 class HTMLPage{
     constructor(pageID){
@@ -11,7 +11,7 @@ class HTMLPage{
     }
     createButton(buttonName, command, arg = '', style = ""){
         const spl = Config.rooms[0].split(",");
-        return "<button type='send' value='/msg " + Config.nick + ", /msgroom " + spl[0] + ", /botmsg " + 
+        return "<button class='button' type='send' value='/msg " + Config.nick + ", /msgroom " + spl[0] + ", /botmsg " + 
         Config.nick + ", ." + command + arg + "' "+"style='" + style + "'>" + buttonName+ "</button>";
     }
     createExpandButton(){
@@ -83,6 +83,12 @@ class PL_Assistant_Menu extends HTMLPage{
         style += "margin:-30px 5px 0; position:relative; bottom:-5px;'></div>";
         return style;
     }
+    createRefreshButton(command, arg='', style=''){
+        return this.createButton("Refresh", "plmenu", arg, style);
+    }
+    createExitButton(command, arg='', style=''){
+        return this.createButton("Exit", "plmenu exit", arg, style);
+    }
      //TODO: pass Games.players[playerID].name as argument
     createRenamePlayerButton(playerID){
         const playerName = Games.players[playerID].name;
@@ -128,7 +134,7 @@ class PL_Assistant_Menu extends HTMLPage{
         return this.createButton("Broadcast Playerlist", "pl ", "survivor", style);
     }
     createPLHeader(){
-        return this.createHeader1(PLAYERLIST_MENU_TITLE);
+        return this.createHeader3(PLAYERLIST_MENU_TITLE);
     }
     createEndSignupsTimerButton(){
         return this.createButton("End Signups Timer", "plmenu timer,", " end", "");
@@ -165,7 +171,7 @@ class PL_Assistant_Menu extends HTMLPage{
     }
     generateOptionsRow(...buttons){
         const html = buttons.join("");
-        return this.nestInDiv(html);
+        return this.nestInDiv(html, "margin-top:10px;");
     }
     //TODO: pass Games.expandedUser as argument
     generateAllPlayerRows(players){
@@ -185,23 +191,29 @@ class PL_Assistant_Menu extends HTMLPage{
     generatePlayerListSection(players){
         return this.createDynamicBorderWithHeader("Players", this.generateAllPlayerRows(players));
     }
+    generateTitleBar(){
+        const title = this.createHeader1(PLAYERLIST_MENU_TITLE, "display:inline-block; position:relative; top:4px; margin:5px;");
+        const refreshButton = this.createRefreshButton("test");
+        const exitButton = this.createExitButton("test");
+        return this.nestInDiv(refreshButton + title + exitButton, "border-bottom:solid; margin-bottom:5px;");
+    }
     //TODO: pass Games.isSignupTimer, Games.hideNotes, Games.notes, as argument, 
     generatePLHeading(){
         let notesArea = '';
-        const PLHeader = this.createPLHeader();
+        const titleBar = this.generateTitleBar();
         const displayPLButton = this.createDisplayPLButton("margin-right:5px;");
         const closeSignUpsButton = this.createCloseOpenSignupsButton("margin-right:5px;");
         const signUpTimerButton = Games.isSignupTimer ? this.createEndSignupsTimerButton() : this.createSignUpTimerSection();
         let optionsRow = this.generateOptionsRow(displayPLButton, closeSignUpsButton, signUpTimerButton);
 
         if (!Games.hideNotes) { 
-            notesArea = this.createTextAreaWithSave("survivor", ".plmenu ", "savenotes", "margin-top:10px;", Games.notes);
+            notesArea = this.createTextAreaWithSave("survivor", ".plmenu ", "savenotes", "", Games.notes);
         } else {
-            const showNotesButton = this.createToggleNotesButton("Show Notes", "margin-top:5px;");
+            const showNotesButton = this.createToggleNotesButton("Show Notes", "");
             optionsRow += this.generateOptionsRow(showNotesButton);
         }
 
-        return this.createHTMLElement('div', PLHeader + optionsRow + notesArea, "width:60% ; margin:0 auto ; text-align:center;")
+        return this.createHTMLElement('div', titleBar + optionsRow + notesArea, "width:70% ; margin:0 auto ; text-align:center;")
     }
      //TODO: pass Games.players as argument
     generatePLAssistantHTML(){
