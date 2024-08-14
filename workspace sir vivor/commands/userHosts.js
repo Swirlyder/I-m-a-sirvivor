@@ -327,7 +327,7 @@ module.exports = {
 				break;
 			case 'exit':
 				Games.handlePlayerListExit(room, user);
-				Games.disablePlTool();
+				if (user.id == Games.host.id) Games.disablePlTool();
 				return;
 		}
 
