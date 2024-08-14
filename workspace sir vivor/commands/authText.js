@@ -79,7 +79,7 @@ module.exports = {
 	gui: 'Hi [target],  I\'m Gui♥Shark!',
 
 	guy: '==guyguard',
-	guyguard: 'They call me GuyGuard, Guardian of Guys.',
+	guyguard: 'You hate to see it',
 
 	monkey: '==henka',
 	henka: 'H E N K A B O Y S',
