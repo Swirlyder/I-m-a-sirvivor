@@ -15,6 +15,10 @@ module.exports = {
 	ray: '==ahelpfulrayquaza',
 	ahelpfulrayquaza: 'Skill issue',
 
+	anick: '==andrewnick',
+	andrew: '==andrewnick',
+	andrewnick: 'NS Corp sponsors this roll',
+
 	aud: '==audiino',
 	audi: '==audiino',
 	audii: '==audiino',
@@ -68,9 +72,14 @@ module.exports = {
 
 	gts: '==gary',
 	gary: 'shits rigged',
+	
+	gian: 'YOU CAN\'T PARK THERE',
 
 	guishark: '==gui',
 	gui: 'Hi [target],  I\'m Gui♥Shark!',
+
+	guy: '==guyguard',
+	guyguard: 'They call me GuyGuard, Guardian of Guys.',
 
 	monkey: '==henka',
 	henka: 'H E N K A B O Y S',
