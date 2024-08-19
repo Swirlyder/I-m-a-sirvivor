@@ -214,10 +214,16 @@ module.exports = {
 		else {
 			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${str}</div>`);
 		}
-
 		//get event winners
 
 		//calc top ten seasonal
 		//cal even winners seasonal
-    }
+    },
+	setcycle(target, user, room) {
+		if (!user.hasRank('survivor', '@')) return;
+		if (!target) return;
+		let cycle = parseInt(target);
+		dd.set_current_cycle(target);
+		return user.say("Cycle has been set to: " + cycle);
+	}
 }

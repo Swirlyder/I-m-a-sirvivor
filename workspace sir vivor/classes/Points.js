@@ -10,6 +10,7 @@ class DD {
 		this.eventlog = {};
 		this.authbattle = {};
 		this.numSkips = 0;
+		this.currentCycle = 0;
 	}
 	
 	importData() {
@@ -26,6 +27,7 @@ class DD {
 		this.modlog = readJSONOrDefault('./databases/modlog.json');
 		this.authbattle = readJSONOrDefault('./databases/authbattle.json');
 		this.eventlog = readJSONOrDefault('./databases/eventlog.json');
+		this.currentCycle = readJSONOrDefault('./databases/currentcycle.json');
 
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
@@ -302,6 +304,8 @@ class DD {
 			'style="background-color:#FFFFFF ; ' +
 			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black"> `;
 
+		str+= `<tr><th colspan="5" style="font-weight: bold ; font-size: 1.5em">Cycle ${dd.currentCycle}</th></tr>`;
+
 		// Column labels
 		str += ` <tr style="height:15px ; font-size:1.2em">` +
 			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Rank </td> ` +
@@ -410,6 +414,11 @@ class DD {
 	clear_authhunt_records() {
 		this.authbattle = {};
 		this.exportData();
+	}
+
+	set_current_cycle(cycle) {
+		this.currentCycle = cycle;
+		fs.writeFileSync('./databases/currentcycle.json', JSON.stringify(this.currentCycle));
 	}
 }
 
