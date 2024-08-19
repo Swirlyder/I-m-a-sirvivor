@@ -142,7 +142,15 @@ module.exports = {
 		}
 		else if(Games.host) {
 			if(user.id == Games.host.id && target == 'survivor') {
-				this.say(room, "/msgroom survivor, " + Games.displayPlayerList());
+				if (Games.PLCooldown == false) {
+					Games.PLCooldown = true;
+					clearTimeout(Games.timeout);
+					this.say(room, "/msgroom survivor, " + Games.displayPlayerList());
+					Games.timeout = setTimeout(() => Games.handlePLDisplayCooldown(), 3000);
+				}
+				else{
+					this.say(room, '/msgroom survivor, /sendprivatehtmlbox, ' + user.id + ', \'Broadcast Playerlist\' is on cooldown');
+				}
 			}
 			else if ((user.id == Games.host.id) || (room.id === user.id)) {
 				const split = target.split(","), arg = split[0].trim().toLowerCase();

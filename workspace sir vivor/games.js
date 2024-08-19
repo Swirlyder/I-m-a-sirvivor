@@ -841,6 +841,7 @@ class PL_Assistant extends GamesManager{
 		this.playersElim = {};
 		this.hideNotes = true;
 		this.isSignupTimer = false;
+		this.PLCooldown = false;
     }
 	addPlayer(user) {
 		if (this.host.id === user.id || !this.signupsOpen || user.id in this.players) return;
@@ -929,6 +930,9 @@ class PL_Assistant extends GamesManager{
 	}
 	handlePlayerListExit(user, room){
 		this.say(room, "/msgroom survivor, /closehtmlpage + " + user.id + ", " + pl_assistant_PAGE_ID);
+	}
+	handlePLDisplayCooldown(){
+		this.PLCooldown = false;
 	}
 	resetPLData() {
 		this.players= [];

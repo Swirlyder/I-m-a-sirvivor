@@ -326,7 +326,7 @@ global.parse = exports.parse = {
 			else if (Games.host && room.id === 'survivor') Parse.say(room, '/sendprivatehtmlbox, ' + user.id + ', Signups for this game are closed');
 			else if (room.game) room.game.join(user);
 		} 
-		else if (message.substr(0, 7).toLowerCase() === '/me out' && (room.game || Games.host)) {
+		else if (message.substr(0, 7).toLowerCase() === '/me out' && (room.game || Games.host) && user.id !== Games.host.id) {
 			if(Games.host && room.id === 'survivor'){ 
 				Games.removePlayerAndDecrement(user);
 				if(Games.playerListToolEnabled) {
