@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 const name = "Rock, Paper, Scissors";
 const description = "__Sorry, no lizards or Spocks involved... Winner of NBT #2!__ Game rules: https://sites.google.com/view/survivor-ps/themes/rps **Modification**: includes Lizard and Spock: https://sites.google.com/view/survivor-ps/themes/rps/rpsls";
 const id = Tools.toId(name);
@@ -242,3 +242,4 @@ exports.variations = [
 		variationAliases: ["ls"],
 	}
 ]
+*/

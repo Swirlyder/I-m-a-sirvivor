@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 let fishdict = {
 	old: {
@@ -233,4 +233,4 @@ exports.commands = {
 exports.pmCommands = {
 	"choose": true
 }
-
+*/

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 const name = "Dragon Orbs";
 const description = "__Get your power level over 9000 by collecting getting the right balls or whatever..__ Game rules: https://sites.google.com/view/survivor-ps/themes/dragon-orbs";
 const id = Tools.toId(name);
@@ -192,3 +192,4 @@ exports.pmCommands = {
 	destroy: true,
 	choose: true
 }
+*/

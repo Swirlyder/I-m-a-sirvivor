@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 function getFish(roll) {
 	if (roll === 1) {
@@ -212,3 +212,4 @@ exports.id = id;
 exports.description = description;
 exports.commands = [];
 
+*/

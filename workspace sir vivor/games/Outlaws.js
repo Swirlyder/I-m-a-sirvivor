@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Outlaws";
 const description = "__[Insert \"high noon\" meme here]__ Game rules: https://sites.google.com/view/survivor-ps/themes/outlaws";
@@ -175,3 +175,4 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true,
 }
+*/

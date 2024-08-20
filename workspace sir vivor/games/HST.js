@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Hide & Seek Tag';
 const description = '__Stop being so damn edgy and just play a childhood game for once.__ Game rules: https://sites.google.com/view/survivor-ps/themes/hst';
@@ -281,3 +281,4 @@ exports.variations = [
 		variationAliases: [],
 	},
 ]
+*/

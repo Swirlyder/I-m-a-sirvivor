@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Weardown';
 const description = '__The game where we all get frustrated over losing all of our health in 2 rounds!__ Modification can be found here: https://sites.google.com/view/survivor-ps/themes/modifications'
@@ -176,3 +176,4 @@ exports.aliases = ["wd"];
 exports.commands = {
 	attack: "attack"
 };
+*/

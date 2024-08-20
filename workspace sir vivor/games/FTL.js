@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Follow the Leader";
 const id = Tools.toId(name);
@@ -438,3 +438,4 @@ exports.pmCommands = {
 	follow: true,
 }
 exports.aliases = ["ftl"];
+*/

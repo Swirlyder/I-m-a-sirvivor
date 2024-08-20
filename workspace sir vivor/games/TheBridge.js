@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 const name = "The Bridge";
 const description = "__Why burn the bridge when it will crumble on its own?__ Game rules: https://sites.google.com/view/survivor-ps/themes/the-bridge";
 const id = Tools.toId(name);
@@ -232,3 +232,4 @@ exports.pmCommands = {
 	leap: false,
 	destroy: false
 }
+*/

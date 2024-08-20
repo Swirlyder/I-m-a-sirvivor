@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Lego Tower Defense";
 const id = Tools.toId(name);
@@ -163,3 +163,4 @@ exports.commands = {
 exports.pmCommands = {
 	choose: true
 };
+*/

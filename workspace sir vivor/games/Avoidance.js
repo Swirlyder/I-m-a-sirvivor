@@ -1,3 +1,4 @@
+/*
 'use strict';
 const name = "Avoidance";
 const description = "__The trick is to pick the number that makes you not lose.__ Game rules: https://sites.google.com/view/survivor-ps/themes/avoidance";
@@ -226,3 +227,5 @@ exports.pmCommands = {
 	destroy: true,
 	choose: true
 }
+*/
+

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Russian Roulette";
 const id = Tools.toId(name);
@@ -284,3 +284,4 @@ exports.commands = {
     pass: "pass",
     steal: "steal"
 };
+*/
