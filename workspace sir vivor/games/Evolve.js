@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 let goodmons = {};
 let dex = Tools.data.pokedex;
@@ -232,3 +232,4 @@ exports.variations = [
 		variationAliases: ["shades"],
 	}
 ]
+*/
