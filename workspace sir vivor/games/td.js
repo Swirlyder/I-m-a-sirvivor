@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Tower Defense';
 const description = '__Can you defend your tower? Who will be left standing when the dust settles?__ Game rules: https://sites.google.com/view/survivor-ps/themes/lego-td';
@@ -132,3 +132,4 @@ exports.variations = [
 		variationAliases: ["b"],
 	}
 ]
+*/
