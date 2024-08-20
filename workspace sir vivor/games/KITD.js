@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Killer in the Dark";
 const id = Tools.toId(name);
@@ -311,3 +311,4 @@ exports.commands = {
 exports.pmCommands = {
 	destroy: true,
 }
+*/
