@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Hidden Type';
 const description = '__The theme that won our April 2015\'s NBT!__ Game rules: https://sites.google.com/view/survivor-ps/themes/hidden-type';
@@ -247,3 +247,4 @@ exports.pmCommands = {
 	destroy: true,
 	type: true,
 }
+*/
