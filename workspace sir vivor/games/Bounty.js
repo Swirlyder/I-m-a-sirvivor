@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = "Bounty";
 const id = Tools.toId(name);
@@ -358,3 +358,4 @@ exports.pmCommands = {
 	action: true,
 	destroy: true,
 }
+*/
