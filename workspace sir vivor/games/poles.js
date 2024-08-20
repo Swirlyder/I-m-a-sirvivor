@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Poles';
 const description = '__Your power is within the cards, can you use them wisely?__ Game rules: https://sites.google.com/view/survivor-ps/themes/poles';
@@ -505,3 +505,4 @@ exports.pmCommands = {
 	action: true,
 	hand: true,
 }
+*/
