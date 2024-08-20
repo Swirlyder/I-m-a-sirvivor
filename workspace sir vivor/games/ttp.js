@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 const name = 'Top Trumps Pokebattle';
 const description = '__Where your partners\' lesser strengths can become their greatest assets.__ Game rules: https://sites.google.com/view/survivor-ps/themes/ttp';
@@ -367,4 +367,4 @@ exports.commands = {
 exports.pmCommands = {
 	hand: true,
 }
-
+*/
