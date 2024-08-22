@@ -98,6 +98,10 @@ module.exports = {
 	lunarixis: '==lunar',
 	lunar: '/me sips tea',
 
+	morgan: '==morgantactician',
+	emma: '==morgantactician',
+	morgantactician: 'Hi, I\'m Morgan (Tactician)... and Emma (Femcario)... and SonicBoom(Pikachu)... and Zero the Jackal! Six-time DD champ, two-time cycle champ... undefeated champion of changing Surv names.',
+
 	opple: '==flopple',
 	flopple: 'Who\'s the floppling? Opple? AGAIN?',
 
