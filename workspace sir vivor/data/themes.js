@@ -55,7 +55,7 @@ const gameTypes = {
 	putt: 'puttputtpanic',
 	ppp: 'puttputtpanic',
 	hotpotato: ['Hot Potato', 'https://sites.google.com/view/survivor-ps/themes/hot-potato', 'This be a real hot potato.', 0],
-	horseracing: ['Horse Racing', 'https://sites.google.com/view/survivor-ps/themes/casino/horse-racing?authuser=0', 'Go Seabiscuit,', 0],
+	horseracing: ['Horse Racing', 'https://sites.google.com/view/survivor-ps/themes/casino/horse-racing?authuser=0', 'Go Seabiscuit, GO!!!', 0],
 	hungergames: ['Hunger Games', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Classic but with a twist: No alliances.', 0],
 	hg: 'hungergames',
 	hungergamesanonymous: ['Hunger Games Anonymous', 'https://sites.google.com/view/survivor-ps/themes/hunger-games', 'Hunger Games but you don\'t know who is who...', 0],
