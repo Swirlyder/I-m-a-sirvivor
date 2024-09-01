@@ -34,6 +34,8 @@ const eventTypes = {
 	minigames: ['Minigames', 'https://sites.google.com/view/survivor-ps/events/minigames', 'A mini spin on Survivor games.'],
 	minigame: 'minigames',
 	missingalias: ['Missing Alias', 'https://sites.google.com/view/survivor-ps/events/missing-alias', 'True identities are not given.'],
+	spotlightthemes: ['Spotlight Themes', 'https://sites.google.com/view/survivor-ps/events/spotlight-themes?authuser=0', 'You\'re in the spotlight now!'],
+	spotlight: 'spotlightthemes',
 	supersurvivorbros: ['Super Survivor Bros Tour', 'https://sites.google.com/view/survivor-ps/events/ssb', 'Destroy your hated roomauth with your favourite roomauth!'],
 	ssb: 'supersurvivorbros',
 	survivorolympics: ['Survivor Olympics', 'https://sites.google.com/view/survivor-ps/events/survivor-olympics', 'Use your points wisely.'],
