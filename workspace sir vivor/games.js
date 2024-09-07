@@ -921,7 +921,7 @@ class PL_Assistant extends GamesManager{
 	saveNotes(notes){
 		this.notes = notes;
 	}
-	handleSignupsTimer(room, PL_Menu, user){
+	handleSignupsTimer(room, user){
 		this.say(room, "/msgroom Survivor, Signups are closed!");
 		this.signupsOpen = false;
 		this.isSignupTimer = false;
@@ -943,6 +943,7 @@ class PL_Assistant extends GamesManager{
 		this.playerListToolEnabled = false;
 		this.notes = '';
 		this.hideNotes = false;
+		this.PLCooldown = false;
 	}
 }
 
