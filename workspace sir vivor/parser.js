@@ -317,7 +317,7 @@ global.parse = exports.parse = {
 		if (message.substr(0, 6).toLowerCase() === '/me in' && (room.game || Games.host)) {
 		    if(Games.host && room.id === 'survivor' && Games.signupsOpen){ 
 				Games.addPlayer(user);
-				if(Games.playerListToolEnabled) {
+				if(Games.playerListToolEnabled && user.rooms.has('survivor')) {
 					const plhtml = PL_Menu.generatePLAssistantHTML();
 					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
 				}
