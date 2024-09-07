@@ -213,7 +213,7 @@ module.exports = {
 						if (!newPlayer) return this.say(room, "User not found.");
 						Games.addPlayer(newPlayer);
 
-						if(Games.playerListToolEnabled) {
+						if(Games.playerListToolEnabled && user.rooms.has('survivor')) {
 							const plhtml = PL_Menu.generatePLAssistantHTML();
 							Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
 						}
