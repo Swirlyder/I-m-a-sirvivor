@@ -317,7 +317,7 @@ global.parse = exports.parse = {
 		if (message.substr(0, 6).toLowerCase() === '/me in' && (room.game || Games.host)) {
 		    if(Games.host && room.id === 'survivor' && Games.signupsOpen){ 
 				Games.addPlayer(user);
-				if(Games.playerListToolEnabled && user.rooms.has('survivor')) {
+				if(Games.playerListToolEnabled && Users.get(Games.host.id)) {
 					const plhtml = PL_Menu.generatePLAssistantHTML();
 					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
 				}
@@ -329,7 +329,7 @@ global.parse = exports.parse = {
 		else if (message.substr(0, 7).toLowerCase() === '/me out' && (room.game || Games.host) && user.id !== Games.host.id) {
 			if(Games.host && room.id === 'survivor'){ 
 				Games.removePlayerAndDecrement(user);
-				if(Games.playerListToolEnabled) {
+				if(Games.playerListToolEnabled && Users.get(Games.host.id)) {
 					const plhtml = PL_Menu.generatePLAssistantHTML();
 					Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
 				}
