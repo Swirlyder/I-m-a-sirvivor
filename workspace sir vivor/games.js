@@ -943,6 +943,7 @@ class PL_Assistant extends GamesManager{
 		this.playerListToolEnabled = false;
 		this.notes = '';
 		this.hideNotes = false;
+		this.PLCooldown = false;
 	}
 }
 
