@@ -428,11 +428,11 @@ module.exports = {
 		let numPoints = parseInt(split[1]);
 		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
 		dd.addseasonpoints(username, numPoints);
-		numPoints = Number(numPoints);
+		
 		let modlogEntry = {
 			command: "addseasonal",
 			user: user.id,
-			first: ["20", "peepee"],
+			first: [numPoints, username],
 			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
@@ -455,7 +455,7 @@ module.exports = {
 		let modlogEntry = {
 			command: "remseasonal",
 			user: user.id,
-			first: [numPoints, username],
+			first: [(-1*numPoints), username],
 			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
