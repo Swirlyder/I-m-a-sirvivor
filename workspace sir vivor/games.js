@@ -844,7 +844,7 @@ class PL_Assistant extends GamesManager{
 		this.PLCooldown = false;
     }
 	addPlayer(user) {
-		if (this.host.id === user.id || !this.signupsOpen || user.id in this.players) return;
+		if (this.host.id === user.id || user.id in this.players) return;
 		const player = new Player(user);
 		this.players[user.id] = player;
 		this.playerCount++;
@@ -941,8 +941,6 @@ class PL_Assistant extends GamesManager{
 		this.signupsOpen = true;
 		this.expandedUser = 'none';
 		this.playerListToolEnabled = false;
-		this.notes = '';
-		this.hideNotes = false;
 		this.PLCooldown = false;
 	}
 }
