@@ -182,31 +182,31 @@ module.exports = {
 					case 'open':
 						Games.enableSignups();
 						break;
-					case 'timer':
-						const arg = split[1].trim();
-						if (arg === "end") {
-							if (Games.isTimer) {
-								clearTimeout(Games.timeout);
-								this.say(room, "The signup timer has been ended.");
-								Games.isTimer = false;
-								Games.isSignupTimer = false;
-							} else {
-								this.say(room, "There is no signup timer running!");
+						case 'timer':
+							const arg = split[1].trim();
+							if (arg === "end") {
+								if (Games.isTimer) {
+									clearTimeout(Games.timeout);
+									this.say(room, "The signup timer has been ended.");
+									Games.isTimer = false;
+									Games.isSignupTimer = false;
+								} else {
+									this.say(room, "There is no signup timer running!");
+								}
+								return;
 							}
-							return;
-						}
-						let x = parseFloat(arg);
-						if (!x || x > 300 || (x < 10 && x > 5) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 5 minutes.");
-						if (x < 10) x *= 60;
-						let minutes = Math.floor(x / 60);
-						let seconds = x % 60;
-						clearTimeout(Games.timeout);
-						this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
-						Games.timeout = setTimeout(() => Games.handleSignupsTimer(room), x * 1000);
-						Games.isTimer = true;
-						Games.isSignupTimer = true;
-						Games.signupsOpen = false;
-						break;
+							let x = parseFloat(arg);
+							if (!x || x > 300 || (x < 10 && x > 5) || x <= 0) return this.say(room, "The timer must be between 10 seconds and 5 minutes.");
+							if (x < 10) x *= 60;
+							let minutes = Math.floor(x / 60);
+							let seconds = x % 60;
+							clearTimeout(Games.timeout);
+							this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
+							Games.timeout = setTimeout(() => Games.handleSignupsTimer(room, user), x * 1000);
+							Games.isTimer = true;
+							Games.isSignupTimer = true;
+							Games.signupsOpen = false;
+							break;
 					case 'add':
 						const newPlayer = split[1];
 						Games.addPlayer(newPlayer);

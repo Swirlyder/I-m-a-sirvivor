@@ -322,7 +322,7 @@ module.exports = {
 				let seconds = x % 60;
 				clearTimeout(Games.timeout);
 				room.say("/msgroom survivor, Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
-				Games.timeout = setTimeout(() => Games.handleSignupsTimer(room, PL_Menu, user), x * 1000);
+				Games.timeout = setTimeout(() => Games.handleSignupsTimer(room, user), x * 1000);
 				Games.isTimer = true;
 				Games.isSignupTimer = true;
 				break;
