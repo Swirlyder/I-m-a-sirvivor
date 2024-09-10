@@ -168,6 +168,7 @@ module.exports = {
 	done: function (arg, user, room) {
 		if (!Games.host || Games.host.id !== user.id) return;
 		Games.host = null;
+		Games.resetPLData();
 		this.say(room, "Thanks for playing!");
 	},
 
