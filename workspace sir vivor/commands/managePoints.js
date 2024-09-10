@@ -310,7 +310,9 @@ module.exports = {
 		let partlist = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
+		dd.addseasonpoints(first, Math.floor(firstpoints / 10));
 		dd.addpoints(second, secondpoints);
+		dd.addseasonpoints(second, Math.floor(second / 10));
 		for (let i = 4; i < split.length; i++) {
 			let part = split[i];
 			dd.addpoints(part, partpoints);
@@ -321,8 +323,8 @@ module.exports = {
 			else partlist += ", " + part.trim();
 		}
 		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
-		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
-		if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard. **" + Math.floor(firstpoints / 10) + "** also goes towards seasonal.");
+		if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard. **" + Math.floor(secondpoints / 10) + "** also goes towards seasonal.");
 		for (let i = 1; i < split.length; i++) {
 			gamecount.add(split[i], 1);
 		}
@@ -339,6 +341,126 @@ module.exports = {
 		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
 	},
 
+	addweekendseasonalpoints: 'awsp',
+	awsp: function (target, user, room) {
+		if (!target) return user.say("No target found :" + target);
+		if (!user.hasRank('survivor', '+')) return;
+		let split = target.split(",");
+		if (split.length < 1) return user.say("You must specify the number of players, followed by the winner.");
+		let numPlayers = parseInt(split[0]);
+		if (!numPlayers) return user.say("'" + split[0] + "' is not a valid number of players.");
+		let first = split[1].trim();
+		let hostpoints = 0;
+		let firstpoints = 0;
+		let secondpoints = 0;
+		let partpoints = 0;
+
+		if (numPlayers < 6) {
+			return user.say("Official games with at least 6 players are worth points.");
+		} else {
+			//dummy variables!!!
+			let minus = numPlayers - 1;
+			let partpointsUserMinus = minus - 3;
+			let hostpointsUserMinus = partpointsUserMinus * 3;
+
+			let probOfLosingUserMinus = (minus - 2) / minus;
+			let sumFirstAndSecondUserMinus = (hostpointsUserMinus - partpointsUserMinus * probOfLosingUserMinus) * minus;
+
+			let secondpointsUserMinus = 0;
+			let firstpointsUserMinus = 0;
+			if (numPlayers < 6) {
+				secondpointsUserMinus = partpointsUserMinus;
+				firstpointsUserMinus = sumFirstAndSecondUserMinus - secondpointsUserMinus;
+			} else {
+				firstpointsUserMinus = (sumFirstAndSecondUserMinus + minus * 4) / 2;
+				secondpointsUserMinus = sumFirstAndSecondUserMinus - firstpointsUserMinus;
+			}
+			//above calculates for numPlayers-1 (minus)
+
+			let partpointsUser = numPlayers - 3;
+			let hostpointsUser = partpointsUser * 3;
+
+			let probOfLosingUser = (numPlayers - 2) / numPlayers;
+			let sumFirstAndSecondUser = (hostpointsUser - partpointsUser * probOfLosingUser) * numPlayers;
+
+			let secondpointsUser = 0;
+			let firstpointsUser = 0;
+			if (numPlayers < 6) {
+				secondpointsUser = partpointsUser;
+				firstpointsUser = sumFirstAndSecondUser - secondpointsUser;
+			} else {
+				firstpointsUser = (sumFirstAndSecondUser + numPlayers * 4) / 2;
+				secondpointsUser = sumFirstAndSecondUser - firstpointsUser;
+			}
+
+			//above calculates for numPlayers
+
+			firstpoints = firstpointsUserMinus * 2;
+
+			secondpoints = firstpointsUser;
+
+			partpoints = Math.ceil(partpointsUser * 1.5);
+
+			/*set hostpoints to expected points on average based on the above values */
+			hostpoints = Math.ceil(firstpoints / numPlayers + secondpoints / numPlayers + partpoints * ((numPlayers - 2) / numPlayers));
+		}
+
+
+		dd.addseasonpoints(first, Math.floor(firstpoints / 5));
+
+		user.say("**" + Math.floor(firstpoints / 5) + "** have been added to **" + first.trim() + "** on the seasonal leaderboard.");
+		let modlogEntry = {
+			command: "addweekendseasonalpoints",
+			user: user.id,
+			first: [Math.floor(firstpoints / 20), first],
+			date: Date.now()
+		};
+		dd.updateModlog(modlogEntry);
+	},
+	addseasonal: 'addseasonspecial',
+	addseasonspecial: 'addseason',
+	addseason: function (target, user, room) {
+		if (!target) return user.say("No target found :" + target);
+		if (!user.hasRank('survivor', '@')) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of points and the user to add them to.");
+		let username = split[0].trim();
+		let numPoints = parseInt(split[1]);
+		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
+		dd.addseasonpoints(username, numPoints);
+		numPoints = Number(numPoints);
+		let modlogEntry = {
+			command: "addseasonal",
+			user: user.id,
+			first: ["20", "peepee"],
+			date: Date.now()
+		};
+		dd.updateModlog(modlogEntry);
+		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the seasonal leaderboard.");
+	},
+	remseason: 'remseasonal',
+	remseasonal: 'removeseasonspecial',
+	removeseasonspecial: 'removeseasonal',
+	removeseasonal: function (target, user, room) {
+		if (!target) return user.say("No target found :" + target);
+		if (!user.hasRank('survivor', '@')) return;
+		let split = target.split(",");
+		if (split.length !== 2) return user.say("You must specify number of points and the user to them from.");
+		let username = split[0].trim();
+		let numPoints = parseInt(split[1]);
+		if (!numPoints || numPoints < 0) return user.say("'" + split[1] + "' is not a valid number of points to remove.");
+		numPoints = -numPoints;
+		dd.addseasonpoints(username, numPoints);
+		numPoints = -numPoints;
+		let modlogEntry = {
+			command: "remseasonal",
+			user: user.id,
+			first: [numPoints, username],
+			date: Date.now()
+		};
+		dd.updateModlog(modlogEntry);
+		return user.say("**" + numPoints + "** have been added to **" + username.trim() + "** on the seasonal leaderboard.");
+	},
 	addpointssurvivorshowdown: 'addss',
 	addss: function (target, user, room) {
 		if (!target) return user.say("No target found :" + target);
@@ -459,7 +581,10 @@ module.exports = {
 			"adduser": "User",
 			"addbot": "Bot",
 			"addspecial": "Special",
-			"addfish": "Official"
+			"addfish": "Official",
+			"addseasonal": "Seasonal",
+			"addweekendseasonalpoints": "Weekend Seasonal",
+			"remseasonal": "Remove Seasonal"
 		}
 		let ret = [''];
 		let n = 0;
@@ -494,8 +619,8 @@ module.exports = {
 			} else {
 				if (i.host) unit += `Host (${i.host[0]}): <i>${i.host[1]}</i><br>`;
 				if (i.first) unit += `First (${i.first[0]}): <i>${i.first[1]}</i><br>`;
-				if (i.second) unit += `Second (${i.second[0]}): <i>${i.second[1]}</i><br>`;
-				if (i.part) unit += `Participation (${i.part[0]}): <i>${i.part.slice(1).join(', ')}</i><br>`;
+				if (i.second) unit += `Second ( ${i.second[0]} ): <i> ${i.second[1]} </i><br>`;
+				if (i.part) unit += `Participation ( ${i.part[0]} ): <i>${i.part.slice(1).join(', ')}</i><br>`;
 			}
 			unit += `</details>`
 			units.push(unit);
@@ -555,5 +680,5 @@ module.exports = {
 		ret += "</div>"
 
 		return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
-	}
+	},
 };

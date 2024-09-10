@@ -10,7 +10,10 @@ class DD {
 		this.eventlog = {};
 		this.authbattle = {};
 		this.numSkips = 0;
-		this.currentCycle = 0;
+		this.current = {
+			"cycle":0, 
+			"season":0
+		}
 	}
 	
 	importData() {
@@ -27,7 +30,8 @@ class DD {
 		this.modlog = readJSONOrDefault('./databases/modlog.json');
 		this.authbattle = readJSONOrDefault('./databases/authbattle.json');
 		this.eventlog = readJSONOrDefault('./databases/eventlog.json');
-		this.currentCycle = readJSONOrDefault('./databases/currentcycle.json');
+		this.current = readJSONOrDefault('./databases/current_cycle_season.json');
+
 
 		if (!("data" in this.modlog)) {
 			this.modlog.data = [];
@@ -61,6 +65,7 @@ class DD {
 				color: "000000",
 				bgcolor: "ffffff",
 				dexnum: 0,
+				seasonpoints: 0,
 				/*displaypoints: numPoints*/
 				/*add extra displaypoints variable*/
 			}
@@ -69,6 +74,30 @@ class DD {
 				this.dd[id].points += numPoints;
 			} else {
 				this.dd[id].points = numPoints;
+			}
+		}
+		this.exportData();
+	}
+
+	addseasonpoints(user, numPoints) {
+		let name = user.trim();
+		let id = Tools.toId(name);
+		if (!(id in this.dd)) {
+			this.dd[id] = {
+				points: 0,
+				name: user,
+				color: "000000",
+				bgcolor: "ffffff",
+				dexnum: 0,
+				seasonpoints: numPoints,
+				/*displaypoints: numPoints*/
+				/*add extra displaypoints variable*/
+			}
+		} else {
+			if (this.dd[id].seasonpoints) {
+				this.dd[id].seasonpoints += numPoints;
+			} else {
+				this.dd[id].seasonpoints = numPoints;
 			}
 		}
 		this.exportData();
@@ -237,12 +266,18 @@ class DD {
 		else
 			return '#FFFFFF'
 	}
+	getSeasonPoints(item) {
+		if (item[5]) {
+			return item[5];
+		}
+		else return 0;
+	}
 
 	getSorted() {
 		let items = [];
 		for (let id in this.dd) {
 			let item = this.dd[id];
-			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.dexnum]);
+			items.push([item.points || 0, item.name, item.color, item.bgcolor, item.dexnum, item.seasonpoints]);
 		}
 		items.sort(function(first, second) {
 			let points1 = dd.getPoints(first);
@@ -253,6 +288,26 @@ class DD {
 			if (first[3] !== second[3]) return second[3] - first[3];
 			return second[4] > first[4];
 		});
+		console.log(items);
+		return items;
+	}
+
+	getSortedSeasonal(){
+		let items = [];
+		for (let id in this.dd) {
+			let item = this.dd[id];
+			items.push([item.points, item.name, item.color, item.bgcolor, item.dexnum, item.seasonpoints || 0]);
+		}
+		items.sort(function(first, second) {
+			let points1 = dd.getSeasonPoints(first) + Math.floor(dd.getPoints(first) / 10);
+			let points2 = dd.getSeasonPoints(second) + Math.floor(dd.getPoints(second) / 10);
+			if (points1 !== points2) return points2 - points1;
+			if (first[1] !== second[1]) return second[1] - first[1];
+			if (first[2] !== second[2]) return second[2] - first[2];
+			if (first[3] !== second[3]) return second[3] - first[3];
+			return second[4] > first[4];
+		});
+		console.log(items);
 		return items;
 	}
 
@@ -271,11 +326,12 @@ class DD {
 			let bgcolor = this.getBgColor(items[i]);
 			let textcolor = this.getTextColor(items[i]);
 			let dexNum = this.getDexNum(items[i]);
+			let seasonpoints = this.getSeasonPoints(items[i]) + Math.floor(points / 10);
 			let h = hostcount.count[toId(cur)] ? hostcount.count[toId(cur)] : 0;
 			let n = gamecount.count[toId(cur)] ? gamecount.count[toId(cur)] : 0;
 
 			//push everything into arrays
-			res.push([rank,cur, points, n, h]);
+			res.push([rank,cur, points, n, h, seasonpoints]);
 			vanity.push([bgcolor, textcolor, dexNum]);
 		}
 
@@ -304,7 +360,7 @@ class DD {
 			'style="background-color:#FFFFFF ; ' +
 			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black"> `;
 
-		str+= `<tr><th colspan="5" style="font-weight: bold ; font-size: 1.5em">Cycle ${dd.currentCycle}</th></tr>`;
+		str+= `<tr><th colspan="5" style="font-weight: bold ; font-size: 2em">Cycle ${dd.current.cycle}</th></tr>`;
 
 		// Column labels
 		str += ` <tr style="height:15px ; font-size:1.2em">` +
@@ -327,7 +383,8 @@ class DD {
 			for (let ln in lbData[i]) {
 				let j = lbData[i][ln];
 
-				if (ln != '1') strx += '<td>' + j + '</td> ';																		//add data
+				if (ln == '5') break;	
+				if (ln != '1') strx += '<td>' + j + '</td> ';																	//add data
 				else if (ln == '1' && dexNum == "0") strx += '<td style="padding: 0px 5px ; text-align:left;"> ' + j + ' </td> ';		//special formatting for name column
 				else if (dexNum != 0) {																								//special formatting for name w/ pokemon sprite
 					sheet_pos_y = (Math.floor(dexNum / POKE_SPRITE_COLS)) * 30 * -1;
@@ -342,12 +399,67 @@ class DD {
 
 		return str;
 	}
-	
+	getSeasonalLbHtml(items) {
+		const ROW_HEIGHT = 30;
+		const DEFAULT_ALIGN = "center";
+		const FONT_WEIGHT = 'bold';
+		const LEFT_RIGHT_PADDING = 5;
+		const POKE_SPRITE_COLS = 12;
+		const POKEMON_SPRITE_WIDTH = 40;
+		const POKEMON_SPRITE_HEIGHT = 30;
+
+		let str, strx, strs = [];
+		let sheet_pos_x, sheet_pos_y;
+		let bgcolor, textcolor, dexNum;
+
+		const lbData = items[0];
+		const lbVanity = items[1];
+
+		// Table styles
+		str = '<div> ';
+		str += `<table border="2" ; align="${DEFAULT_ALIGN}" ` +
+			'style="background-color:#FFFFFF ; ' +
+			`font-weight:${FONT_WEIGHT} ; text-align:${DEFAULT_ALIGN}; color: black"> `;
+
+		str+= `<tr><th colspan="5" style="font-weight: bold ; font-size: 2em">Season ${dd.current.season}</th></tr>`;
+
+		// Column labels
+		str += ` <tr style="height:15px ; font-size:1.2em">` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Rank </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px ; "> Name </td> ` +
+			`<td style="padding:0px ${LEFT_RIGHT_PADDING}px;"> Points </td> ` +
+			` ` + `</tr> `;
+
+		// The rest of the Table
+		for (let i = 0; i < lbData.length; i++) {
+			if (!lbData) continue;
+			//bgcolor = lbVanity[i]['0'];
+			//textcolor = lbVanity[i]['1'];
+			//dexNum = lbVanity[i]['2'];
+
+			bgcolor = "FFFFFF";
+			textcolor = "000000";
+			dexNum = 0;
+
+			// add a row
+			strx = `<tr style="background:${bgcolor} ; color:${textcolor} ; ` + `height: ${ROW_HEIGHT}px ;"> `;
+			for (let ln in lbData[i]) {
+				let j = lbData[i][ln];
+
+				if (ln == '0' || ln == '5') strx += '<td> ' + j + ' </td> ';
+				else if(ln == '1') strx += '<td style="padding:0px 10px;"> ' + j + ' </td>';
+			}
+			strs.push(strx + "</tr> ");
+		}
+		str += strs.join("");
+		str += "</table> </div>";
+
+		return str;
+	}
 	updateModlog(message) {
 		this.modlog.data.push(message);
 		this.exportData();
 	}
-	
 	
 	authhunt_battle(user, challenger, winner) {
 		if (!(challenger in this.authbattle)) {
@@ -361,6 +473,12 @@ class DD {
 		}
 		this.exportData();
 		return true;
+	}
+	addEndOfSeasonPoints() {
+		for (let user in this.dd) {
+			let points_to_be_added = Math.floor(this.dd[user].points / 10);
+			this.addseasonpoints(this.dd[user].name, points_to_be_added);
+		}
 	}
 
 	wins_losses(user) {
@@ -417,8 +535,12 @@ class DD {
 	}
 
 	set_current_cycle(cycle) {
-		this.currentCycle = cycle;
-		fs.writeFileSync('./databases/currentcycle.json', JSON.stringify(this.currentCycle));
+		this.current.cycle = Number(cycle);
+		fs.writeFileSync('./databases/current_cycle_season.json', JSON.stringify(this.current));
+	}
+	set_current_season(season) {
+		this.current.season = Number(season);
+		fs.writeFileSync('./databases/current_cycle_season.json', JSON.stringify(this.current));
 	}
 }
 

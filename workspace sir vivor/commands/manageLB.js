@@ -75,6 +75,25 @@ module.exports = {
 			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${lb_HTML}</div>`);
 		}
 	},
+	slb: function (target, user, room) {
+		if (room.id !== user.id && !user.hasRank(room.id, '+')) return;
+		const num = parseInt(target);
+
+		// Process data
+		let sorted = dd.getSortedSeasonal();
+		const processedData = dd.processLbData(sorted, num);
+
+		// Construct HTML code
+		const slb_HTML = dd.getSeasonalLbHtml(processedData);
+
+		// Dislplay LB
+		if (room.id === user.id) {
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${slb_HTML}`);
+		}
+		else {
+			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${slb_HTML}</div>`);
+		}
+	},
 
 	rename: function (target, user, room) {
 		if (!target) return;
@@ -137,7 +156,23 @@ module.exports = {
 	clearlb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
 		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
-		dd.dd = {};
+
+		// Add 10% of user's cycle points towards their seasonal points
+		dd.addEndOfSeasonPoints();
+
+		// Reset leaderboard data except seasonal points
+		for(let i in dd.dd) {
+			for(let j in dd.dd[i]) {
+				if (j === 'name' || j === 'seasonpoints') continue;
+				else if(j === 'points' || j === 'dexnum') dd.dd[i][j] = 0;
+				else if(j === 'color') dd.dd[i][j] = '000000';
+				else if(j === 'bgcolor') dd.dd[i][j] = 'FFFFFF';
+			}
+		}
+
+		// Update LB cycle
+		dd.set_current_cycle(dd.current.cycle + 1);
+
 		dd.numSkips = 0;
 		dd.exportData();
 		hostcount.count = {};
@@ -148,7 +183,14 @@ module.exports = {
 		gamecount.save();
 		return room.say("The dd leaderboard has been reset.");
 	},
-
+	clearslb: function (target, user, room) {
+		if (!user.hasRank('survivor', '#')) return;
+		if (user.lastcmd !== 'clearslb') return room.say("Are you sure you want to clear the seasonal leaderboard? If so, type the command again. Do NOT use this command before using .clearlb");
+		dd.dd = {};
+		dd.set_current_season(dd.current.season + 1);
+		dd.exportData();
+		return room.say("The seasonal leaderboard has been reset.");
+	},
 	//work in progress
 	/*
 	logevent: function (target, user, room) {
@@ -225,5 +267,12 @@ module.exports = {
 		let cycle = parseInt(target);
 		dd.set_current_cycle(target);
 		return user.say("Cycle has been set to: " + cycle);
+	},
+	setseason(target, user, room) {
+		if (!user.hasRank('survivor', '@')) return;
+		if (!target) return;
+		let season = parseInt(target);
+		dd.set_current_season(target);
+		return user.say("Season has been set to: " + season);
 	}
 }
