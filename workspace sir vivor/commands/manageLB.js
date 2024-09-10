@@ -88,7 +88,7 @@ module.exports = {
 
 		// Dislplay LB
 		if (room.id === user.id) {
-			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, lb, ${slb_HTML}`);
+			Parse.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, slb, ${slb_HTML}`);
 		}
 		else {
 			Parse.say(room, `/addhtmlbox <div style="max-height:300px;overflow:auto">${slb_HTML}</div>`);
