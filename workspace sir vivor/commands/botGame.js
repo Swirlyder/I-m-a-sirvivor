@@ -208,8 +208,15 @@ module.exports = {
 							Games.signupsOpen = false;
 							break;
 					case 'add':
-						const newPlayer = split[1];
+						let newPlayer = split[1];
+						newPlayer = Users.get(newPlayer);
+						if (!newPlayer) return this.say(room, "User not found.");
 						Games.addPlayer(newPlayer);
+
+						if (Games.playerListToolEnabled) {
+							const plhtml = PL_Menu.generatePLAssistantHTML();
+							Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml);
+						}
 						break;
 					default:
 						this.say(room, Games.displayPlayerList());
