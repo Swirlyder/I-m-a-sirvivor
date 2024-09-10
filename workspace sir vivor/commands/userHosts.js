@@ -271,13 +271,9 @@ module.exports = {
 		if ((!Games.host || (Games.host.id !== user.id)) && !user.isExcepted() && !user.hasRank('survivor', '+')) return;
 		if (user.id == Games.host.id) Games.enablePlTool();
 		const split = target.split(","), arg = split[0], playerID = split[1];
-		const parts = target.split(/,(.+)/), notes = parts[1];
 		switch (arg) {
 			case "expanduser":
 				Games.expandedUser = Games.expandedUser == playerID ? "none" : split[1];
-				break;
-			case "savenotes":
-				Games.saveNotes(notes);
 				break;
 			case "remove":
 				Games.removePlayer(Games.players[playerID], false);
@@ -289,9 +285,6 @@ module.exports = {
 			case "rename":
 				const newName = split[2];
 				Games.players[playerID].name = newName;
-				break;
-			case "hidenotes":
-				Games.hideNotes = !Games.hideNotes;
 				break;
 			case "ts":
 				Games.toggleSignups();

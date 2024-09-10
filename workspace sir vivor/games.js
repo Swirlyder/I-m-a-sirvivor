@@ -941,8 +941,6 @@ class PL_Assistant extends GamesManager{
 		this.signupsOpen = true;
 		this.expandedUser = 'none';
 		this.playerListToolEnabled = false;
-		this.notes = '';
-		this.hideNotes = false;
 		this.PLCooldown = false;
 	}
 }
