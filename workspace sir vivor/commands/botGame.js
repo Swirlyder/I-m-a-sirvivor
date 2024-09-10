@@ -202,21 +202,14 @@ module.exports = {
 						let seconds = x % 60;
 						clearTimeout(Games.timeout);
 						this.say(room, "Timer set for " + (minutes > 0 ? ((minutes) + " minute" + (minutes > 1 ? "s" : "")) + (seconds > 0 ? " and " : "") : "") + (seconds > 0 ? ((seconds) + " second" + (seconds > 1 ? "s" : "")) : "") + ".");
-						Games.timeout = setTimeout(() => Games.handleSignupsTimer(room, user), x * 1000);
+						Games.timeout = setTimeout(() => Games.handleSignupsTimer(room), x * 1000);
 						Games.isTimer = true;
 						Games.isSignupTimer = true;
 						Games.signupsOpen = false;
 						break;
 					case 'add':
-						let newPlayer = split[1];
-						newPlayer = Users.get(newPlayer);
-						if (!newPlayer) return this.say(room, "User not found.");
+						const newPlayer = split[1];
 						Games.addPlayer(newPlayer);
-
-						if(Games.playerListToolEnabled && Users.get(Games.host.id)) {
-							const plhtml = PL_Menu.generatePLAssistantHTML();
-							Parse.say(room, '/sendhtmlpage ' + Games.host.id + ', Playerlist-Assistant, ' + plhtml); 
-						}
 						break;
 					default:
 						this.say(room, Games.displayPlayerList());

@@ -142,6 +142,7 @@ class PL_Assistant_Menu extends HTMLPage{
     generatePlayerRow(player){
         const expandButton = this.createExpandButton(player.id);
         const playerNameHTML = player.eliminated ? this.createEliminatedPlayerHTML(player) : this.createPlayerNameHTML(player.name, "");
+        const notesArea = this.createTextArea(1, 7, "notes", "none", "position:relative ; top:5px;");
         const html = expandButton + " " + playerNameHTML;
         return this.nestInDiv(html, "border-bottom:1px solid; padding:5px 0; margin:0 10px;");
     }
@@ -198,13 +199,21 @@ class PL_Assistant_Menu extends HTMLPage{
     }
     //TODO: pass Games.isSignupTimer, Games.hideNotes, Games.notes, as argument, 
     generatePLHeading(){
+        let notesArea = '';
         const titleBar = this.generateTitleBar();
         const displayPLButton = this.createDisplayPLButton("margin-right:5px;");
         const closeSignUpsButton = this.createCloseOpenSignupsButton("margin-right:5px;");
         const signUpTimerButton = Games.isSignupTimer ? this.createEndSignupsTimerButton() : this.createSignUpTimerSection();
         let optionsRow = this.generateOptionsRow(displayPLButton, closeSignUpsButton, signUpTimerButton);
 
-        return this.createHTMLElement('div', titleBar + optionsRow, "width:70% ; margin:0 auto ; text-align:center;")
+        if (!Games.hideNotes) { 
+            notesArea = this.createTextAreaWithSave("survivor", ".plmenu ", "savenotes", "", Games.notes);
+        } else {
+            const showNotesButton = this.createToggleNotesButton("Show Notes", "");
+            optionsRow += this.generateOptionsRow(showNotesButton);
+        }
+
+        return this.createHTMLElement('div', titleBar + optionsRow + notesArea, "width:70% ; margin:0 auto ; text-align:center;")
     }
      //TODO: pass Games.players as argument
     generatePLAssistantHTML(){
