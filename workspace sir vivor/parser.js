@@ -150,16 +150,16 @@ global.parse = exports.parse = {
 					});
 					res.on('end', function () {
 						if (data === ';') {
-							error('failed to log in; nick is registered - invalid or no password given');
+							logging.error('failed to log in; nick is registered - invalid or no password given');
 							process.exit(-1);
 						}
 						if (data.length < 50) {
-							error('failed to log in: ' + data);
+							logging.error('failed to log in: ' + data);
 							process.exit(-1);
 						}
 
 						if (data.indexOf('heavy load') !== -1) {
-							error('the login server is under heavy load; trying again in one minute');
+							logging.error('the login server is under heavy load; trying again in one minute');
 							setTimeout(function () {
 								this.message(message);
 							}.bind(this), 60 * 1000);
@@ -167,7 +167,7 @@ global.parse = exports.parse = {
 						}
 
 						if (data.substr(0, 16) === '<!DOCTYPE html>') {
-							error('Connection error 522; trying agian in one minute');
+							logging.error('Connection error 522; trying agian in one minute');
 							setTimeout(function () {
 								this.message(message);
 							}.bind(this), 60 * 1000);
@@ -179,7 +179,7 @@ global.parse = exports.parse = {
 							if (data.actionsuccess) {
 								data = data.assertion;
 							} else {
-								error('could not log in; action was not successful: ' + JSON.stringify(data));
+								logging.error('could not log in; action was not successful: ' + JSON.stringify(data));
 								process.exit(-1);
 							}
 						} catch (e) {}
@@ -188,7 +188,7 @@ global.parse = exports.parse = {
 				}.bind(this));
 
 				req.on('error', function (err) {
-					error('login error: ' + err.stack);
+					logging.error('login error: ' + err.stack);
 				});
 
 				if (data) req.write(data);
@@ -205,7 +205,7 @@ global.parse = exports.parse = {
 				if (spl[2] !== (" " + Config.nick)) return;
 
 				if (spl[3] !== '1') {
-					error('failed to log in, still guest');
+					logging.error('failed to log in, still guest');
 					process.exit(-1);
 				}
 
@@ -423,7 +423,7 @@ global.parse = exports.parse = {
 					console.log(stack);
 				}
 			} else {
-				error("invalid command type for " + cmd + ": " + (typeof Commands[cmd]));
+				logging.error("invalid command type for " + cmd + ": " + (typeof Commands[cmd]));
 			}
 		}
         else if (!!Commands.Replies[cmd]) {
