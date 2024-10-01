@@ -69,6 +69,13 @@ class Room {
 		if (Games.host && user && Games.host.id === user.id) {
 			Games.host = user;
 		}
+		// May seem redundant to add if(!user) but there is a bug where 
+		// the bot will get this far when user.id = null, and the 
+		// bot will crash
+		if(!user)  {
+			user = {id: toId(username), name: username};
+			send('|/w Swirlyder, I HAD TO RESORT TO SECOND IF(!USER))');
+		}
 		this.users.set(user.id, group);
 		user.rooms.set(this.id, group);
 		if (this.game) this.game.renamePlayer(user, oldid);
