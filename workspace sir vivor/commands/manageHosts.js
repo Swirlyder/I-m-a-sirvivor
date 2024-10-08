@@ -82,11 +82,13 @@ module.exports = {
 				this.say(room, "The game was forcibly ended.");
 			}
 			Games.host = null;
+			Games.resetPLData();
 			return;
 		}
 		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
 			Games.host = null;
+			Games.resetPLData();
 			return;
 		}
 		let i = 0,
