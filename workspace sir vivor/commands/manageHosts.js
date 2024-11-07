@@ -82,11 +82,13 @@ module.exports = {
 				this.say(room, "The game was forcibly ended.");
 			}
 			Games.host = null;
+			Games.resetPLData();
 			return;
 		}
 		if (Games.host && Games.host.id === target) {
 			this.say(room, "The game was forcibly ended.");
 			Games.host = null;
+			Games.resetPLData();
 			return;
 		}
 		let i = 0,
@@ -212,7 +214,7 @@ module.exports = {
 
 	hostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		if (!target) return room.say("Please provide a username.");
+		if (!target) return room.say("You must provide a username.");
 		let split = target.split(",");
 		let targUser = Users.get(split[0]);
 		if (!targUser) {
@@ -223,7 +225,7 @@ module.exports = {
 		}
 		let numDays = parseInt(split[1]);
 		if (!numDays) numDays = 3;
-		Rooms.get('survivor').say("/modnote HOSTBAN: [" + targUser.id + "] has been hostbanned for " + numDays + " days by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote HOSTBAN: [" + targUser.id + "] was hostbanned for " + numDays + " days by " + user.name + ".");
 		return room.say(Games.hostBan(targUser, numDays));
 	},
 
@@ -244,7 +246,7 @@ module.exports = {
 
 	unhostban: function (target, user, room) {
 		if (!user.hasRank('survivor', '%')) return;
-		Rooms.get('survivor').say("/modnote UNHOSTBAN: [" + target + "] has been unhostbanned by " + user.name + ".");
+		Rooms.get('survivor').say("/modnote UNHOSTBAN: [" + target + "] was unhostbanned by " + user.name + ".");
 		return room.say(Games.unHostBan(target));
 	},
 
