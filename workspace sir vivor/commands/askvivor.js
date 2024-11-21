@@ -6,7 +6,7 @@ module.exports = {
         responses: [
             {
                 username: false,
-                before: "Because PenQuin said so.",
+                before: "Better not tell you now",
             },
             {
                 username: false,
@@ -18,7 +18,15 @@ module.exports = {
             },
             {
                 username: false,
-                before: "Blame OM tbh",
+                before: "Concentrate and ask again",
+            },
+            {
+                username: false,
+                before: "Cannot predict now.",
+            },
+            {
+                username: false,
+                before: "Reply hazy, try again.",
             },
         ],
     },
@@ -77,11 +85,11 @@ module.exports = {
             },
             {
                 username: false,
-                before: "4/20/2020",
+                before: "Soon.",
             },
             {
                 username: false,
-                before: "today",
+                before: "Today",
             },
             {
                 username: false,
@@ -89,7 +97,7 @@ module.exports = {
             },
             {
                 username: false,
-                before: "This has already happened",
+                before: "This has already happened.",
             },
             {
                 username: false,
@@ -97,7 +105,7 @@ module.exports = {
             },
             {
                 username: false,
-                before: "On April 31st",
+                before: "NOW",
             },
         ],
     },
@@ -116,11 +124,27 @@ module.exports = {
             },
             {
                 username: false,
-                before: "Probably not tbh",
+                before: "It is decidedly so",
             },
             {
                 username: false,
-                before: "why would you even ask that",
+                before: "Why would you even ask that?",
+            },
+            {
+                username: false,
+                before: "Signs point to yes",
+            },
+            {
+                username: false,
+                before: "My sources say no.",
+            },
+             {
+                username: false,
+                before: "Outlook not so good",
+            },
+             {
+                username: false,
+                before: "Outlook good",
             },
         ],
     },
@@ -149,20 +173,28 @@ module.exports = {
         responses: [
             {
                 username: false,
-                before: "No",
+                before: "My sources say no",
             },
             {
                 username: false,
-                before: "Yes",
+                before: "Signs point to yes.",
+            },
+             {
+                username: false,
+                before: "Without a doubt.",
             },
             {
                 username: false,
-                before: "Probably not tbh",
+                before: "My reply is no.",
             },
             {
                 username: false,
-                before: "obviously not lol",
+                before: "Better not tell you now.",
             },
+            {
+                username: false,
+                before: "Cannot predict now.",
+            }
         ],
     },
 
@@ -172,19 +204,19 @@ module.exports = {
         responses: [
             {
                 username: false,
-                before: "No",
+                before: "Don’t count on it",
             },
             {
                 username: false,
-                before: "Yes",
+                before: "As I see it, yes",
             },
             {
                 username: false,
-                before: "Probably not tbh",
+                before: "Very doubtful",
             },
             {
                 username: false,
-                before: "why would you even ask that",
+                before: "Shut up.",
             },
         ],
     },
@@ -204,7 +236,7 @@ module.exports = {
             },
             {
                 username: false,
-                before: "I'm stuck in botland D:",
+                before: "Concentrate and ask again",
             }
         ],
     },
@@ -215,8 +247,8 @@ module.exports = {
         responses: [
             {
                 username: true,
-                before: "",
-                after: "",
+                before: "Are you getting tired yet,",
+                after: "?",
             },
 
             {
@@ -238,14 +270,14 @@ module.exports = {
         ],
     },
 
-    hi: 'hello',
+/*    hi: 'hello',
     hello: {
         priority: 2,
         placement: "prefix",
         responses: [
             {
                 username: false,
-                before: "Uh... hello",
+                before: "Uh... hello.",
             },
             {
                 username: true,
@@ -254,16 +286,17 @@ module.exports = {
             },
             {
                 username: false,
-                before: "**GUESS WHAT TIME IT IS??? YEP, TIME FOR A BEATDOWN!!!** ",
+                before: "!",
 
             },
             {
                 username: false,
-                before: "**CONGRATULATIONS, YOU'VE LOST** ",
+                before: "?",
 
             }
         ]
     },
+    */
 
     dosomething: {
         priority: 4,
@@ -271,8 +304,8 @@ module.exports = {
         responses: [
             {
                 username: true,
-                before: "why do I have to do what you want me to do ",
-                after: "? Who do you think you are? You should be happy with what I am doing for you right now. I can't believe you want me to do even more for you. Ha! What a joke. Can you believe this is what I have to work with?",
+                before: "Why do I have to do what you want me to do ",
+                after: "? Who do you think you are? You should be happy with what I am doing for you right now. I can't believe you want me to do even more for you. HA! What a joke. Can you believe this is what I have to work with?",
             },
         ],
     },
@@ -283,11 +316,11 @@ module.exports = {
         responses: [
             {
                 username: false,
-                before: "duh",
+                before: "Ask again later",
             },
             {
                 username: false,
-                before: "I hope not",
+                before: "Reply hazy, try again",
             },
             {
                 username: true,
