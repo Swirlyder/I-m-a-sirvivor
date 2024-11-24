@@ -1,4 +1,4 @@
-/*'use strict';
+'use strict';
 
 const name = "Hot Potato";
 const description = "__This be a real hot potato.__ Game rules: https://sites.google.com/view/survivor-ps/themes/hot-potato";
@@ -122,4 +122,4 @@ exports.variations = [
 		variationAliases: ["timed"],
 	}
 ]
-*/
+
