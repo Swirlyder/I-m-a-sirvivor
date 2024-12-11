@@ -197,7 +197,7 @@ global.connect = function (retry) {
 		con.on('message', function (response) {
 			if (response.type !== 'utf8') return false;
 			var message = response.utf8Data;
-			if (!['c', 'l', 'n', 'j'].includes(toId(message.split('|')[1]))) logging.recv(message);
+			if (!['c', 'l', 'n', 'j', 'init'].includes(toId(message.split('|')[1]))) logging.recv(message);
 
 			// SockJS messages sent from the server begin with 'a'
 			// this filters out other SockJS response types (heartbeats in particular)
