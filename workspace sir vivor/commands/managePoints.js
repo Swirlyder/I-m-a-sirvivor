@@ -312,7 +312,7 @@ module.exports = {
 		dd.addpoints(first, firstpoints);
 		dd.addseasonpoints(first, Math.floor(firstpoints / 10));
 		dd.addpoints(second, secondpoints);
-		dd.addseasonpoints(second, Math.floor(second / 10));
+		dd.addseasonpoints(second, Math.floor(secondpoints / 10));
 		for (let i = 4; i < split.length; i++) {
 			let part = split[i];
 			dd.addpoints(part, partpoints);
