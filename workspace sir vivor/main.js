@@ -12,7 +12,7 @@
 const MESSAGE_THROTTLE = 110;
 
 // First dependencies and welcome message
-require('babel/register')({
+/*require('babel/register')({
 	blacklist: [
 		'es6.arrowFunctions',
 		'es6.blockScoping',
@@ -23,7 +23,7 @@ require('babel/register')({
 		'regenerator'
 	],
 	optional: ['asyncToGenerator']
-});
+});*/
 var chokidar = require('chokidar');
 require('sugar');
 global.colors = require('colors');
