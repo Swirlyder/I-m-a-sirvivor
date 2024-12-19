@@ -12,7 +12,7 @@
 const MESSAGE_THROTTLE = 110;
 
 // First dependencies and welcome message
-require('babel/register')({
+/*require('babel/register')({
 	blacklist: [
 		'es6.arrowFunctions',
 		'es6.blockScoping',
@@ -23,7 +23,7 @@ require('babel/register')({
 		'regenerator'
 	],
 	optional: ['asyncToGenerator']
-});
+});*/
 var chokidar = require('chokidar');
 require('sugar');
 global.colors = require('colors');
@@ -197,7 +197,7 @@ global.connect = function (retry) {
 		con.on('message', function (response) {
 			if (response.type !== 'utf8') return false;
 			var message = response.utf8Data;
-			if (!['c', 'l', 'n', 'j'].includes(toId(message.split('|')[1]))) logging.recv(message);
+			if (!['c', 'l', 'n', 'j', 'init'].includes(toId(message.split('|')[1]))) logging.recv(message);
 
 			// SockJS messages sent from the server begin with 'a'
 			// this filters out other SockJS response types (heartbeats in particular)
