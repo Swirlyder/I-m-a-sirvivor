@@ -821,6 +821,9 @@ class GamesManager {
 		childGame.playerCount = parentGame.playerCount;
 		return childGame;
 	}
+	getCardHTML(rank, suit) {
+		return `<div style="width:75px; background-color:#FAF9F6; color:black; padding:3px; border-radius: 5px;"><p style="margin:0px;">${rank}${suit}</p><p style="text-align:center; font-size:2em;">${suit}</p><p style="color:black; margin-bottom:1px; transform: rotate(180deg)">${rank}${suit}</p></div>`;
+		}
 }
 // ##PLAYERLIST TOOL## 
 // Due the unorganized nature of games.js, this feature 

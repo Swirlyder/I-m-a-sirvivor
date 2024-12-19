@@ -327,5 +327,21 @@ module.exports = {
 
 		const html = PL_Menu.generatePLAssistantHTML();
 		PL_Menu.sendPage(user.id, "Playerlist-Assistant", html, room);
+	},
+	randcard: function (target, user, room) {
+		if (!user.hasRank(room.id, '+') && (!Games.host || Games.host.id !== user.id)) return;
+
+		const cardRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+		const cardSuits = ['♠️', '♣️', '♥️', '♦️'];
+
+		//get random suit and rank
+		const cardRank = cardRanks[Math.floor(Math.random() * cardRanks.length)];
+		const cardSuit = cardSuits[Math.floor(Math.random() * cardSuits.length)];
+
+		//insert the card info into html template
+		const cardHTML = Games.getCardHTML(cardRank, cardSuit);
+
+		//display card in chat
+		this.say(room, "/addhtmlbox " + cardHTML);
 	}
 }
