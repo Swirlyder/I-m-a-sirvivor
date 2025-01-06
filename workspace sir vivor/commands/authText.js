@@ -11,6 +11,9 @@ module.exports = {
 	'2guhde': '==2guhde4u',
 	'2guhde4u': 'hey guys welcome back to my game of casino',
 
+	abs: '==absolites',
+	absolites: 'Absolute W',
+
 	ahr: '==ahelpfulrayquaza',
 	ray: '==ahelpfulrayquaza',
 	ahelpfulrayquaza: 'Skill issue',
