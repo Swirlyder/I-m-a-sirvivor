@@ -1,4 +1,4 @@
-Sir Vivor
+Sir. Vivor
 ====================
 
 A chat bot for the Survivor Room on [Pokémon Showdown][1]. This bot has a number of commands, some helpful and some less so, as well as the capability to moderate, and play games. 
@@ -7,7 +7,7 @@ A chat bot for the Survivor Room on [Pokémon Showdown][1]. This bot has a numbe
 Installation
 ------------
 
-Sir Vivor requires [node.js][2] to run.
+Sir. Vivor requires [node.js][2] to run.
 This bot has not been tested on every `node.js` version possible, but has the same version requirements as [Pokémon Showdown][3]: either v0.6.3 through v0.8.22, or v0.10.2 and up.
 Install `node.js` if you don't have it yet, try the last stable version.
 
@@ -42,19 +42,19 @@ However, please refrain from adding more example commands.
 Credits
 -------
 Current Developers:
-- Felucia (Bot Owner, Major Development, Maintainer)
-- inactive (Bot Owner, Maintainer)
-- marillvibes (Development)
-- Rainshaft (Development)
-- Shadecession (Major Development)
 - Swirlyder (Bot Owner, Repo Owner)
-   
+- inactive (Bot Owner, Maintainer)
+- Rainshaft (Development)
+     
  Past Developers:
- - Hawkie (First customization for survivor, Major Development)
- - CheeseMuffin/Cheese/Moo (Major Development, Bot Owner and Former Maintainer)
+- Felucia (Bot Owner, Major Development, Maintainer)
+- Hawkie (First customization for survivor, Major Development)
+- CheeseMuffin/Cheese/Moo (Major Development, Bot Owner and Former Maintainer)
+- marillvibes (Development)
+- Shadecession (Major Development)
 - Tushavi (Created and Updated current Leaderboard system, Major Development)
    
- Sir Vivor is based on the original BoTTT devloped by Morfent/TalkTakesTime/Quinella/Rival Nick
+ Sir. Vivor is based on the original BoTTT devloped by Morfent/TalkTakesTime/Quinella/Rival Nick
 
 License
 -------
