@@ -102,7 +102,7 @@ module.exports = {
 		if (split.length < 2) return user.say("You must specify an old and new username");
 		let realt = Tools.toId(split[0])
 		if (!(realt in dd.dd)) {
-			return user.say("**" + split[0] + "** is not on the dd leaderboard.");
+			return user.say("**" + split[0] + "** is not on the leaderboard.");
 		} else {
 			let newid = Tools.toId(split[1]);
 			let newdata = (newid in dd.dd ? dd.dd[newid] : {});
@@ -155,7 +155,7 @@ module.exports = {
 
 	clearlb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
-		if (user.lastcmd !== 'clearlb') return room.say("Are you sure you want to clear the dd leaderboard? If so, type the command again.");
+		if (user.lastcmd !== 'clearlb') return room.say("Type the command again to reset the leaderboard.");
 
 		// Add 10% of user's cycle points towards their seasonal points
 		dd.addEndOfSeasonPoints();
@@ -181,15 +181,17 @@ module.exports = {
 		eventcount.save();
 		hostcount.save();
 		gamecount.save();
-		return room.say("The dd leaderboard has been reset.");
+		return room.say("The leaderboard for this CYCLE was been reset by " + user.name + ".");
+		room.say("/modnote CYCLE LEADERBOARD RESET: The leaderboard was reset by " + user.name + ".");
 	},
 	clearslb: function (target, user, room) {
 		if (!user.hasRank('survivor', '#')) return;
-		if (user.lastcmd !== 'clearslb') return room.say("Are you sure you want to clear the seasonal leaderboard? If so, type the command again. Do NOT use this command before using .clearlb");
+		if (user.lastcmd !== 'clearslb') return room.say("Type the command again to clear the SEASONSAL leaderboard. **Do NOT use this command before using .clearlb!**");
 		dd.dd = {};
 		dd.set_current_season(dd.current.season + 1);
 		dd.exportData();
-		return room.say("The seasonal leaderboard has been reset.");
+		return room.say("The seasonal leaderboard has been reset by " + user.name + ".");
+		room.say("/modnote SEASONAL LEADERBOARD RESET: The SEASONAL leaderboard was reset by " + user.name + ".");
 	},
 	//work in progress
 	/*
