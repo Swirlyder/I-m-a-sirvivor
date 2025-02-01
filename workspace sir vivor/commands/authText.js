@@ -188,6 +188,9 @@ module.exports = {
 
 	zach: '==whatazachattack',
 	whatazachattack: 'For every good thing that happens, there will be a Zach moment to counter it.',
+
+	yosh: '==yoshman8',
+	yoshman8: 'Hold on, let me activate my Yoshing Power',
 	
 	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
