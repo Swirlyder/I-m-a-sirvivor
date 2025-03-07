@@ -20,7 +20,7 @@ module.exports = {
 
 	anick: '==andrewnick',
 	andrew: '==andrewnick',
-	andrewnick: 'NS Corp sponsors this roll',
+	andrewnick: 'Andrew Nick resurrects and returns to the game.',
 
 	aud: '==audiino',
 	audi: '==audiino',
@@ -59,6 +59,10 @@ module.exports = {
 	crabachillable: '/me crabwalks',
 
 	deetah: 'Survivor\'s Resident Cheetah',
+	
+	dom: '==deathofmimikyu',
+	deathofmimikyu: 'Don\'t Worry, we lose these ALL the time :D',
+	
 
 	dl: '==dontlose',
 	dontlose: 'dont lose? HA! More like dont win :^)',
@@ -166,7 +170,7 @@ module.exports = {
 	tushavi: 'THEME GOD',
 
 	yakko: '==yakkosalabama',
-	yakkosalabama: 'And now, the rolls of the world, brought to you by... Yakko!',
+	yakkosalabama: 'And now, the rolls of the world, brought to you by... Yakko Warner!',
 
 	zygten: '==zyg',
 	zyg: '/me sighs... what is there to say?',
