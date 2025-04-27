@@ -165,6 +165,7 @@ module.exports = {
 
 	hostqueue: 'queue',
 	que: 'queue',
+	hq: 'queue',
 	q: 'queue',
 	queue: function (arg, user, room) {
 		if (!Games.canQueue) return;
