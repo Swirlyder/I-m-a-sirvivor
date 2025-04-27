@@ -127,11 +127,13 @@ module.exports = {
 	pokemonvortex: '==pv',
 	pv: '[[]]',
 
+	cv: '==pm',
 	mv: '==pm=',
 	pacmar: '==pm',
 	marill: '==pm',
 	marillvibes: '==pm',
-	pm: 'Someone get that rat a towel... ᘛ⁐̤ᕐᐷ',
+	calmvibes: '==pm',
+	pm: 'Calm the fuck down.',
 
 	pq: '==penquin',
 	ppq: '==penquin',
