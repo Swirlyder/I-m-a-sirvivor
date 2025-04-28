@@ -71,10 +71,9 @@ module.exports = {
 	star: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text = '';
+			text += '/addhtmlbox The above user is a ⭐, too!';
+			this.say(room, text);
 		}
-		text += '/addhtmlbox The above user is a ⭐, too!';
-		this.say(room, text);
 	},
 
 	highfive: function (arg, user, room) {
