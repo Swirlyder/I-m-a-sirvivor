@@ -140,8 +140,7 @@ module.exports = {
 			if (!user.hasRank(room.id, '%') && (Config.canHost.indexOf(user.id) === -1)) return;
 			if (room.game && typeof room.game.pl === 'function') {room.game.pl(); }
 		}
-		else if(Games.host) {
-			if(user.id == Games.host.id && target == 'survivor') {
+		else if(Games.host && user.id == Games.host.id && target == 'survivor') {
 				if (Games.PLCooldown == false) {
 					Games.PLCooldown = true;
 					clearTimeout(Games.timeout);
@@ -152,7 +151,7 @@ module.exports = {
 					this.say(room, '/msgroom survivor, /sendprivatehtmlbox, ' + user.id + ', \'Broadcast Playerlist\' is on cooldown');
 				}
 			}
-			else if ((user.id == Games.host.id) || (room.id === user.id)) {
+			else if ((user.id == Games.host.id) || (room.id === Games.host.id) ) {
 				const split = target.split(","), arg = split[0].trim().toLowerCase();
 				switch (arg) {
 					case 'shuffle':
@@ -220,8 +219,9 @@ module.exports = {
 						break;
 					default:
 						this.say(room, Games.displayPlayerList());
-				}
 			}
+		} else if(room.id == user.id) {
+			this.say(room, Games.displayPlayerList());
 		}
 	},
 
