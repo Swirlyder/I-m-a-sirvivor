@@ -10,3 +10,4 @@ credentials.json
 .svn
 *~
 *#
+/utilities/createTables.js
