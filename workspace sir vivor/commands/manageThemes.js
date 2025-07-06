@@ -103,6 +103,24 @@ module.exports = {
             themeRepo.db.close();
         }
     },
+    deletetheme: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeId] = target.split(',').map(part => part.trim());
+        if (!themeId) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+        }
+
+        const themeRepo = new themeRepository();
+        try {
+            await themeRepo.delete(themeId);
+            user.say(`Theme succesfully deleted!`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+        }
+    },
     theme: 'themes',
 	themes: async function (arg, user, room) {
 		if (!Games.canTheme) return;

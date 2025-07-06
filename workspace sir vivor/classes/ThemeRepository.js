@@ -54,8 +54,13 @@ class themesRepository {
     }
 
     delete(id) {
-        const sql = `DELETE FROM ${USER_TABLE} WHERE ${THEME_ID} = ?`;
-        return this.db.run(sql, [id]);
+        const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ?`;
+        return new Promise((resolve, reject) => { this.db.run(sql, [id], function (err) {
+            if (err) {
+                return reject(err);
+            }
+            resolve();
+        }); });
     }
 }
 module.exports = themesRepository;
