@@ -104,7 +104,7 @@ const gameTypes = {
 	tribalcouncil: ['Tribal Council', 'https://sites.google.com/view/survivor-ps/themes/tribal-council', 'Unlike most elections, you don\'t want to be voted in this one.', 1],
 	tc: 'tribalcouncil',
 	lobsterpots: ['Lobster Pots', 'https://sites.google.com/view/survivor-ps/themes/risk/lobster-pots', 'Blame EOTH.', 1],
-	lb: 'lobsterpots',
+	lp: 'lobsterpots',
 	sardines: ['Sardines', 'https://sites.google.com/view/survivor-ps/themes/hst/sardines', 'Arrest OM.', 1],
 	takeastab: ['Take a Stab', 'https://sites.google.com/view/survivor-ps/themes/take-a-stab', 'Get skewered.', 1],
 	tas: 'takeastab',
