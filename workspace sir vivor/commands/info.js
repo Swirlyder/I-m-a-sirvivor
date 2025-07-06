@@ -40,27 +40,27 @@ module.exports = {
 
 	/* SURVIVOR INFO --------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-	theme: 'themes',
-	themes: function (arg, user, room) {
-		if (!Games.canTheme) return;
-		let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
-		arg = toId(arg);
-		if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
-		if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
-		let data = gameTypes[arg];
-		if (typeof data === 'string') data = gameTypes[data];
+	// theme: 'themes',
+	// themes: function (arg, user, room) {
+	// 	if (!Games.canTheme) return;
+	// 	let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
+	// 	arg = toId(arg);
+	// 	if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
+	// 	if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
+	// 	let data = gameTypes[arg];
+	// 	if (typeof data === 'string') data = gameTypes[data];
 
-		let text = '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
-		if (Games.host) {
-			Games.hosttype = data[3];
-		}
-		target.say(text);
-		if (room == user) return;
-		Games.canTheme = false;
-		var t = setTimeout(function () {
-			Games.canTheme = true;
-		}, 5 * 1000);
-	},
+	// 	let text = '**' + data[0] + '**: __' + data[2] + '__ Game rules: ' + data[1];
+	// 	if (Games.host) {
+	// 		Games.hosttype = data[3];
+	// 	}
+	// 	target.say(text);
+	// 	if (room == user) return;
+	// 	Games.canTheme = false;
+	// 	var t = setTimeout(function () {
+	// 		Games.canTheme = true;
+	// 	}, 5 * 1000);
+	// },
 
 	events: 'event',
 	event: function (arg, user, room) {

@@ -2,11 +2,11 @@ const themeRepository = require('../classes/ThemeRepository.js');
 
 module.exports = {
     addtheme: async function (target, user, room) {
-        if (!user.isExcepted()) return false;
+        if (!user.hasRank('survivor', '%')) return;
 
         const [name, url, desc] = target.split(',').map(part => part.trim());
         if (!name || !url || !desc) {
-            return user.say("Usage: .addtheme [name], [url], [description]");
+            return user.say("To use this command, follow the following format:.addtheme [name], [url], [description]");
         }
 
         const themeRepo = new themeRepository();
@@ -16,11 +16,89 @@ module.exports = {
             await themeRepo.add(theme);
             user.say(`Theme "${name}" added successfully.`);
         } catch (error) {
-            if (error.code === 'SQLITE_CONSTRAINT') {
-                user.say(`Theme "${name}" already exists.`);
-            } else {
                 user.say("Error adding theme: " + error.message);
-            }
+        } finally {
+            themeRepo.db.close();
+        }
+    },
+    editthemename: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeId, newName] = target.split(',').map(part => part.trim());
+        if (!themeId || !newName ) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewName]");
+        }
+
+        const themeRepo = new themeRepository();
+
+        try {
+            let theme = await themeRepo.getById(themeId);
+            theme.name = newName;
+            await themeRepo.update(theme);
+            user.say(`Theme "${newName}" updated successfully.`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+        }
+    },
+    editthemeurl: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeId, newUrl] = target.split(',').map(part => part.trim());
+        if (!themeId || !newUrl ) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewUrl]");
+        }
+
+        const themeRepo = new themeRepository();
+
+        try {
+            let theme = await themeRepo.getById(themeId);
+            theme.url = newUrl;
+            await themeRepo.update(theme);
+            user.say(`Theme "${theme.name}" updated with a new url: ${newUrl}.`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+        }
+    },
+    editthemedesc: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeId, newDesc] = target.split(',').map(part => part.trim());
+        if (!themeId || !newDesc ) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewDescription]");
+        }
+
+        const themeRepo = new themeRepository();
+
+        try {
+            let theme = await themeRepo.getById(themeId);
+            theme.desc = newDesc;
+            await themeRepo.update(theme);
+            user.say(`Theme "${theme.name}" updated updated with a new description: ${newDesc}`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+        }
+    },
+    edittheme: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeId, newName, newUrl, newDesc] = target.split(',').map(part => part.trim());
+        if (!themeId || !newName || !newUrl || !newDesc ) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+        }
+
+        const themeRepo = new themeRepository();
+        try {
+            let theme = {id:themeId, name:newName, url:newUrl, desc:newDesc};
+            await themeRepo.update(theme);
+            user.say(`Theme "${theme.name}" succesfully updated!`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
         } finally {
             themeRepo.db.close();
         }
