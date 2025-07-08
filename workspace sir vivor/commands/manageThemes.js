@@ -1,4 +1,5 @@
-const themeRepository = require('../classes/ThemeRepository.js');
+const themeRepository = require('../classes/ThemeRepository.js').themesRepository;
+const themeAliasRepository = require('../classes/ThemeRepository.js').themeAliasRepository;
 
 module.exports = {
     addtheme: async function (target, user, room) {
@@ -121,6 +122,27 @@ module.exports = {
             themeRepo.db.close();
         }
     },
+    addthemealias: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [name, theme_id] = target.split(',').map(part => part.trim());
+        if (!name || !theme_id) {
+            return user.say("To use this command, follow the following format:.addthemealias [alias_name], [theme_id");
+        }
+
+        const themeAliasRepo = new themeAliasRepository();
+        const theme = {name, theme_id};
+
+        try {
+            await themeAliasRepo.add(theme);
+            user.say(`Theme "${name}" added successfully.`);
+        } catch (error) {
+                user.say("Error adding theme: " + error.message);
+        } finally {
+            themeAliasRepo.db.close();
+        }
+    },
+
     theme: 'themes',
 	themes: async function (arg, user, room) {
 		if (!Games.canTheme) return;
