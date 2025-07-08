@@ -97,7 +97,7 @@ module.exports = {
         }
 
         const themeRepo = new themeRepository();
-        
+
         try {
             let theme = { id: themeId, name: newName, url: newUrl, desc: newDesc };
             await themeRepo.update(theme);
@@ -146,6 +146,24 @@ module.exports = {
             themeAliasRepo.db.close();
         }
     },
+    deletethemealias: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [themeAliasId] = target.split(',').map(part => part.trim());
+        if (!themeAliasId) {
+            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+        }
+
+        const themeAliasRepo = new themeAliasRepository();
+        try {
+            await themeAliasRepo.delete(themeAliasId);
+            user.say(`Theme succesfully deleted!`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeAliasRepo.db.close();
+        }
+    },
 
     theme: 'themes',
     themes: async function (arg, user, room) {
@@ -166,7 +184,7 @@ module.exports = {
             themeRepo.db.close();
             themeAliasRepo.db.close();
         }
-        if (theme == null) return;
+        //if (theme == null) return;
         //if (typeof data === 'string') data = gameTypes[data];
 
         let text = '**' + theme.name + '**: __' + theme.desc + '__ Game rules: ' + theme.url;
