@@ -31,9 +31,10 @@ module.exports = {
         }
 
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = await themeRepo.getById(themeId);
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
             theme.name = newName;
             await themeRepo.update(theme);
             user.say(`Theme "${newName}" updated successfully.`);
@@ -52,9 +53,10 @@ module.exports = {
         }
 
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = await themeRepo.getById(themeId);
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
             theme.url = newUrl;
             await themeRepo.update(theme);
             user.say(`Theme "${theme.name}" updated with a new url: ${newUrl}.`);
@@ -73,9 +75,10 @@ module.exports = {
         }
 
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = await themeRepo.getById(themeId);
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
             theme.desc = newDesc;
             await themeRepo.update(theme);
             user.say(`Theme "${theme.name}" updated updated with a new description: ${newDesc}`);
@@ -94,6 +97,7 @@ module.exports = {
         }
 
         const themeRepo = new themeRepository();
+        
         try {
             let theme = { id: themeId, name: newName, url: newUrl, desc: newDesc };
             await themeRepo.update(theme);
@@ -149,23 +153,20 @@ module.exports = {
         let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
         let theme;
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
         arg = toId(arg);
         if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
         //if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
+        //TODO: Validate 'arg'
         try {
-            if (!isNaN(arg)) {
-                // TODO: Validate if ID exists
-                theme = await themeRepo.getById(arg); // theme = [name: 'name', url: 'url', desc: 'desc']
-            }
-            else {
-                // TODO: Validate if alias exists 
-                theme = await themeRepo.getByAlias(arg);
-            }
+            theme = await getTheme(themeRepo, themeAliasRepo, arg);
         } catch (error) {
             return target.say("Error retrieving theme: " + error.message);
         } finally {
             themeRepo.db.close();
+            themeAliasRepo.db.close();
         }
+        if (theme == null) return;
         //if (typeof data === 'string') data = gameTypes[data];
 
         let text = '**' + theme.name + '**: __' + theme.desc + '__ Game rules: ' + theme.url;
@@ -174,10 +175,30 @@ module.exports = {
         //}
         target.say(text);
         if (room == user) return;
-        Games.canTheme = false;
-        var t = setTimeout(function () {
-            Games.canTheme = true;
-        }, 5 * 1000);
+        // Games.canTheme = false;
+        // var t = setTimeout(function () {
+        //     Games.canTheme = true;
+        // }, 5 * 1000);
     },
-
 };
+
+// helper functions
+
+async function getTheme(themeRepo, themeAliasRepo, arg) {
+    // arg is theme id
+    if ((!isNaN(arg)) && (await themeRepo.themeIdExists(arg))) {
+        return await themeRepo.getById(arg);
+    }
+
+    // arg is theme name
+    if (await themeRepo.themeNameExists(arg)) {
+        return await themeRepo.getByName(arg);
+    }
+
+    // arg is theme alias
+    if (await themeAliasRepo.themeAliasExists(arg)) {
+        return await themeRepo.getByAlias(arg);
+    }
+
+    return null;
+}

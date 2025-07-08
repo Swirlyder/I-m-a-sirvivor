@@ -7,10 +7,10 @@ const THEME_ALIAS_TABLE_NAME = "theme_alias";
 const THEME_ID = "id";
 const THEME_ALIAS_ID = "id";
 const THEME_NAME = "name";
-const THEME_ALIAS_NAME ="name";
+const THEME_ALIAS_NAME = "name";
 const THEME_URL = "url";
 const THEME_DESCRIPTION = "desc";
-const THEME_ALIAS_THEME_ID ="theme_id";
+const THEME_ALIAS_THEME_ID = "theme_id";
 
 class themesRepository {
     constructor() {
@@ -48,33 +48,68 @@ class themesRepository {
     }
 
     getByAlias(alias) {
-    const sql = `SELECT theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+        const sql = `SELECT theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [alias], (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+        });
+    }
+
+    getByName(name) {
+        const sql = `SELECT name, url, \`desc\` FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [name], (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+        });
+    }
+
+    themeNameExists(name) {
+    const sql = `SELECT 1 FROM theme WHERE name = ? COLLATE NOCASE LIMIT 1`;
     return new Promise((resolve, reject) => {
-        this.db.get(sql, [alias], (err, row) => {
+        this.db.get(sql, [name], (err, row) => {
             if (err) return reject(err);
-            resolve(row);
+            resolve(!!row);
         });
     });
 }
 
+    themeIdExists(id) {
+        const sql = `SELECT 1 FROM theme WHERE id = ? LIMIT 1`;
+
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [id], (err, row) => {
+                if (err) return reject(err);
+                resolve(!!row);
+            });
+        });
+    }
+
     update(product) {
         const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ? WHERE ${THEME_ID} = ?`;
-        return new Promise((resolve, reject) => { this.db.run(sql, [product.name, product.url, product.desc, product.id], function (err) {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        }); });
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [product.name, product.url, product.desc, product.id], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
     }
 
     delete(id) {
         const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ?`;
-        return new Promise((resolve, reject) => { this.db.run(sql, [id], function (err) {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        }); });
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [id], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
     }
 }
 class themeAliasRepository {
@@ -114,22 +149,37 @@ class themeAliasRepository {
 
     update(product) {
         const sql = `UPDATE ${THEME_ALIAS_TABLE_NAME} SET ${THEME_ALIAS_NAME} = ?, ${THEME_ID} = ? WHERE ${THEME_ALIAS_ID} = ?`;
-        return new Promise((resolve, reject) => { this.db.run(sql, [product.name, product.theme_id, product.id], function (err) {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        }); });
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [product.name, product.theme_id, product.id], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
     }
 
     delete(id) {
         const sql = `DELETE FROM ${THEME_ALIAS_TABLE_NAME} WHERE ${THEME_ALIAS_ID} = ?`;
-        return new Promise((resolve, reject) => { this.db.run(sql, [id], function (err) {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        }); });
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [id], function (err) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
+        });
+    }
+
+    themeAliasExists(alias) {
+        const sql = `SELECT 1 FROM theme_alias WHERE name = ? LIMIT 1`;
+
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [alias], (err, row) => {
+                if (err) return reject(err);
+                resolve(!!row);
+            });
+        });
     }
 }
 
