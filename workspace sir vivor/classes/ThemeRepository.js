@@ -47,6 +47,16 @@ class themesRepository {
         });
     }
 
+    getByAlias(alias) {
+    const sql = `SELECT theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+    return new Promise((resolve, reject) => {
+        this.db.get(sql, [alias], (err, row) => {
+            if (err) return reject(err);
+            resolve(row);
+        });
+    });
+}
+
     update(product) {
         const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ? WHERE ${THEME_ID} = ?`;
         return new Promise((resolve, reject) => { this.db.run(sql, [product.name, product.url, product.desc, product.id], function (err) {
