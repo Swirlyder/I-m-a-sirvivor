@@ -7,7 +7,7 @@ module.exports = {
 
         const [name, url, desc] = target.split(',').map(part => part.trim());
         if (!name || !url || !desc) {
-            return user.say("To use this command, follow the following format:.addtheme [name], [url], [description]");
+            return user.say("Example:.addtheme [name], [url], [description]");
         }
 
         const themeRepo = new themeRepository();
@@ -27,7 +27,7 @@ module.exports = {
 
         const [themeId, newName] = target.split(',').map(part => part.trim());
         if (!themeId || !newName) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewName]");
+            return user.say("Example: .editthemename [id], [NewName]");
         }
 
         const themeRepo = new themeRepository();
@@ -49,7 +49,7 @@ module.exports = {
 
         const [themeId, newUrl] = target.split(',').map(part => part.trim());
         if (!themeId || !newUrl) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewUrl]");
+            return user.say("Example: .editthemename [id], [NewUrl]");
         }
 
         const themeRepo = new themeRepository();
@@ -71,7 +71,7 @@ module.exports = {
 
         const [themeId, newDesc] = target.split(',').map(part => part.trim());
         if (!themeId || !newDesc) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewDescription]");
+            return user.say("Example: .editthemename [id], [NewDescription]");
         }
 
         const themeRepo = new themeRepository();
@@ -93,7 +93,7 @@ module.exports = {
 
         const [themeId, newName, newUrl, newDesc] = target.split(',').map(part => part.trim());
         if (!themeId || !newName || !newUrl || !newDesc) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
         }
 
         const themeRepo = new themeRepository();
@@ -114,7 +114,7 @@ module.exports = {
 
         const [themeId] = target.split(',').map(part => part.trim());
         if (!themeId) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
         }
 
         const themeRepo = new themeRepository();
@@ -136,7 +136,7 @@ module.exports = {
 
 
         if (!themeIdOrName || aliases.length === 0) {
-            return user.say("Usage: .addthemealias [theme_id], [alias1], [alias2], ...");
+            return user.say("Example: .addthemealias [theme_id], [alias1], [alias2], ...");
         }
 
         const themeRepo = new themeRepository();
@@ -163,29 +163,30 @@ module.exports = {
         if (!user.hasRank('survivor', '%')) return;
         let themeAliasId;
 
-        const [arg] = target.split(',').map(part => part.trim()); // arg can be theme_alias id or name
-        if (!arg) {
-            return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+        const aliasArgs = target.split(',').map(part => part.trim()); // aliasArgs can be alias name or ID
+        if (aliasArgs.length === 0) {
+            return user.say("Example: .deletethemealias [aliasName_orAliasID_1], [aliasName_orAliasID_2], [aliasName_orAliasID_3], ...");
         }
 
-        const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
 
         try {
-            if (await themeAliasRepo.themeAliasExists(arg)) {
-                themeAliasId = (await themeAliasRepo.getByAlias(arg)).id;
-            }
-            else if (await themeAliasRepo.themeAliasIdExists(arg)) {
-                themeAliasId = arg;
-            }
-            else {
-                return user.say("Theme alias not found.");
-            }
 
-            await themeAliasRepo.delete(themeAliasId);
-            user.say(`Theme succesfully deleted!`);
+            for (const arg of aliasArgs) {
+                if (await themeAliasRepo.themeAliasExists(arg)) {
+                    themeAliasId = (await themeAliasRepo.getByAlias(arg)).id;
+                }
+                else if (await themeAliasRepo.themeAliasIdExists(arg)) {
+                    themeAliasId = arg;
+                }
+                else {
+                    return user.say("Theme alias not found.");
+                }
+                await themeAliasRepo.delete(themeAliasId);
+            }
+            user.say(`Theme alias(es) succesfully deleted!`);
         } catch (error) {
-            user.say("Error updating theme: " + error.message);
+            user.say("Error deleting alias: " + error.message);
         } finally {
             themeAliasRepo.db.close();
         }
