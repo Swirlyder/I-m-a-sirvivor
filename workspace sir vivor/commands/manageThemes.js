@@ -127,25 +127,31 @@ module.exports = {
         }
     },
     addthemealias: async function (target, user, room) {
-        if (!user.hasRank('survivor', '%')) return;
+    if (!user.hasRank('survivor', '%')) return;
 
-        const [name, theme_id] = target.split(',').map(part => part.trim());
-        if (!name || !theme_id) {
-            return user.say("To use this command, follow the following format:.addthemealias [alias_name], [theme_id");
-        }
+    const [arg, name] = target.split(',').map(part => part.trim()); // arg can be a theme's id, name or alias
+    if (!name || !arg) {
+        return user.say("To use this command, follow the format: .addthemealias [alias_name], [theme_id]");
+    }
 
-        const themeAliasRepo = new themeAliasRepository();
-        const theme = { name, theme_id };
+    const themeRepo = new themeRepository();
+    const themeAliasRepo = new themeAliasRepository();
 
-        try {
-            await themeAliasRepo.add(theme);
-            user.say(`Theme "${name}" added successfully.`);
-        } catch (error) {
-            user.say("Error adding theme: " + error.message);
-        } finally {
-            themeAliasRepo.db.close();
-        }
-    },
+    try {
+        let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+        if (!theme) return user.say("Theme not found.");
+
+        const alias = { name, theme_id: theme.id };
+        await themeAliasRepo.add(alias);
+        user.say(`Theme alias "${name}" added successfully for theme "${theme.name}".`);
+    } catch (error) {
+        user.say("Error adding theme: " + error.message);
+    } finally {
+        themeAliasRepo.db.close();
+        themeRepo.db.close();
+    }
+},
+
     deletethemealias: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
@@ -170,12 +176,12 @@ module.exports = {
         if (!Games.canTheme) return;
         let target = user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id) ? room : user;
         let theme;
+
         const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
+
         arg = toId(arg);
-        if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
-        //if (!gameTypes[arg]) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
-        //TODO: Validate 'arg'
+
         try {
             theme = await getTheme(themeRepo, themeAliasRepo, arg);
         } catch (error) {
@@ -184,19 +190,19 @@ module.exports = {
             themeRepo.db.close();
             themeAliasRepo.db.close();
         }
-        //if (theme == null) return;
-        //if (typeof data === 'string') data = gameTypes[data];
+
+        if (!theme) return target.say("Invalid game type. The game types can be found here: https://sites.google.com/view/survivor-ps/themes");
 
         let text = '**' + theme.name + '**: __' + theme.desc + '__ Game rules: ' + theme.url;
-        //if (Games.host) {
-        //	Games.hosttype = data[3];
-        //}
         target.say(text);
+
         if (room == user) return;
-        // Games.canTheme = false;
-        // var t = setTimeout(function () {
-        //     Games.canTheme = true;
-        // }, 5 * 1000);
+
+        //5 second timeout between uses
+        Games.canTheme = false;
+        var t = setTimeout(function () {
+            Games.canTheme = true;
+        }, 5 * 1000);
     },
 };
 

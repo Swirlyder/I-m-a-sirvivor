@@ -48,7 +48,7 @@ class themesRepository {
     }
 
     getByAlias(alias) {
-        const sql = `SELECT theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+        const sql = `SELECT theme.id, theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
         return new Promise((resolve, reject) => {
             this.db.get(sql, [alias], (err, row) => {
                 if (err) return reject(err);
@@ -58,7 +58,7 @@ class themesRepository {
     }
 
     getByName(name) {
-        const sql = `SELECT name, url, \`desc\` FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
+        const sql = `SELECT id, name, url, desc FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
         return new Promise((resolve, reject) => {
             this.db.get(sql, [name], (err, row) => {
                 if (err) return reject(err);
@@ -68,7 +68,7 @@ class themesRepository {
     }
 
     themeNameExists(name) {
-    const sql = `SELECT 1 FROM theme WHERE name = ? COLLATE NOCASE LIMIT 1`;
+    const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE LIMIT 1`;
     return new Promise((resolve, reject) => {
         this.db.get(sql, [name], (err, row) => {
             if (err) return reject(err);
@@ -78,7 +78,7 @@ class themesRepository {
 }
 
     themeIdExists(id) {
-        const sql = `SELECT 1 FROM theme WHERE id = ? LIMIT 1`;
+        const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ? LIMIT 1`;
 
         return new Promise((resolve, reject) => {
             this.db.get(sql, [id], (err, row) => {
