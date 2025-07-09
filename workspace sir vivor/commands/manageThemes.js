@@ -108,6 +108,7 @@ module.exports = {
             themeRepo.db.close();
         }
     },
+    //TODO: Deleting a theme should delete delete the corresponding theme aliases where theme.id = theme_alias.theme_id
     deletetheme: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
@@ -127,41 +128,54 @@ module.exports = {
         }
     },
     addthemealias: async function (target, user, room) {
-    if (!user.hasRank('survivor', '%')) return;
+        if (!user.hasRank('survivor', '%')) return;
 
-    const [arg, name] = target.split(',').map(part => part.trim()); // arg can be a theme's id, name or alias
-    if (!name || !arg) {
-        return user.say("To use this command, follow the format: .addthemealias [alias_name], [theme_id]");
-    }
+        const [arg, name] = target.split(',').map(part => part.trim()); // arg can be a theme's id, name or alias
+        if (!name || !arg) {
+            return user.say("To use this command, follow the format: .addthemealias [alias_name], [theme_id]");
+        }
 
-    const themeRepo = new themeRepository();
-    const themeAliasRepo = new themeAliasRepository();
+        const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
 
-    try {
-        let theme = await getTheme(themeRepo, themeAliasRepo, arg);
-        if (!theme) return user.say("Theme not found.");
+        try {
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found.");
 
-        const alias = { name, theme_id: theme.id };
-        await themeAliasRepo.add(alias);
-        user.say(`Theme alias "${name}" added successfully for theme "${theme.name}".`);
-    } catch (error) {
-        user.say("Error adding theme: " + error.message);
-    } finally {
-        themeAliasRepo.db.close();
-        themeRepo.db.close();
-    }
-},
+            const alias = { name, theme_id: theme.id };
+            await themeAliasRepo.add(alias);
+            user.say(`Theme alias "${name}" added successfully for theme "${theme.name}".`);
+        } catch (error) {
+            user.say("Error adding theme: " + error.message);
+        } finally {
+            themeAliasRepo.db.close();
+            themeRepo.db.close();
+        }
+    },
 
     deletethemealias: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
+        let themeAliasId;
 
-        const [themeAliasId] = target.split(',').map(part => part.trim());
-        if (!themeAliasId) {
+        const [arg] = target.split(',').map(part => part.trim()); // arg can be theme_alias id or name
+        if (!arg) {
             return user.say("To use this command, follow the following format: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
         }
 
+        const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
+
         try {
+            if (await themeAliasRepo.themeAliasExists(arg)) {
+                themeAliasId = (await themeAliasRepo.getByAlias(arg)).id;
+            }
+            else if (await themeAliasRepo.themeAliasIdExists(arg)) {
+                themeAliasId = arg;
+            }
+            else {
+                return user.say("Theme alias not found.");
+            }
+
             await themeAliasRepo.delete(themeAliasId);
             user.say(`Theme succesfully deleted!`);
         } catch (error) {
@@ -226,3 +240,4 @@ async function getTheme(themeRepo, themeAliasRepo, arg) {
 
     return null;
 }
+

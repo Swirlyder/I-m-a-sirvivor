@@ -147,6 +147,16 @@ class themeAliasRepository {
         });
     }
 
+    getByAlias(name) {
+        const sql = `SELECT * FROM theme_alias WHERE theme_alias.name = ?;`
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [name], (err, row) => {
+                if (err) return reject(err);
+                resolve(row);
+            });
+        });
+    }
+
     update(product) {
         const sql = `UPDATE ${THEME_ALIAS_TABLE_NAME} SET ${THEME_ALIAS_NAME} = ?, ${THEME_ID} = ? WHERE ${THEME_ALIAS_ID} = ?`;
         return new Promise((resolve, reject) => {
@@ -172,10 +182,21 @@ class themeAliasRepository {
     }
 
     themeAliasExists(alias) {
-        const sql = `SELECT 1 FROM theme_alias WHERE name = ? LIMIT 1`;
+        const sql = `SELECT 1 FROM ${THEME_ALIAS_TABLE_NAME} WHERE ${THEME_ALIAS_NAME} = ? LIMIT 1`;
 
         return new Promise((resolve, reject) => {
             this.db.get(sql, [alias], (err, row) => {
+                if (err) return reject(err);
+                resolve(!!row);
+            });
+        });
+    }
+
+    themeAliasIdExists(id) {
+        const sql = `SELECT 1 FROM ${THEME_ALIAS_TABLE_NAME} WHERE ${THEME_ALIAS_THEME_ID} = ? LIMIT 1`;
+
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [id], (err, row) => {
                 if (err) return reject(err);
                 resolve(!!row);
             });
