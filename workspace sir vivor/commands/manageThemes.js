@@ -130,21 +130,27 @@ module.exports = {
     addthemealias: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [arg, name] = target.split(',').map(part => part.trim()); // arg can be a theme's id, name or alias
-        if (!name || !arg) {
-            return user.say("To use this command, follow the format: .addthemealias [alias_name], [theme_id]");
+        const parts = target.split(',').map(part => part.trim());
+        const themeIdOrName = parts.shift(); // this variable can be a theme name or theme id
+        const aliases = parts;
+
+
+        if (!themeIdOrName || aliases.length === 0) {
+            return user.say("Usage: .addthemealias [theme_id], [alias1], [alias2], ...");
         }
 
         const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            let theme = await getTheme(themeRepo, themeAliasRepo, themeIdOrName);
             if (!theme) return user.say("Theme not found.");
 
-            const alias = { name, theme_id: theme.id };
-            await themeAliasRepo.add(alias);
-            user.say(`Theme alias "${name}" added successfully for theme "${theme.name}".`);
+            for (const name of aliases) {
+                const alias = { name, theme_id: theme.id };
+                await themeAliasRepo.add(alias);
+            }
+            user.say(`Theme aliases [${aliases.join(', ')}] added for theme ID ${theme.id}.`);
         } catch (error) {
             user.say("Error adding theme: " + error.message);
         } finally {
