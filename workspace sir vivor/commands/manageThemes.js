@@ -6,13 +6,13 @@ module.exports = {
     addtheme: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [name, url, desc] = target.split(',').map(part => part.trim());
-        if (!name || !url || !desc) {
+        const [name, url, desc, difficulty] = target.split(',').map(part => part.trim());
+        if (!name || !url || !desc || !difficulty) {
             return user.say("Example:.addtheme [name], [url], [description]");
         }
 
         const themeRepo = new themeRepository();
-        const theme = { name, url, desc };
+        const theme = { name, url, desc, difficulty };
 
         try {
             await themeRepo.add(theme);
@@ -26,8 +26,8 @@ module.exports = {
     editthemename: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [themeId, newName] = target.split(',').map(part => part.trim());
-        if (!themeId || !newName) {
+        const [arg, newName] = target.split(',').map(part => part.trim());  // arg can be theme id, name, or alias
+        if (!arg|| !newName) {
             return user.say("Example: .editthemename [id], [NewName]");
         }
 
@@ -43,13 +43,14 @@ module.exports = {
             user.say("Error updating theme: " + error.message);
         } finally {
             themeRepo.db.close();
+            themeAliasRepo.db.close();
         }
     },
     editthemeurl: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [themeId, newUrl] = target.split(',').map(part => part.trim());
-        if (!themeId || !newUrl) {
+        const [arg, newUrl] = target.split(',').map(part => part.trim());  // arg can be theme id, name, or alias
+        if (!arg || !newUrl) {
             return user.say("Example: .editthemename [id], [NewUrl]");
         }
 
@@ -65,13 +66,14 @@ module.exports = {
             user.say("Error updating theme: " + error.message);
         } finally {
             themeRepo.db.close();
+            themeAliasRepo.db.close();
         }
     },
     editthemedesc: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [themeId, newDesc] = target.split(',').map(part => part.trim());
-        if (!themeId || !newDesc) {
+        const [arg, newDesc] = target.split(',').map(part => part.trim()); // arg can be theme id, name, or alias
+        if (!arg || !newDesc) {
             return user.say("Example: .editthemename [id], [NewDescription]");
         }
 
@@ -87,6 +89,30 @@ module.exports = {
             user.say("Error updating theme: " + error.message);
         } finally {
             themeRepo.db.close();
+            themeAliasRepo.db.close();
+        }
+    },
+    editthemediff: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+
+        const [arg, newDiff] = target.split(',').map(part => part.trim());
+        if (!arg || !newDiff) {
+            return user.say("Example: .editthemename [id], [NewDifficulty]");
+        }
+
+        const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
+
+        try {
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            theme.difficulty = newDiff;
+            await themeRepo.update(theme);
+            user.say(`Theme "${theme.name}" updated updated with a new description: ${newDiff}`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+            themeAliasRepo.db.close();
         }
     },
     edittheme: async function (target, user, room) {
@@ -240,9 +266,9 @@ module.exports = {
             themeRepo.db.close();
         }
 
-        let html = `<table border="1" style="font-size:.85em;"><tr><th style="">ID</th><th>Name</th><th style="">Aliases</th><th style="">Description</th><th style="">URL</th></tr>`
+        let html = `<table border="1" style="font-size:.85em;"><tr><th style="">ID</th><th>Name</th><th style="">Aliases</th><th style="">Difficulty</th><th style="">Description</th><th style="">URL</th></tr>`
         for (const theme of themes) {
-            html += `<tr><th style="font-weight:normal">${theme.id}</th><th style="font-weight:normal">${theme.name}</th><th style="font-weight:normal">${theme.aliases}</th><th style="font-weight:normal">${theme.desc}</th><th style="font-weight:normal">${theme.url}</th></tr>`
+            html += `<tr><th style="font-weight:normal">${theme.id}</th><th style="font-weight:normal">${theme.name}</th><th style="font-weight:normal">${theme.aliases}</th><th style="font-weight:normal">${theme.difficulty}</th><th style="font-weight:normal">${theme.desc}</th><th style="font-weight:normal">${theme.url}</th></tr>`
         }
         html += `</table>`
 

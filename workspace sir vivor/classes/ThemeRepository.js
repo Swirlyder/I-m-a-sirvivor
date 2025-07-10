@@ -10,7 +10,7 @@ const THEME_NAME = "name";
 const THEME_ALIAS_NAME = "name";
 const THEME_URL = "url";
 const THEME_DESCRIPTION = "desc";
-const THEME_DIFFICULTY = "name";
+const THEME_DIFFICULTY = "difficulty";
 const THEME_ALIAS_THEME_ID = "theme_id";
 
 class themesRepository {
@@ -75,7 +75,7 @@ class themesRepository {
             t.name AS name,
             t.url AS url,
             t.desc AS desc,
-            t.difficulty AS difficulty
+            t.difficulty AS difficulty,
             a.name AS alias_name
         FROM theme t
         LEFT JOIN theme_alias a ON t.id = a.theme_id;`;
@@ -95,7 +95,7 @@ class themesRepository {
                             name: row.name,
                             url: row.url,
                             desc: row.desc,
-                            difficulty: row.diffulty,
+                            difficulty: row.difficulty,
                             aliases: []
                         });
                     }
