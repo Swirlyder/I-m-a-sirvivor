@@ -67,15 +67,54 @@ class themesRepository {
         });
     }
 
-    themeNameExists(name) {
-    const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE LIMIT 1`;
-    return new Promise((resolve, reject) => {
-        this.db.get(sql, [name], (err, row) => {
-            if (err) return reject(err);
-            resolve(!!row);
+    getAllWithAliases() {
+        const sql = `
+        SELECT 
+            t.id AS id,
+            t.name AS name,
+            t.url AS url,
+            t.desc AS desc,
+            a.name AS alias_name
+        FROM theme t
+        LEFT JOIN theme_alias a ON t.id = a.theme_id;`;
+
+        return new Promise((resolve, reject) => {
+            this.db.all(sql, [], (err, rows) => {
+                if (err) return reject(err);
+
+                const themesMap = new Map();
+
+                for (const row of rows) {
+                    const id = row.id;
+
+                    if (!themesMap.has(id)) {
+                        themesMap.set(id, {
+                            id: row.id,
+                            name: row.name,
+                            url: row.url,
+                            desc: row.desc,
+                            aliases: []
+                        });
+                    }
+
+                    if (row.alias_name) {
+                        themesMap.get(id).aliases.push(row.alias_name);
+                    }
+                }
+                resolve(Array.from(themesMap.values()));
+            });
         });
-    });
-}
+    }
+
+    themeNameExists(name) {
+        const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE LIMIT 1`;
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [name], (err, row) => {
+                if (err) return reject(err);
+                resolve(!!row);
+            });
+        });
+    }
 
     themeIdExists(id) {
         const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ? LIMIT 1`;
