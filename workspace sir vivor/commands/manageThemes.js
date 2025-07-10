@@ -1,6 +1,7 @@
 const themeRepository = require('../classes/ThemeRepository.js').themesRepository;
 const themeAliasRepository = require('../classes/ThemeRepository.js').themeAliasRepository;
 
+//TODO: rework all these functions to incorporate theme difficulty
 module.exports = {
     addtheme: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
@@ -224,6 +225,29 @@ module.exports = {
         var t = setTimeout(function () {
             Games.canTheme = true;
         }, 5 * 1000);
+    },
+
+    themedb: async function (arg, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+        let themes;
+        const themeRepo = new themeRepository();
+
+         try {
+            themes = await themeRepo.getAllWithAliases();
+        } catch (error) {
+            return console.log("Error retrieving theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+        }
+
+        let html = `<table border="1" style="font-size:.85em;"><tr><th style="">ID</th><th>Name</th><th style="">Aliases</th><th style="">Description</th><th style="">URL</th></tr>`
+        for (const theme of themes) {
+            html += `<tr><th style="font-weight:normal">${theme.id}</th><th style="font-weight:normal">${theme.name}</th><th style="font-weight:normal">${theme.aliases}</th><th style="font-weight:normal">${theme.desc}</th><th style="font-weight:normal">${theme.url}</th></tr>`
+        }
+        html += `</table>`
+
+        PL_Menu.sendPage(user.id, "ThemeDB", html, room);
+
     },
 };
 
