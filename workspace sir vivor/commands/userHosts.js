@@ -123,7 +123,7 @@ module.exports = {
 		room.say("!dt " + Tools.data.pokedex[Tools.sample(Object.keys(Tools.data.pokedex))].name);
 	},
 
-	randtheme: function (arg, user, room) {
+	/*randtheme: function (arg, user, room) {
 		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
 		let avail = [];
 		for (let i in gameTypes) {
@@ -143,7 +143,7 @@ module.exports = {
 		}
 
 	},
-
+*/
 	randmod: function (arg, user, room) {
 		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
 		let avail = [];
@@ -196,7 +196,7 @@ module.exports = {
 		}
 		Games.hosttype = null;
 		Games.host = null;*/
-		room.say("The winner is **" + target + "**! Thanks for playing.");
+		room.say("Thanks for playing!");
 		Games.host = null;
 		Games.resetPLData();
 		Games.hosttype = null;
