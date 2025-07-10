@@ -10,6 +10,7 @@ const THEME_NAME = "name";
 const THEME_ALIAS_NAME = "name";
 const THEME_URL = "url";
 const THEME_DESCRIPTION = "desc";
+const THEME_DIFFICULTY = "name";
 const THEME_ALIAS_THEME_ID = "theme_id";
 
 class themesRepository {
@@ -25,10 +26,10 @@ class themesRepository {
     }
 
     add(product) {
-        const sql = `INSERT INTO ${THEME_TABLE_NAME} (${THEME_NAME}, ${THEME_URL}, ${THEME_DESCRIPTION}) VALUES (?, ?, ?)`;
+        const sql = `INSERT INTO ${THEME_TABLE_NAME} (${THEME_NAME}, ${THEME_URL}, ${THEME_DESCRIPTION}, ${THEME_DIFFICULTY}) VALUES (?, ?, ?, ?)`;
 
         return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.name, product.url, product.desc], function (err) {
+            this.db.run(sql, [product.name, product.url, product.desc, product.difficulty], function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -48,7 +49,7 @@ class themesRepository {
     }
 
     getByAlias(alias) {
-        const sql = `SELECT theme.id, theme.name, theme.url, theme.desc FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+        const sql = `SELECT theme.id, theme.name, theme.url, theme.desc, theme.difficulty FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
         return new Promise((resolve, reject) => {
             this.db.get(sql, [alias], (err, row) => {
                 if (err) return reject(err);
@@ -74,6 +75,7 @@ class themesRepository {
             t.name AS name,
             t.url AS url,
             t.desc AS desc,
+            t.difficulty AS difficulty
             a.name AS alias_name
         FROM theme t
         LEFT JOIN theme_alias a ON t.id = a.theme_id;`;
@@ -93,6 +95,7 @@ class themesRepository {
                             name: row.name,
                             url: row.url,
                             desc: row.desc,
+                            difficulty: row.diffulty,
                             aliases: []
                         });
                     }
@@ -128,9 +131,9 @@ class themesRepository {
     }
 
     update(product) {
-        const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ? WHERE ${THEME_ID} = ?`;
+        const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ?, ${THEME_DIFFICULTY} = ? WHERE ${THEME_ID} = ?`;
         return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.name, product.url, product.desc, product.id], function (err) {
+            this.db.run(sql, [product.name, product.url, product.desc, product.difficulty, product.id], function (err) {
                 if (err) {
                     return reject(err);
                 }
