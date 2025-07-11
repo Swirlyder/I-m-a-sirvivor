@@ -44,6 +44,9 @@ module.exports = {
 	ceterisparibus: '==ceteris',
 	ceteris: 'CHOO CHOO ALL ABOARD THE PARTYBUS TRAIN',
 
+	cel: '==celeryyyy',
+	celeryyyy: 'Math is hard',
+
 	cheese: 'Muffinss',
 
 	crab: '==crabachillable',
@@ -144,6 +147,9 @@ module.exports = {
 
 	sifi: '==sificon',
 	sificon: 'If you tabfail my name for Sir.Vivor - you owe me a dollar :>',
+
+	sleepy: '==sleepyfwog',
+	sleepyfwog: 'Par for the course ¯\_(ツ)_/¯',
 
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
