@@ -155,10 +155,14 @@ module.exports = {
 
         const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
+
         try {
             let theme = await getTheme(themeRepo, themeAliasRepo, arg);
             if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .deletetheme [ID or Name or Alias]");
+            
             await themeRepo.delete(theme.id);
+            await themeAliasRepo.deleteByThemeId(theme.id); // delete theme's aliases from database
+
             user.say(`The theme **${theme.name}** has been sucessfully deleted!`);
         } catch (error) {
             user.say("Error updating theme: " + error.message);
@@ -275,7 +279,8 @@ module.exports = {
         arg = toId(arg);
 
         try {
-            themes = await themeRepo.getAllWithAliases();
+            if(arg == "easy" || arg == "medium" || arg == "hard") themes = await themeRepo.getAllByDifficulty(arg);
+            else themes = await themeRepo.getAllWithAliases();
         } catch (error) {
             return target.say("Error retrieving theme: " + error.message);
         } finally {

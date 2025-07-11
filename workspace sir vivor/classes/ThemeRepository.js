@@ -109,6 +109,17 @@ class themesRepository {
         });
     }
 
+    getAllByDifficulty(diff){
+        const sql = `SELECT * FROM ${THEME_TABLE_NAME} WHERE ${THEME_DIFFICULTY} = ? COLLATE NOCASE`;
+
+        return new Promise((resolve, reject) => {
+            this.db.all(sql, [diff], (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    }
+
     themeNameExists(name) {
         const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE LIMIT 1`;
         return new Promise((resolve, reject) => {
@@ -190,7 +201,7 @@ class themeAliasRepository {
     }
 
     getByAlias(name) {
-        const sql = `SELECT * FROM theme_alias WHERE theme_alias.name = ?;`
+        const sql = `SELECT * FROM ${THEME_ALIAS_TABLE_NAME} WHERE ${THEME_ALIAS_NAME} = ?;`
         return new Promise((resolve, reject) => {
             this.db.get(sql, [name], (err, row) => {
                 if (err) return reject(err);
@@ -200,7 +211,7 @@ class themeAliasRepository {
     }
 
     update(product) {
-        const sql = `UPDATE ${THEME_ALIAS_TABLE_NAME} SET ${THEME_ALIAS_NAME} = ?, ${THEME_ID} = ? WHERE ${THEME_ALIAS_ID} = ?`;
+        const sql = `UPDATE ${THEME_ALIAS_TABLE_NAME} SET ${THEME_ALIAS_NAME} = ?, ${THEME_ALIAS_THEME_ID} = ? WHERE ${THEME_ALIAS_ID} = ?`;
         return new Promise((resolve, reject) => {
             this.db.run(sql, [product.name, product.theme_id, product.id], function (err) {
                 if (err) {
@@ -218,6 +229,17 @@ class themeAliasRepository {
                 if (err) {
                     return reject(err);
                 }
+                resolve();
+            });
+        });
+    }
+
+    deleteByThemeId(themeId) {
+        const sql = `DELETE FROM ${THEME_ALIAS_TABLE_NAME} WHERE ${THEME_ALIAS_THEME_ID} = ?`;
+
+        return new Promise((resolve, reject) => {
+            this.db.run(sql, [themeId], function (err) {
+                if (err) return reject(err);
                 resolve();
             });
         });
