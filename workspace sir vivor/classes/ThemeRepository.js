@@ -59,7 +59,7 @@ class themesRepository {
     }
 
     getByName(name) {
-        const sql = `SELECT id, name, url, desc FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
+        const sql = `SELECT id, name, url, desc, difficulty FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
         return new Promise((resolve, reject) => {
             this.db.get(sql, [name], (err, row) => {
                 if (err) return reject(err);

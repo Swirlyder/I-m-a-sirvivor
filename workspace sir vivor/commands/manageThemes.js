@@ -29,7 +29,7 @@ module.exports = {
 
         const [arg, newName] = target.split(',').map(part => part.trim());  // arg can be theme id, name, or alias
         if (!arg|| !newName) {
-            return user.say("Example: .editthemename [id], [NewName]");
+            return user.say("Example: .editthemename [themeID_or_themeName_or_themeAlias], [NewName]");
         }
 
         const themeRepo = new themeRepository();
@@ -37,11 +37,12 @@ module.exports = {
 
         try {
             let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .editthemename [ID or Name or Alias], [NewName]");
             theme.name = newName;
             await themeRepo.update(theme);
-            user.say(`Theme "${newName}" updated successfully.`);
+            user.say(`Theme name updated to "${newName}".`);
         } catch (error) {
-            user.say("Error updating theme: " + error.message);
+            user.say("Error updating theme name: " + error.message);
         } finally {
             themeRepo.db.close();
             themeAliasRepo.db.close();
@@ -52,7 +53,7 @@ module.exports = {
 
         const [arg, newUrl] = target.split(',').map(part => part.trim());  // arg can be theme id, name, or alias
         if (!arg || !newUrl) {
-            return user.say("Example: .editthemename [id], [NewUrl]");
+            return user.say("Example: .editthemeurl [ID or Name or Alias], [NewUrl]");
         }
 
         const themeRepo = new themeRepository();
@@ -60,6 +61,7 @@ module.exports = {
 
         try {
             let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .editthemeurl [ID or Name or Alias], [NewUrl]");
             theme.url = newUrl;
             await themeRepo.update(theme);
             user.say(`Theme "${theme.name}" updated with a new url: ${newUrl}.`);
@@ -75,7 +77,7 @@ module.exports = {
 
         const [arg, newDesc] = target.split(',').map(part => part.trim()); // arg can be theme id, name, or alias
         if (!arg || !newDesc) {
-            return user.say("Example: .editthemename [id], [NewDescription]");
+            return user.say("Example: .editthemedesc [ID or Name or Alias], [NewDescription]");
         }
 
         const themeRepo = new themeRepository();
@@ -83,6 +85,7 @@ module.exports = {
 
         try {
             let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .editthemeurl [ID or Name or Alias], [NewDescription]");
             theme.desc = newDesc;
             await themeRepo.update(theme);
             user.say(`Theme "${theme.name}" updated updated with a new description: ${newDesc}`);
@@ -98,7 +101,7 @@ module.exports = {
 
         const [arg, newDiff] = target.split(',').map(part => part.trim());
         if (!arg || !newDiff) {
-            return user.say("Example: .editthemename [id], [NewDifficulty]");
+            return user.say("Example: .editthemediff [ID or Name or Alias], [NewDifficulty]");
         }
 
         const themeRepo = new themeRepository();
@@ -106,9 +109,10 @@ module.exports = {
 
         try {
             let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .editthemediff [ID or Name or Alias], [NewDifficulty]");
             theme.difficulty = newDiff;
             await themeRepo.update(theme);
-            user.say(`Theme "${theme.name}" updated updated with a new description: ${newDiff}`);
+            user.say(`Theme "${theme.name}" updated updated with a new diffculty: ${newDiff}`);
         } catch (error) {
             user.say("Error updating theme: " + error.message);
         } finally {
@@ -119,17 +123,21 @@ module.exports = {
     edittheme: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [themeId, newName, newUrl, newDesc] = target.split(',').map(part => part.trim());
-        if (!themeId || !newName || !newUrl || !newDesc) {
-            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc], [NewDifficulty]");
+        const [arg, newName, newUrl, newDesc, newDiff] = target.split(',').map(part => part.trim()); // arg can be theme id, name, alias
+        if (!arg || !newName || !newUrl || !newDesc) {
+            return user.say("Example: .edittheme [ID or Name or Alias], [NewName], [NewUrl], [NewDesc], [NewDifficulty]");
         }
 
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = { id: themeId, name: newName, url: newUrl, desc: newDesc };
+            let themeBefore = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!themeBefore) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .edittheme [ID or Name or Alias], [NewName], [NewUrl], [NewDesc], [NewDifficulty]");
+
+            let theme = { id: themeBefore.id, name: newName, url: newUrl, desc: newDesc, difficulty: newDiff};
             await themeRepo.update(theme);
-            user.say(`Theme "${theme.name}" succesfully updated!`);
+            user.say(`Theme updated! | **Name**: ${theme.name} | **URL**: ${theme.url} | **Description**: ${theme.desc} | **Difficulty**: ${theme.difficulty}`);
         } catch (error) {
             user.say("Error updating theme: " + error.message);
         } finally {
@@ -140,15 +148,18 @@ module.exports = {
     deletetheme: async function (target, user, room) {
         if (!user.hasRank('survivor', '%')) return;
 
-        const [themeId] = target.split(',').map(part => part.trim());
-        if (!themeId) {
-            return user.say("Example: .deletetheme [themeIdOrNameOrAlias]");
+        const [arg] = target.split(',').map(part => part.trim());
+        if (!arg) {
+            return user.say("Example: .deletetheme [ID or Name or Alias]");
         }
 
         const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
         try {
-            await themeRepo.delete(themeId);
-            user.say(`Theme succesfully deleted!`);
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .deletetheme [ID or Name or Alias]");
+            await themeRepo.delete(theme.id);
+            user.say(`The theme **${theme.name}** has been sucessfully deleted!`);
         } catch (error) {
             user.say("Error updating theme: " + error.message);
         } finally {
@@ -159,20 +170,20 @@ module.exports = {
         if (!user.hasRank('survivor', '%')) return;
 
         const parts = target.split(',').map(part => part.trim());
-        const themeIdOrName = parts.shift(); // this variable can be a theme name or theme id
+        const arg = parts.shift(); // this variable can be a theme name or theme id
         const aliases = parts;
 
 
-        if (!themeIdOrName || aliases.length === 0) {
-            return user.say("Example: .addthemealias [theme_id], [alias1], [alias2], ...");
+        if (!arg || aliases.length === 0) {
+            return user.say("Example: .addthemealias [ID or Name or Alias], [alias1], [alias2], ...");
         }
 
         const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
 
         try {
-            let theme = await getTheme(themeRepo, themeAliasRepo, themeIdOrName);
-            if (!theme) return user.say("Theme not found.");
+            let theme = await getTheme(themeRepo, themeAliasRepo, arg);
+            if (!theme) return user.say("Theme not found. Make sure that the correct theme id, name, or alias has been entered. Example: .addthemealias [ID or Name or Alias], [alias1], [alias2], ...");
 
             for (const name of aliases) {
                 const alias = { name, theme_id: theme.id };
@@ -193,7 +204,7 @@ module.exports = {
 
         const aliasArgs = target.split(',').map(part => part.trim()); // aliasArgs can be alias name or ID
         if (aliasArgs.length === 0) {
-            return user.say("Example: .deletethemealias [aliasName_orAliasID_1], [aliasName_orAliasID_2], [aliasName_orAliasID_3], ...");
+            return user.say("Example: .deletethemealias [aliasName1 or AliasID1], [aliasName2 or AliasID2], [aliasName3 or AliasID3], ...");
         }
 
         const themeAliasRepo = new themeAliasRepository();
@@ -208,7 +219,7 @@ module.exports = {
                     themeAliasId = arg;
                 }
                 else {
-                    return user.say("Theme alias not found.");
+                    return user.say("Theme alias not found. Make sure that the correct theme alias id or name has been entered. Example: .deletethemealias [aliasName1 or AliasID1], [alias1], [alias2], ...");
                 }
                 await themeAliasRepo.delete(themeAliasId);
             }
