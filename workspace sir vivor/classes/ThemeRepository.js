@@ -49,7 +49,21 @@ class themesRepository {
     }
 
     getByAlias(alias) {
-        const sql = `SELECT theme.id, theme.name, theme.url, theme.desc, theme.difficulty FROM theme INNER JOIN theme_alias ON theme_alias.theme_id = theme.id WHERE theme_alias.name = ?;`
+        const sql = `
+        SELECT 
+            t.${THEME_ID}, 
+            t.${THEME_NAME}, 
+            t.${THEME_URL}, 
+            t.${THEME_DESCRIPTION}, 
+            t.${THEME_DIFFICULTY} 
+        FROM 
+            ${THEME_TABLE_NAME} t 
+        INNER JOIN 
+            ${THEME_ALIAS_TABLE_NAME} a 
+            ON a.${THEME_ALIAS_THEME_ID} = t.${THEME_ID} 
+        WHERE 
+            a.${THEME_ALIAS_NAME} = ?;`
+
         return new Promise((resolve, reject) => {
             this.db.get(sql, [alias], (err, row) => {
                 if (err) return reject(err);
@@ -59,7 +73,7 @@ class themesRepository {
     }
 
     getByName(name) {
-        const sql = `SELECT id, name, url, desc, difficulty FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
+        const sql = `SELECT * FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE;`;
         return new Promise((resolve, reject) => {
             this.db.get(sql, [name], (err, row) => {
                 if (err) return reject(err);
@@ -71,14 +85,17 @@ class themesRepository {
     getAllWithAliases() {
         const sql = `
         SELECT 
-            t.id AS id,
-            t.name AS name,
-            t.url AS url,
-            t.desc AS desc,
-            t.difficulty AS difficulty,
-            a.name AS alias_name
-        FROM theme t
-        LEFT JOIN theme_alias a ON t.id = a.theme_id;`;
+            t.${THEME_ID} AS id,
+            t.${THEME_NAME} AS name,
+            t.${THEME_URL} AS url,
+            t.${THEME_DESCRIPTION} AS desc,
+            t.${THEME_DIFFICULTY} AS difficulty,
+            a.${THEME_ALIAS_NAME} AS alias_name
+        FROM 
+            ${THEME_TABLE_NAME} t
+        LEFT JOIN 
+            ${THEME_ALIAS_TABLE_NAME} a 
+            ON t.${THEME_ID}  = a.${THEME_ALIAS_THEME_ID};`;
 
         return new Promise((resolve, reject) => {
             this.db.all(sql, [], (err, rows) => {
