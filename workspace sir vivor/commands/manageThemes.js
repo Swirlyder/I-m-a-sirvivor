@@ -253,6 +253,29 @@ module.exports = {
             Games.canTheme = true;
         }, 5 * 1000);
     },
+    randtheme: async function (arg, user, room) {
+		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
+		let avail = [];
+        let themes;
+
+        const themeRepo = new themeRepository();
+        const themeAliasRepo = new themeAliasRepository();
+
+        arg = toId(arg);
+
+        try {
+            themes = await themeRepo.getAllWithAliases();
+        } catch (error) {
+            return target.say("Error retrieving theme: " + error.message);
+        } finally {
+            themeRepo.db.close();
+            themeAliasRepo.db.close();
+        }
+        let theme = themes[Math.floor(Math.random() * themes.length)]
+
+        let text = '**' + theme.name + '**: __' + theme.desc + '__ Game rules: ' + theme.url;
+        target.say(text);
+	},
 
     themedb: async function (arg, user, room) {
         if (!user.hasRank('survivor', '%')) return;
@@ -267,7 +290,7 @@ module.exports = {
         } finally {
             themeRepo.db.close();
         }
-        
+
         let html = themesDBHtml.generateHTML(themes);
 
         PL_Menu.sendPage(user.id, "ThemeDB", html, room);
