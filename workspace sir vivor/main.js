@@ -70,7 +70,7 @@ global.Commands = require('./commands.js').commands;
 global.Parse = require('./parser.js').parse;
 
 global.Games = require('./games.js');
-global.PL_Menu = require('./classes/HTMLPage.js');
+global.PL_Menu = require('./classes/HTMLPage.js').PL_Menu;
 
 
 console.log(Tools.mod(912673, 688165, 1032247));

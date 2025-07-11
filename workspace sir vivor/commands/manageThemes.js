@@ -1,5 +1,6 @@
 const themeRepository = require('../classes/ThemeRepository.js').themesRepository;
 const themeAliasRepository = require('../classes/ThemeRepository.js').themeAliasRepository;
+const themesDbHtml = require('../classes/HTMLPage.js').ThemesDB; 
 
 //TODO: rework all these functions to incorporate theme difficulty
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
 
         const [name, url, desc, difficulty] = target.split(',').map(part => part.trim());
         if (!name || !url || !desc || !difficulty) {
-            return user.say("Example:.addtheme [name], [url], [description]");
+            return user.say("Example:.addtheme [name], [url], [description], [difficulty]");
         }
 
         const themeRepo = new themeRepository();
@@ -120,7 +121,7 @@ module.exports = {
 
         const [themeId, newName, newUrl, newDesc] = target.split(',').map(part => part.trim());
         if (!themeId || !newName || !newUrl || !newDesc) {
-            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc], [NewDifficulty]");
         }
 
         const themeRepo = new themeRepository();
@@ -141,7 +142,7 @@ module.exports = {
 
         const [themeId] = target.split(',').map(part => part.trim());
         if (!themeId) {
-            return user.say("Example: .editthemename [id], [NewName], [NewUrl], [NewDesc]");
+            return user.say("Example: .deletetheme [themeIdOrNameOrAlias]");
         }
 
         const themeRepo = new themeRepository();
@@ -256,6 +257,7 @@ module.exports = {
     themedb: async function (arg, user, room) {
         if (!user.hasRank('survivor', '%')) return;
         let themes;
+        const themesDBHtml = new themesDbHtml();
         const themeRepo = new themeRepository();
 
          try {
@@ -265,12 +267,8 @@ module.exports = {
         } finally {
             themeRepo.db.close();
         }
-
-        let html = `<table border="1" style="font-size:.85em;"><tr><th style="">ID</th><th>Name</th><th style="">Aliases</th><th style="">Difficulty</th><th style="">Description</th><th style="">URL</th></tr>`
-        for (const theme of themes) {
-            html += `<tr><th style="font-weight:normal">${theme.id}</th><th style="font-weight:normal">${theme.name}</th><th style="font-weight:normal">${theme.aliases}</th><th style="font-weight:normal">${theme.difficulty}</th><th style="font-weight:normal">${theme.desc}</th><th style="font-weight:normal">${theme.url}</th></tr>`
-        }
-        html += `</table>`
+        
+        let html = themesDBHtml.generateHTML(themes);
 
         PL_Menu.sendPage(user.id, "ThemeDB", html, room);
 
