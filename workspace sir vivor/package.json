@@ -15,6 +15,7 @@
     "googleapis": "^105.0.0",
     "lodash": "^4.15.0",
     "origindb": "^2.6.1",
+    "sqlite3": "^5.1.7",
     "sugar": "1.4.1",
     "websocket": "^1.0.21"
   },

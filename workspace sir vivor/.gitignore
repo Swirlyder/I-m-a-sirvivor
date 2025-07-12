@@ -10,3 +10,6 @@ credentials.json
 .svn
 *~
 *#
+/utilities/createTables.js
+/data/themesDB.sqlite3
+/databases/authbattle.json
