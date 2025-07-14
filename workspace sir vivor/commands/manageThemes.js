@@ -294,7 +294,7 @@ module.exports = {
 	},
 
     themedb: async function (arg, user, room) {
-        if (!user.hasRank('survivor', '%')) return;
+        if (!user.hasRank('survivor', '+')) return;
         let themes;
         const themesDBHtml = new themesDbHtml();
         const themeRepo = new themeRepository();
