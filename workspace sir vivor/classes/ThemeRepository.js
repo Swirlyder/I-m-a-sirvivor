@@ -95,7 +95,9 @@ class themesRepository {
             ${THEME_TABLE_NAME} t
         LEFT JOIN 
             ${THEME_ALIAS_TABLE_NAME} a 
-            ON t.${THEME_ID}  = a.${THEME_ALIAS_THEME_ID};`;
+            ON t.${THEME_ID}  = a.${THEME_ALIAS_THEME_ID}
+        ORDER BY
+            t.${THEME_NAME};`;
 
         return new Promise((resolve, reject) => {
             this.db.all(sql, [], (err, rows) => {
