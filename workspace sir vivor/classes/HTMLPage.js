@@ -63,14 +63,14 @@ class HTMLPage {
     htmlTableWrapper(content, style = '') {
         return "<table border=1 style='" + style + "'>" + content + "</table>";
     }
-    htmlTableHeaderWrapper(content, style = '') {
-        return this.createHTMLElement("th", content, style = "");
+    htmlTableHeaderWrapper(content, style = "") {
+        return this.createHTMLElement("th", content, style);
     }
     htmlTableDataWrapper(content, style = '') {
-        return this.createHTMLElement("td", content, style = "");
+        return this.createHTMLElement("td", content, style);
     }
     htmlTableRowWrapper(content, style = '') {
-        return this.createHTMLElement("tr", content, style = "");
+        return this.createHTMLElement("tr", content, style);
     }
 }
 
@@ -233,15 +233,16 @@ class ThemesDB extends HTMLPage {
         super(pageID);
     }
     generateHTML(themes) {
-        const tdStyle = "font-weight:normal;"
-        const tableStyle = "font-size:.85em; text-align:center;";
+        const tdStyle = "font-weight:normal; padding:5px;";
+        const tableStyle = "font-size:.85em; text-align:center; margin:5px;";
+        const headingStyle ="font-size:1.15em; padding:5px;";
         let dataHTML = ""
         let rowHTML = "";
         let headingHTML = "";
         let html = "";
         const headers = ["ID", "Name", "Aliases", "Difficulty", "Description", "URL"];
         for (const header of headers) {
-            headingHTML += this.htmlTableHeaderWrapper(header);
+            headingHTML += this.htmlTableHeaderWrapper(header, headingStyle);
         }
         html += this.htmlTableRowWrapper(headingHTML);
 
@@ -250,8 +251,8 @@ class ThemesDB extends HTMLPage {
             const data = [
                 theme.id,
                 theme.name,
-                theme.aliases.join(", "), // Join aliases into a single string
-                theme.difficulty || "",   // In case difficulty is optional
+                theme.aliases.join(", "),
+                theme.difficulty || "", 
                 theme.desc,
                 theme.url
             ];
