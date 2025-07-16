@@ -245,7 +245,8 @@ module.exports = {
         const themeAliasRepo = new themeAliasRepository();
 
         arg = toId(arg);
-
+        if (!arg) return target.say("The list of game types can be found here: https://sites.google.com/view/survivor-ps/themes");
+        
         try {
             theme = await getTheme(themeRepo, themeAliasRepo, arg);
         } catch (error) {
