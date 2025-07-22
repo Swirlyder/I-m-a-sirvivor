@@ -196,7 +196,7 @@ module.exports = {
 		}
 		Games.hosttype = null;
 		Games.host = null;*/
-		room.say("**Survivor:**" + target + ");
+		room.say("**Winner:**" + target + ");
 		Games.host = null;
 		Games.resetPLData();
 		Games.hosttype = null;
