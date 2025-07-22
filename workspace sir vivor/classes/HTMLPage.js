@@ -302,7 +302,7 @@ class JokesHtml extends HTMLPage {
             html += rowHTML;
             count++;
         }
-        const headerHTML = createHeader2(`Jokes from Survivor (${count}):`);
+        const headerHTML = this.createHeader2(`Jokes from Survivor (${count}):`);
         let headingHTML = refreshButton + headerHTML;
         html = headingHTML + html;
         html = this.nestInPadDiv(html);
