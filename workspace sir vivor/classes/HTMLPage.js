@@ -33,6 +33,9 @@ class HTMLPage {
     createHeader1(text, style = "") {
         return this.createHTMLElement("h1", text, style);
     }
+    createHeader2(text, style = "") {
+        return this.createHTMLElement("h2", text, style);
+    }
     createHeader3(text, style = "") {
         return this.createHTMLElement("h3", text, style);
     }
@@ -71,6 +74,15 @@ class HTMLPage {
     }
     htmlTableRowWrapper(content, style = '') {
         return this.createHTMLElement("tr", content, style);
+    }
+    smallTextWrapper(content, style = '') {
+        return this.createHTMLElement("small", content, style);
+    }
+    nestInInfoBoxDiv(content, style = "") {
+        return `<div class='infobox' style='${style}'>${content}</div>`
+    }
+    nestInPadDiv(content, style = "") {
+        return `<div class='pad' style='${style}'>${content}</div>`
     }
 }
 
@@ -235,7 +247,7 @@ class ThemesDB extends HTMLPage {
     generateHTML(themes) {
         const tdStyle = "font-weight:normal; padding:5px;";
         const tableStyle = "font-size:.85em; text-align:center; margin:5px;";
-        const headingStyle ="font-size:1.15em; padding:5px;";
+        const headingStyle = "font-size:1.15em; padding:5px;";
         let dataHTML = ""
         let rowHTML = "";
         let headingHTML = "";
@@ -252,13 +264,13 @@ class ThemesDB extends HTMLPage {
                 theme.id,
                 theme.name,
                 theme.aliases.join(", "),
-                theme.difficulty || "", 
+                theme.difficulty || "",
                 theme.desc,
                 theme.url
             ];
 
             for (const element of data) {
-                
+
                 dataHTML += this.htmlTableDataWrapper(element, tdStyle);
             }
             rowHTML += this.htmlTableRowWrapper(dataHTML);
@@ -270,9 +282,42 @@ class ThemesDB extends HTMLPage {
         return html;
     }
 }
+class JokesHtml extends HTMLPage {
+    constructor(pageID) {
+        super(pageID);
+    }
+    generateTableHTML(jokes) {
+        let dateHTML;
+        let removeButton;
+        let rowHTML;
+        let count = 0;
+        const idk = '<i class="fa fa-refresh"></i>';
+        const refreshButton = this.createButton(idk + " Refresh", "jokedb", '' ,'float:right;');
+        let html = '';
+        for (const joke of jokes) {
+            dateHTML = this.smallTextWrapper(`Added by ${joke.added_by} on ${joke.date_added} `);
+            removeButton = this.createButton("Remove", "removejoke", " " + joke.id);
+            rowHTML = `#${joke.id}: ${joke.text} <br /><hr /> ${dateHTML} ${removeButton}`;
+            rowHTML = this.nestInInfoBoxDiv(rowHTML, "margin:10px 0px;");
+            html += rowHTML;
+            count++;
+        }
+        const headerHTML = createHeader2(`Jokes from Survivor (${count}):`);
+        let headingHTML = refreshButton + headerHTML;
+        html = headingHTML + html;
+        html = this.nestInPadDiv(html);
+        return html;
+    }
+    generateShowAuthorRow(joke){
+        let html = ``;
+        html += `${joke.text}<hr />`;
+        html+= this.smallTextWrapper(`Added by ${joke.added_by} on ${joke.date_added}`);
+        return html;
+    }
+}
 
 let PL_Menu = new PL_Assistant_Menu("PLAssistantMenu");
-module.exports = { PL_Menu, ThemesDB };
+module.exports = { PL_Menu, ThemesDB, JokesHtml};
 
 
 

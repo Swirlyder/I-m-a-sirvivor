@@ -1,7 +1,7 @@
 const sqlite3 = require("sqlite3").verbose();
 
 const path = require("path");
-const THEMES_DB_FILE = path.resolve(__dirname, "../data/themesDB.sqlite3");
+const TEXT_DB_FILE = path.resolve(__dirname, "../data/textDB.sqlite3");
 
 const JOKE_TABLE_NAME = "joke";
 const JOKE_ID = "id";
@@ -23,7 +23,7 @@ const GIFT_DATE_ADDED = "date_added";
 
 class jokesRepository {
     constructor() {
-        this.db_file = THEMES_DB_FILE;
+        this.db_file = TEXT_DB_FILE;
         this.db = new sqlite3.Database(this.db_file, sqlite3.OPEN_READWRITE, (err) => {
             if (err) {
                 console.error(err.message);
@@ -35,9 +35,14 @@ class jokesRepository {
 
     add(product) {
         const sql = `INSERT INTO ${JOKE_TABLE_NAME} (${JOKE_TEXT}, ${JOKE_ADDED_BY}, ${JOKE_DATE_ADDED}) VALUES (?, ?, ?)`;
+        const now = new Date();
+        const formatted_now = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${now.toLocaleTimeString('en-US', { hour12: true })}`;
+
+
+        //console.log(now.getDate());
 
         return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.text, product.added_by, product.date_added], function (err) {
+            this.db.run(sql, [product.text, product.added_by, formatted_now], function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -56,18 +61,18 @@ class jokesRepository {
         });
     }
 
-    getAll(diff){
+    getAll(){
         const sql = `SELECT * FROM ${JOKE_TABLE_NAME}`;
 
         return new Promise((resolve, reject) => {
-            this.db.all(sql, [diff], (err, rows) => {
+            this.db.all(sql, [], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
             });
         });
     }
 
-
+/*
     themeIdExists(id) {
         const sql = `SELECT 1 FROM ${JOKE_TABLE_NAME} WHERE ${JOKE_ID} = ? LIMIT 1`;
 
@@ -77,22 +82,10 @@ class jokesRepository {
                 resolve(!!row);
             });
         });
-    }
-
-    update(product) {
-        const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ?, ${THEME_DIFFICULTY} = ? WHERE ${THEME_ID} = ?`;
-        return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.name, product.url, product.desc, product.difficulty, product.id], function (err) {
-                if (err) {
-                    return reject(err);
-                }
-                resolve();
-            });
-        });
-    }
+    } */
 
     delete(id) {
-        const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ?`;
+        const sql = `DELETE FROM ${JOKE_TABLE_NAME} WHERE ${JOKE_ID} = ?`;
         return new Promise((resolve, reject) => {
             this.db.run(sql, [id], function (err) {
                 if (err) {
@@ -175,7 +168,7 @@ class giftsRepository {
     }
 
     delete(id) {
-        const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ?`;
+        const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${JOKE_ID} = ?`;
         return new Promise((resolve, reject) => {
             this.db.run(sql, [id], function (err) {
                 if (err) {
@@ -269,3 +262,4 @@ class roastsRepository {
         });
     }
 }
+module.exports = { jokesRepository, giftsRepository, roastsRepository };

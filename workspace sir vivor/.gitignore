@@ -12,4 +12,5 @@ credentials.json
 *#
 /utilities/createTables.js
 /data/themesDB.sqlite3
+/data/textDB.sqlite3
 /databases/authbattle.json
