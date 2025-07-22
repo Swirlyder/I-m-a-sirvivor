@@ -273,6 +273,8 @@ module.exports = {
 		let target = !user.hasRank(room.id, '+') && !(Games.host && Games.host.id === user.id) ? user : room;
 		let avail = [];
         let themes;
+        let id;
+        let theme;
 
         const themeRepo = new themeRepository();
         const themeAliasRepo = new themeAliasRepository();
@@ -282,14 +284,14 @@ module.exports = {
         try {
             if(arg == "easy" || arg == "medium" || arg == "hard") themes = await themeRepo.getAllByDifficulty(arg);
             else themes = await themeRepo.getAllWithAliases();
+            id = themes[Math.floor(Math.random() * themes.length)].id;
+            theme = await themeRepo.getById(id);
         } catch (error) {
             return target.say("Error retrieving theme: " + error.message);
         } finally {
             themeRepo.db.close();
             themeAliasRepo.db.close();
         }
-        let theme = themes[Math.floor(Math.random() * themes.length)]
-
         let text = '**' + theme.name + '**: __' + theme.desc + '__ Game rules: ' + theme.url;
         target.say(text);
 	},
