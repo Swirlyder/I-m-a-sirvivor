@@ -42,17 +42,17 @@ However, please refrain from adding more example commands.
 Credits
 -------
 Current Developers:
-- Swirlyder (Bot Owner, Repo Owner)
+- Swirlyder (Bot Owner, Repo Owner, Major Development, Maintainer)
 - inactive (Bot Owner, Maintainer)
-- Rainshaft (Development)
      
  Past Developers:
 - Felucia (Bot Owner, Major Development, Maintainer)
 - Hawkie (First customization for survivor, Major Development)
 - CheeseMuffin/Cheese/Moo (Major Development, Bot Owner and Former Maintainer)
-- marillvibes (Development)
+- marillvibes (Maintainer)
 - Shadecession (Major Development)
 - Tushavi (Created and Updated current Leaderboard system, Major Development)
+- Rainshaft (Development)
    
  Sir. Vivor is based on the original BoTTT devloped by Morfent/TalkTakesTime/Quinella/Rival Nick
 
