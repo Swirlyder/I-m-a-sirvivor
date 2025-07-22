@@ -169,7 +169,7 @@ module.exports = {
 		if (!Games.host || Games.host.id !== user.id) return;
 		Games.host = null;
 		Games.resetPLData();
-		this.say(room, "Thanks for playing!");
+		this.say(room, "The game is over!");
 	},
 
 	win: function (target, user, room) {
@@ -196,7 +196,7 @@ module.exports = {
 		}
 		Games.hosttype = null;
 		Games.host = null;*/
-		room.say("Thanks for playing!");
+		room.say("**Survivor:**" + target + ");
 		Games.host = null;
 		Games.resetPLData();
 		Games.hosttype = null;
