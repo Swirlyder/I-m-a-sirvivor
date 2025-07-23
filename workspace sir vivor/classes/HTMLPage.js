@@ -315,9 +315,43 @@ class JokesHtml extends HTMLPage {
         return html;
     }
 }
+class GiftsHtml extends HTMLPage {
+    constructor(pageID) {
+        super(pageID);
+    }
+    generateTableHTML(gifts) {
+        let dateHTML;
+        let removeButton;
+        let rowHTML;
+        let count = 0;
+        const idk = '<i class="fa fa-refresh"></i>';
+        const refreshButton = this.createButton(idk + " Refresh", "giftdb", '' ,'float:right;');
+        let html = '';
+        for (const gift of gifts) {
+            dateHTML = this.smallTextWrapper(`Added by ${gift.added_by} on ${gift.date_added} `);
+            removeButton = this.createButton("Remove", "removegift", " " + gift.id);
+            rowHTML = `#${gift.id}: ${gift.text} <br /><hr /> ${dateHTML} ${removeButton}`;
+            rowHTML = this.nestInInfoBoxDiv(rowHTML, "margin:10px 0px;");
+            html += rowHTML;
+            count++;
+        }
+        const headerHTML = this.createHeader2(`Gifts from Survivor (${count}):`);
+        let headingHTML = refreshButton + headerHTML;
+        html = headingHTML + html;
+        html = this.nestInPadDiv(html);
+        return html;
+    }
+    generateShowAuthorRow(gift, targetUser){
+        let html = ``;
+        const giftText = 'Inside ' + targetUser + '\'s present is...' + gift.text;
+        html += `${giftText}<hr />`;
+        html+= this.smallTextWrapper(`Added by ${gift.added_by} on ${gift.date_added}`);
+        return html;
+    }
+}
 
 let PL_Menu = new PL_Assistant_Menu("PLAssistantMenu");
-module.exports = { PL_Menu, ThemesDB, JokesHtml};
+module.exports = { PL_Menu, ThemesDB, JokesHtml, GiftsHtml};
 
 
 
