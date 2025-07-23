@@ -72,18 +72,6 @@ class jokesRepository {
         });
     }
 
-/*
-    themeIdExists(id) {
-        const sql = `SELECT 1 FROM ${JOKE_TABLE_NAME} WHERE ${JOKE_ID} = ? LIMIT 1`;
-
-        return new Promise((resolve, reject) => {
-            this.db.get(sql, [id], (err, row) => {
-                if (err) return reject(err);
-                resolve(!!row);
-            });
-        });
-    } */
-
     delete(id) {
         const sql = `DELETE FROM ${JOKE_TABLE_NAME} WHERE ${JOKE_ID} = ?`;
         return new Promise((resolve, reject) => {
@@ -99,7 +87,7 @@ class jokesRepository {
 
 class giftsRepository {
     constructor() {
-        this.db_file = THEMES_DB_FILE;
+        this.db_file = TEXT_DB_FILE;
         this.db = new sqlite3.Database(this.db_file, sqlite3.OPEN_READWRITE, (err) => {
             if (err) {
                 console.error(err.message);
@@ -110,10 +98,12 @@ class giftsRepository {
     }
 
     add(product) {
-        const sql = `INSERT INTO ${THEME_TABLE_NAME} (${THEME_NAME}, ${THEME_URL}, ${THEME_DESCRIPTION}, ${THEME_DIFFICULTY}) VALUES (?, ?, ?, ?)`;
+        const sql = `INSERT INTO ${GIFT_TABLE_NAME} (${GIFT_TEXT}, ${GIFT_ADDED_BY}, ${GIFT_DATE_ADDED}) VALUES (?, ?, ?)`;
+        const now = new Date();
+        const formatted_now = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${now.toLocaleTimeString('en-US', { hour12: true })}`;
 
         return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.name, product.url, product.desc, product.difficulty], function (err) {
+            this.db.run(sql, [product.text, product.added_by, formatted_now], function (err) {
                 if (err) {
                     return reject(err);
                 }
@@ -123,7 +113,7 @@ class giftsRepository {
     }
 
     getById(id) {
-        const sql = `SELECT * FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ?`;
+        const sql = `SELECT * FROM ${GIFT_TABLE_NAME} WHERE ${GIFT_ID} = ?`;
         return new Promise((resolve, reject) => {
             this.db.get(sql, [id], (err, row) => {
                 if (err) return reject(err);
@@ -132,43 +122,19 @@ class giftsRepository {
         });
     }
 
-    getAll(diff){
-        const sql = `SELECT * FROM ${THEME_TABLE_NAME} WHERE ${THEME_DIFFICULTY} = ? COLLATE NOCASE`;
+    getAll(){
+        const sql = `SELECT * FROM ${GIFT_TABLE_NAME}`;
 
         return new Promise((resolve, reject) => {
-            this.db.all(sql, [diff], (err, rows) => {
+            this.db.all(sql, [], (err, rows) => {
                 if (err) return reject(err);
                 resolve(rows);
             });
         });
     }
 
-
-    themeIdExists(id) {
-        const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_ID} = ? LIMIT 1`;
-
-        return new Promise((resolve, reject) => {
-            this.db.get(sql, [id], (err, row) => {
-                if (err) return reject(err);
-                resolve(!!row);
-            });
-        });
-    }
-
-    update(product) {
-        const sql = `UPDATE ${THEME_TABLE_NAME} SET ${THEME_NAME} = ?, ${THEME_URL} = ?, ${THEME_DESCRIPTION} = ?, ${THEME_DIFFICULTY} = ? WHERE ${THEME_ID} = ?`;
-        return new Promise((resolve, reject) => {
-            this.db.run(sql, [product.name, product.url, product.desc, product.difficulty, product.id], function (err) {
-                if (err) {
-                    return reject(err);
-                }
-                resolve();
-            });
-        });
-    }
-
     delete(id) {
-        const sql = `DELETE FROM ${THEME_TABLE_NAME} WHERE ${JOKE_ID} = ?`;
+        const sql = `DELETE FROM ${GIFT_TABLE_NAME} WHERE ${GIFT_ID} = ?`;
         return new Promise((resolve, reject) => {
             this.db.run(sql, [id], function (err) {
                 if (err) {

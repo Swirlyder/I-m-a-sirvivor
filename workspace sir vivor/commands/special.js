@@ -121,19 +121,6 @@ module.exports = {
 
 	},
 
-	gift: 'present',
-	present: function (arg, user, room) {
-		var text = '';
-		text += 'Inside ' + arg + '\'s present is...' + presents[Math.floor(Math.random() * presents.length)];
-		if (user.hasRank(room.id, '+') || room.id === user.id) {
-			this.say(room, text);
-			return;
-		}
-		if (!user.hasRank(room.id, '+')) {
-			this.say(room, '/w ' + user.id + ', ' + text);
-		}
-	},
-
 	roast: function (target, user, room) {
 		if (!user.hasRank(room.id, '+')) return;
 		let msg = Tools.sample(roasts).replace(`[USER]`, target.trim());
