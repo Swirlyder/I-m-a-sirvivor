@@ -349,9 +349,43 @@ class GiftsHtml extends HTMLPage {
         return html;
     }
 }
+class RoastsHtml extends HTMLPage {
+    constructor(pageID) {
+        super(pageID);
+    }
+    generateTableHTML(roasts) {
+        let dateHTML;
+        let removeButton;
+        let rowHTML;
+        let count = 0;
+        const idk = '<i class="fa fa-refresh"></i>';
+        const refreshButton = this.createButton(idk + " Refresh", "roastdb", '' ,'float:right;');
+        let html = '';
+        for (const roast of roasts) {
+            dateHTML = this.smallTextWrapper(`Added by ${roast.added_by} on ${roast.date_added} `);
+            removeButton = this.createButton("Remove", "removeroast", " " + roast.id);
+            rowHTML = `#${roast.id}: ${roast.text} <br /><hr /> ${dateHTML} ${removeButton}`;
+            rowHTML = this.nestInInfoBoxDiv(rowHTML, "margin:10px 0px;");
+            html += rowHTML;
+            count++;
+        }
+        const headerHTML = this.createHeader2(`Roasts from Survivor (${count}):`);
+        let headingHTML = refreshButton + headerHTML;
+        html = headingHTML + html;
+        html = this.nestInPadDiv(html);
+        return html;
+    }
+    generateShowAuthorRow(roast, targetUser){
+        let html = ``;
+        const roastText = 'Inside ' + targetUser + '\'s present is...' + roast.text;
+        html += `${roastText}<hr />`;
+        html+= this.smallTextWrapper(`Added by ${roast.added_by} on ${roast.date_added}`);
+        return html;
+    }
+}
 
 let PL_Menu = new PL_Assistant_Menu("PLAssistantMenu");
-module.exports = { PL_Menu, ThemesDB, JokesHtml, GiftsHtml};
+module.exports = { PL_Menu, ThemesDB, JokesHtml, GiftsHtml, RoastsHtml};
 
 
 
