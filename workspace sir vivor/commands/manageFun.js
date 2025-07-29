@@ -2,6 +2,8 @@ const jokeRepository = require('../classes/TextRepository.js').jokesRepository;
 const jokesHTML = require('../classes/HTMLPage.js').JokesHtml;
 const giftRepository = require('../classes/TextRepository.js').giftsRepository;
 const giftsHTML = require('../classes/HTMLPage.js').GiftsHtml;
+const roastRepository = require('../classes/TextRepository.js').roastsRepository;
+const roastsHTML = require('../classes/HTMLPage.js').RoastsHtml;
 
 module.exports = {
     addjoke: async function (target, user, room) {
@@ -131,7 +133,7 @@ module.exports = {
             giftRepo.db.close();
         }
     },
-    presents:'gifts',
+    presents: 'gifts',
     gifts: 'giftdb',
     giftdb: async function (arg, user, room) {
         if (!user.hasRank('survivor', '+')) return;
@@ -153,7 +155,7 @@ module.exports = {
         PL_Menu.sendPage(user.id, "giftsDB", html, room);
 
     },
-    present:'gift',
+    present: 'gift',
     gift: async function (arg, user, room) {
         let target = !user.hasRank(room.id, '+') ? user : room;
         let [targetUser, id, showAuthor] = arg.split(',').map(part => part.trim());
@@ -174,13 +176,103 @@ module.exports = {
 
             gift = await giftRepo.getById(id);
 
-            const giftText = 'Inside ' + targetUser + '\'s present is...' + gift.text;
+            const giftText = 'Inside ' + targetUser + '\'s present is... ' + gift.text;
             const text = (showAuthor === "showauthor") ? `/addhtmlbox ${giftsHtml.generateShowAuthorRow(gift)}` : giftText;
             target.say(text);
         } catch (error) {
             return console.log("Error retrieving theme: " + error.message);
         } finally {
             giftRepo.db.close();
+        }
+    },
+    addroast: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+        if (!target) return user.say("Example:.addroast [roast]");
+
+        const roastRepo = new roastRepository();
+        const info = { text: target, added_by: user.id }
+
+        try {
+            await roastRepo.add(info);
+            this.say(room, `/msgroom survivor, /modnote ADDROAST: by ${info.added_by}: ${info.text}`);
+        } catch (error) {
+            if (error.code === "SQLITE_CONSTRAINT" && error.message.includes("UNIQUE")) {
+                user.say(`"${info.text}" is already in Survivor's roast list.`);
+            }
+            else {
+                user.say("Error adding theme: " + error.message);
+            }
+        } finally {
+            roastRepo.db.close();
+        }
+    },
+    removeroast: async function (target, user, room) {
+        if (!user.hasRank('survivor', '%')) return;
+        const id = Number(target);
+        if (!target || !id.isInteger() || id < 0) {
+            return user.say("Example: .removeroast [ID]. ID must be a postive integer.");
+        }
+
+        const roastRepo = new roastRepository();
+
+        try {
+            let roast = await roastRepo.getById(id);
+            await roastRepo.delete(roast.id);
+            this.say(room, `/msgroom survivor, /modnote REMOVEROAST: by ${user.id}: ${roast.text}`);
+        } catch (error) {
+            user.say("Error updating theme: " + error.message);
+        } finally {
+            roastRepo.db.close();
+        }
+    },
+    roasts: 'roastdb',
+    roastdb: async function (arg, user, room) {
+        if (!user.hasRank('survivor', '+')) return;
+
+        let roasts;
+        const roastsHtml = new roastsHTML();
+        const roastRepo = new roastRepository();
+
+        try {
+            roasts = await roastRepo.getAll();
+        } catch (error) {
+            return console.log("Error retrieving roasts: " + error.message);
+        } finally {
+            roastRepo.db.close();
+        }
+
+        let html = roastsHtml.generateTableHTML(roasts);
+
+        PL_Menu.sendPage(user.id, "RoastsDB", html, room);
+
+    },
+    roast: async function (arg, user, room) {
+        let target = !user.hasRank(room.id, '+') ? user : room;
+        let [targetUser, id, showAuthor] = arg.split(',').map(part => part.trim());
+        if (!targetUser) return room.say("Usage: .roast [user], [roastId(optional)], [showauthor(optional)]");
+
+        let roasts;
+        let roast;
+        const roastsHtml = new roastsHTML();
+        const roastRepo = new roastRepository();
+
+        try {
+            if (!id && !showAuthor) {
+                //since ID's in the database arent labeled from index 0 to # of roasts, put all roasts into an array, 
+                //then get a random element from the array, and then store that elements database ID into 'id'
+                roasts = await roastRepo.getAll();
+                id = roasts[Math.floor(Math.random() * roasts.length)].id;
+            }
+
+            roast = await roastRepo.getById(id);
+
+            let roastText = roast.text.replace(`[USER]`, targetUser);
+            const text = (showAuthor === "showauthor") ? `/addhtmlbox ${roastsHtml.generateShowAuthorRow(roast)}` : roastText;
+            target.say(text);
+        } catch (error) {
+            return console.log("Error retrieving theme: " + error.message);
+        } finally {
+            roastRepo.db.close();
         }
     }
 }
