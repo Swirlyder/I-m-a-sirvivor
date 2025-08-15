@@ -546,7 +546,7 @@ global.parse = exports.parse = {
 			let muteMessage = '';
 			let modSettings = useDefault ? null : this.settings.modding[roomid];
 
-			// moderation for banned words
+/*			// moderation for banned words
 			if ((useDefault || !this.settings.banword[roomid]) && pointVal < 2) {
 				let bannedPhraseSettings = this.settings.bannedphrases;
 				let bannedPhrases = !!bannedPhraseSettings ? (Object.keys(bannedPhraseSettings[roomid] || {})).concat(Object.keys(bannedPhraseSettings.global || {})) : [];
@@ -558,6 +558,7 @@ global.parse = exports.parse = {
 					}
 				}
 			}
+   */
 			// moderation for flooding (more than x lines in y seconds)
 			let times = roomData.times;
 			let timesLen = times.length;
@@ -569,7 +570,7 @@ global.parse = exports.parse = {
 					muteMessage = ', Do not flood the chat.';
 				}
 			}
-			// moderation for caps (over x% of the letters in a line of y characters are capital)
+	/*		// moderation for caps (over x% of the letters in a line of y characters are capital)
 			let capsMatch = msg.replace(/[^A-Za-z]/g, '').match(/[A-Z]/g);
 			if ((useDefault || !('caps' in modSettings)) && capsMatch && toId(msg).length > MIN_CAPS_LENGTH && (capsMatch.length >= ~~(toId(msg).length * MIN_CAPS_PROPORTION))) {
 				if (pointVal < 1) {
@@ -577,6 +578,7 @@ global.parse = exports.parse = {
 					muteMessage = ', Do not abuse caps.';
 				}
 			}
+   
 			// moderation for stretching (over x consecutive characters in the message are the same)
 			let stretchMatch = /(.)\1{25,}/gi.test(msg) || /(..+)\1{4,}/gi.test(msg); // matches the same character (or group of characters) 8 (or 5) or more times in a row
 			if ((useDefault || !('stretching' in modSettings)) && stretchMatch) {
@@ -585,7 +587,7 @@ global.parse = exports.parse = {
 					muteMessage = ', Do not stretch your posts.';
 				}
 			}
-
+*/
 			if (pointVal > 0 && now - roomData.lastAction >= ACTION_COOLDOWN) {
 				let cmd = 'mute';
 				// defaults to the next punishment in Config.punishVals instead of repeating the same action (so a second warn-worthy
