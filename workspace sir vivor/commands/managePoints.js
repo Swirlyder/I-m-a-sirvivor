@@ -206,21 +206,26 @@ module.exports = {
 		}
 
 		let partlist = '';
+		let partListArgs = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
 		let second = split[3].trim();
 		dd.addpoints(second, secondpoints);
-		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
-		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
-		user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+
 		for (let i = 4; i < split.length; i++) {
 			let part = split[i];
 			dd.addpoints(part, partpoints);
 			if (i == 4) {
 				//if (numPlayers < 6) partlist = second.trim() + ", " + part.trim(); else
 				partlist = part.trim()
-			} else if (i == split.length - 1) partlist += " and " + part.trim();
-			else partlist += ", " + part.trim();
+				partListArgs = part.trim()
+			} else if (i == split.length - 1) {
+				partlist += " and " + part.trim();
+				partListArgs += ", " + part.trim();
+			} else {
+				partlist += ", " + part.trim();
+				partListArgs += ", " + part.trim();
+			}
 		}
 		for (let i = 1; i < split.length; i++) {
 			gamecount.add(split[i], 1);
@@ -234,8 +239,14 @@ module.exports = {
 			part: [partpoints].concat(split.slice(4)),
 			date: Date.now()
 		};
+
+	
 		dd.updateModlog(modlogEntry);
-		if (partpoints !== 0) return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard.");
+		user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard.");
+		if (partpoints !== 0) user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+		if(Config.ugo_live) addUgoPoints(user, host, first, second, partlist, partListArgs, hostpoints, firstpoints, secondpoints, partpoints);
 	},
 
 	addpointsofficial: 'addfish',
@@ -308,6 +319,7 @@ module.exports = {
 		}
 
 		let partlist = '';
+		let partListArgs = '';
 		dd.addpoints(host, hostpoints);
 		dd.addpoints(first, firstpoints);
 		dd.addseasonpoints(first, Math.floor(firstpoints / 10));
@@ -317,14 +329,17 @@ module.exports = {
 			let part = split[i];
 			dd.addpoints(part, partpoints);
 			if (i == 4) {
-				if (numPlayers < 6) partlist = second.trim() + ", " + part.trim();
-				else partlist = part.trim()
-			} else if (i == split.length - 1) partlist += " and " + part.trim();
-			else partlist += ", " + part.trim();
+				//if (numPlayers < 6) partlist = second.trim() + ", " + part.trim(); else
+				partlist = part.trim()
+				partListArgs = part.trim()
+			} else if (i == split.length - 1) {
+				partlist += " and " + part.trim();
+				partListArgs += ", " + part.trim();
+			} else {
+				partlist += ", " + part.trim();
+				partListArgs += ", " + part.trim();
+			}
 		}
-		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
-		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard. **" + Math.floor(firstpoints / 10) + "** also goes towards seasonal.");
-		if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard. **" + Math.floor(secondpoints / 10) + "** also goes towards seasonal.");
 		for (let i = 1; i < split.length; i++) {
 			gamecount.add(split[i], 1);
 		}
@@ -338,7 +353,11 @@ module.exports = {
 			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
-		return user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+		user.say("**" + hostpoints + "** have been added to **" + host.trim() + "** on the leaderboard.");
+		user.say("**" + firstpoints + "** have been added to **" + first.trim() + "** on the leaderboard. **" + Math.floor(firstpoints / 10) + "** also goes towards seasonal.");
+		if (numPlayers >= 6) user.say("**" + secondpoints + "** have been added to **" + second.trim() + "** on the leaderboard. **" + Math.floor(secondpoints / 10) + "** also goes towards seasonal.");
+		user.say("**" + partpoints + "** each have been added to **" + partlist + "** on the leaderboard.");
+		if(Config.ugo_live) addUgoPoints(user, host, first, second, partlist, partListArgs, hostpoints, firstpoints, secondpoints, partpoints);
 	},
 
 	addweekendseasonalpoints: 'awsp',
@@ -428,7 +447,7 @@ module.exports = {
 		let numPoints = parseInt(split[1]);
 		if (!numPoints) return user.say("'" + split[1] + "' is not a valid number of points to add.");
 		dd.addseasonpoints(username, numPoints);
-		
+
 		let modlogEntry = {
 			command: "addseasonal",
 			user: user.id,
@@ -455,7 +474,7 @@ module.exports = {
 		let modlogEntry = {
 			command: "remseasonal",
 			user: user.id,
-			first: [(-1*numPoints), username],
+			first: [(-1 * numPoints), username],
 			date: Date.now()
 		};
 		dd.updateModlog(modlogEntry);
@@ -682,3 +701,23 @@ module.exports = {
 		return this.say(Rooms.get('survivor'), `/sendhtmlpage ${user.id}, hostcount, ${ret} </center>`);
 	},
 };
+
+function addUgoPoints(user, host, first, second, partlist, partListArgs, hostpoints, firstpoints, secondpoints, partpoints) {
+	//UGO bot's format for adding points: ;addpoints [amount], [room], [user1], [user2], ...
+	const gameRoom = 'survivor';
+	const ugoBotName = 'UGO';
+	const ugoMultiplier = 0.25; //ugo_points = regular_points * 0.25 (rounded up)
+
+	const ugoHostPoints = Math.ceil(hostpoints * ugoMultiplier);
+	const ugoFirstPoints = Math.ceil(firstpoints * ugoMultiplier);
+	const ugoSecondPoints = Math.ceil(secondpoints * ugoMultiplier);
+	const ugoPartPoints = Math.ceil(partpoints * ugoMultiplier);
+
+	//add ugo points for host, first, second, and participators 
+	user.say(`/msgroom ${gameRoom}, /msg ${ugoBotName}, ;addpoints ${ugoHostPoints}, ${gameRoom}, ${host}`);
+	user.say(`/msgroom ${gameRoom}, /msg ${ugoBotName}, ;addpoints ${ugoFirstPoints}, ${gameRoom}, ${first}`);
+	user.say(`/msgroom ${gameRoom}, /msg ${ugoBotName}, ;addpoints ${ugoSecondPoints}, ${gameRoom}, ${second}`);
+	user.say(`/msgroom ${gameRoom}, /msg ${ugoBotName}, ;addpoints ${ugoPartPoints}, ${gameRoom}, ${partListArgs}`);
+
+	user.say(`**${host}**, **${first}**, and **${second}** have been rewarded **${ugoHostPoints}**, **${ugoFirstPoints}**, and **${ugoSecondPoints}** UGO points, respectively. **${partlist}** have been rewarded **${ugoPartPoints}** UGO points.`);
+}
