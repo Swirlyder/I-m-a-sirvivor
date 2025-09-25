@@ -194,6 +194,8 @@ module.exports = {
 
 	yosh: '==yoshman8',
 	yoshman8: 'Hold on, let me activate my Yoshing Power',
+
+	ugo: 'ugo get a job',
 	
 	saw: '==workshop',
 	workshop: '<<survivorworkshop>>',
