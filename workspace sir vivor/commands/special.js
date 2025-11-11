@@ -67,11 +67,11 @@ module.exports = {
 		text += '/addhtmlbox <center><a href="https://youtu.be/DLzxrzFCyOs"><button title="Dot Not Click Me">Click Me</button></a></center>';
 		this.say(room, text);
 	},
-	startu: 'star',
-	star: function (arg, user, room) {
+	🤡: 'clown',
+	clown: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text += '/addhtmlbox The above user is a ⭐, too!';
+			text += '/addhtmlbox <center>T🤡🤡🤡</center>';
 			this.say(room, text);
 		}
 	},
