@@ -67,14 +67,6 @@ module.exports = {
 		text += '/addhtmlbox <center><a href="https://youtu.be/DLzxrzFCyOs"><button title="Dot Not Click Me">Click Me</button></a></center>';
 		this.say(room, text);
 	},
-	clown: function (arg, user, room) {
-		var text = '';
-		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text += '/addhtmlbox <center>T🤡🤡🤡</center>';
-			this.say(room, text);
-		}
-	},
-
 	highfive: function (arg, user, room) {
 		let prefix = user.hasRank(room, '+') ? '' : '/pm ' + user.id + ', ';
 		let text = toId(arg) ? '/me high-fives ' + arg.trim() : 'Usage: ``.highfive [name]``';
