@@ -58,6 +58,13 @@ module.exports = {
 		if (arg) text += arg;
 		this.say(room, text);
 	},
+	clown: function (arg, user, room) {
+		var text = '';
+		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
+			text += '/addhtmlbox <center>T🤡🤡🤡</center>';
+			this.say(room, text);
+		}
+	},
 
 	meme: function (arg, user, room) {
 		var text = '';
