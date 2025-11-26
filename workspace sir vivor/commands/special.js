@@ -61,7 +61,7 @@ module.exports = {
 	clown: function (arg, user, room) {
 		var text = '';
 		if (user.hasRank(room.id, '+') || (Games.host && Games.host.id === user.id)) {
-			text += '/addhtmlbox <center>T🤡🤡🤡</center>';
+			text += '/addhtmlbox <center>🤡🤡🤡</center>';
 			this.say(room, text);
 		}
 	},
