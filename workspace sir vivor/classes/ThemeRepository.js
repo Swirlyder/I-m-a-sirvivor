@@ -139,6 +139,17 @@ class themesRepository {
         });
     }
 
+    getAllSubthemesByTheme(name) {
+        const sql = `SELECT * FROM ${THEME_TABLE_NAME} WHERE ${THEME_URL} LIKE '%' || ? || '/%' COLLATE NOCASE`;
+
+        return new Promise((resolve, reject) => {
+            this.db.all(sql, [name], (err, rows) => {
+                if (err) return reject(err);
+                resolve(rows);
+            });
+        });
+    }
+
     themeNameExists(name) {
         const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_NAME} = ? COLLATE NOCASE LIMIT 1`;
         return new Promise((resolve, reject) => {
@@ -154,6 +165,17 @@ class themesRepository {
 
         return new Promise((resolve, reject) => {
             this.db.get(sql, [id], (err, row) => {
+                if (err) return reject(err);
+                resolve(!!row);
+            });
+        });
+    }
+
+    themeHasSubthemes(name) {
+        const sql = `SELECT 1 FROM ${THEME_TABLE_NAME} WHERE ${THEME_URL} LIKE '%' || ? || '/%' COLLATE NOCASE LIMIT 1`;
+        
+        return new Promise((resolve, reject) => {
+            this.db.get(sql, [name], (err, row) => {
                 if (err) return reject(err);
                 resolve(!!row);
             });

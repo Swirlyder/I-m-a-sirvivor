@@ -283,7 +283,12 @@ module.exports = {
 
         try {
             if(arg == "easy" || arg == "medium" || arg == "hard") themes = await themeRepo.getAllByDifficulty(arg);
-            else themes = await themeRepo.getAllWithAliases();
+            else {
+                theme = await getTheme(themeRepo, themeAliasRepo, arg);
+                arg = theme ? toId(theme.name) : theme;
+                if (arg && (await themeRepo.themeHasSubthemes(arg))) themes = await themeRepo.getAllSubthemesByTheme(arg);
+                else themes = await themeRepo.getAllWithAliases();
+            }
             id = themes[Math.floor(Math.random() * themes.length)].id;
             theme = await themeRepo.getById(id);
         } catch (error) {
