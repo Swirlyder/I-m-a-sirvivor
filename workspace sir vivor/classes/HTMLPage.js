@@ -7,7 +7,7 @@ class HTMLPage {
         this.pageID = pageID;
     }
     createHTMLElement(element, content, style = "") {
-        return "<" + element + " style='" + style + "'>" + this.sanitizeHTML(content) + "</" + element + ">";
+        return "<" + element + " style='" + style + "'>" + content + "</" + element + ">";
     }
     createButton(buttonName, command, arg = '', style = "") {
         const spl = Config.rooms[0].split(",");
@@ -18,14 +18,14 @@ class HTMLPage {
         return this.createButton
     }
     createUsernameElement(content, style = '') {
-        return "<username>" + this.sanitizeHTML(content) + "</username>";
+        return "<username>" + content + "</username>";
     }
     sendPage(name, pageID, html, room) {
         Parse.say(room, "/msgroom, Survivor, /sendhtmlpage " + name + ", " + pageID + ", " + html);
     }
     createTextArea(rows, cols, placeholder, resize = "none", styling = "", text = "") {
         return "<textarea rows='" + rows + "' cols='" + cols + "' placeholder='" + placeholder +
-            "' style='resize: " + resize + ";" + styling + "' name='arg'>" + this.sanitizeHTML(text) + "</textarea>";
+            "' style='resize: " + resize + ";" + styling + "' name='arg'>" + text + "</textarea>";
     }
     createInlineText(text, style = "") {
         return this.createHTMLElement("span", text, style);
@@ -139,11 +139,11 @@ class PL_Assistant_Menu extends HTMLPage {
         return this.createButton(label, "plmenu hidenotes", "", style);
     }
     createPlayerNameHTML(playerName, style) {
-        return this.createUsernameElement(playerName + " ", style);
+        return this.createUsernameElement(this.sanitizeHTML(playerName) + " ", style);
     }
     createEliminatedPlayerHTML(player) {
         const style = "text-decoration: line-through; font-style: italic; color:grey; font-weight:bold;"
-        return this.createInlineText(player.name, style);
+        return this.createInlineText(this.sanitizeHTML(player.name), style);
     }
     //TODO: pass Games.signupsOpen as argument
     createCloseOpenSignupsButton(style = "") {
