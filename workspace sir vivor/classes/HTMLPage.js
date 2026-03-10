@@ -12,7 +12,7 @@ class HTMLPage {
     createButton(buttonName, command, arg = '', style = "") {
         const spl = Config.rooms[0].split(",");
         return "<button class='button' type='send' value='/msg " + Config.nick + ", /msgroom " + spl[0] + ", /botmsg " +
-            Config.nick + ", ." + command + arg + "' " + "style='" + style + "'>" + this.sanitizeHTML(buttonName) + "</button>";
+            Config.nick + ", ." + command + arg + "' " + "style='" + style + "'>" + buttonName + "</button>";
     }
     createExpandButton() {
         return this.createButton
