@@ -7,25 +7,25 @@ class HTMLPage {
         this.pageID = pageID;
     }
     createHTMLElement(element, content, style = "") {
-        return "<" + element + " style='" + style + "'>" + content + "</" + element + ">";
+        return "<" + element + " style='" + style + "'>" + this.sanitizeHTML(content) + "</" + element + ">";
     }
     createButton(buttonName, command, arg = '', style = "") {
         const spl = Config.rooms[0].split(",");
         return "<button class='button' type='send' value='/msg " + Config.nick + ", /msgroom " + spl[0] + ", /botmsg " +
-            Config.nick + ", ." + command + arg + "' " + "style='" + style + "'>" + buttonName + "</button>";
+            Config.nick + ", ." + command + arg + "' " + "style='" + style + "'>" + this.sanitizeHTML(buttonName) + "</button>";
     }
     createExpandButton() {
         return this.createButton
     }
     createUsernameElement(content, style = '') {
-        return "<username>" + content + "</username>";
+        return "<username>" + this.sanitizeHTML(content) + "</username>";
     }
     sendPage(name, pageID, html, room) {
         Parse.say(room, "/msgroom, Survivor, /sendhtmlpage " + name + ", " + pageID + ", " + html);
     }
     createTextArea(rows, cols, placeholder, resize = "none", styling = "", text = "") {
         return "<textarea rows='" + rows + "' cols='" + cols + "' placeholder='" + placeholder +
-            "' style='resize: " + resize + ";" + styling + "' name='arg'>" + text + "</textarea>";
+            "' style='resize: " + resize + ";" + styling + "' name='arg'>" + this.sanitizeHTML(text) + "</textarea>";
     }
     createInlineText(text, style = "") {
         return this.createHTMLElement("span", text, style);
@@ -83,6 +83,14 @@ class HTMLPage {
     }
     nestInPadDiv(content, style = "") {
         return `<div class='pad' style='${style}'>${content}</div>`
+    }
+    sanitizeHTML(content) {
+        return content
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
     }
 }
 
