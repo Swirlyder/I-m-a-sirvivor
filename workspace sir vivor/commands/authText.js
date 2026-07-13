@@ -57,7 +57,6 @@ module.exports = {
 	dom: '==deathofmimikyu',
 	deathofmimikyu: 'Don\'t Worry, we lose these ALL the time :D',
 	
-
 	dl: '==dontlose',
 	dontlose: 'dont lose? HA! More like dont win :^)',
 
@@ -82,8 +81,8 @@ module.exports = {
 	guy: '==guyguard',
 	guyguard: 'You hate to see it',
 
-	monkey: '==henka',
-	henka: 'H E N K A B O Y S',
+	hyzer: '==hyzerflippin',
+	hyzerflippin: 'quality.',
 
 	inac: '==inactive',
 	inactive: 'NOW',
@@ -93,8 +92,6 @@ module.exports = {
 
 	lfo: '==lfolfo',
 	lfolfo: 'It\’s loaf-o loaf-o thank you very much',
-
-	ljb: 'hi frens :3',
 
 	lunarixis: '==lunar',
 	lunar: '/me sips tea',
@@ -108,6 +105,9 @@ module.exports = {
 
 	micro: '==micromorphic',
 	micromorphic: 'Hello everyone, unfortunately I have some very sudden news.',
+
+	monkey: '==henka',
+	henka: 'H E N K A B O Y S',
 
 	mit: '==mitsuki',
 	mitsuki: 'isso significa algo em português',
@@ -138,6 +138,8 @@ module.exports = {
 	rain: '==rainshaft',
 	rainshaft: ':P',
 
+	rika: 'hi frens :3',
+
 	sc: '==saltiestcactus43',
 	salti: 'saltiestcactus43',
 	saltiestcactus43: 'Salti plays connect 5 while the rest play connect 4...',
@@ -150,6 +152,8 @@ module.exports = {
 
 	sleepy: '==sleepyfwog',
 	sleepyfwog: 'Par for the course ¯\_(ツ)_/¯',
+
+	shietz: 'holy shietz',
 
 	soccer: '==soccerz12',
 	soccerz12: 'Hey, what\'s up guys it\'s Soccer here',
